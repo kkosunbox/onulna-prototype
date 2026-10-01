@@ -16,22 +16,46 @@ import Icon from '../components/Icon';
 import Reveal from '../components/Reveal';
 import HomeSkeleton from '../components/Skeleton';
 import Disclaimer from '../components/Disclaimer';
-import { colors } from '../theme/colors';
-import { radius, SCREEN_PX, txt } from '../theme/typography';
+import { Coin, PriceTag, Seal } from '../components/premium/Kit';
+import { usePremium } from '../context/PremiumContext';
+import { PremiumKey, defaultItem, openPremium } from '../navigation/premium';
+import { ITEMS } from '../services/premium/catalog';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors, gradients } from '../theme/colors';
+import { radius, SCREEN_PX, shadow, txt } from '../theme/typography';
 import { formatKoreanDate } from '../utils/date';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
+const PREMIUM_TILES = (today: string) => {
+  const ny = Number(today.slice(0, 4)) + 1;
+  return ([
+    ['life', '圖', '평생운', '초년 · 중년 · 말년'],
+    ['newyear', '年', '신년운세', `${ny}년 미리보기`],
+    ['monthly', '月', '월별 상세운세', '달력과 좋은 날'],
+    ['lucky', '日', '길일 찾기', '이사 · 계약 · 고백'],
+  ] as [Exclude<PremiumKey, 'lounge'>, string, string, string][]).map(([key, ch, title, desc]) => ({
+    key, ch, title, desc, item: key === 'newyear' ? ITEMS.newyear(ny) : defaultItem(key, today),
+  }));
+};
+
 export default function HomeScreen() {
   const nav = useNavigation<Nav>();
   const { user, fortune, today, fortuneLoading, refreshFortune } = useApp();
+  const { points } = usePremium();
 
   const top = (
     <View style={s.topBar}>
       <BrandMark />
-      <PressableScale onPress={() => fortune && nav.navigate('Share')} style={s.iconBtn} scaleTo={0.9} accessibilityLabel="오늘의 운세 공유하기" disabled={!fortune}>
-        <Icon name="share" size={20} color={colors.purple} />
-      </PressableScale>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+        <PressableScale onPress={() => nav.navigate('Wallet')} style={s.ptPill} scaleTo={0.94} accessibilityLabel={`내 포인트 ${points}P`}>
+          <Coin size={16} />
+          <Text style={s.ptText}>{points.toLocaleString('ko-KR')}</Text>
+        </PressableScale>
+        <PressableScale onPress={() => fortune && nav.navigate('Share')} style={s.iconBtn} scaleTo={0.9} accessibilityLabel="오늘의 운세 공유하기" disabled={!fortune}>
+          <Icon name="share" size={20} color={colors.purple} />
+        </PressableScale>
+      </View>
     </View>
   );
 
@@ -95,6 +119,33 @@ export default function HomeScreen() {
           <View style={s.storyArrow}><Icon name="chevronRight" size={18} color={colors.white} strokeWidth={2.2} /></View>
         </PressableScale>
 
+        {/* 프리미엄 콘텐츠 — 앞부분은 무료 미리보기 */}
+        <SectionHeader title="더 깊이 보기" caption="앞부분은 무료로 미리 볼 수 있어요" action="전체 보기" onAction={() => nav.navigate('PremiumHub')} />
+        <PressableScale onPress={() => nav.navigate('PremiumHub')} style={[s.premiumWrap, shadow.hero]} scaleTo={0.985} accessibilityLabel="프리미엄 콘텐츠 보기">
+          <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.premium}>
+            <Text style={{ fontSize: 28, color: colors.moon, fontWeight: '700' }}>圖</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 16, fontWeight: '700', color: colors.white }}>프리미엄 콘텐츠</Text>
+              <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)' }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>
+            </View>
+            <Icon name="chevronRight" size={18} color={colors.white} strokeWidth={2.2} />
+          </LinearGradient>
+        </PressableScale>
+        <View style={[s.grid, { marginTop: 12 }]}>
+          {[0, 2].map(r => (
+            <View key={r} style={s.gridRow}>
+              {PREMIUM_TILES(today).slice(r, r + 2).map(t => (
+                <PressableScale key={t.key} onPress={() => (t.key === 'newyear' ? nav.navigate('NewYear', { year: Number(today.slice(0, 4)) + 1 }) : openPremium(nav, t.key))} style={s.ptile} accessibilityLabel={t.title}>
+                  <Seal ch={t.ch} size={40} />
+                  <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 12 }}>{t.title}</Text>
+                  <Text style={[txt.small, { marginTop: 2 }]}>{t.desc}</Text>
+                  <View style={{ position: 'absolute', top: 14, right: 14 }}><PriceTag item={t.item} /></View>
+                </PressableScale>
+              ))}
+            </View>
+          ))}
+        </View>
+
         <Disclaimer />
       </ScrollView>
     </SafeAreaView>
@@ -109,5 +160,10 @@ const s = StyleSheet.create({
   story: { marginTop: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: colors.lavenderSoft, borderRadius: radius.lg, padding: 18, borderWidth: 1, borderColor: colors.lavender },
   storyTitle: { fontSize: 15, fontWeight: '700', color: colors.purple, letterSpacing: -0.3 },
   storySub: { fontSize: 12, color: colors.purpleSoft, marginTop: 3 },
+  ptPill: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
+  ptText: { fontSize: 13, fontWeight: '800', color: colors.purple },
+  premiumWrap: { borderRadius: radius.lg, backgroundColor: colors.purple },
+  premium: { borderRadius: radius.lg, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14 },
+  ptile: { flex: 1, backgroundColor: colors.white, borderRadius: radius.lg, padding: 16, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, ...shadow.card },
   storyArrow: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.purple, alignItems: 'center', justifyContent: 'center' },
 });

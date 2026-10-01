@@ -27,7 +27,7 @@ const SUMMARY: Record<KeywordTag, string> = {
   learning: '배운 만큼 흐름이 넓어지는 날이에요.',
 };
 
-const CAT_TEXT: Record<Cat, { high: string[]; mid: string[]; low: string[] }> = {
+export const CAT_TEXT: Record<Cat, { high: string[]; mid: string[]; low: string[] }> = {
   love: {
     high: ['설렘이 자연스럽게 찾아와요. 먼저 건넨 한마디가 분위기를 바꿔요.', '연인과는 대화가 깊어지고, 솔로라면 새 인연의 신호가 보여요.'],
     mid: ['잔잔하지만 따뜻한 흐름이에요. 작은 관심 표현이 좋아요.', '큰 이벤트보다 일상의 배려가 마음을 움직여요.'],

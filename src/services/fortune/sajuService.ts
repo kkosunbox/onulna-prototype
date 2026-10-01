@@ -22,7 +22,7 @@ export function dayPillar(iso: string): Pillar {
 }
 
 // 각 절기의 대략적 시작일 (월, 일) → 해당 월지 인덱스
-const SOLAR_TERMS: [number, number, number][] = [
+export const SOLAR_TERMS: [number, number, number][] = [
   [1, 6, 1], [2, 4, 2], [3, 6, 3], [4, 5, 4], [5, 6, 5], [6, 6, 6],
   [7, 7, 7], [8, 8, 8], [9, 8, 9], [10, 8, 10], [11, 7, 11], [12, 7, 0],
 ];
@@ -71,7 +71,7 @@ export function relation(me: Element, other: Element): TenGodGroup {
   return 'officer';
 }
 
-const RELATION_EFFECT: Record<TenGodGroup, { tags: KeywordTag[]; bias: AnalysisResult['scoreBias'] }> = {
+export const RELATION_EFFECT: Record<TenGodGroup, { tags: KeywordTag[]; bias: AnalysisResult['scoreBias'] }> = {
   peer: { tags: ['harmony', 'challenge'], bias: { love: 0, money: -2, work: 3, relationship: 6 } },
   resource: { tags: ['learning', 'rest'], bias: { love: 2, money: 0, work: 5, relationship: 2 } },
   output: { tags: ['expression', 'newMeeting'], bias: { love: 7, money: 1, work: 2, relationship: 4 } },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
@@ -10,6 +10,8 @@ import { RootStackParamList } from '../navigation/types';
 import { analysisTheme, colors } from '../theme/colors';
 import { radius, txt } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
+import { LockCard } from '../components/premium/Kit';
+import { ITEMS } from '../services/premium/catalog';
 
 const NOTE: Record<string, string> = {
   saju: '양력 기준 근사 만세력으로 계산해요. 정밀 계산은 업데이트 예정이에요.',
@@ -21,6 +23,7 @@ const NOTE: Record<string, string> = {
 export default function AnalysisDetailScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'AnalysisDetail'>>();
   const { fortune } = useApp();
+  const nav = useNavigation();
   if (!fortune) return null;
   const a = fortune.analyses[params.source];
   const t = analysisTheme[params.source];
@@ -54,6 +57,9 @@ export default function AnalysisDetailScreen() {
         ))}
       </Card>
 
+      {a.source === 'saju' ? (
+        <LockCard mt={12} title="상세 사주 해석 보기" desc="원국표 · 오행 분포 · 나의 본성 · 올해와 이달의 흐름" item={ITEMS.sajuDeep()} onPress={() => nav.navigate('SajuDeep')} />
+      ) : null}
       <Text style={[txt.caption, { marginTop: 16, textAlign: 'center' }]}>{NOTE[a.source]}</Text>
       <Disclaimer compact />
     </Screen>

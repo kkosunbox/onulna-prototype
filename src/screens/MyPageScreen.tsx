@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Switch, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, Platform, StyleSheet, Switch, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
@@ -9,6 +10,9 @@ import Icon, { IconName } from '../components/Icon';
 import { Crescent } from '../components/BrandMark';
 import Disclaimer from '../components/Disclaimer';
 import { useApp } from '../context/AppContext';
+import { usePremium } from '../context/PremiumContext';
+import { Coin } from '../components/premium/Kit';
+import { fmtP } from '../services/premium/catalog';
 import { storage, NotificationSettings } from '../services/storage/storageService';
 import { notificationService } from '../services/notificationService';
 import { MBTI_INFO } from '../data/mbtiData';
@@ -29,9 +33,13 @@ function Row({ icon, label, value, last, right }: { icon: IconName; label: strin
 
 export default function MyPageScreen() {
   const { user, fortune, resetProfile } = useApp();
+  const { points, ownedCount } = usePremium();
+  const nav = useNavigation();
   const [noti, setNoti] = useState<NotificationSettings | null>(null);
+  const [resetArm, setResetArm] = useState(false);
+  const armTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  useEffect(() => { storage.getNotificationSettings().then(setNoti); }, []);
+  useEffect(() => { storage.getNotificationSettings().then(setNoti); return () => clearTimeout(armTimer.current); }, []);
   if (!user) return null;
 
   const updateNoti = async (next: NotificationSettings) => {
@@ -39,10 +47,24 @@ export default function MyPageScreen() {
     await notificationService.schedule(next, user.nickname);
   };
 
-  const confirmReset = () => Alert.alert('프로필을 다시 입력할까요?', '저장된 운세 기록도 함께 초기화돼요.', [
-    { text: '취소', style: 'cancel' },
-    { text: '다시 입력하기', style: 'destructive', onPress: resetProfile },
-  ]);
+  // 웹에서는 Alert 버튼이 동작하지 않아 두 번 눌러 확인한다
+  const confirmReset = () => {
+    if (Platform.OS !== 'web') {
+      Alert.alert('프로필을 다시 입력할까요?', '저장된 운세 기록도 함께 초기화돼요.', [
+        { text: '취소', style: 'cancel' },
+        { text: '다시 입력하기', style: 'destructive', onPress: resetProfile },
+      ]);
+      return;
+    }
+    if (!resetArm) {
+      setResetArm(true);
+      armTimer.current = setTimeout(() => setResetArm(false), 4000);
+      return;
+    }
+    clearTimeout(armTimer.current);
+    setResetArm(false);
+    resetProfile();
+  };
 
   return (
     <Screen largeTitle="마이">
@@ -66,7 +88,7 @@ export default function MyPageScreen() {
         </LinearGradient>
       </View>
 
-      <SectionHeader title="내 프로필" action="다시 입력" onAction={confirmReset} />
+      <SectionHeader title="내 프로필" caption={resetArm ? '저장된 정보가 모두 지워져요' : undefined} action={resetArm ? '한 번 더 누르면 초기화' : '다시 입력'} onAction={confirmReset} />
       <Card style={s.group}>
         <Row icon="sparkle" label="MBTI" value={user.mbti} />
         <Row icon="heart" label="혈액형" value={`${user.bloodType}형`} />
@@ -101,14 +123,25 @@ export default function MyPageScreen() {
         </Card>
       )}
 
-      <SectionHeader title="구독" />
-      <Card variant="tinted" tint={colors.lavenderSoft} style={s.plus}>
-        <View style={s.plusIcon}><Icon name="crown" size={20} color={colors.money} filled /></View>
-        <View style={{ flex: 1 }}>
-          <Text style={txt.h3}>오늘나 플러스</Text>
-          <Text style={[txt.small, { marginTop: 2 }]}>상세 사주 해석 · AI 궁합 · 월간 리포트</Text>
+      <SectionHeader title="포인트" />
+      <Card style={{ paddingVertical: 4, paddingHorizontal: 16 }}>
+        <View style={[s.row, { paddingVertical: 12 }]}>
+          <View style={[s.rowIcon, { width: 42, height: 42, borderRadius: 21 }]}><Coin size={22} /></View>
+          <View style={{ flex: 1 }}>
+            <Text style={txt.caption}>보유 포인트</Text>
+            <Text style={{ fontSize: 22, fontWeight: '800', color: colors.purple }}>{fmtP(points)}</Text>
+          </View>
+          <PressableScale onPress={() => nav.navigate('Wallet')} style={s.charge} scaleTo={0.95}>
+            <Text style={{ color: colors.white, fontSize: 14, fontWeight: '700' }}>충전</Text>
+          </PressableScale>
         </View>
-        <View style={s.badge}><Text style={s.badgeText}>준비 중</Text></View>
+        {([['記', '이용 내역 · 요금 안내', () => nav.navigate('Wallet')], ['圖', `프리미엄 콘텐츠 · 보유 ${ownedCount}개`, () => nav.navigate('PremiumHub')]] as const).map(([e, t, go]) => (
+          <PressableScale key={e} onPress={go} style={[s.row, s.topBorder]} scaleTo={0.98}>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
+            <Text style={[s.rowLabel, { fontWeight: '600' }]}>{t}</Text>
+            <Icon name="chevronRight" size={18} color={colors.inkMute} />
+          </PressableScale>
+        ))}
       </Card>
 
       <Disclaimer />
@@ -138,8 +171,6 @@ const s = StyleSheet.create({
   hourOn: { backgroundColor: colors.purple },
   hourText: { fontSize: 13, fontWeight: '700', color: colors.purple },
   preview: { fontSize: 12, color: colors.inkMute, paddingVertical: 14 },
-  plus: { flexDirection: 'row', alignItems: 'center', gap: 14, borderWidth: 1, borderColor: colors.lavender },
-  plusIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
-  badge: { backgroundColor: colors.white, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 5 },
-  badgeText: { fontSize: 11, fontWeight: '700', color: colors.purple },
+  topBorder: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
+  charge: { height: 40, paddingHorizontal: 16, borderRadius: radius.md, backgroundColor: colors.purple, alignItems: 'center', justifyContent: 'center' },
 });

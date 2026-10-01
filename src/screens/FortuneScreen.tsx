@@ -8,6 +8,9 @@ import ScoreRing from '../components/ScoreRing';
 import CategoryRow from '../components/CategoryRow';
 import SectionHeader from '../components/SectionHeader';
 import Disclaimer from '../components/Disclaimer';
+import { LockCard } from '../components/premium/Kit';
+import { ITEMS } from '../services/premium/catalog';
+import { parseISO } from '../utils/date';
 import { useApp } from '../context/AppContext';
 import { getPeriodFortune } from '../services/fortune/periodFortuneService';
 import { Period } from '../types';
@@ -85,6 +88,13 @@ export default function FortuneScreen() {
               <FlowBar key={`${tab}-${x.label}`} label={x.label} score={x.score} best={x.score === bestScore} index={i} />
             ))}
           </Card>
+          {tab === 'yearly' ? (
+            <LockCard title="신년운세 보기" desc="올해의 사자성어 · 띠 궁합 · 분기 전략 · 새해 미리보기" item={ITEMS.newyear(parseISO(today).y)} onPress={() => nav.navigate('NewYear')} />
+          ) : tab === 'weekly' ? (
+            <LockCard title="길일 찾기" desc="이사 · 계약 · 고백 · 면접하기 좋은 날" item={ITEMS.lucky('move', today)} onPress={() => nav.navigate('Lucky')} />
+          ) : (
+            <LockCard title={`${parseISO(today).m}월 상세운세 보기`} desc="운세 달력 · 4가지 관점 · 좋은 날 · 이달의 미션" item={ITEMS.monthly(parseISO(today).y, parseISO(today).m)} onPress={() => nav.navigate('Monthly')} />
+          )}
         </>
       ) : null}
       <Disclaimer />

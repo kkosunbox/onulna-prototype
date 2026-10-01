@@ -13,6 +13,12 @@ import SectionHeader from '../components/SectionHeader';
 import Icon from '../components/Icon';
 import Disclaimer from '../components/Disclaimer';
 import { useApp } from '../context/AppContext';
+import { usePremium } from '../context/PremiumContext';
+import { PriceCard } from '../components/premium/Kit';
+import ReportArea from '../components/premium/Report';
+import CompatDeep from '../components/premium/CompatDeep';
+import { ITEMS } from '../services/premium/catalog';
+import { generateReport, reportAvailable } from '../services/report/reportService';
 import { getCompatibilityEngine } from '../services/fortune/compatibilityService';
 import { storage } from '../services/storage/storageService';
 import { BloodType, CompatibilityResult, Gender, MBTI } from '../types';
@@ -42,7 +48,8 @@ function Avatar({ name, light }: { name: string; light?: boolean }) {
 }
 
 export default function CompatibilityScreen() {
-  const { user } = useApp();
+  const { user, today } = useApp();
+  const { owned } = usePremium();
   const [name, setName] = useState('');
   const [y, setY] = useState(''); const [m, setM] = useState(''); const [d, setD] = useState('');
   const [hh, setHh] = useState('');
@@ -113,6 +120,18 @@ export default function CompatibilityScreen() {
             );
           })}
         </View>
+
+        {(() => {
+          const item = ITEMS.compat(result.target.nickname, result.target.birthDate);
+          const rk = { key: item.key, kind: 'compat' as const, user, today, compat: result };
+          if (!owned(item.key)) return <PriceCard item={item} onUnlocked={() => { if (reportAvailable()) generateReport(rk); }} />;
+          return (
+            <>
+              <SectionHeader title="심층 궁합 리포트" caption="두 사람의 네 가지 관점을 하나로 엮은 풀이" />
+              <ReportArea rk={rk} item={item} basis={<CompatDeep u={user} r={result} today={today} />} />
+            </>
+          );
+        })()}
 
         <PrimaryButton label="다른 사람과 궁합 보기" variant="soft" onPress={() => setResult(null)} style={{ marginTop: 24 }} />
         <Disclaimer compact />

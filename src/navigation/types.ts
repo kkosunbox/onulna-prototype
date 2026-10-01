@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { AnalysisResult } from '../types';
 import { CategoryKey } from '../theme/colors';
+import { ThemeKind } from '../services/premium/catalog';
 
 export type TabParamList = {
   Home: undefined;
@@ -17,6 +18,14 @@ export type RootStackParamList = {
   AnalysisDetail: { source: AnalysisResult['source'] };
   CombinedAnalysis: undefined;
   Share: undefined;
+  PremiumHub: undefined;
+  Wallet: undefined;
+  SajuDeep: undefined;
+  Life: undefined;
+  NewYear: { year?: number } | undefined;
+  Monthly: { y: number; m: number } | undefined;
+  Theme: { kind: ThemeKind };
+  Lucky: undefined;
 };
 
 declare global {

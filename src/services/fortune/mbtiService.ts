@@ -7,7 +7,7 @@ import { AnalysisResult, KeywordTag, User } from '../../types';
 import { AXIS_TAGS, MBTI_INFO } from '../../data/mbtiData';
 import { dayNumber } from '../../utils/date';
 
-const AXES: [string, string, string][] = [
+export const AXES: [string, string, string][] = [
   ['E', 'I', '에너지 방향'],
   ['N', 'S', '정보 인식'],
   ['T', 'F', '판단 기준'],

@@ -45,6 +45,22 @@ src/
   screens/                      Onboarding, ProfileSetup, Home, Fortune, Compatibility, MyPage …
 ```
 
+## 프리미엄 콘텐츠 · 포인트 (v0.3)
+
+`onulna-preview.html` 미리보기의 유료 콘텐츠를 앱으로 옮겼다. 계산 엔진은 미리보기와 같은 결과를 낸다(같은 프로필로 대조 검증).
+
+- **포인트**: 1,000원 = 100P, 가입 축하 100P · 출석 체크 10P. 충전은 미리보기용(실제 결제 없음) — `context/PremiumContext.tsx`
+- **상품 · 가격**: `services/premium/catalog.ts` (상세 사주 300P · 평생운 500P · 신년 300P/해 · 월별 100P/월 · 테마 각 200P · 심층 궁합 150P/상대 · 길일 50P/7일 · 인생 패키지 1,100P)
+- **계산 엔진**: `services/premium/engine.ts` (십성 · 지장간 · 12운성 · 신강약 · 용신 · 신살 · 대운 · 연/월운 · 테마 · 길일), 문장 데이터 `services/premium/data.ts`
+- **화면**: `screens/premium/*` — 프리미엄 허브, 내 포인트, 상세 사주 해석, 평생운, 신년운세, 월별 상세운세, 테마 운세, 길일 찾기 + 궁합 결과의 심층 궁합
+- 모든 콘텐츠는 앞부분 무료 미리보기 → 나머지는 흐리게 잠금(`LockGate`) → 포인트로 열람
+
+### AI 종합 리포트
+열람한 콘텐츠마다 4가지 관점을 엮은 장문 리포트(8~14개 섹션)를 만든다. `services/report/reportService.ts`
+1. 백엔드에 `POST { prompt }` → `{ text }` 를 돌려주는 엔드포인트를 만든다(LLM 호출). **API 키는 앱에 넣지 않는다.**
+2. `REPORT_CONFIG.endpoint` 수정, `enabled: true`.
+3. 꺼져 있으면 "AI 종합 풀이를 쓸 수 없어요" 안내와 함께 계산 근거(상세 데이터)를 바로 펼쳐 보여준다.
+
 ## AI 연결
 
 `src/services/fortune/aiFortuneService.ts`

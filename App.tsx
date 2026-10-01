@@ -3,6 +3,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider } from './src/context/AppContext';
+import { PremiumProvider } from './src/context/PremiumContext';
 import RootNavigator from './src/navigation/RootNavigator';
 import { colors } from './src/theme/colors';
 
@@ -10,8 +11,10 @@ export default function App() {
   const app = (
     <SafeAreaProvider>
       <AppProvider>
-        <StatusBar style="dark" />
-        <RootNavigator />
+        <PremiumProvider>
+          <StatusBar style="dark" />
+          <RootNavigator />
+        </PremiumProvider>
       </AppProvider>
     </SafeAreaProvider>
   );
