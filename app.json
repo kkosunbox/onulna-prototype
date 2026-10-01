@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "오늘나",
+    "slug": "onulna",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#FBF8F2",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.onulna.app"
+    },
+    "android": {
+      "package": "com.onulna.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}
