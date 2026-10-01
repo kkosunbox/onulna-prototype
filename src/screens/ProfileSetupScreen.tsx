@@ -200,8 +200,8 @@ const s = StyleSheet.create({
   progressBar: { height: 3, backgroundColor: colors.purple, borderRadius: 2 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  mbtiCell: { width: '23.4%' },
-  interestCell: { width: '31.6%' },
+  mbtiCell: { width: '23%' },
+  interestCell: { width: '31%' },
   fieldLabel: { fontSize: 13, fontWeight: '700', color: colors.inkSub, marginBottom: 8 },
   error: { color: colors.danger, fontSize: 12, marginTop: 8 },
 });

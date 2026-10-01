@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TextInputProps, View, StyleProp, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, TextInputProps, View, StyleProp, ViewStyle } from 'react-native';
 import { colors } from '../theme/colors';
 import { radius } from '../theme/typography';
 
@@ -15,12 +15,15 @@ export default function TextField({ suffix, containerStyle, invalid, style, onFo
         placeholderTextColor={colors.inkMute}
         onFocus={e => { setFocused(true); onFocus?.(e); }}
         onBlur={e => { setFocused(false); onBlur?.(e); }}
-        style={[s.input, rest.multiline && { height: 96, paddingTop: 14, textAlignVertical: 'top' }, style]}
+        style={[s.input, Platform.OS === 'web' && webInput, rest.multiline && { height: 96, paddingTop: 14, textAlignVertical: 'top' }, style]}
       />
       {suffix ? <Text style={s.suffix}>{suffix}</Text> : null}
     </View>
   );
 }
+
+/** 웹: 브라우저 기본 포커스 외곽선 제거 + input 기본 너비(size=20)로 칸이 넘치지 않게 */
+const webInput = { outlineStyle: 'none', minWidth: 0, width: '100%' } as object;
 
 const s = StyleSheet.create({
   box: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.white, borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.line, paddingRight: 14 },

@@ -19,7 +19,7 @@ export default function LuckyStrip({ f }: { f: CombinedFortune }) {
       </View>
       <View style={s.div} />
       <View style={s.item}>
-        <Text style={[s.big, { fontSize: 15 }]}>{f.luckyTime.replace('~', ' – ')}</Text>
+        <Text style={[s.big, { fontSize: 15, letterSpacing: -0.3 }]} numberOfLines={1}>{f.luckyTime.replace('~', '–')}</Text>
         <Text style={s.label}>행운의 시간</Text>
       </View>
     </Card>

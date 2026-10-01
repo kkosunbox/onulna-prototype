@@ -24,7 +24,9 @@ function TabItem({ focused, label, icon, onPress }: { focused: boolean; label: s
     <Pressable onPress={onPress} style={s.item} accessibilityRole="tab" accessibilityState={{ selected: focused }} accessibilityLabel={label}>
       <View style={s.iconBox}>
         <Animated.View style={[s.pill, { opacity: v, transform: [{ scaleX: pillScale }] }]} />
-        <Icon name={icon} size={22} color={focused ? colors.purple : colors.inkMute} filled={focused} strokeWidth={focused ? 2 : 1.7} />
+        <View>
+          <Icon name={icon} size={22} color={focused ? colors.purple : colors.inkMute} filled={focused} strokeWidth={focused ? 2 : 1.7} />
+        </View>
       </View>
       <Text style={[s.label, focused && { color: colors.purple, fontWeight: '700' }]}>{label}</Text>
     </Pressable>
