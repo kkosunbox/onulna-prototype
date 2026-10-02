@@ -4,8 +4,8 @@
     "slug": "onulna",
     "version": "0.1.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "backgroundColor": "#FBF8F2",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F3EEE4",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.onulna.app"
@@ -16,6 +16,9 @@
     "web": {
       "bundler": "metro",
       "output": "single"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

@@ -11,6 +11,7 @@ import ScoreRing from '../components/ScoreRing';
 import ScoreBar from '../components/ScoreBar';
 import SectionHeader from '../components/SectionHeader';
 import Icon from '../components/Icon';
+import Seal from '../components/Seal';
 import Disclaimer from '../components/Disclaimer';
 import { useApp } from '../context/AppContext';
 import { usePremium } from '../context/PremiumContext';
@@ -25,13 +26,13 @@ import { BloodType, CompatibilityResult, Gender, MBTI } from '../types';
 import { MBTI_LIST } from '../data/mbtiData';
 import { isValidDate } from '../utils/date';
 import { analysisTheme, colors, gradients } from '../theme/colors';
-import { radius, shadow, txt } from '../theme/typography';
+import { fonts, radius, shadow, txt } from '../theme/typography';
 
 const BARS: { k: 'love' | 'personality' | 'conversation' | 'money'; l: string; c: string; e: string }[] = [
-  { k: 'love', l: '연애 궁합', c: colors.love, e: '❤️' },
-  { k: 'personality', l: '성격 궁합', c: colors.purpleSoft, e: '🫶' },
-  { k: 'conversation', l: '대화 궁합', c: colors.work, e: '💬' },
-  { k: 'money', l: '금전 궁합', c: colors.money, e: '💰' },
+  { k: 'love', l: '연애 궁합', c: colors.love, e: '緣' },
+  { k: 'personality', l: '성격 궁합', c: colors.purpleSoft, e: '和' },
+  { k: 'conversation', l: '대화 궁합', c: colors.work, e: '言' },
+  { k: 'money', l: '금전 궁합', c: colors.money, e: '財' },
 ];
 const POINT_SOURCE = ['saju', 'mbti', 'blood'] as const;
 
@@ -99,7 +100,7 @@ export default function CompatibilityScreen() {
           {BARS.map((b, i) => (
             <View key={b.k} style={{ gap: 8 }}>
               <View style={s.barHead}>
-                <Text style={s.barLabel}>{b.e}  {b.l}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}><Seal ch={b.e} /><Text style={s.barLabel}>{b.l}</Text></View>
                 <Text style={[s.barScore, { color: b.c }]}>{result[b.k]}</Text>
               </View>
               <ScoreBar value={result[b.k]} color={b.c} height={8} delay={300 + i * 90} />
@@ -114,7 +115,7 @@ export default function CompatibilityScreen() {
             return (
               <Card key={p.title} style={s.point}>
                 <View style={[s.pointBand, { backgroundColor: t.color }]} />
-                <Text style={[s.pointTitle, { color: t.color }]}>{p.title}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}><Seal ch={p.title.slice(0, 1)} color={t.color} /><Text style={[s.pointTitle, { color: t.color }]}>{p.title.slice(2)}</Text></View>
                 <Text style={[txt.body, { marginTop: 6 }]}>{p.text}</Text>
               </Card>
             );
@@ -182,7 +183,7 @@ export default function CompatibilityScreen() {
 
         <View>
           <Label>MBTI</Label>
-          <PressableScale onPress={() => setShowMbti(v => !v)} style={[s.select, showMbti && { borderColor: colors.purpleSoft }]} scaleTo={0.98}>
+          <PressableScale onPress={() => setShowMbti(v => !v)} style={[s.select, showMbti && { borderColor: colors.purple }]} scaleTo={0.98}>
             <Text style={[s.selectText, !mbti && { color: colors.inkMute }]}>{mbti ?? '선택하기'}</Text>
             <View style={{ transform: [{ rotate: showMbti ? '-90deg' : '90deg' }] }}><Icon name="chevronRight" size={18} color={colors.inkMute} /></View>
           </PressableScale>
@@ -214,19 +215,19 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', gap: 8 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   mbtiCell: { width: '23.8%' },
-  select: { height: 54, borderRadius: radius.md, backgroundColor: colors.white, borderWidth: 1.5, borderColor: colors.line, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  selectText: { fontSize: 17, fontWeight: '600', color: colors.ink },
+  select: { height: 52, borderRadius: radius.sm, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  selectText: { fontSize: 17, fontWeight: '500', color: colors.ink },
   error: { color: colors.danger, fontSize: 12, marginTop: 6 },
-  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.purpleSoft, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.6)' },
-  avatarText: { color: colors.white, fontWeight: '800', fontSize: 16 },
-  heroWrap: { borderRadius: radius.xl, backgroundColor: colors.purple },
+  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#4F5F8A', alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.6)' },
+  avatarText: { fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 16 },
+  heroWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   hero: { borderRadius: radius.xl, padding: 24, alignItems: 'center' },
   pair: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   pairNames: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '600', marginTop: 8 },
-  heroSummary: { color: colors.white, fontSize: 18, fontWeight: '700', letterSpacing: -0.4, textAlign: 'center' },
+  heroSummary: { fontFamily: fonts.serif, color: colors.white, fontSize: 18, fontWeight: '600', letterSpacing: -0.4, textAlign: 'center' },
   barHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   barLabel: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  barScore: { fontSize: 17, fontWeight: '800', fontVariant: ['tabular-nums'] },
+  barScore: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '600', fontVariant: ['tabular-nums'] },
   point: { paddingLeft: 24 },
   pointBand: { position: 'absolute', left: 10, top: 18, bottom: 18, width: 3, borderRadius: 2 },
   pointTitle: { fontSize: 13, fontWeight: '800' },

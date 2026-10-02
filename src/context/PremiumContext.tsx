@@ -228,13 +228,13 @@ function Toast({ msg }: { msg: string }) {
 const s = StyleSheet.create({
   modalRoot: { flex: 1, justifyContent: 'flex-end', alignItems: 'center' },
   backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(20,18,14,0.45)' },
-  sheet: { width: '100%', maxWidth: 430, backgroundColor: colors.white, borderTopLeftRadius: 26, borderTopRightRadius: 26, paddingTop: 10, paddingHorizontal: 20 },
+  sheet: { width: '100%', maxWidth: 430, backgroundColor: colors.card, borderTopLeftRadius: 18, borderTopRightRadius: 18, paddingTop: 10, paddingHorizontal: 20 },
   grab: { alignSelf: 'center', width: 40, height: 5, borderRadius: 3, backgroundColor: colors.lineStrong, marginBottom: 16 },
   center: { textAlign: 'center' },
-  sumBox: { backgroundColor: colors.cream, borderRadius: radius.md, padding: 16, marginTop: 18, marginBottom: 12, gap: 10 },
+  sumBox: { backgroundColor: colors.cream, borderRadius: radius.lg, padding: 16, marginTop: 18, marginBottom: 12, gap: 10 },
   sumRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   sumVal: { fontSize: 15, fontWeight: '700', color: colors.ink },
   hr: { height: 1, backgroundColor: colors.lineStrong },
-  toast: { position: 'absolute', alignSelf: 'center', backgroundColor: '#161A27', paddingHorizontal: 18, paddingVertical: 12, borderRadius: radius.pill, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 15, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
+  toast: { position: 'absolute', alignSelf: 'center', backgroundColor: colors.heroBg, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 10, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 15, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
   toastText: { color: colors.white, fontSize: 14, fontWeight: '600' },
 });

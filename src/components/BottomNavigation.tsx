@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import Icon, { IconName } from './Icon';
 import { colors } from '../theme/colors';
-import { shadow } from '../theme/typography';
+import { radius, shadow } from '../theme/typography';
 
 const ITEMS: Record<string, { label: string; icon: IconName }> = {
   Home: { label: '홈', icon: 'home' },
@@ -61,9 +61,9 @@ export default function BottomNavigation({ state, navigation }: BottomTabBarProp
 }
 
 const s = StyleSheet.create({
-  bar: { flexDirection: 'row', backgroundColor: colors.white, paddingTop: 8, borderTopLeftRadius: 22, borderTopRightRadius: 22 },
+  bar: { flexDirection: 'row', backgroundColor: colors.card, paddingTop: 8, borderTopLeftRadius: 22, borderTopRightRadius: 22 },
   item: { flex: 1, alignItems: 'center', gap: 3 },
   iconBox: { width: 56, height: 30, alignItems: 'center', justifyContent: 'center' },
-  pill: { position: 'absolute', width: 56, height: 30, borderRadius: 15, backgroundColor: colors.lavender },
+  pill: { position: 'absolute', width: 56, height: 30, borderRadius: radius.sm, backgroundColor: colors.lavenderSoft },
   label: { fontSize: 11, color: colors.inkMute, fontWeight: '500' },
 });

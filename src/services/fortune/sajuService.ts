@@ -93,7 +93,7 @@ export function getSajuAnalysis(user: User, date: string): AnalysisResult {
   return {
     source: 'saju',
     title: '사주',
-    emoji: '🔮',
+    emoji: '命',
     headline: text.headline,
     details: [
       { label: '나의 일간', value: `${me.ko}${ELEMENT_INFO[me.element].ko}(${me.hanja}) · ${ELEMENT_INFO[me.element].nature}` },

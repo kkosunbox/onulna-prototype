@@ -4,6 +4,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import Screen from '../components/Screen';
 import ScoreRing from '../components/ScoreRing';
 import Card from '../components/Card';
+import Seal from '../components/Seal';
 import SectionHeader from '../components/SectionHeader';
 import Stars from '../components/Stars';
 import Disclaimer from '../components/Disclaimer';
@@ -40,7 +41,7 @@ export default function CategoryDetailScreen() {
           const pos = c.v >= 0;
           return (
             <View key={c.key} style={s.row}>
-              <Text style={s.rowLabel}>{at.emoji} {at.label}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: 104 }}><Seal ch={at.emoji} color={at.color} /><Text style={[s.rowLabel, { width: undefined }]}>{at.label}</Text></View>
               <View style={s.track}>
                 <View style={s.center} />
                 <View style={[s.bar, { width: `${pct}%`, backgroundColor: pos ? at.color : colors.inkMute }, pos ? { left: '50%' } : { right: '50%' }]} />

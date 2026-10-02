@@ -42,7 +42,7 @@ export function getMbtiAnalysis(user: User, date: string): AnalysisResult {
   return {
     source: 'mbti',
     title: 'MBTI',
-    emoji: '🧠',
+    emoji: '性',
     headline,
     details: [
       { label: '나의 유형', value: `${user.mbti} · ${info.nickname}` },

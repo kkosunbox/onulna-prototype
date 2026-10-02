@@ -3,6 +3,7 @@ import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, gradients } from '../theme/colors';
 import { useReducedMotion } from '../utils/motion';
+import { fonts } from '../theme/typography';
 
 interface Props { title: string; messages?: string[]; variant?: 'night' | 'light' }
 
@@ -43,14 +44,14 @@ export default function MoonLoader({ title, messages = [], variant = 'night' }: 
   const glowScale = breathe.interpolate({ inputRange: [0, 1], outputRange: [1, 1.18] });
   const glowOpacity = breathe.interpolate({ inputRange: [0, 1], outputRange: [0.18, 0.34] });
   const rotate = orbit.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] });
-  const bgCut = dark ? '#261954' : colors.cream;
+  const bgCut = dark ? '#161A27' : colors.cream;
 
   const body = (
     <View style={s.center}>
       <View style={s.stage}>
         <Animated.View style={[s.glow, { backgroundColor: colors.moon, opacity: glowOpacity, transform: [{ scale: glowScale }] }]} />
         <Animated.View style={[s.orbit, { borderColor: dark ? 'rgba(255,255,255,0.12)' : colors.line, transform: [{ rotate }] }]}>
-          {['#8E7FD0', '#E0A458', '#5BB8B4', '#E07A88'].map((c, k) => (
+          {['#8D97B5', '#C29A55', '#6F9C97', '#B5605F'].map((c, k) => (
             <View key={c} style={[s.orb, { backgroundColor: c }, [{ top: -4, left: 76 }, { right: -4, top: 76 }, { bottom: -4, left: 76 }, { left: -4, top: 76 }][k]]} />
           ))}
         </Animated.View>
@@ -80,6 +81,6 @@ const s = StyleSheet.create({
   orb: { position: 'absolute', width: 8, height: 8, borderRadius: 4 },
   moon: { width: 72, height: 72, borderRadius: 36, backgroundColor: colors.moon, overflow: 'hidden' },
   cut: { position: 'absolute', width: 72, height: 72, borderRadius: 36, left: 24, top: -10 },
-  title: { fontSize: 19, lineHeight: 28, fontWeight: '700', letterSpacing: -0.4, textAlign: 'center', marginTop: 36 },
+  title: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 28, fontWeight: '600', letterSpacing: -0.4, textAlign: 'center', marginTop: 36 },
   msg: { fontSize: 13, marginTop: 10, textAlign: 'center' },
 });

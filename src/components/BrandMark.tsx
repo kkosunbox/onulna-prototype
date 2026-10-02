@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
+import { fonts } from '../theme/typography';
 
 /** 초승달 심볼 + 워드마크. 앱 전체에서 같은 모양으로 반복 사용 */
 export function Crescent({ size = 18, color = colors.purple, cut = colors.cream }: { size?: number; color?: string; cut?: string }) {
@@ -14,13 +15,13 @@ export function Crescent({ size = 18, color = colors.purple, cut = colors.cream 
 export default function BrandMark({ light = false }: { light?: boolean }) {
   return (
     <View style={s.row} accessibilityLabel="오늘나">
-      <Crescent color={light ? colors.moon : colors.purple} cut={light ? colors.purpleDeep : colors.cream} />
+      <Crescent size={20} color={light ? colors.moon : colors.purple} cut={light ? colors.heroBg : colors.cream} />
       <Text style={[s.word, light && { color: colors.white }]}>오늘나</Text>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 7 },
-  word: { fontSize: 17, fontWeight: '800', letterSpacing: -0.6, color: colors.purple },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  word: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', letterSpacing: -0.3, color: colors.purple },
 });

@@ -26,8 +26,8 @@ const STEPS = [
 ] as const;
 
 const INTERESTS: { k: Interest; l: string }[] = [
-  { k: 'love', l: '❤️ 연애' }, { k: 'money', l: '💰 재물' }, { k: 'work', l: '💼 일' },
-  { k: 'relationship', l: '🤝 관계' }, { k: 'health', l: '🌿 건강' }, { k: 'study', l: '📖 공부' },
+  { k: 'love', l: '緣 연애' }, { k: 'money', l: '財 재물' }, { k: 'work', l: '業 일' },
+  { k: 'relationship', l: '人 관계' }, { k: 'health', l: '康 건강' }, { k: 'study', l: '學 공부' },
 ];
 
 const LOADING_MSGS = ['사주 원국을 세우는 중', '태어난 요일의 행성을 찾는 중', 'MBTI 성향을 읽는 중', '네 가지 결과를 엮는 중'];
@@ -197,7 +197,7 @@ const s = StyleSheet.create({
   count: { fontSize: 13, color: colors.inkMute, fontWeight: '600', fontVariant: ['tabular-nums'] },
   skip: { fontSize: 14, color: colors.inkMute, fontWeight: '600', paddingHorizontal: 8 },
   progress: { height: 3, backgroundColor: colors.line, marginHorizontal: 24, borderRadius: 2, overflow: 'hidden' },
-  progressBar: { height: 3, backgroundColor: colors.purple, borderRadius: 2 },
+  progressBar: { height: 3, backgroundColor: colors.navy, borderRadius: 2 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mbtiCell: { width: '23%' },

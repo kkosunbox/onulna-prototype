@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Screen from '../components/Screen';
+import Seal from '../components/Seal';
 import KeywordChip from '../components/KeywordChip';
 import ActionTabs from '../components/ActionTabs';
 import SectionHeader from '../components/SectionHeader';
@@ -39,7 +40,7 @@ export default function CombinedAnalysisScreen() {
             <View key={a.source} style={[s.item, i > 0 && s.border]}>
               <View style={[s.dot, { backgroundColor: t.color }]} />
               <View style={{ flex: 1 }}>
-                <Text style={[s.itemTitle, { color: t.color }]}>{t.emoji} {t.label}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}><Seal ch={t.emoji} color={t.color} /><Text style={[s.itemTitle, { color: t.color }]}>{t.label}</Text></View>
                 <Text style={s.itemHeadline}>{a.headline}</Text>
                 <View style={s.tags}>
                   {a.tags.map(tag => {
@@ -79,7 +80,7 @@ const s = StyleSheet.create({
   commonBox: { marginTop: 20, backgroundColor: colors.lavenderSoft, borderRadius: radius.lg, padding: 18, borderWidth: 1, borderColor: colors.lavender },
   commonLabel: { fontSize: 12, fontWeight: '700', color: colors.purpleSoft },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10 },
-  list: { marginTop: 12, backgroundColor: colors.white, borderRadius: radius.lg, paddingHorizontal: 18, ...shadow.card },
+  list: { marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, paddingHorizontal: 18, ...shadow.card },
   item: { flexDirection: 'row', gap: 12, paddingVertical: 16 },
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   dot: { width: 8, height: 8, borderRadius: 4, marginTop: 5 },
@@ -88,7 +89,7 @@ const s = StyleSheet.create({
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
   tag: { backgroundColor: colors.cream, borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
   tagText: { fontSize: 11, color: colors.inkMute, fontWeight: '600' },
-  storyWrap: { marginTop: 24, borderRadius: radius.xl, backgroundColor: colors.purple },
+  storyWrap: { marginTop: 24, borderRadius: radius.xl, backgroundColor: colors.heroBg },
   story: { borderRadius: radius.xl, padding: 22 },
   storyHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   storyLabel: { color: colors.moon, fontSize: 13, fontWeight: '700' },

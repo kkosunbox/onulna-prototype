@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import Screen from '../../components/Screen';
 import Card from '../../components/Card';
 import Disclaimer from '../../components/Disclaimer';
@@ -16,7 +17,7 @@ import { THAI_DAYS } from '../../data/thaiData';
 import { MBTI_INFO } from '../../data/mbtiData';
 import { BLOOD_INFO } from '../../data/bloodData';
 import { analysisTheme, colors } from '../../theme/colors';
-import { txt } from '../../theme/typography';
+import { fonts, txt } from '../../theme/typography';
 import { Pillar } from '../../services/fortune/sajuService';
 
 const EK = (e: keyof typeof ELEMENT_INFO) => ELEMENT_INFO[e].ko;
@@ -111,7 +112,7 @@ export default function SajuDeepScreen() {
 
       <SubHead title="02 · 신강·신약" caption="나를 돕는 기운과 빼는 기운의 균형" />
       <Card>
-        <View style={s.gauge}><View style={[s.gaugeDot, { left: `${Math.round(F.ratio * 100)}%` }]} /></View>
+        <LinearGradient colors={['#9FB0CF', '#D8CFBF', '#D3A08E']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={s.gauge}><View style={[s.gaugeDot, { left: `${Math.round(F.ratio * 100)}%` }]} /></LinearGradient>
         <View style={[s.between, { marginTop: 6 }]}><Text style={txt.caption}>신약</Text><Text style={txt.caption}>중화</Text><Text style={txt.caption}>신강</Text></View>
         <Text style={[txt.h3, { marginTop: 12 }]}>{F.strength} ({Math.round(F.ratio * 100)}%)</Text>
         <Para>{F.strength === '신강' ? '나를 돕는 기운이 강한 사주예요. 에너지가 넘치고 주관이 뚜렷해 스스로 길을 개척하는 힘이 있어요. 넘치는 힘을 밖으로 쓰는 일(표현·사업·책임 있는 자리)에서 운이 열려요.' : F.strength === '신약' ? '나를 빼는 기운이 상대적으로 강한 사주예요. 섬세하고 주변을 잘 살피며, 좋은 사람과 환경을 만날 때 크게 성장해요. 배움과 협력, 충분한 휴식이 운을 키워줘요.' : '돕는 기운과 빼는 기운이 고르게 맞선 중화 사주예요. 어느 쪽으로도 크게 치우치지 않아 상황 적응력이 뛰어나요.'}</Para>
@@ -122,7 +123,7 @@ export default function SajuDeepScreen() {
         {([['용신', '가장 필요한 기운', F.yong], ['희신', '용신을 돕는 기운', F.hee], ['기신', '조심할 기운', F.gi]] as const).map(([l, d, e]) => (
           <Card key={l} style={s.cell3}>
             <Text style={txt.caption}>{l}</Text>
-            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ color: colors.white, fontWeight: '700', fontSize: 18 }}>{ELEMENT_INFO[e].hanja}</Text></View>
+            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 18 }}>{ELEMENT_INFO[e].hanja}</Text></View>
             <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{elName(e)}</Text>
             <Text style={[txt.caption, { marginTop: 2, textAlign: 'center' }]}>{d}</Text>
           </Card>
@@ -152,7 +153,7 @@ export default function SajuDeepScreen() {
       <Card>
         <Text style={[s.label, { color: colors.success }]}>강점</Text>
         {[...per.str, ...F.topTG.slice(0, 2).map(x => TG_INFO[x.i].trait.split('.')[0] + '.')].map((t, i) => <Bullet key={i} color={colors.success}>{t}</Bullet>)}
-        <Text style={[s.label, { color: '#C27A2C', marginTop: 14 }]}>보완하면 좋은 점</Text>
+        <Text style={[s.label, { color: colors.thai, marginTop: 14 }]}>보완하면 좋은 점</Text>
         {[per.watch, ...F.topTG.slice(0, 2).map(x => TG_INFO[x.i].care)].map((t, i) => <Bullet key={i} color="#C27A2C">{t}</Bullet>)}
       </Card>
       <View style={{ gap: 10, marginTop: 12 }}>
@@ -233,7 +234,7 @@ export default function SajuDeepScreen() {
                   <View style={s.axmid} />
                   {(['saju', 'thai', 'mbti', 'blood'] as SrcKey[]).map((k, ki) => (
                     <View key={k} style={[s.axdot, { left: `${50 + a.v[k] * 34 + (ki - 1.5) * 7}%`, borderColor: analysisTheme[k].color }]} accessibilityLabel={analysisTheme[k].label}>
-                      <Text style={{ fontSize: 11 }}>{analysisTheme[k].emoji}</Text>
+                      <Text style={{ fontFamily: fonts.serif, fontSize: 11, fontWeight: '600', color: analysisTheme[k].color }}>{analysisTheme[k].emoji}</Text>
                     </View>
                   ))}
                 </View>
@@ -294,14 +295,14 @@ const s = StyleSheet.create({
   hid: { fontSize: 10, color: colors.inkMute, textAlign: 'center', letterSpacing: 1 },
   st12: { fontSize: 10, fontWeight: '700', color: colors.purpleSoft, textAlign: 'center' },
   pc: { borderRadius: 12, alignItems: 'center', justifyContent: 'center', paddingVertical: 10, minHeight: 68 },
-  pcBig: { fontSize: 24, fontWeight: '700', lineHeight: 28, color: colors.white },
+  pcBig: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '600', lineHeight: 28, color: colors.white },
   pcSmall: { fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.9)', marginTop: 2 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', columnGap: 12, rowGap: 4, marginTop: 10 },
   legendT: { fontSize: 10, color: colors.inkMute },
   track: { height: 6, borderRadius: 3, backgroundColor: colors.line, overflow: 'hidden', marginTop: 6 },
   fill: { height: 6, borderRadius: 3, backgroundColor: colors.purpleSoft },
-  gauge: { height: 10, borderRadius: 5, backgroundColor: '#D8CFE8', marginTop: 6 },
-  gaugeDot: { position: 'absolute', top: -5, width: 20, height: 20, marginLeft: -10, borderRadius: 10, backgroundColor: colors.white, borderWidth: 3, borderColor: colors.purple },
+  gauge: { height: 10, borderRadius: 5, marginTop: 6 },
+  gaugeDot: { position: 'absolute', top: -5, width: 20, height: 20, marginLeft: -10, borderRadius: 10, backgroundColor: colors.card, borderWidth: 3, borderColor: colors.navy },
   grid3: { flexDirection: 'row', gap: 8 },
   cell3: { flex: 1, paddingVertical: 14, paddingHorizontal: 8, alignItems: 'center' },
   eld: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginVertical: 8 },
@@ -310,7 +311,7 @@ const s = StyleSheet.create({
   axrow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 10 },
   axline: { flex: 1, height: 30, borderRadius: 15, backgroundColor: colors.cream },
   axmid: { position: 'absolute', left: '50%', top: 6, bottom: 6, width: 1, backgroundColor: colors.lineStrong },
-  axdot: { position: 'absolute', top: 3, width: 24, height: 24, marginLeft: -12, borderRadius: 12, backgroundColor: colors.white, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
+  axdot: { position: 'absolute', top: 3, width: 24, height: 24, marginLeft: -12, borderRadius: 12, backgroundColor: colors.card, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
   topLine: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
 });
 

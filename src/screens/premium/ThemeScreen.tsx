@@ -220,7 +220,7 @@ export default function ThemeScreen() {
         <Card>
           <Text style={{ fontSize: 12, fontWeight: '700', color: colors.success }}>강점</Text>
           {F.topTG.slice(0, 3).map(x => <Bullet key={x.i} color={colors.success}>{TG_INFO[x.i].talent}에 재능</Bullet>)}
-          <Text style={{ fontSize: 12, fontWeight: '700', color: '#C27A2C', marginTop: 12 }}>보완점</Text>
+          <Text style={{ fontSize: 12, fontWeight: '700', color: colors.thai, marginTop: 12 }}>보완점</Text>
           {F.topTG.slice(0, 2).map(x => <Bullet key={x.i} color="#C27A2C">{TG_INFO[x.i].care}</Bullet>)}
         </Card>
         <SubHead title="06 · 4가지 관점으로 본 적성" />

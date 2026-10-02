@@ -16,7 +16,7 @@ import {
   reportAvailable, stopReport, subscribeReports,
 } from '../../services/report/reportService';
 import { colors } from '../../theme/colors';
-import { radius, shadow, txt } from '../../theme/typography';
+import { fonts, radius, shadow, txt } from '../../theme/typography';
 
 function useReportState(key: string) {
   const [, force] = useReducer(x => x + 1, 0);
@@ -51,9 +51,9 @@ export function RepTOC({ O, owned }: { O: Outline; owned: boolean }) {
 
 function Num({ n }: { n: number }) {
   return (
-    <LinearGradient colors={['#5A46A8', colors.purple]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={s.rnum}>
-      <Text style={{ color: colors.white, fontSize: 13, fontWeight: '800' }}>{String(n).padStart(2, '0')}</Text>
-    </LinearGradient>
+    <View style={s.rnum}>
+      <Text style={{ fontFamily: fonts.serif, color: colors.white, fontSize: 13, fontWeight: '600' }}>{String(n).padStart(2, '0')}</Text>
+    </View>
   );
 }
 
@@ -102,7 +102,7 @@ function RSection({ sec, n, last }: { sec: ReportSection; n: number; last: boole
               <View key={i} style={s.rsub}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
                   <Inline text={m ? m[1] : x.h} style={{ fontSize: 15, fontWeight: '700', color: colors.ink, flex: 1 }} boldColor={colors.ink} />
-                  {m ? <Text style={{ fontSize: 15, fontWeight: '800', color: scoreColor(+m[2]) }}>{m[2]}</Text> : null}
+                  {m ? <Text style={{ fontFamily: fonts.serif, fontSize: 15, fontWeight: '600', color: scoreColor(+m[2]) }}>{m[2]}</Text> : null}
                 </View>
                 {x.ps.map((p, k) => <Inline key={k} text={p} style={s.rsubP} />)}
               </View>
@@ -151,7 +151,7 @@ function ReportBody({ rk }: { rk: ReportCtx }) {
     }
     return (
       <View style={s.start}>
-        <LinearGradient colors={['#5A46A8', colors.purple]} style={s.startIco}><Icon name="sparkle" size={26} color={colors.white} filled strokeWidth={2} /></LinearGradient>
+        <View style={s.startIco}><Icon name="sparkle" size={26} color={colors.white} filled strokeWidth={2} /></View>
         <Text style={[txt.h2, { textAlign: 'center', marginTop: 14 }]}>{rk.user.nickname}님만의 {O.title}</Text>
         <Text style={[txt.body, { textAlign: 'center', marginTop: 6 }]}>네 가지 관점을 하나로 엮어 {total}개 섹션의 풀이를 써드려요.{'\n'}처음 한 번만 1~3분 정도 걸리고, 이후엔 바로 열려요.</Text>
         <PrimaryButton label="종합 풀이 작성하기" onPress={() => start()} style={{ marginTop: 18, alignSelf: 'stretch' }} icon={<Icon name="sparkle" size={18} color={colors.white} filled strokeWidth={2} />} />
@@ -239,31 +239,31 @@ export default function ReportArea({ rk, item, basis }: { rk: ReportCtx; item: I
 
 const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  toc: { marginTop: 16, backgroundColor: colors.white, borderRadius: radius.lg, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, paddingVertical: 18, paddingHorizontal: 20, ...shadow.card },
+  toc: { marginTop: 16, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 18, paddingHorizontal: 20, ...shadow.card },
   tocHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   tocRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 9, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.line },
   tocNum: { width: 22, fontSize: 11, fontWeight: '800', color: colors.purpleSoft, fontVariant: ['tabular-nums'] },
   tocFoot: { fontSize: 12, color: colors.inkMute, marginTop: 12, lineHeight: 18 },
-  paper: { marginTop: 16, backgroundColor: colors.white, borderRadius: 24, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, paddingVertical: 4, paddingHorizontal: 22, ...shadow.card },
+  paper: { marginTop: 16, backgroundColor: colors.card, borderRadius: 16, borderWidth: 1, borderColor: colors.line, paddingVertical: 4, paddingHorizontal: 22, ...shadow.card },
   rsec: { paddingVertical: 28 },
   rsecLine: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   rhead: { flexDirection: 'row', gap: 14, alignItems: 'flex-start', marginBottom: 16 },
-  rnum: { width: 34, height: 34, borderRadius: 11, alignItems: 'center', justifyContent: 'center' },
-  rtitle: { fontSize: 19, lineHeight: 26, fontWeight: '800', letterSpacing: -0.5, color: colors.ink },
-  rlead: { fontSize: 14, lineHeight: 20, color: colors.purpleSoft, fontWeight: '600', marginTop: 3 },
-  rp: { fontSize: 15.5, lineHeight: 28, color: colors.ink, letterSpacing: -0.2, marginTop: 14 },
+  rnum: { width: 34, height: 34, borderRadius: 8, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  rtitle: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 26, fontWeight: '600', letterSpacing: -0.5, color: colors.ink },
+  rlead: { fontSize: 14, lineHeight: 20, color: colors.seal, fontWeight: '500', marginTop: 3 },
+  rp: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 29, color: colors.ink, letterSpacing: -0.3, marginTop: 14 },
   rsub: { backgroundColor: colors.cream, borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: 16 },
-  rsubP: { fontSize: 14.5, lineHeight: 24, color: colors.inkSub, marginTop: 6 },
-  rpts: { marginTop: 18, backgroundColor: colors.lavenderSoft, borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: 16 },
+  rsubP: { fontFamily: fonts.serif, fontSize: 15, lineHeight: 26, color: colors.inkSub, marginTop: 6 },
+  rpts: { marginTop: 18, backgroundColor: colors.lavenderSoft, borderLeftWidth: 3, borderLeftColor: colors.seal, borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: 12, borderBottomRightRadius: 12, paddingVertical: 14, paddingHorizontal: 16 },
   rptsHead: { fontSize: 11, fontWeight: '800', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
   rpt: { flexDirection: 'row', gap: 8, alignItems: 'flex-start', paddingVertical: 4 },
   ghost: { height: 12, borderRadius: 6, backgroundColor: colors.line, marginTop: 12 },
-  note: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', marginTop: 12, backgroundColor: colors.white, borderRadius: radius.lg, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, paddingVertical: 16, paddingHorizontal: 18 },
-  start: { marginTop: 16, backgroundColor: colors.white, borderRadius: 24, borderWidth: 1.5, borderColor: colors.lavender, paddingVertical: 28, paddingHorizontal: 22, alignItems: 'center' },
-  startIco: { width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center' },
-  prog: { marginTop: 12, backgroundColor: colors.white, borderRadius: radius.lg, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, paddingVertical: 16, paddingHorizontal: 18 },
+  note: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 16, paddingHorizontal: 18 },
+  start: { marginTop: 16, backgroundColor: colors.card, borderRadius: 16, borderWidth: 1.5, borderColor: colors.lavender, paddingVertical: 28, paddingHorizontal: 22, alignItems: 'center' },
+  startIco: { width: 60, height: 60, borderRadius: 14, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  prog: { marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 16, paddingHorizontal: 18 },
   bar: { height: 6, borderRadius: 3, backgroundColor: colors.line, overflow: 'hidden', marginTop: 10 },
-  barFill: { height: '100%', backgroundColor: colors.purple, borderRadius: 3 },
+  barFill: { height: '100%', backgroundColor: colors.navy, borderRadius: 3 },
   link: { fontSize: 13, fontWeight: '600', color: colors.purpleSoft },
-  summary: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 16, paddingHorizontal: 18, backgroundColor: colors.white, borderRadius: radius.md, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong },
+  summary: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 16, paddingHorizontal: 18, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line },
 });

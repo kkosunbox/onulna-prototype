@@ -8,7 +8,7 @@ import Disclaimer from '../components/Disclaimer';
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/types';
 import { analysisTheme, colors } from '../theme/colors';
-import { radius, txt } from '../theme/typography';
+import { fonts, radius, txt } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
 import { LockCard } from '../components/premium/Kit';
 import { ITEMS } from '../services/premium/catalog';
@@ -31,13 +31,13 @@ export default function AnalysisDetailScreen() {
   return (
     <Screen title={t.label} back>
       <View style={[s.hero, { backgroundColor: t.bg }]}>
-        <View style={s.emoji}><Text style={{ fontSize: 30 }}>{t.emoji}</Text></View>
+        <View style={s.emoji}><Text style={{ fontFamily: fonts.serif, fontSize: 28, fontWeight: '600', color: t.color }}>{t.emoji}</Text></View>
         <Text style={[s.sub, { color: t.color }]}>{t.sub}</Text>
         <Text style={[txt.h2, { textAlign: 'center', marginTop: 6 }]}>{a.headline}</Text>
         <View style={s.tags}>
           {a.tags.map(tag => (
-            <View key={tag} style={[s.tag, { backgroundColor: colors.white }]}>
-              <Text style={[s.tagText, { color: t.color }]}>{KEYWORDS[tag].emoji} {KEYWORDS[tag].label}</Text>
+            <View key={tag} style={[s.tag, { backgroundColor: colors.card }]}>
+              <Text style={[s.tagText, { color: t.color }]}>{KEYWORDS[tag].label}</Text>
             </View>
           ))}
         </View>
@@ -68,10 +68,10 @@ export default function AnalysisDetailScreen() {
 
 const s = StyleSheet.create({
   hero: { borderRadius: radius.xl, padding: 24, alignItems: 'center', marginTop: 4 },
-  emoji: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
+  emoji: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center' },
   sub: { fontSize: 12, fontWeight: '700', marginTop: 12 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 14 },
-  tag: { borderRadius: radius.pill, paddingHorizontal: 11, paddingVertical: 6 },
+  tag: { borderRadius: radius.xs, paddingHorizontal: 11, paddingVertical: 6 },
   tagText: { fontSize: 12, fontWeight: '700' },
   row: { paddingVertical: 14, gap: 4 },
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },

@@ -20,7 +20,7 @@ import { BRANCHES, STEMS } from '../../data/sajuData';
 import { relation } from '../../services/fortune/sajuService';
 import { seededRandom } from '../../utils/seed';
 import { colors, gradients } from '../../theme/colors';
-import { radius, txt } from '../../theme/typography';
+import { fonts, radius, txt } from '../../theme/typography';
 
 function LifeChart({ stages, dae, now }: { stages: LifeStage[]; dae: { list: Daeun[] }; now: number }) {
   const pts = lifeChartPoints(stages, dae);
@@ -51,8 +51,8 @@ function LifeChart({ stages, dae, now }: { stages: LifeStage[]; dae: { list: Dae
         <Path d={path} fill="none" stroke={colors.purpleSoft} strokeWidth={2.5} strokeLinecap="round" />
         {now >= 5 && now <= 85 ? (
           <>
-            <Line x1={X(now)} x2={X(now)} y1={8} y2={H - 24} stroke={colors.love} strokeWidth={1.5} strokeDasharray="3 3" />
-            <Rect x={X(now) - 15} y={H - 22} width={30} height={15} rx={7.5} fill={colors.love} />
+            <Line x1={X(now)} x2={X(now)} y1={8} y2={H - 24} stroke={colors.seal} strokeWidth={1.5} strokeDasharray="3 3" />
+            <Rect x={X(now) - 15} y={H - 22} width={30} height={15} rx={4} fill={colors.seal} />
             <SvgText x={X(now)} y={H - 11} textAnchor="middle" fill="#fff" fontSize={9} fontWeight="700">지금</SvgText>
           </>
         ) : null}
@@ -99,7 +99,7 @@ export default function LifeScreen() {
           return (
             <Card key={x.key} style={{ padding: 0, overflow: 'hidden' }}>
               {cur
-                ? <LinearGradient colors={gradients.night} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={s.stageHead}>{head}</LinearGradient>
+                ? <View style={[s.stageHead, { backgroundColor: colors.heroBg }]}>{head}</View>
                 : <View style={[s.stageHead, { backgroundColor: colors.lavenderSoft }]}>{head}</View>}
               <View style={{ paddingVertical: 16, paddingHorizontal: 18 }}>
                 <Para mt={0}>{x.desc}</Para>
@@ -134,7 +134,7 @@ export default function LifeScreen() {
       </View>
       {care.map(d => (
         <Card key={d.age} style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 12, fontWeight: '700', color: '#C27A2C' }}>愼 숨 고르기 구간 · {d.age}~{d.age + 9}세</Text>
+          <Text style={{ fontSize: 12, fontWeight: '700', color: colors.thai }}>愼 숨 고르기 구간 · {d.age}~{d.age + 9}세</Text>
           <Para>{pText(d.p)} 대운은 상대적으로 흐름이 잔잔해요. {STAGE_FIELD[d.rel].health} 큰 확장보다 내실을 다지면 다음 대운에서 크게 도약해요.</Para>
         </Card>
       ))}
@@ -148,7 +148,7 @@ export default function LifeScreen() {
             <Card key={d.age} style={cur ? { borderWidth: 1.5, borderColor: colors.purpleSoft } : null}>
               <View style={s.between}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1 }}>
-                  <View style={s.dp}><Text style={{ fontSize: 16, color: colors.purple, fontWeight: '700' }}>{STEMS[d.p.stem].hanja}{BRANCHES[d.p.branch].hanja}</Text></View>
+                  <View style={s.dp}><Text style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.purple, fontWeight: '600' }}>{STEMS[d.p.stem].hanja}{BRANCHES[d.p.branch].hanja}</Text></View>
                   <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                       <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
@@ -180,7 +180,7 @@ export default function LifeScreen() {
       <Card style={{ paddingVertical: 2, paddingHorizontal: 16 }}>
         {seun.map((x, i) => (
           <PressableScale key={x.y} disabled={i >= 2} onPress={() => nav.navigate('NewYear', { year: x.y })} style={[s.drow, i ? s.topLine : null]} scaleTo={0.98}>
-            <View style={s.dd}><Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{x.age}세</Text></View>
+            <View style={s.dd}><Text style={{ fontFamily: fonts.serif, fontSize: 14, fontWeight: '600', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{x.age}세</Text></View>
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 14, fontWeight: '600', color: colors.ink }}>{PERIOD_TEXT.year[x.rel][0]}</Text>
               <Text style={txt.caption}>{pText(x.yp)} · {TG[x.tg]} · {BRANCHES[x.yp.branch].animal}의 해</Text>
@@ -224,7 +224,7 @@ const s = StyleSheet.create({
   grid2: { flexDirection: 'row', gap: 12 },
   goldCard: { flex: 1, padding: 16, backgroundColor: colors.moneyBg, borderRadius: radius.lg },
   dp: { width: 44, height: 44, borderRadius: 12, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
-  nowTag: { backgroundColor: colors.love, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 999 },
+  nowTag: { backgroundColor: colors.seal, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 4 },
   nowText: { color: colors.white, fontSize: 9, fontWeight: '700' },
   drow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11 },
   dd: { width: 40, alignItems: 'center' },

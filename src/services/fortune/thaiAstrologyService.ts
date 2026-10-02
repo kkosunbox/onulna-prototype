@@ -47,7 +47,7 @@ export function getThaiAnalysis(user: User, date: string): AnalysisResult {
   return {
     source: 'thai',
     title: '태국 점성술',
-    emoji: '🌙',
+    emoji: '星',
     headline,
     details: [
       { label: '태어난 요일', value: `${me.label} · 수호 행성 ${me.planetKo}(${me.planet})` },

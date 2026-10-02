@@ -8,7 +8,7 @@ import { usePremium } from '../../context/PremiumContext';
 import { PRICE_TABLE, fmtP } from '../../services/premium/catalog';
 import { PACKS } from '../../services/premium/data';
 import { colors } from '../../theme/colors';
-import { radius, txt } from '../../theme/typography';
+import { fonts, radius, txt } from '../../theme/typography';
 
 export default function WalletScreen() {
   const { points, history, attendedToday: att, ownedCount, attend, openCharge } = usePremium();
@@ -76,11 +76,11 @@ export default function WalletScreen() {
 
 const s = StyleSheet.create({
   attend: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 12 },
-  pack: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, paddingHorizontal: 18, backgroundColor: colors.white, borderWidth: 1.5, borderColor: colors.line, borderRadius: radius.md },
-  bonus: { backgroundColor: '#F2E8D2', paddingHorizontal: 7, paddingVertical: 3, borderRadius: radius.pill },
-  bonusText: { fontSize: 11, fontWeight: '800', color: '#7E5C1A' },
-  won: { fontSize: 15, fontWeight: '700', color: colors.inkSub },
-  bestTag: { position: 'absolute', top: -9, right: 16, backgroundColor: colors.love, paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.pill },
+  pack: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, paddingHorizontal: 18, backgroundColor: colors.card, borderWidth: 1.5, borderColor: colors.line, borderRadius: radius.lg },
+  bonus: { backgroundColor: colors.badgeBg, paddingHorizontal: 7, paddingVertical: 3, borderRadius: radius.xs },
+  bonusText: { fontSize: 11, fontWeight: '800', color: colors.badge },
+  won: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '600', color: colors.inkSub },
+  bestTag: { position: 'absolute', top: -9, right: 16, backgroundColor: colors.seal, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
   bestText: { color: colors.white, fontSize: 10, fontWeight: '800' },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, gap: 8 },
   line: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },

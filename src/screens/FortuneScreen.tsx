@@ -35,7 +35,7 @@ function FlowBar({ label, score, best, index }: { label: string; score: number; 
   return (
     <View style={s.col}>
       <Text style={[s.colScore, best && { color: colors.purple }]}>{score}</Text>
-      <Animated.View style={[s.colBar, { height: h, backgroundColor: best ? colors.purple : colors.lavender }]} />
+      <Animated.View style={[s.colBar, { height: h, backgroundColor: best ? colors.navy : colors.lavender }]} />
       <Text style={[s.colLabel, best && { color: colors.purple, fontWeight: '700' }]}>{label}</Text>
     </View>
   );

@@ -1,19 +1,19 @@
 import { KeywordTag } from '../types';
 
-/** 모든 분석 모듈이 공유하는 키워드 어휘. 공통 키워드 추출의 기준이 된다. */
+/** 모든 분석 모듈이 공유하는 키워드 어휘. 공통 키워드 추출의 기준이 된다. emoji 자리는 한자 도장. */
 export const KEYWORDS: Record<KeywordTag, { label: string; emoji: string }> = {
-  newMeeting: { label: '새로운 만남', emoji: '✨' },
-  change: { label: '변화', emoji: '🚶' },
-  opportunity: { label: '기회', emoji: '🍀' },
-  money: { label: '금전 흐름', emoji: '💰' },
-  rest: { label: '재충전', emoji: '🌙' },
-  focus: { label: '집중', emoji: '🎯' },
-  expression: { label: '표현', emoji: '💬' },
-  caution: { label: '신중함', emoji: '🧭' },
-  harmony: { label: '조화', emoji: '🫶' },
-  challenge: { label: '도전', emoji: '🔥' },
-  intuition: { label: '직감', emoji: '🔮' },
-  learning: { label: '배움', emoji: '📖' },
+  newMeeting: { label: '새로운 만남', emoji: '新' },
+  change: { label: '변화', emoji: '變' },
+  opportunity: { label: '기회', emoji: '機' },
+  money: { label: '금전 흐름', emoji: '財' },
+  rest: { label: '재충전', emoji: '休' },
+  focus: { label: '집중', emoji: '集' },
+  expression: { label: '표현', emoji: '言' },
+  caution: { label: '신중함', emoji: '愼' },
+  harmony: { label: '조화', emoji: '和' },
+  challenge: { label: '도전', emoji: '挑' },
+  intuition: { label: '직감', emoji: '感' },
+  learning: { label: '배움', emoji: '學' },
 };
 
 export const kw = (t: KeywordTag) => `${KEYWORDS[t].emoji} ${KEYWORDS[t].label}`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
+import { colors } from '../theme/colors';
 
 export type IconName = 'home' | 'sparkle' | 'heart' | 'user' | 'share' | 'chevronRight' | 'chevronLeft' | 'bell' | 'crown' | 'refresh' | 'check' | 'close' | 'clock' | 'palette';
 
@@ -23,7 +24,7 @@ const PATHS: Record<IconName, string> = {
 interface Props { name: IconName; size?: number; color?: string; filled?: boolean; strokeWidth?: number }
 
 /** 이모지·유니코드 기호 대신 쓰는 일관된 선형 아이콘 세트 */
-export default function Icon({ name, size = 22, color = '#1C1530', filled = false, strokeWidth = 1.8 }: Props) {
+export default function Icon({ name, size = 22, color = colors.ink, filled = false, strokeWidth = 1.8 }: Props) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       {name === 'user' && <Circle cx={12} cy={8.2} r={3.6} stroke={color} strokeWidth={strokeWidth} fill={filled ? color : 'none'} fillOpacity={0.18} />}

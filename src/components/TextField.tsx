@@ -26,9 +26,9 @@ export default function TextField({ suffix, containerStyle, invalid, style, onFo
 const webInput = { outlineStyle: 'none', minWidth: 0, width: '100%' } as object;
 
 const s = StyleSheet.create({
-  box: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.white, borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.line, paddingRight: 14 },
-  focus: { borderColor: colors.purpleSoft, backgroundColor: '#FDFCFF' },
+  box: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.sm, borderWidth: 1, borderColor: colors.lineStrong, paddingRight: 14 },
+  focus: { borderColor: colors.purple },
   invalid: { borderColor: colors.danger },
-  input: { flex: 1, minHeight: 54, paddingHorizontal: 16, fontSize: 17, fontWeight: '600', color: colors.ink },
-  suffix: { fontSize: 15, fontWeight: '600', color: colors.inkMute },
+  input: { flex: 1, minHeight: 52, paddingHorizontal: 14, fontSize: 17, fontWeight: '500', color: colors.ink, fontVariant: ['tabular-nums'] },
+  suffix: { fontSize: 15, fontWeight: '500', color: colors.inkMute },
 });

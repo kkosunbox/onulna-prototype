@@ -7,7 +7,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import PressableScale from '../components/PressableScale';
 import BrandMark from '../components/BrandMark';
 import { analysisTheme, colors, gradients } from '../theme/colors';
-import { radius, txt } from '../theme/typography';
+import { fonts, radius, txt } from '../theme/typography';
 
 const PAGES = [
   { title: '오늘의 나는\n어떤 흐름일까?', body: '매일 아침, 나에게 맞춘 하루를 알려드려요.', art: 'moon' },
@@ -38,7 +38,7 @@ function Illustration({ kind }: { kind: Art }) {
           <Text style={a.miniLabel}>오늘의 종합운</Text>
           <Text style={a.miniScore}>87</Text>
           <Text style={{ color: colors.moon, letterSpacing: 2, fontSize: 12 }}>★★★★☆</Text>
-          <View style={a.miniChip}><Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>✨ 새로운 만남</Text></View>
+          <View style={a.miniChip}><Text style={{ color: '#fff', fontSize: 12, fontWeight: '600' }}>새로운 만남</Text></View>
         </LinearGradient>
       </View>
     );
@@ -47,13 +47,13 @@ function Illustration({ kind }: { kind: Art }) {
   return (
     <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
       {kind === 'orbit' ? <View style={[a.ring, { width: r * 2, height: r * 2, borderRadius: r }]} /> : null}
-      <View style={a.center}><Text style={{ fontSize: 22, color: colors.moon }}>☾</Text></View>
+      <View style={a.center}><Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '600', color: colors.moon }}>月</Text></View>
       {SOURCES.map((k, i) => {
         const ang = (i / 4) * Math.PI * 2 - Math.PI / 4;
         const t = analysisTheme[k];
         return (
           <View key={k} style={[a.orb, { backgroundColor: kind === 'four' ? t.bg : colors.white, transform: [{ translateX: Math.cos(ang) * r }, { translateY: Math.sin(ang) * r }] }]}>
-            <Text style={{ fontSize: 22 }}>{t.emoji}</Text>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '600', color: t.color }}>{t.emoji}</Text>
             {kind === 'four' ? <Text style={[a.orbLabel, { color: t.color }]}>{t.label}</Text> : null}
           </View>
         );
@@ -108,7 +108,7 @@ export default function OnboardingScreen() {
         <View style={s.dots}>
           {PAGES.map((_, i) => {
             const w = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [6, 22, 6], extrapolate: 'clamp' });
-            const bg = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [colors.lavender, colors.purple, colors.lavender], extrapolate: 'clamp' });
+            const bg = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [colors.lavender, colors.navy, colors.lavender], extrapolate: 'clamp' });
             return <Animated.View key={i} style={[s.dot, { width: w, backgroundColor: bg }]} />;
           })}
         </View>
@@ -130,14 +130,14 @@ const a = StyleSheet.create({
   stage: { height: 300, marginTop: 12, borderRadius: radius.xl, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   halo: { position: 'absolute', width: 200, height: 200, borderRadius: 100, backgroundColor: colors.moon, opacity: 0.12 },
   moon: { width: 120, height: 120, borderRadius: 60, backgroundColor: colors.moon, overflow: 'hidden' },
-  moonCut: { position: 'absolute', width: 120, height: 120, borderRadius: 60, backgroundColor: '#2A1D5E', left: 38, top: -16 },
+  moonCut: { position: 'absolute', width: 120, height: 120, borderRadius: 60, backgroundColor: '#1A1E2B', left: 38, top: -16 },
   star: { position: 'absolute', borderRadius: 2, backgroundColor: '#fff', opacity: 0.8 },
   ring: { position: 'absolute', borderWidth: 1, borderColor: colors.lavender, borderStyle: 'dashed' },
-  center: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.purple, alignItems: 'center', justifyContent: 'center' },
-  orb: { position: 'absolute', width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center' },
+  center: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  orb: { position: 'absolute', width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.lineStrong },
   orbLabel: { position: 'absolute', bottom: -20, fontSize: 11, fontWeight: '800', width: 90, textAlign: 'center' },
   mini: { width: 200, paddingVertical: 24, borderRadius: radius.xl, alignItems: 'center' },
   miniLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 12 },
-  miniScore: { color: '#fff', fontSize: 48, fontWeight: '800', letterSpacing: -1.5 },
-  miniChip: { marginTop: 12, backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
+  miniScore: { fontFamily: fonts.serif, color: '#fff', fontSize: 48, fontWeight: '500', letterSpacing: -1 },
+  miniChip: { marginTop: 12, backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)', borderRadius: 6, paddingHorizontal: 12, paddingVertical: 6 },
 });

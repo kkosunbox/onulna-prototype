@@ -6,9 +6,9 @@
 import { storage, NotificationSettings } from './storage/storageService';
 
 const TEMPLATES = [
-  (n: string) => `${n}님, 오늘의 운세가 도착했어요 🔮`,
+  (n: string) => `${n}님, 오늘의 운세가 도착했어요 命`,
   () => '오늘 당신에게 가장 강한 운은 무엇일까요?',
-  (n: string) => `${n}님의 오늘 키워드, 확인해볼까요? ✨`,
+  (n: string) => `${n}님의 오늘 키워드, 확인해볼까요? 新`,
 ];
 
 export const notificationService = {

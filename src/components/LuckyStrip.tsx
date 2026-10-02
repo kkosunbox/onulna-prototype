@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Card from './Card';
 import { CombinedFortune } from '../types';
 import { colors } from '../theme/colors';
+import { fonts } from '../theme/typography';
 
 export default function LuckyStrip({ f }: { f: CombinedFortune }) {
   return (
@@ -29,9 +30,9 @@ export default function LuckyStrip({ f }: { f: CombinedFortune }) {
 const s = StyleSheet.create({
   card: { flexDirection: 'row', alignItems: 'center', paddingVertical: 16, paddingHorizontal: 8 },
   item: { flex: 1, alignItems: 'center', gap: 4 },
-  div: { width: StyleSheet.hairlineWidth, height: 40, backgroundColor: colors.lineStrong },
-  swatch: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.white, shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 3, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
+  div: { width: 1, height: 40, backgroundColor: colors.lineStrong },
+  swatch: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.card, shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 3, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   value: { fontSize: 13, fontWeight: '700', color: colors.ink },
-  big: { fontSize: 20, fontWeight: '800', color: colors.purple, height: 24, lineHeight: 24, fontVariant: ['tabular-nums'] },
+  big: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '600', color: colors.purple, height: 24, lineHeight: 24, fontVariant: ['tabular-nums'] },
   label: { fontSize: 11, color: colors.inkMute, fontWeight: '500' },
 });

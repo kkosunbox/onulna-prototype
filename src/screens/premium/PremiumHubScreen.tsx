@@ -95,7 +95,7 @@ export default function PremiumHubScreen() {
 const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   bundle: { marginTop: 14, borderWidth: 1.5, borderColor: colors.purpleSoft },
-  tag: { position: 'absolute', top: -9, left: 16, backgroundColor: colors.love, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+  tag: { position: 'absolute', top: -9, left: 16, backgroundColor: colors.seal, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
   tagText: { color: colors.white, fontSize: 10, fontWeight: '800' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   line: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },

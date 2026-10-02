@@ -29,7 +29,7 @@ import { dayPillar, relation } from '../../services/fortune/sajuService';
 import { parseISO, weekdayOf } from '../../utils/date';
 import { clamp, pick, seededRandom } from '../../utils/seed';
 import { colors } from '../../theme/colors';
-import { radius, txt } from '../../theme/typography';
+import { fonts, radius, txt } from '../../theme/typography';
 
 type FieldKey = 'money' | 'work' | 'love' | 'health' | 'people' | 'study';
 
@@ -148,8 +148,8 @@ export default function MonthlyScreen() {
           return (
             <View key={x.iso} style={[s.drow, i ? s.topLine : null, isToday && s.drowToday]}>
               <View style={s.dd}>
-                <Text style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{x.d}</Text>
-                <Text style={{ fontSize: 11, color: weekdayOf(x.iso) === 0 ? colors.love : colors.inkMute }}>{WEEK[weekdayOf(x.iso)]}</Text>
+                <Text style={{ fontFamily: fonts.serif, fontSize: 16, fontWeight: '600', color: colors.ink }}>{x.d}</Text>
+                <Text style={{ fontSize: 11, color: weekdayOf(x.iso) === 0 ? colors.seal : colors.inkMute }}>{WEEK[weekdayOf(x.iso)]}</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 14, fontWeight: '600', lineHeight: 20, color: colors.ink }}>{x.c.summary}</Text>
@@ -234,5 +234,5 @@ const s = StyleSheet.create({
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13 },
   mission: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   box: { width: 22, height: 22, borderRadius: 6, borderWidth: 1.5, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
-  boxOn: { backgroundColor: colors.purple, borderColor: colors.purple },
+  boxOn: { backgroundColor: colors.navy, borderColor: colors.navy },
 });

@@ -23,7 +23,7 @@ export default function ShareScreen() {
       contentStyle={{ alignItems: 'center', paddingTop: 8 }}
       footer={<PrimaryButton label={busy ? '이미지 만드는 중…' : '이미지로 공유하기'} onPress={share} disabled={busy} icon={busy ? undefined : <Icon name="share" size={18} color={colors.white} />} />}
     >
-      <View style={[{ borderRadius: 28, backgroundColor: colors.purple }, shadow.hero]}>
+      <View style={[{ borderRadius: 18, backgroundColor: colors.heroBg }, shadow.hero]}>
         <ShareCard ref={ref} fortune={fortune.combined} nickname={user.nickname} dateLabel={formatKoreanDate(today)} />
       </View>
     </Screen>

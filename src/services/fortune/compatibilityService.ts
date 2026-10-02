@@ -54,9 +54,9 @@ export const ruleCompatibility: CompatibilityEngine = {
       total, love, personality, conversation, money,
       summary: total >= 85 ? '함께할수록 서로를 빛내주는 사이' : total >= 75 ? '조금씩 맞춰가며 깊어지는 사이' : '다름을 배우며 성장하는 사이',
       points: [
-        { title: `🔮 사주 · ${ELEMENT_INFO[meEl].ko}과 ${ELEMENT_INFO[youEl].ko}`, text: sajuLine },
-        { title: `🧠 MBTI · ${a} × ${b}`, text: a[1] === b[1] ? '세상을 보는 방식이 비슷해 대화가 자연스럽게 이어져요.' : '보는 관점이 달라 새로운 시각을 서로에게 선물해요. 설명을 조금 더 친절하게.' },
-        { title: `🩸 혈액형 · ${user.bloodType}형 × ${partner.bloodType}형`, text: blood >= 6 ? '생활 리듬이 잘 맞는 조합이에요.' : blood >= 3 ? '무난하게 어울리는 조합이에요.' : '표현 방식이 달라요. 서운함은 바로 말로 풀어주세요.' },
+        { title: `命 사주 · ${ELEMENT_INFO[meEl].ko}과 ${ELEMENT_INFO[youEl].ko}`, text: sajuLine },
+        { title: `性 MBTI · ${a} × ${b}`, text: a[1] === b[1] ? '세상을 보는 방식이 비슷해 대화가 자연스럽게 이어져요.' : '보는 관점이 달라 새로운 시각을 서로에게 선물해요. 설명을 조금 더 친절하게.' },
+        { title: `血 혈액형 · ${user.bloodType}형 × ${partner.bloodType}형`, text: blood >= 6 ? '생활 리듬이 잘 맞는 조합이에요.' : blood >= 3 ? '무난하게 어울리는 조합이에요.' : '표현 방식이 달라요. 서운함은 바로 말로 풀어주세요.' },
       ],
       createdAt: new Date().toISOString(),
     };

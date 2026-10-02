@@ -150,7 +150,7 @@ export default function MyPageScreen() {
 }
 
 const s = StyleSheet.create({
-  cardWrap: { borderRadius: radius.xl, backgroundColor: colors.purple },
+  cardWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   card: { borderRadius: radius.xl, padding: 20 },
   cardTop: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.moon, alignItems: 'center', justifyContent: 'center' },
@@ -168,9 +168,9 @@ const s = StyleSheet.create({
   rowValue: { fontSize: 15, color: colors.inkSub, fontWeight: '600' },
   hours: { flexDirection: 'row', gap: 8, paddingTop: 14 },
   hour: { flex: 1, height: 40, borderRadius: radius.sm, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
-  hourOn: { backgroundColor: colors.purple },
+  hourOn: { backgroundColor: colors.navy },
   hourText: { fontSize: 13, fontWeight: '700', color: colors.purple },
   preview: { fontSize: 12, color: colors.inkMute, paddingVertical: 14 },
   topBorder: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
-  charge: { height: 40, paddingHorizontal: 16, borderRadius: radius.md, backgroundColor: colors.purple, alignItems: 'center', justifyContent: 'center' },
+  charge: { height: 40, paddingHorizontal: 16, borderRadius: radius.md, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
 });

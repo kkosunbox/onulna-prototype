@@ -10,7 +10,7 @@ export function getBloodAnalysis(user: User, date: string): AnalysisResult {
   return {
     source: 'blood',
     title: '혈액형',
-    emoji: '🩸',
+    emoji: '血',
     headline: tip,
     details: [
       { label: '나의 혈액형', value: `${user.bloodType}형` },

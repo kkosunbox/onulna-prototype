@@ -5,6 +5,7 @@ import { AnalysisResult } from '../types';
 import { analysisTheme, colors } from '../theme/colors';
 import { radius, shadow } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
+import Ico from './Ico';
 
 /** 4가지 분석 타일 — 관점마다 고유 색·아이콘 배경으로 즉시 구분 */
 export default function AnalysisTile({ analysis, onPress }: { analysis: AnalysisResult; onPress(): void }) {
@@ -13,7 +14,7 @@ export default function AnalysisTile({ analysis, onPress }: { analysis: Analysis
     <PressableScale onPress={onPress} style={[s.tile, shadow.card]} accessibilityLabel={`${t.label}: ${analysis.headline}`}>
       <View style={[s.band, { backgroundColor: t.color }]} />
       <View style={s.head}>
-        <View style={[s.icon, { backgroundColor: t.bg }]}><Text style={{ fontSize: 18 }}>{t.emoji}</Text></View>
+        <Ico ch={t.emoji} />
         <View style={{ flex: 1 }}>
           <Text style={[s.title, { color: t.color }]}>{t.label}</Text>
           <Text style={s.sub}>{t.sub}</Text>
@@ -28,10 +29,9 @@ export default function AnalysisTile({ analysis, onPress }: { analysis: Analysis
 }
 
 const s = StyleSheet.create({
-  tile: { flex: 1, backgroundColor: colors.white, borderRadius: radius.lg, padding: 16, paddingTop: 18, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, minHeight: 168 },
+  tile: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, padding: 16, paddingTop: 18, borderWidth: 1, borderColor: colors.line, minHeight: 168 },
   band: { position: 'absolute', top: 0, left: 18, width: 28, height: 3, borderBottomLeftRadius: 3, borderBottomRightRadius: 3 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  icon: { width: 36, height: 36, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' },
   title: { fontSize: 13, fontWeight: '800', letterSpacing: -0.2 },
   sub: { fontSize: 11, color: colors.inkMute, marginTop: 1 },
   headline: { fontSize: 15, lineHeight: 21, fontWeight: '700', color: colors.ink, letterSpacing: -0.3, marginTop: 14, flex: 1 },

@@ -162,8 +162,8 @@ const s = StyleSheet.create({
   storySub: { fontSize: 12, color: colors.purpleSoft, marginTop: 3 },
   ptPill: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
   ptText: { fontSize: 13, fontWeight: '800', color: colors.purple },
-  premiumWrap: { borderRadius: radius.lg, backgroundColor: colors.purple },
+  premiumWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   premium: { borderRadius: radius.lg, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14 },
-  ptile: { flex: 1, backgroundColor: colors.white, borderRadius: radius.lg, padding: 16, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, ...shadow.card },
-  storyArrow: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.purple, alignItems: 'center', justifyContent: 'center' },
+  ptile: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, padding: 16, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, ...shadow.card },
+  storyArrow: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
 });

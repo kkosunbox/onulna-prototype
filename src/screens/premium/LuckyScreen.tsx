@@ -95,8 +95,8 @@ export default function LuckyScreen() {
 
 const s = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 18 },
-  cell: { width: '31%', flexGrow: 1, minHeight: 72, borderRadius: radius.sm, backgroundColor: colors.white, borderWidth: 1.5, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
-  cellOn: { backgroundColor: colors.purple, borderColor: colors.purple },
+  cell: { width: '31%', flexGrow: 1, minHeight: 72, borderRadius: radius.sm, backgroundColor: colors.card, borderWidth: 1.5, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
+  cellOn: { backgroundColor: colors.navy, borderColor: colors.navy },
   first: { marginTop: 24, flexDirection: 'row', alignItems: 'center', gap: 14 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   topLine: { borderTopWidth: 0.5, borderTopColor: colors.lineStrong },
