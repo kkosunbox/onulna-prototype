@@ -30,8 +30,8 @@ export const ITEMS = {
     const P = PURPOSE.find(p => p[0] === pk)!;
     return { key: 'lucky-' + pk, title: P[2] + ' 길일 TOP 5', cost: 50, scope: '7일 동안 볼 수 있어요', until: addDays(today, 7), desc: 'TOP 5 상세 이유 · 귀인일 · 피해야 할 날 · 당일 팁' };
   },
-  spouse: (): Item => ({ key: 'spouse', title: '미래 배우자 리포트', cost: 300, scope: '한 번 열면 계속 볼 수 있어요', desc: '배우자의 성격 · 외모 분위기 · 찰떡 MBTI와 띠 · 만나는 시기와 장소 · 첫 만남 · 인연을 끌어오는 법' }),
-  crush: (name: string, birthDate: string): Item => ({ key: 'crush-' + name + '-' + birthDate, title: name + '님의 속마음', cost: 150, scope: '이 상대의 속마음은 계속 볼 수 있어요', desc: '나를 향한 마음 온도 · 나를 어떤 사람으로 느끼는지 · 3개월 관계 흐름 · 연락하기 좋은 날 · 다가가는 법' }),
+  spouse: (): Item => ({ key: 'spouse', title: '미래 배우자 리포트', cost: 300, scope: '한 번 열면 계속 볼 수 있어요', desc: '배우자의 성격·외모·직업·경제관 · 알아보는 신호 · 찰떡 조건 · 나의 배우자 운 · 6년 인연 지수와 결혼 시기 · 만나는 길과 장소 · 결혼 생활 미리보기 · 놓치기 쉬운 점 · 개운법' }),
+  crush: (name: string, birthDate: string): Item => ({ key: 'crush-' + name + '-' + birthDate, title: name + '님의 속마음', cost: 150, scope: '이 상대의 속마음은 계속 볼 수 있어요', desc: '마음 온도와 연인 발전 가능성 · 나를 어떻게 느끼는지와 끌리는 이유 · 호감 신호 · 관계 속도와 오해 포인트 · 3개월 흐름 · 연락·고백하기 좋은 날 · 대화 주제와 첫 메시지' }),
   compat: (name: string, birthDate: string): Item => ({
     key: 'compat-' + name + '-' + birthDate, title: name + '님과 심층 궁합', cost: 150, scope: '이 상대와의 궁합은 계속 볼 수 있어요',
     desc: '11개 섹션 궁합 리포트 · 끌림 · 성격 · 대화 · 연애 · 결혼 · 금전 · 갈등과 화해 · 서로에게 보내는 편지',
