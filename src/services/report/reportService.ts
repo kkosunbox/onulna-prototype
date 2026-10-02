@@ -4,6 +4,7 @@
  * API 키는 앱에 넣지 않는다. REPORT_CONFIG.endpoint(자체 백엔드)가 LLM을 호출하고 { text } 를 돌려준다.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { scopedKey } from '../storage/storageService';
 import { CompatibilityResult, User } from '../../types';
 import { BRANCHES, ELEMENT_INFO, STEMS } from '../../data/sajuData';
 import { THAI_DAYS, THAI_FRIENDS, WEEKDAY_TO_THAI } from '../../data/thaiData';
@@ -197,7 +198,7 @@ export function parseReport(text: string): ReportSection[] {
 export type GenStatus = 'running' | 'done' | 'error' | 'stopped' | 'partial';
 export interface GenState { parts: string[]; part: number; total: number; status: GenStatus; err?: string | null; ctl?: AbortController }
 const REP_V = 'v1';
-const repKey = (uid: string, k: string) => `onulna:rep:${REP_V}:${uid}:${k}`;
+const repKey = (uid: string, k: string) => scopedKey(`rep:${REP_V}:${uid}:${k}`);
 const states = new Map<string, GenState>();
 const subs = new Set<() => void>();
 const emit = () => subs.forEach(f => f());

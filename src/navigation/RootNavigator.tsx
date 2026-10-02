@@ -10,6 +10,10 @@ import { colors } from '../theme/colors';
 import BottomNavigation from '../components/BottomNavigation';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import ProfileSetupScreen from '../screens/ProfileSetupScreen';
+import LoginScreen from '../screens/auth/LoginScreen';
+import SignUpScreen from '../screens/auth/SignUpScreen';
+import FindPasswordScreen from '../screens/auth/FindPasswordScreen';
+import SocialLoginScreen from '../screens/auth/SocialLoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import FortuneScreen from '../screens/FortuneScreen';
 import CompatibilityScreen from '../screens/CompatibilityScreen';
@@ -47,7 +51,7 @@ export const navRef = createNavigationContainerRef<RootStackParamList>();
 const theme = { ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colors.cream, primary: colors.purple } };
 
 export default function RootNavigator() {
-  const { booting, onboarded, user } = useApp();
+  const { booting, onboarded, account, user } = useApp();
   const { setGoWallet } = usePremium();
   const wired = useRef(false);
   if (!wired.current) {
@@ -67,6 +71,13 @@ export default function RootNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_right', contentStyle: { backgroundColor: colors.cream } }}>
         {!onboarded ? (
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        ) : !account ? (
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
+            <Stack.Screen name="SocialLogin" component={SocialLoginScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+          </>
         ) : !user ? (
           <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
         ) : (

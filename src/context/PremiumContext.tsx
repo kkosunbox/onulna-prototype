@@ -7,6 +7,7 @@ import { Animated, Modal, Pressable, StyleSheet, Text, View } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApp } from './AppContext';
+import { scopedKey } from '../services/storage/storageService';
 import { Item, fmtP } from '../services/premium/catalog';
 import { PACKS } from '../services/premium/data';
 import PrimaryButton from '../components/PrimaryButton';
@@ -35,11 +36,15 @@ interface PremiumState {
   setGoWallet(fn: () => void): void;
 }
 
-const K = { points: 'onulna:points', history: 'onulna:history', unlocks: 'onulna:unlocks', attend: 'onulna:attend', missions: 'onulna:missions' };
+/** 계정별 저장 키 */
+const K = {
+  get points() { return scopedKey('points'); }, get history() { return scopedKey('history'); }, get unlocks() { return scopedKey('unlocks'); },
+  get attend() { return scopedKey('attend'); }, get missions() { return scopedKey('missions'); },
+};
 const Ctx = createContext<PremiumState | null>(null);
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
-  const { user, today } = useApp();
+  const { account, user, today } = useApp();
   const [ready, setReady] = useState(false);
   const [points, setPoints] = useState(0);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -51,7 +56,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const goWalletRef = useRef<() => void>(undefined);
 
-  // 프로필이 바뀌면(초기화 포함) 저장된 값을 다시 읽고, 처음이면 가입 축하 포인트를 준다
+  // 계정·프로필이 바뀌면(초기화 포함) 저장된 값을 다시 읽고, 처음이면 가입 축하 포인트를 준다
   useEffect(() => {
     (async () => {
       const read = async <T,>(k: string): Promise<T | null> => { try { const v = await AsyncStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } };
@@ -66,7 +71,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
       setMissions(m ?? {});
       setReady(true);
     })();
-  }, [user?.id]);
+  }, [account?.id, user?.id]);
 
   async function persist(v: { points: number; history: HistoryEntry[]; unlocks: Unlocks; attend: string | null }) {
     await AsyncStorage.multiSet([

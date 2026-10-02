@@ -13,6 +13,7 @@ import { useApp } from '../context/AppContext';
 import { usePremium } from '../context/PremiumContext';
 import { Coin } from '../components/premium/Kit';
 import { fmtP } from '../services/premium/catalog';
+import { providerLabel } from '../services/auth/authService';
 import { storage, NotificationSettings } from '../services/storage/storageService';
 import { notificationService } from '../services/notificationService';
 import { MBTI_INFO } from '../data/mbtiData';
@@ -32,11 +33,12 @@ function Row({ icon, label, value, last, right }: { icon: IconName; label: strin
 }
 
 export default function MyPageScreen() {
-  const { user, fortune, resetProfile } = useApp();
+  const { user, fortune, resetProfile, account, signOut, deleteAccount } = useApp();
   const { points, ownedCount } = usePremium();
   const nav = useNavigation();
   const [noti, setNoti] = useState<NotificationSettings | null>(null);
   const [resetArm, setResetArm] = useState(false);
+  const [deleteArm, setDeleteArm] = useState(false);
   const armTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => { storage.getNotificationSettings().then(setNoti); return () => clearTimeout(armTimer.current); }, []);
@@ -144,6 +146,31 @@ export default function MyPageScreen() {
         ))}
       </Card>
 
+      <SectionHeader title="계정" />
+      <Card style={s.group}>
+        <Row icon="user" label="로그인 방법" value={account ? providerLabel(account.provider) : '-'} />
+        <Row icon="mail" label="이메일" value={account?.email ?? '제공 안 함'} last />
+      </Card>
+      <View style={s.accountActions}>
+        <PressableScale onPress={() => signOut()} hitSlop={8}><Text style={s.accountLink}>로그아웃</Text></PressableScale>
+        <View style={s.sep} />
+        <PressableScale
+          hitSlop={8}
+          onPress={() => {
+            const msg = '프로필 · 운세 기록 · 포인트가 모두 지워지고 되돌릴 수 없어요.';
+            if (Platform.OS !== 'web') {
+              Alert.alert('회원 탈퇴할까요?', msg, [{ text: '취소', style: 'cancel' }, { text: '탈퇴하기', style: 'destructive', onPress: () => deleteAccount() }]);
+              return;
+            }
+            if (!deleteArm) { setDeleteArm(true); setTimeout(() => setDeleteArm(false), 4000); return; }
+            deleteAccount();
+          }}
+        >
+          <Text style={[s.accountLink, deleteArm && { color: colors.danger, fontWeight: '700' }]}>{deleteArm ? '한 번 더 누르면 탈퇴' : '회원 탈퇴'}</Text>
+        </PressableScale>
+      </View>
+      {deleteArm ? <Text style={[txt.caption, { textAlign: 'center', marginTop: 6 }]}>프로필 · 운세 기록 · 포인트가 모두 지워지고 되돌릴 수 없어요.</Text> : null}
+
       <Disclaimer />
     </Screen>
   );
@@ -172,5 +199,8 @@ const s = StyleSheet.create({
   hourText: { fontSize: 13, fontWeight: '700', color: colors.purple },
   preview: { fontSize: 12, color: colors.inkMute, paddingVertical: 14 },
   topBorder: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
+  accountActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 16 },
+  accountLink: { fontSize: 14, color: colors.inkMute, fontWeight: '500' },
+  sep: { width: 1, height: 12, backgroundColor: colors.lineStrong },
   charge: { height: 40, paddingHorizontal: 16, borderRadius: radius.md, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
 });

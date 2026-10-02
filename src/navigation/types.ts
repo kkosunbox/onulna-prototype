@@ -12,6 +12,10 @@ export type TabParamList = {
 
 export type RootStackParamList = {
   Onboarding: undefined;
+  Login: undefined;
+  SignUp: undefined;
+  FindPassword: undefined;
+  SocialLogin: { provider: 'kakao' | 'naver' };
   ProfileSetup: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
   CategoryDetail: { category: CategoryKey };

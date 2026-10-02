@@ -33,7 +33,7 @@ const INTERESTS: { k: Interest; l: string }[] = [
 const LOADING_MSGS = ['사주 원국을 세우는 중', '태어난 요일의 행성을 찾는 중', 'MBTI 성향을 읽는 중', '네 가지 결과를 엮는 중'];
 
 export default function ProfileSetupScreen() {
-  const { saveUser } = useApp();
+  const { saveUser, signOut } = useApp();
   const reduced = useReducedMotion();
   const [step, setStep] = useState(0);
   const [generating, setGenerating] = useState(false);
@@ -100,6 +100,9 @@ export default function ProfileSetupScreen() {
           <Text style={s.count}>{step + 1} / {STEPS.length}</Text>
           {step === STEPS.length - 1 ? (
             <PressableScale onPress={finish} hitSlop={10} scaleTo={0.94}><Text style={s.skip}>건너뛰기</Text></PressableScale>
+          ) : step === 0 ? (
+            // 프로필 입력 전에도 다른 계정으로 바꿀 수 있게
+            <PressableScale onPress={() => signOut()} hitSlop={10} scaleTo={0.94} accessibilityLabel="다른 계정으로 로그인"><Text style={s.skip}>로그아웃</Text></PressableScale>
           ) : <View style={{ width: 44 }} />}
         </View>
         <View style={s.progress}><Animated.View style={[s.progressBar, { width: barW }]} /></View>
