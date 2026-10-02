@@ -1,31 +1,68 @@
 import React, { useRef, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import Screen from '../components/Screen';
-import ShareCard from '../components/ShareCard';
+import ShareCard, { CARD_THEMES, CardTheme } from '../components/ShareCard';
 import PrimaryButton from '../components/PrimaryButton';
+import Segmented from '../components/Segmented';
 import Icon from '../components/Icon';
 import { useApp } from '../context/AppContext';
+import { usePremium } from '../context/PremiumContext';
+import { RootStackParamList } from '../navigation/types';
 import { shareCardImage } from '../services/shareService';
-import { formatKoreanDate } from '../utils/date';
+import { todaySpec } from '../services/share/shareSpecs';
+import { appUrl, shareLink } from '../services/share/linkShare';
 import { colors } from '../theme/colors';
-import { shadow } from '../theme/typography';
+import { shadow, txt } from '../theme/typography';
 
+/** 공유 카드 미리보기 · 테마 고르기 · 이미지 저장 / 공유 / 링크 복사 */
 export default function ShareScreen() {
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Share'>>();
   const { fortune, user, today } = useApp();
+  const { toast } = usePremium();
   const ref = useRef<View>(null);
-  const [busy, setBusy] = useState(false);
-  if (!fortune || !user) return null;
-  const share = async () => { setBusy(true); await shareCardImage(ref); setBusy(false); };
+  const [theme, setTheme] = useState<CardTheme>('paper');
+  const [busy, setBusy] = useState<'share' | 'save' | null>(null);
+  const spec = params?.spec ?? (fortune && user ? todaySpec(user, fortune.combined) : null);
+  if (!spec) return null;
+
+  const run = async (mode: 'share' | 'save') => {
+    setBusy(mode);
+    const r = await shareCardImage(ref, { file: spec.file, text: spec.text, url: appUrl(), mode });
+    setBusy(null);
+    if (r === 'saved') toast(mode === 'share' ? '이미지를 저장했어요. 인스타 스토리에 올려 보세요' : '이미지를 저장했어요');
+  };
+  const copy = async () => {
+    const r = await shareLink(spec.text);
+    if (r === 'copied') toast('링크를 복사했어요. 친구에게 붙여 넣어 보내세요');
+  };
+
   return (
     <Screen
       title="공유하기"
       back
-      contentStyle={{ alignItems: 'center', paddingTop: 8 }}
-      footer={<PrimaryButton label={busy ? '이미지 만드는 중…' : '이미지로 공유하기'} onPress={share} disabled={busy} icon={busy ? undefined : <Icon name="share" size={18} color={colors.white} />} />}
+      contentStyle={{ alignItems: 'center', paddingTop: 4 }}
+      footer={
+        <View style={{ gap: 4 }}>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <PrimaryButton label={busy === 'save' ? '만드는 중…' : '이미지 저장'} variant="soft" onPress={() => run('save')} disabled={!!busy} style={{ flex: 1 }} />
+            <PrimaryButton label={busy === 'share' ? '만드는 중…' : '공유하기'} onPress={() => run('share')} disabled={!!busy} style={{ flex: 1.4 }} icon={busy ? undefined : <Icon name="share" size={18} color={colors.white} />} />
+          </View>
+          <PrimaryButton label="링크만 복사하기" variant="text" onPress={copy} />
+        </View>
+      }
     >
-      <View style={[{ borderRadius: 18, backgroundColor: colors.heroBg }, shadow.hero]}>
-        <ShareCard ref={ref} fortune={fortune.combined} nickname={user.nickname} dateLabel={formatKoreanDate(today)} />
+      <View style={{ alignSelf: 'stretch', marginBottom: 16 }}>
+        <Segmented<CardTheme> options={CARD_THEMES.map(([key, label]) => ({ key, label }))} value={theme} onChange={setTheme} />
       </View>
+      <View style={[s.shadow, shadow.hero]}>
+        <ShareCard ref={ref} spec={spec} today={today} theme={theme} />
+      </View>
+      <Text style={[txt.caption, { marginTop: 12, textAlign: 'center' }]}>인스타그램 스토리에 꼭 맞는 9:16 크기예요{'\n'}가려진 내용은 앱에서만 볼 수 있어요</Text>
     </Screen>
   );
 }
+
+const s = StyleSheet.create({
+  shadow: { borderRadius: 2, backgroundColor: colors.card },
+});

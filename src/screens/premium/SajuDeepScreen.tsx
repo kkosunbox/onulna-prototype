@@ -19,6 +19,8 @@ import { BLOOD_INFO } from '../../data/bloodData';
 import { analysisTheme, colors } from '../../theme/colors';
 import { fonts, txt } from '../../theme/typography';
 import { Pillar } from '../../services/fortune/sajuService';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { sajuDeepSpec } from '../../services/share/shareSpecs';
 
 const EK = (e: keyof typeof ELEMENT_INFO) => ELEMENT_INFO[e].ko;
 
@@ -256,7 +258,7 @@ export default function SajuDeepScreen() {
   );
 
   return (
-    <Screen title="상세 사주 해석" back>
+    <Screen title="상세 사주 해석" back right={<ShareIconButton item={item} spec={sajuDeepSpec(u)} />}>
       <HeadRow item={item} caption={`양력 ${u.birthDate.replace(/-/g, '.')} ${u.birthTime || '(시간 모름)'}`} />
       <Text style={[txt.title, { marginTop: 10 }]}>{u.nickname}님은{'\n'}{per.img} 같은 사람이에요</Text>
       <Text style={[txt.body, { marginTop: 6 }]}>{dayName} · {F.strength} · 용신 {elName(F.yong)}</Text>
@@ -280,6 +282,7 @@ export default function SajuDeepScreen() {
         <View style={s.legend}><Text style={s.legendT}>위·아래 작은 글씨: 십성</Text><Text style={s.legendT}>회색: 지장간</Text><Text style={s.legendT}>보라: 12운성</Text></View>
       </Card>
       <ReportArea rk={{ key: item.key, kind: 'sajuDeep', user: u, today }} item={item} basis={basis} />
+      <ShareCta item={item} spec={sajuDeepSpec(u)} />
       <Disclaimer compact />
     </Screen>
   );

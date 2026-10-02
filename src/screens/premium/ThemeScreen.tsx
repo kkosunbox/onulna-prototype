@@ -21,6 +21,8 @@ import { BLOOD_INFO } from '../../data/bloodData';
 import { BloodType } from '../../types';
 import { colors } from '../../theme/colors';
 import { radius, txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { themeSpec } from '../../services/share/shareSpecs';
 
 const TABS: { key: ThemeKind; label: string }[] = [{ key: 'love', label: '연애·결혼' }, { key: 'money', label: '재물' }, { key: 'career', label: '직업·적성' }];
 
@@ -247,11 +249,12 @@ export default function ThemeScreen() {
   }
 
   return (
-    <Screen title="테마 운세" back>
+    <Screen title="테마 운세" back right={<ShareIconButton item={item} spec={themeSpec(u, today, kind)} />}>
       <HeadRow item={item} caption={`${pText(F.ch.day)}일주 · ${u.mbti} · ${u.bloodType}형`} />
       <View style={{ marginTop: 12 }}><Segmented<ThemeKind> options={TABS} value={kind} onChange={setKind} /></View>
       {hero}
       <ReportArea key={item.key} rk={{ key: item.key, kind: `theme-${kind}`, user: u, today }} item={item} basis={basis} />
+      <ShareCta item={item} spec={themeSpec(u, today, kind)} />
       <Disclaimer compact />
     </Screen>
   );

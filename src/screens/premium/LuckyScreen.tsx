@@ -12,6 +12,8 @@ import { EL_LUCK, PURPOSE, PURPOSE_TIPS, STAGE12, TG, TG_INFO } from '../../serv
 import { parseISO, weekdayOf } from '../../utils/date';
 import { colors } from '../../theme/colors';
 import { radius, txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { luckySpec } from '../../services/share/shareSpecs';
 
 const dateLabel = (iso: string) => { const { m, d } = parseISO(iso); return `${m}월 ${d}일 ${WEEK[weekdayOf(iso)]}요일`; };
 
@@ -30,7 +32,7 @@ export default function LuckyScreen() {
   ].filter(Boolean);
 
   return (
-    <Screen title="길일 찾기" back>
+    <Screen title="길일 찾기" back right={<ShareIconButton item={item} spec={luckySpec(u, today, pk)} />}>
       <HeadRow item={item} caption="앞으로 45일 중에서 골라요" />
       <Text style={[txt.title, { marginTop: 10 }]}>어떤 날을{'\n'}찾고 있나요?</Text>
       <View style={s.grid}>
@@ -88,6 +90,7 @@ export default function LuckyScreen() {
         </Card>
         <Text style={[txt.caption, { textAlign: 'center', marginTop: 16 }]}>재미와 참고를 위한 추천이에요. 실제 일정은 상황에 맞게 정해 주세요.</Text>
       </LockGate>
+      <ShareCta item={item} spec={luckySpec(u, today, pk)} />
       <Disclaimer compact />
     </Screen>
   );

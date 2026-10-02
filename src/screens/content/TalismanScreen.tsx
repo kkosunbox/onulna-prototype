@@ -7,6 +7,7 @@ import { useApp } from '../../context/AppContext';
 import { todayTalisman } from '../../services/content/freeContent';
 import { formatKoreanDate } from '../../utils/date';
 import { fonts, txt } from '../../theme/typography';
+import { talismanSpec } from '../../services/share/shareSpecs';
 
 const PAPER = '#EED9A4';
 const INK = '#A5321F';
@@ -32,7 +33,7 @@ export default function TalismanScreen() {
           </View>
         </View>
       </View>
-      <ShareActions cardRef={card} text={`오늘의 부적은 '${t.hanja}(${t.keyword})' — ${t.mantra}. 너의 오늘 부적도 받아봐!`} />
+      <ShareActions spec={talismanSpec(u, today)} />
 
       <SubHead title="부적과 함께하는 행운" caption="매일 자정에 새 부적으로 바뀌어요" />
       <InfoRows labelWidth={100} rows={[['色', '행운의 색', t.color], ['數', '행운의 숫자', String(t.number)], ['時', '행운의 시간', t.time.replace('~', ' – ')]]} />

@@ -30,6 +30,8 @@ import { parseISO, weekdayOf } from '../../utils/date';
 import { clamp, pick, seededRandom } from '../../utils/seed';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { monthlySpec } from '../../services/share/shareSpecs';
 
 type FieldKey = 'money' | 'work' | 'love' | 'health' | 'people' | 'study';
 
@@ -204,7 +206,7 @@ export default function MonthlyScreen() {
   );
 
   return (
-    <Screen title="월별 상세운세" back>
+    <Screen title="월별 상세운세" back right={<ShareIconButton item={item} spec={monthlySpec(u, sel.y, sel.m)} />}>
       <HeadRow item={item} caption={`${R.y}년 ${R.m}월 1일 ~ ${R.n}일`} />
       <ChipSelect<string> items={months} value={`${sel.y}-${sel.m}`} onChange={v => { const [yy, mm] = v.split('-').map(Number); setSel({ y: yy, m: mm }); setCalSel(null); }} />
       <Hero style={{ flexDirection: 'row', alignItems: 'center', gap: 18 }}>
@@ -216,6 +218,7 @@ export default function MonthlyScreen() {
         </View>
       </Hero>
       <ReportArea key={item.key} rk={{ key: item.key, kind: 'monthly', user: u, today, month: sel }} item={item} basis={basis} />
+      <ShareCta item={item} spec={monthlySpec(u, sel.y, sel.m)} />
       <Disclaimer compact />
     </Screen>
   );

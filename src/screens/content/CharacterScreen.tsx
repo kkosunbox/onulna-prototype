@@ -12,6 +12,7 @@ import { sajuCharacter } from '../../services/content/freeContent';
 import { ELEMENT_INFO } from '../../data/sajuData';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import { characterSpec } from '../../services/share/shareSpecs';
 
 /** 무료: 일주(60갑자)로 보는 나의 사주 캐릭터 */
 export default function CharacterScreen() {
@@ -34,7 +35,7 @@ export default function CharacterScreen() {
         </View>
         <Text style={s.foot}>60가지 사주 캐릭터 중 하나 · {ELEMENT_INFO[c.element].ko}({ELEMENT_INFO[c.element].hanja})의 기운</Text>
       </View>
-      <ShareActions cardRef={card} text={`나의 사주 캐릭터는 '${c.name}'! ${c.core}을 지녔대. 너는 어떤 캐릭터야?`} />
+      <ShareActions spec={characterSpec(u)} />
 
       <SubHead title="이런 사람이에요" caption={c.core} />
       <Card>

@@ -1,0 +1,227 @@
+/**
+ * 공유 카드 데이터 — 콘텐츠마다 "핵심 한 줄 + 숫자 3개 + 봉인된 이야기 + 질문" 구조로 함축한다.
+ * 봉인된 이야기는 결과의 가장 궁금한 부분을 가려서, 보는 사람이 직접 들어와 확인하게 만든다.
+ * 생년월일 같은 개인 정보는 카드에 넣지 않는다.
+ */
+import { CombinedFortune, CompatibilityResult, User } from '../../types';
+import { BRANCHES, ELEMENT_INFO, STEMS } from '../../data/sajuData';
+import { mbtiMatches, sajuCharacter, todayTalisman } from '../content/freeContent';
+import { crushReport, spouseReport } from '../content/premiumContent';
+import {
+  PurposeKey, ageNow, daeun, lifeStages, luckyDays, monthPillarOf, monthReport, isoOf, sajuFull, stageKeyOfAge,
+  themeCareer, themeLove, themeMoney, yearData, WEEK,
+} from '../premium/engine';
+import { relation } from '../fortune/sajuService';
+import { MONTH_LINE, STEM_PERSONA, YEAR_IDIOM } from '../premium/data';
+import { parseISO, weekdayOf } from '../../utils/date';
+
+export interface ShareSpec {
+  /** 상단 분류 (예: 미래 배우자 리포트) */
+  kind: string;
+  /** 도장·워터마크 한자 한 글자 */
+  seal: string;
+  eyebrow: string;
+  headline: string;
+  sub?: string;
+  big?: { value: string; unit?: string; label: string };
+  /** [라벨, 값] 2~3개 */
+  stats: [string, string][];
+  /** 봉인된 이야기 — label은 보이고 내용은 가린다 */
+  teaser?: string;
+  /** 카드 하단 질문 */
+  hook: string;
+  /** 공유 메시지 */
+  text: string;
+  file: string;
+}
+
+const md = (iso: string) => { const p = parseISO(iso); return `${p.m}/${p.d}`; };
+const mdw = (iso: string) => `${md(iso)} ${WEEK[weekdayOf(iso)]}`;
+
+/* ---------- 무료 ---------- */
+export function todaySpec(u: User, f: CombinedFortune): ShareSpec {
+  return {
+    kind: '오늘의 운세', seal: '日', eyebrow: `${u.nickname}님의 오늘`,
+    headline: f.summary, big: { value: String(f.totalScore), unit: '점', label: '오늘의 종합운' },
+    stats: [['연애', String(f.love)], ['재물', String(f.money)], ['일', String(f.work)]],
+    teaser: '오늘 꼭 피해야 할 한 가지',
+    hook: '너의 오늘은 몇 점일까?',
+    text: `오늘 내 운세 ${f.totalScore}점 · "${f.keywords[0]}" 🌙 너의 오늘도 확인해 봐`, file: 'onulna-today',
+  };
+}
+
+export function mbtiSpec(u: User): ShareSpec {
+  const { best, worst } = mbtiMatches(u.mbti); const top = best[0];
+  return {
+    kind: '찰떡 MBTI', seal: '性', eyebrow: `${u.mbti} ${u.nickname}님의 찰떡 MBTI는`,
+    headline: top.type, sub: top.together,
+    big: { value: String(top.score), unit: '점', label: '궁합 점수' },
+    stats: [['2위', best[1].type], ['3위', best[2].type], ['조심', worst.type]],
+    teaser: `${top.type}와 잘 맞는 진짜 이유`,
+    hook: '너의 찰떡 MBTI는 뭘까?',
+    text: `나의 찰떡 MBTI는 ${top.type}(${top.nickname})! 너의 찰떡 MBTI도 확인해 봐 🌙`, file: 'onulna-mbti',
+  };
+}
+
+export function characterSpec(u: User): ShareSpec {
+  const c = sajuCharacter(u);
+  return {
+    kind: '사주 캐릭터', seal: c.hanja.slice(0, 1), eyebrow: `60가지 캐릭터 중 ${u.nickname}님은`,
+    headline: c.name, sub: `${c.title} · ${c.core}`,
+    stats: [['일주', c.hanja], ['기운', `${ELEMENT_INFO[c.element].ko}(${ELEMENT_INFO[c.element].hanja})`], ['키워드', c.keyword]],
+    teaser: `나와 찰떡인 캐릭터는 '${c.bestFriend.split(' ')[0]} ··'`,
+    hook: '너는 60가지 중 어떤 캐릭터일까?',
+    text: `나의 사주 캐릭터는 '${c.name}'! ${c.core}을 지녔대. 너는 어떤 캐릭터야?`, file: 'onulna-character',
+  };
+}
+
+export function talismanSpec(u: User, today: string): ShareSpec {
+  const t = todayTalisman(u, today);
+  return {
+    kind: '오늘의 부적', seal: t.hanja, eyebrow: `${u.nickname}님에게 온 오늘의 부적`,
+    headline: t.mantra, sub: `${t.hanja} · ${t.keyword}`,
+    stats: [['행운의 색', t.color], ['숫자', String(t.number)], ['시간', t.time]],
+    hook: '오늘 너에게 온 부적은?',
+    text: `오늘의 부적은 '${t.hanja}(${t.keyword})' — ${t.mantra}. 너의 오늘 부적도 받아봐!`, file: 'onulna-talisman',
+  };
+}
+
+export function compatSpec(u: User, r: CompatibilityResult): ShareSpec {
+  return {
+    kind: '궁합', seal: '和', eyebrow: `${u.nickname} × ${r.target.nickname}`,
+    headline: r.summary, big: { value: String(r.total), unit: '점', label: '우리 둘의 궁합' },
+    stats: [['연애', String(r.love)], ['대화', String(r.conversation)], ['재물', String(r.money)]],
+    teaser: '둘이 가장 부딪히기 쉬운 순간',
+    hook: '우리 궁합은 몇 점일까?',
+    text: `${u.nickname} × ${r.target.nickname} 궁합 ${r.total}점 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, file: 'onulna-compat',
+  };
+}
+
+/* ---------- 프리미엄 ---------- */
+export function spouseSpec(u: User, today: string): ShareSpec {
+  const R = spouseReport(u, today);
+  return {
+    kind: '미래 배우자 리포트', seal: '緣', eyebrow: `${u.nickname}님의 미래 배우자는`,
+    headline: R.headline, sub: R.look.split(',')[0],
+    big: { value: String(R.bestYear.yy), unit: '년', label: '인연이 가장 강한 해' },
+    stats: [['MBTI', R.mbti[0]], ['띠', `${R.animals[0]}띠`], ['나이', R.ageGap.startsWith('동갑') ? '동갑·연하' : R.ageGap.includes('연상') ? '연상' : '상관없음']],
+    teaser: '그 사람을 처음 만나는 곳',
+    hook: '내 미래 배우자는 어떤 사람일까?',
+    text: `내 미래 배우자는 '${R.headline}' 💍 ${R.bestYear.yy}년에 인연이 가장 강하대. 너의 미래 배우자도 확인해 봐`, file: 'onulna-spouse',
+  };
+}
+
+export function crushSpec(u: User, r: CompatibilityResult, today: string): ShareSpec {
+  const R = crushReport(u, r, today);
+  return {
+    kind: '그 사람의 속마음', seal: '心', eyebrow: `${r.target.nickname}님이 나를 생각하는 마음`,
+    headline: R.oneLine, big: { value: String(R.temp), unit: '℃', label: '마음 온도' },
+    stats: [['연인 가능성', `${R.chance}%`], ['나는 그에게', R.tg], ['연락하기 좋은 날', md(R.contact[0].iso)]],
+    teaser: '마음을 표현하기 가장 좋은 날',
+    hook: '그 사람은 나를 어떻게 생각할까?',
+    text: `그 사람의 마음 온도 ${R.temp}℃ 💘 너도 궁금한 사람의 속마음 확인해 봐`, file: 'onulna-crush',
+  };
+}
+
+export function lifeSpec(u: User, today: string): ShareSpec {
+  const st = lifeStages(u); const dae = daeun(u); const now = ageNow(u, today);
+  const cur = st.find(x => x.key === stageKeyOfAge(now)) ?? st[0];
+  const gold = [...dae.list].sort((a, b) => b.score - a.score)[0];
+  return {
+    kind: '평생운', seal: '圖', eyebrow: `${u.nickname}님의 인생 지도`,
+    headline: cur.headline, sub: `지금은 ${cur.label}(${cur.range})`,
+    big: { value: `${gold.age}`, unit: '세~', label: '인생 최고의 10년' },
+    stats: st.map(x => [x.label, String(x.score)] as [string, string]),
+    teaser: '인생에서 가장 조심해야 할 10년',
+    hook: '내 인생의 황금기는 언제일까?',
+    text: `내 인생 최고의 10년은 ${gold.age}세부터래 ✨ 너의 황금기도 확인해 봐`, file: 'onulna-life',
+  };
+}
+
+export function newYearSpec(u: User, y: number): ShareSpec {
+  const D = yearData(u, y); const idiom = YEAR_IDIOM[D.rel];
+  return {
+    kind: `${y} 신년운세`, seal: '年', eyebrow: `${u.nickname}님의 ${y}년은`,
+    headline: `${idiom[0]}의 해`, sub: `${idiom[1]} · ${idiom[2]}`.length > 18 ? idiom[2] : `${idiom[1]} · ${idiom[2]}`,
+    big: { value: String(D.total), unit: '점', label: `${y}년 총운` },
+    stats: [['좋은 달', D.best.map(b => b.m).sort((a, b) => a - b).join('·') + '월'], ['연애', String(D.cat.love)], ['재물', String(D.cat.money)]],
+    teaser: `${y}년에 조심해야 할 달`,
+    hook: `너의 ${y}년은 어떤 해일까?`,
+    text: `나의 ${y}년은 '${idiom[0]}(${idiom[1]})'의 해래 🎍 너의 ${y}년도 확인해 봐`, file: `onulna-${y}`,
+  };
+}
+
+export function monthlySpec(u: User, y: number, m: number): ShareSpec {
+  const R = monthReport(u, isoOf(y, m, 1)); const F = sajuFull(u);
+  const rel = relation(F.meE, STEMS[monthPillarOf(y, m).stem].element); const line = MONTH_LINE[rel];
+  return {
+    kind: `${m}월 운세`, seal: '月', eyebrow: `${u.nickname}님의 ${y}년 ${m}월`,
+    headline: line[0], sub: line[1].split('.')[0],
+    big: { value: String(R.avg), unit: '점', label: `${m}월 평균` },
+    stats: [['행운의 날', R.best.map(b => b.d).sort((a, b) => a - b).join('·') + '일'], ['키워드', R.kws[0]], ['연애', String(R.cat.love)]],
+    teaser: `${m}월에 피해야 할 날`,
+    hook: '이번 달 나의 행운의 날은?',
+    text: `나의 ${m}월은 '${line[0]}' 🌙 행운의 날은 ${R.best.map(b => b.d).sort((a, b) => a - b).join('·')}일! 너의 이번 달도 확인해 봐`, file: `onulna-${y}-${m}`,
+  };
+}
+
+export function sajuDeepSpec(u: User): ShareSpec {
+  const F = sajuFull(u); const per = STEM_PERSONA[F.ds];
+  const name = `${STEMS[F.ds].ko}${BRANCHES[F.ch.day.branch].ko}일주`;
+  return {
+    kind: '상세 사주 해석', seal: STEMS[F.ds].hanja, eyebrow: `${u.nickname}님은 ${per.img}을 닮은`,
+    headline: name, sub: per.core,
+    stats: [['기운', F.strength], ['용신', `${ELEMENT_INFO[F.yong].ko}(${ELEMENT_INFO[F.yong].hanja})`], ['강점', per.str[0].split(' ')[0]]],
+    teaser: '타고난 재물 그릇의 크기',
+    hook: '내 사주에 숨겨진 본성은?',
+    text: `나는 '${name}' — ${per.core}을 타고났대 🔮 너의 사주 본성도 확인해 봐`, file: 'onulna-saju',
+  };
+}
+
+export function themeSpec(u: User, today: string, kind: 'love' | 'money' | 'career'): ShareSpec {
+  const F = sajuFull(u); const now = ageNow(u, today);
+  if (kind === 'love') {
+    const L = themeLove(u, today);
+    return {
+      kind: '연애·결혼운', seal: '緣', eyebrow: `${u.nickname}님의 연애 스타일`,
+      headline: L.st, sub: `${u.bloodType}형답게 ${L.blood}`,
+      stats: [['연애운 강한 달', L.ms.map(x => x.m).sort((a, b) => a - b).join('·') + '월'], ['잘 맞는 MBTI', L.types[0]], ['인연의 해', L.yrs[0] ? `${L.yrs[0].yy}` : '—']],
+      teaser: '결혼 흐름이 들어오는 시기',
+      hook: '나는 어떤 연애를 하는 사람일까?',
+      text: `나의 연애 스타일은 '${L.st}' 💕 너는 어떤 연애를 할까?`, file: 'onulna-love',
+    };
+  }
+  if (kind === 'money') {
+    const M = themeMoney(u, today);
+    return {
+      kind: '재물운', seal: '財', eyebrow: `${u.nickname}님의 돈 성향은`,
+      headline: M.t.name, sub: M.t.desc,
+      stats: [['재물 강한 달', M.ms.map(x => x.m).sort((a, b) => a - b).join('·') + '월'], ['재물 기운', `${M.cnt}개`], ['강점', M.t.str.split(' ')[0]]],
+      teaser: '재물이 크게 모이는 10년',
+      hook: '나는 어떤 부자가 될 사람일까?',
+      text: `나의 돈 성향은 '${M.t.name}' 💰 너의 재물운도 확인해 봐`, file: 'onulna-money',
+    };
+  }
+  const C = themeCareer(u, today); const up = C.ups[0];
+  return {
+    kind: '직업·적성', seal: '業', eyebrow: `${u.nickname}님에게 맞는 일은`,
+    headline: `${C.jobs[0]} · ${C.jobs[1]}`, sub: C.style[0],
+    stats: [['커리어 상승기', up ? `${up.age}세~` : '—'], ['일하는 방식', C.style[1].split(' ')[0]], ['추천', C.jobs[2] ?? '—']],
+    teaser: '이직·창업하기 좋은 타이밍',
+    hook: '나에게 꼭 맞는 일은 뭘까?',
+    text: `나에게 맞는 일은 ${C.jobs[0]}·${C.jobs[1]}래 💼 너의 적성도 확인해 봐`, file: 'onulna-career',
+  };
+}
+
+export function luckySpec(u: User, today: string, pk: PurposeKey): ShareSpec {
+  const { P, list } = luckyDays(u, today, pk);
+  return {
+    kind: '길일 찾기', seal: P[1], eyebrow: `${u.nickname}님의 ${P[2]} 길일`,
+    headline: mdw(list[0].iso), sub: `앞으로 45일 중 ${P[2]}하기 가장 좋은 날`,
+    stats: [['2순위', mdw(list[1].iso)], ['3순위', mdw(list[2].iso)], ['행운의 시간', list[0].c.luckyTime]],
+    teaser: `${P[2]}할 때 피해야 할 날`,
+    hook: `나에게 ${P[2]}하기 좋은 날은?`,
+    text: `내 ${P[2]} 길일은 ${mdw(list[0].iso)}! 너에게 좋은 날도 찾아봐 📅`, file: `onulna-lucky-${pk}`,
+  };
+}
+

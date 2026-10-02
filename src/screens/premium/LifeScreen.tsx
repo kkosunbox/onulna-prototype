@@ -21,6 +21,8 @@ import { relation } from '../../services/fortune/sajuService';
 import { seededRandom } from '../../utils/seed';
 import { colors, gradients } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { lifeSpec } from '../../services/share/shareSpecs';
 
 function LifeChart({ stages, dae, now }: { stages: LifeStage[]; dae: { list: Daeun[] }; now: number }) {
   const pts = lifeChartPoints(stages, dae);
@@ -203,13 +205,14 @@ export default function LifeScreen() {
   );
 
   return (
-    <Screen title="평생운" back>
+    <Screen title="평생운" back right={<ShareIconButton item={item} spec={lifeSpec(u, today)} />}>
       <HeadRow item={item} caption={`만 ${now}세 · ${pText(F.ch.day)}일주 · ${F.strength}`} />
       <Text style={[txt.title, { marginTop: 10 }]}>{u.nickname}님의{'\n'}인생 지도</Text>
       <Card style={{ marginTop: 20, paddingVertical: 16, paddingHorizontal: 14 }}>
         <LifeChart stages={st} dae={dae} now={now} />
       </Card>
       <ReportArea rk={{ key: item.key, kind: 'life', user: u, today }} item={item} basis={basis} />
+      <ShareCta item={item} spec={lifeSpec(u, today)} />
       <Disclaimer compact />
     </Screen>
   );

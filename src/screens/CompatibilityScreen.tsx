@@ -30,6 +30,8 @@ import { MBTI_LIST } from '../data/mbtiData';
 import { isValidDate } from '../utils/date';
 import { analysisTheme, colors, gradients } from '../theme/colors';
 import { fonts, radius, shadow, txt } from '../theme/typography';
+import ShareCta from '../components/ShareCta';
+import { compatSpec, crushSpec } from '../services/share/shareSpecs';
 
 const BARS: { k: 'love' | 'personality' | 'conversation' | 'money'; l: string; c: string; e: string }[] = [
   { k: 'love', l: '연애 궁합', c: colors.love, e: '緣' },
@@ -119,6 +121,8 @@ export default function CompatibilityScreen() {
           ))}
         </Card>
 
+        <ShareCta spec={compatSpec(user, result)} />
+
         <SectionHeader title="관점별 풀이" />
         <View style={{ gap: 10 }}>
           {result.points.map((p, i) => {
@@ -148,7 +152,12 @@ export default function CompatibilityScreen() {
         {(() => {
           const item = ITEMS.crush(result.target.nickname, result.target.birthDate);
           if (!owned(item.key)) return <PriceCard item={item} />;
-          return <CrushView u={user} r={result} today={today} />;
+          return (
+            <>
+              <CrushView u={user} r={result} today={today} />
+              <ShareCta spec={crushSpec(user, result, today)} />
+            </>
+          );
         })()}
 
         <PrimaryButton label="다른 사람과 궁합 보기" variant="soft" onPress={() => setResult(null)} style={{ marginTop: 24 }} />

@@ -20,6 +20,8 @@ import { BRANCHES, STEMS } from '../../data/sajuData';
 import { clamp } from '../../utils/seed';
 import { categoryTheme, colors } from '../../theme/colors';
 import { txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { newYearSpec } from '../../services/share/shareSpecs';
 
 type FieldKey = 'money' | 'work' | 'love' | 'health' | 'people' | 'study';
 
@@ -172,7 +174,7 @@ export default function NewYearScreen() {
   );
 
   return (
-    <Screen title="신년운세" back>
+    <Screen title="신년운세" back right={<ShareIconButton item={item} spec={newYearSpec(u, y)} />}>
       <HeadRow item={item} caption={`${D.myAnimal}띠 · ${u.mbti} · ${u.bloodType}형`} />
       <ChipSelect<number> items={[[cy, cy + '년', '올해'], [cy + 1, cy + 1 + '년', '새해 미리보기']]} value={y} onChange={setY} />
       <Hero style={{ alignItems: 'center', paddingVertical: 24 }}>
@@ -183,6 +185,7 @@ export default function NewYearScreen() {
         <View style={s.chips}>{D.kws.map(k => <KeywordChip key={k} label={k} tone="onDark" />)}</View>
       </Hero>
       <ReportArea key={item.key} rk={{ key: item.key, kind: 'newyear', user: u, today, year: y }} item={item} basis={basis} />
+      <ShareCta item={item} spec={newYearSpec(u, y)} />
       <Disclaimer compact />
     </Screen>
   );

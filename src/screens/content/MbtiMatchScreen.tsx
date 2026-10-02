@@ -13,6 +13,7 @@ import { mbtiMatches } from '../../services/content/freeContent';
 import { MBTI_INFO } from '../../data/mbtiData';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import { mbtiSpec } from '../../services/share/shareSpecs';
 
 /** 무료: 나와 가장 잘 맞는 MBTI */
 export default function MbtiMatchScreen() {
@@ -46,7 +47,7 @@ export default function MbtiMatchScreen() {
           </View>
         </View>
       </View>
-      <ShareActions cardRef={card} text={`나의 찰떡 MBTI는 ${top.type}(${top.nickname})! 너의 찰떡 MBTI도 확인해 봐 🌙`} />
+      <ShareActions spec={mbtiSpec(u)} />
 
       <SubHead title="TOP 3 찰떡 궁합" caption="함께하면 서로를 빛내주는 성향" />
       <View style={{ gap: 10 }}>

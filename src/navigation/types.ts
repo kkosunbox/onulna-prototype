@@ -2,6 +2,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { AnalysisResult, PartnerInput } from '../types';
 import { CategoryKey } from '../theme/colors';
 import { ThemeKind } from '../services/premium/catalog';
+import type { ShareSpec } from '../services/share/shareSpecs';
 
 export type TabParamList = {
   Home: undefined;
@@ -23,7 +24,7 @@ export type RootStackParamList = {
   CategoryDetail: { category: CategoryKey };
   AnalysisDetail: { source: AnalysisResult['source'] };
   CombinedAnalysis: undefined;
-  Share: undefined;
+  Share: { spec?: ShareSpec } | undefined;
   Wallet: undefined;
   SajuDeep: undefined;
   Life: undefined;

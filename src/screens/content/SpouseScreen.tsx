@@ -12,6 +12,8 @@ import { ELEMENT_INFO } from '../../data/sajuData';
 import { MBTI_INFO } from '../../data/mbtiData';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import ShareCta, { ShareIconButton } from '../../components/ShareCta';
+import { spouseSpec } from '../../services/share/shareSpecs';
 
 /** 프리미엄: 미래 배우자 리포트 — 첫 화면은 무료로 보여주고 나머지는 잠금 */
 export default function SpouseScreen() {
@@ -23,7 +25,7 @@ export default function SpouseScreen() {
   const thisYear = R.yearIdx[0];
 
   return (
-    <Screen title="미래 배우자 리포트" back>
+    <Screen title="미래 배우자 리포트" back right={<ShareIconButton item={item} spec={spouseSpec(u, today)} />}>
       <HeadRow item={item} caption={`배우자의 별 · ${el.ko}(${el.hanja})`} />
       <Hero style={{ alignItems: 'center', paddingVertical: 26 }}>
         <Text style={heroTxt.eyebrow}>{u.nickname}님의 미래 배우자는</Text>
@@ -165,6 +167,7 @@ export default function SpouseScreen() {
         <Card>{R.advice.map(a => <Bullet key={a}>{a}</Bullet>)}</Card>
         <Tip title="기억해 두세요">운세는 흐름을 참고하는 콘텐츠예요. 좋은 인연은 결국 내가 알아보는 눈에서 시작돼요.</Tip>
       </LockGate>
+      <ShareCta item={item} spec={spouseSpec(u, today)} />
       <Disclaimer compact />
     </Screen>
   );
