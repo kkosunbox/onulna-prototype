@@ -63,9 +63,10 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
       const read = async <T,>(k: string): Promise<T | null> => { try { const v = await AsyncStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } };
       const [p, h, u, a, m] = await Promise.all([read<number>(K.points), read<HistoryEntry[]>(K.history), read<Unlocks>(K.unlocks), read<string>(K.attend), read<Record<string, boolean>>(K.missions)]);
       if (p === null) {
-        const first: HistoryEntry[] = [{ t: '적립', label: '가입 축하 포인트', amt: 100, date: today }];
-        setPoints(100); setHistory(first); setUnlocks({}); setLastAttend(null);
-        await persist({ points: 100, history: first, unlocks: {}, attend: null });
+        const start = account?.master ? 999999 : 100;
+        const first: HistoryEntry[] = [{ t: '적립', label: account?.master ? '관리자 포인트' : '가입 축하 포인트', amt: start, date: today }];
+        setPoints(start); setHistory(first); setUnlocks({}); setLastAttend(null);
+        await persist({ points: start, history: first, unlocks: {}, attend: null });
       } else {
         setPoints(p); setHistory(h ?? []); setUnlocks(u ?? {}); setLastAttend(a);
       }
@@ -81,7 +82,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
     ]).catch(() => {});
   }
 
-  const owned = useCallback((key: string) => { const u = unlocks[key]; return !!u && (!u.until || u.until >= today); }, [unlocks, today]);
+  // 마스터 계정은 모든 콘텐츠를 열람할 수 있다
+  const owned = useCallback((key: string) => { if (account?.master) return true; const u = unlocks[key]; return !!u && (!u.until || u.until >= today); }, [unlocks, today, account?.master]);
 
   const toast = useCallback((msg: string) => {
     setToastMsg(msg);

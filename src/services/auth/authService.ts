@@ -19,6 +19,8 @@ export interface Account {
   name: string | null;
   marketing: boolean;
   createdAt: string;
+  /** 마스터(관리자) 계정 — 모든 기기에서 로그인, 전체 콘텐츠 열람 */
+  master?: boolean;
 }
 
 interface StoredAccount extends Account { pwHash?: string }
@@ -44,6 +46,13 @@ export interface AuthService {
 }
 
 const K = { accounts: 'onulna:auth:accounts', session: 'onulna:auth:session', reset: 'onulna:auth:reset' };
+
+/**
+ * 마스터 계정 (기획 공유용): 앱에 내장돼 어느 기기에서든 같은 아이디로 로그인된다.
+ * 비밀번호 원문은 코드에 두지 않고 해시만 둔다(비밀번호는 로컬의 MASTER_ACCOUNT.local.md).
+ * 서버 없이 앱 안에서 확인하는 방식이라 실서비스 전환 시 반드시 서버 인증으로 옮길 것.
+ */
+const MASTER = { id: 'acc-master', email: 'master@onulna.app', pwHash: 'h1:13m8cv2sjjkin' };
 const RESET_TTL_MS = 10 * 60 * 1000;
 
 const normEmail = (e: string) => e.trim().toLowerCase();
@@ -67,6 +76,7 @@ export const localAuth: AuthService = {
   async signUp({ email, password, marketing }) {
     const list = await readAccounts();
     const e = normEmail(email);
+    if (e === MASTER.email) throw new AuthError('email_taken', '사용할 수 없는 이메일이에요.');
     if (list.some(a => a.provider === 'email' && a.email === e)) throw new AuthError('email_taken', '이미 가입된 이메일이에요.');
     const acc: StoredAccount = { id: 'acc-' + Date.now().toString(36), provider: 'email', email: e, name: null, marketing, createdAt: new Date().toISOString(), pwHash: pwHash(e, password) };
     await writeAccounts([...list, acc]);
@@ -76,6 +86,14 @@ export const localAuth: AuthService = {
 
   async signIn(email, password) {
     const e = normEmail(email);
+    if (e === MASTER.email) {
+      if (pwHash(e, password) !== MASTER.pwHash) throw new AuthError('invalid_credentials', '이메일 또는 비밀번호가 맞지 않아요.');
+      const list = await readAccounts();
+      let m = list.find(x => x.id === MASTER.id);
+      if (!m) { m = { id: MASTER.id, provider: 'email', email: e, name: '마스터', marketing: false, createdAt: new Date().toISOString(), master: true }; await writeAccounts([...list, m]); }
+      await startSession(m.id);
+      return strip(m);
+    }
     const a = (await readAccounts()).find(x => x.provider === 'email' && x.email === e);
     if (!a || a.pwHash !== pwHash(e, password)) throw new AuthError('invalid_credentials', '이메일 또는 비밀번호가 맞지 않아요.');
     await startSession(a.id);
@@ -96,6 +114,7 @@ export const localAuth: AuthService = {
 
   async requestPasswordReset(email) {
     const e = normEmail(email);
+    if (e === MASTER.email) throw new AuthError('not_found', '관리자 계정은 비밀번호를 재설정할 수 없어요.');
     const a = (await readAccounts()).find(x => x.email === e);
     if (!a) throw new AuthError('not_found', '가입된 이메일을 찾지 못했어요.');
     if (a.provider !== 'email') throw new AuthError('social_account', `${SOCIAL_LABEL[a.provider as SocialProvider]} 로그인으로 가입한 계정이에요. 소셜 로그인을 이용해 주세요.`);

@@ -40,7 +40,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const enter = useCallback(async (acc: Account | null) => {
     setStorageScope(acc?.id ?? null);
     setFortune(null);
-    setUser(acc ? await storage.getUser() : null);
+    let u = acc ? await storage.getUser() : null;
+    // 마스터 계정은 처음 로그인할 때 기본 프로필을 만들어 바로 홈으로 간다
+    if (acc?.master && !u) {
+      u = { id: 'local-master', nickname: '마스터', birthDate: '1995-03-15', birthTime: '09:30', gender: 'female', mbti: 'ENFP', bloodType: 'O', interests: [], createdAt: new Date().toISOString() };
+      await storage.saveUser(u);
+    }
+    setUser(u);
     setAccount(acc);
   }, []);
 

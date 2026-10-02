@@ -43,3 +43,6 @@ yarn-error.*
 
 # local tooling
 .claude/
+
+# 마스터 계정 정보 (로컬 전용)
+MASTER_ACCOUNT.local.md

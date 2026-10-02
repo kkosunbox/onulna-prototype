@@ -148,7 +148,7 @@ export default function MyPageScreen() {
 
       <SectionHeader title="계정" />
       <Card style={s.group}>
-        <Row icon="user" label="로그인 방법" value={account ? providerLabel(account.provider) : '-'} />
+        <Row icon="user" label="로그인 방법" value={account ? (account.master ? '관리자(마스터)' : providerLabel(account.provider)) : '-'} />
         <Row icon="mail" label="이메일" value={account?.email ?? '제공 안 함'} last />
       </Card>
       <View style={s.accountActions}>
