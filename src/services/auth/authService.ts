@@ -8,7 +8,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { hashString } from '../../utils/seed';
 
-export type AuthProviderKind = 'email' | 'kakao' | 'naver';
+export type AuthProviderKind = 'email' | SocialProvider;
+export type SocialProvider = 'kakao' | 'naver' | 'apple' | 'google';
+export const SOCIAL_LABEL: Record<SocialProvider, string> = { kakao: '카카오', naver: '네이버', apple: 'Apple', google: 'Google' };
 
 export interface Account {
   id: string;
@@ -33,7 +35,7 @@ export interface AuthService {
   currentAccount(): Promise<Account | null>;
   signUp(input: SignUpInput): Promise<Account>;
   signIn(email: string, password: string): Promise<Account>;
-  signInWithProvider(provider: 'kakao' | 'naver', profile: { name: string; email: string | null }): Promise<Account>;
+  signInWithProvider(provider: SocialProvider, profile: { name: string; email: string | null }): Promise<Account>;
   /** 재설정 인증번호 발송. 데모에서는 화면에 보여줄 인증번호를 돌려준다 */
   requestPasswordReset(email: string): Promise<{ demoCode: string }>;
   resetPassword(email: string, code: string, newPassword: string): Promise<void>;
@@ -96,7 +98,7 @@ export const localAuth: AuthService = {
     const e = normEmail(email);
     const a = (await readAccounts()).find(x => x.email === e);
     if (!a) throw new AuthError('not_found', '가입된 이메일을 찾지 못했어요.');
-    if (a.provider !== 'email') throw new AuthError('social_account', `${a.provider === 'kakao' ? '카카오' : '네이버'} 로그인으로 가입한 계정이에요. 소셜 로그인을 이용해 주세요.`);
+    if (a.provider !== 'email') throw new AuthError('social_account', `${SOCIAL_LABEL[a.provider as SocialProvider]} 로그인으로 가입한 계정이에요. 소셜 로그인을 이용해 주세요.`);
     const code = String(Math.floor(100000 + Math.random() * 900000));
     await AsyncStorage.setItem(K.reset, JSON.stringify({ email: e, code, exp: Date.now() + RESET_TTL_MS }));
     return { demoCode: code };
@@ -129,4 +131,4 @@ export const authService: AuthService = localAuth;
 export const isEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.trim());
 /** 8자 이상, 영문과 숫자를 모두 포함 */
 export const isStrongPassword = (p: string) => p.length >= 8 && /[A-Za-z]/.test(p) && /\d/.test(p);
-export const providerLabel = (p: AuthProviderKind) => ({ email: '이메일', kakao: '카카오', naver: '네이버' })[p];
+export const providerLabel = (p: AuthProviderKind) => (p === 'email' ? '이메일' : SOCIAL_LABEL[p]);

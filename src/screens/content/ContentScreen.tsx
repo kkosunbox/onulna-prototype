@@ -1,0 +1,144 @@
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Screen from '../../components/Screen';
+import Card from '../../components/Card';
+import Icon from '../../components/Icon';
+import Ico from '../../components/Ico';
+import PressableScale from '../../components/PressableScale';
+import PrimaryButton from '../../components/PrimaryButton';
+import Disclaimer from '../../components/Disclaimer';
+import { Coin, Pill, PriceTag, SubHead } from '../../components/premium/Kit';
+import { useApp } from '../../context/AppContext';
+import { usePremium } from '../../context/PremiumContext';
+import { BUNDLE, ITEMS, fmtP } from '../../services/premium/catalog';
+import { inviteUrl, shareLink } from '../../services/share/linkShare';
+import { PremiumKey, defaultItem, openPremium } from '../../navigation/premium';
+import { colors } from '../../theme/colors';
+import { fonts, radius, txt } from '../../theme/typography';
+
+type Entry = [PremiumKey, string, string, string];
+const LIST: [string, Entry[]][] = [
+  ['나의 인생 지도', [['life', '圖', '평생운', '초년 · 중년 · 말년 · 10년 대운'], ['sajuDeep', '命', '상세 사주 해석', '원국 · 오행 · 나의 본성']]],
+  ['올해와 이달', [['newyear', '年', '신년운세', '올해 · 새해 미리보기 · 분기 전략'], ['monthly', '月', '월별 상세운세', '달력 · 좋은 날 · 이달의 미션']]],
+  ['테마 운세', [['theme-love', '緣', '연애·결혼', '연애 스타일 · 인연의 해'], ['theme-money', '財', '재물', '돈 성향 · 재물 흐름'], ['theme-career', '業', '직업·적성', '맞는 일 · 커리어 상승기']]],
+  ['도구', [['lucky', '日', '길일 찾기', '이사 · 계약 · 고백 · 면접']]],
+];
+
+/** 콘텐츠 탭 — 무료로 즐기고(공유) → 궁금한 건 프리미엄으로 */
+export default function ContentScreen() {
+  const nav = useNavigation();
+  const { user, today } = useApp();
+  const { points, owned, openUnlock, toast } = usePremium();
+  if (!user) return null;
+  const bOwned = owned(BUNDLE.key);
+
+  const invite = async () => {
+    const r = await shareLink(`${user.nickname}님이 궁합을 보자고 해요 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, inviteUrl(user));
+    if (r === 'copied') toast('초대 링크를 복사했어요. 친구에게 보내 보세요');
+  };
+
+  const FREE: [string, string, string, () => void][] = [
+    ['性', '찰떡 MBTI', '나와 가장 잘 맞는 유형', () => nav.navigate('MbtiMatch')],
+    ['命', '사주 캐릭터', '60가지 중 나는 누구?', () => nav.navigate('Character')],
+    ['符', '오늘의 부적', '매일 바뀌는 행운 카드', () => nav.navigate('Talisman')],
+    ['和', '친구 궁합 초대', '링크 하나로 궁합 보기', invite],
+  ];
+
+  return (
+    <Screen largeTitle="콘텐츠" right={undefined}>
+      <PressableScale onPress={() => nav.navigate('Wallet')} style={s.points} scaleTo={0.98}>
+        <Coin size={18} />
+        <Text style={{ fontSize: 14, fontWeight: '700', color: colors.purple }}>{fmtP(points)}</Text>
+        <Text style={[txt.small, { flex: 1 }]}>· 출석하고 매일 10P 받기</Text>
+        <Icon name="chevronRight" size={16} color={colors.inkMute} />
+      </PressableScale>
+
+      <SubHead title="무료로 즐기기" caption="결과를 친구에게 공유해 보세요" />
+      <View style={s.grid}>
+        {FREE.map(([ch, t, d, go]) => (
+          <PressableScale key={t} onPress={go} style={s.free} scaleTo={0.97} accessibilityLabel={t}>
+            <View style={s.freeHead}>
+              <Ico ch={ch} size={40} />
+              <View style={s.freeTag}><Text style={s.freeTagText}>무료</Text></View>
+            </View>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 12 }}>{t}</Text>
+            <Text style={[txt.small, { marginTop: 2 }]}>{d}</Text>
+          </PressableScale>
+        ))}
+      </View>
+
+      <SubHead title="지금 가장 많이 보는" caption="새로 나온 프리미엄 콘텐츠" />
+      <View style={{ gap: 10 }}>
+        <PressableScale onPress={() => nav.navigate('Spouse')} style={s.hot} scaleTo={0.98}>
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><PriceTag item={ITEMS.spouse()} /></View>
+            <Text style={s.hotTitle}>미래 배우자 리포트</Text>
+            <Text style={s.hotDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
+          </View>
+          <Text style={s.hotHanja}>緣</Text>
+        </PressableScale>
+        <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Compatibility' })} style={s.hot} scaleTo={0.98}>
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '800', color: colors.purple }}>150P</Text></Pill></View>
+            <Text style={s.hotTitle}>그 사람의 속마음</Text>
+            <Text style={s.hotDesc}>궁합을 본 뒤 상대의 마음 온도와 연락하기 좋은 날까지</Text>
+          </View>
+          <Text style={s.hotHanja}>心</Text>
+        </PressableScale>
+      </View>
+
+      <Card style={s.bundle}>
+        <View style={s.bundleTag}><Text style={s.bundleTagText}>{bOwned ? '보유 중' : '21% 할인'}</Text></View>
+        <Text style={[txt.h3, { marginTop: 4 }]}>인생 패키지</Text>
+        <Text style={[txt.small, { marginTop: 2 }]}>{BUNDLE.desc}</Text>
+        {bOwned ? null : (
+          <View style={[s.between, { marginTop: 14 }]}>
+            <Text style={{ fontSize: 13, color: colors.inkMute, textDecorationLine: 'line-through' }}>{fmtP(BUNDLE.orig!)}</Text>
+            <PrimaryButton label={`${fmtP(BUNDLE.cost)}로 모두 열기`} icon={<Coin size={16} />} onPress={() => openUnlock(BUNDLE)} style={{ width: 210 }} />
+          </View>
+        )}
+      </Card>
+
+      {LIST.map(([g, items]) => (
+        <View key={g}>
+          <SubHead title={g} />
+          <Card style={{ paddingVertical: 2, paddingHorizontal: 16 }}>
+            {items.map(([k, e, t, d], i) => (
+              <PressableScale key={k} onPress={() => openPremium(nav, k)} style={[s.lrow, i > 0 && s.line]} scaleTo={0.98} accessibilityLabel={t}>
+                <Ico ch={e} size={40} />
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{t}</Text>
+                  <Text style={txt.small}>{d}</Text>
+                </View>
+                <PriceTag item={defaultItem(k as Exclude<PremiumKey, 'lounge'>, today)} />
+              </PressableScale>
+            ))}
+          </Card>
+        </View>
+      ))}
+      <Disclaimer compact />
+    </Screen>
+  );
+}
+
+const s = StyleSheet.create({
+  points: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  free: { width: '48%', flexGrow: 1, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  freeHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  freeTag: { paddingHorizontal: 7, paddingVertical: 3, borderRadius: 6, backgroundColor: colors.okBg },
+  freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
+  hot: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
+  hotTitle: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.white, marginTop: 10 },
+  hotDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
+  hotHanja: { fontFamily: fonts.serif, fontSize: 44, color: colors.moon, marginLeft: 12 },
+  newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
+  newText: { fontSize: 10, fontWeight: '800', color: colors.white },
+  bundle: { marginTop: 24, borderWidth: 1.5, borderColor: colors.purpleSoft },
+  bundleTag: { position: 'absolute', top: -9, left: 16, backgroundColor: colors.seal, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
+  bundleTagText: { color: colors.white, fontSize: 10, fontWeight: '800' },
+  between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
+  line: { borderTopWidth: 1, borderTopColor: colors.line },
+});

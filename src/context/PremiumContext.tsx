@@ -3,7 +3,8 @@
  * 결제는 미리보기용(실제 결제 없음). 저장은 AsyncStorage, 프로필 초기화 시 함께 지워진다.
  */
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Animated, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
+import BottomSheet from '../components/BottomSheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApp } from './AppContext';
@@ -154,22 +155,7 @@ export function usePremium() {
   return v;
 }
 
-/* ---------- 바텀시트 · 토스트 ---------- */
-function BottomSheet({ visible, onClose, children }: { visible: boolean; onClose(): void; children: React.ReactNode }) {
-  const insets = useSafeAreaInsets();
-  return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
-      <View style={s.modalRoot}>
-        <Pressable style={s.backdrop} onPress={onClose} accessibilityLabel="닫기" />
-        <View style={[s.sheet, { paddingBottom: 18 + insets.bottom }]} accessibilityViewIsModal>
-          <View style={s.grab} />
-          {children}
-        </View>
-      </View>
-    </Modal>
-  );
-}
-
+/* ---------- 시트 내용 · 토스트 ---------- */
 function SumRow({ label, value, color }: { label: string; value: string; color?: string }) {
   return (
     <View style={s.sumRow}>
@@ -231,10 +217,6 @@ function Toast({ msg }: { msg: string }) {
 }
 
 const s = StyleSheet.create({
-  modalRoot: { flex: 1, justifyContent: 'flex-end', alignItems: 'center' },
-  backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(20,18,14,0.45)' },
-  sheet: { width: '100%', maxWidth: 430, backgroundColor: colors.card, borderTopLeftRadius: 18, borderTopRightRadius: 18, paddingTop: 10, paddingHorizontal: 20 },
-  grab: { alignSelf: 'center', width: 40, height: 5, borderRadius: 3, backgroundColor: colors.lineStrong, marginBottom: 16 },
   center: { textAlign: 'center' },
   sumBox: { backgroundColor: colors.cream, borderRadius: radius.lg, padding: 16, marginTop: 18, marginBottom: 12, gap: 10 },
   sumRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },

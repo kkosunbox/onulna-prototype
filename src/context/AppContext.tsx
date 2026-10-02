@@ -2,8 +2,9 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { DailyFortune, User } from '../types';
 import { setStorageScope, storage } from '../services/storage/storageService';
 import { getDailyFortune } from '../services/fortune/fortuneService';
-import { Account, SignUpInput, authService } from '../services/auth/authService';
+import { Account, SignUpInput, SocialProvider, authService } from '../services/auth/authService';
 import { todayISO } from '../utils/date';
+import { captureInvite } from '../services/share/linkShare';
 
 interface AppState {
   booting: boolean;
@@ -19,7 +20,7 @@ interface AppState {
   resetProfile(): Promise<void>;
   signIn(email: string, password: string): Promise<void>;
   signUp(input: SignUpInput): Promise<void>;
-  signInWithProvider(provider: 'kakao' | 'naver', profile: { name: string; email: string | null }): Promise<void>;
+  signInWithProvider(provider: SocialProvider, profile: { name: string; email: string | null }): Promise<void>;
   signOut(): Promise<void>;
   deleteAccount(): Promise<void>;
 }
@@ -45,6 +46,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     (async () => {
+      await captureInvite();
       const [ob, acc] = await Promise.all([storage.getOnboarded(), authService.currentAccount()]);
       setOnboarded(ob);
       await enter(acc);

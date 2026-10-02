@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { TabParamList } from '../navigation/types';
+import CrushView from '../components/premium/Crush';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Screen from '../components/Screen';
@@ -22,7 +25,7 @@ import { ITEMS } from '../services/premium/catalog';
 import { generateReport, reportAvailable } from '../services/report/reportService';
 import { getCompatibilityEngine } from '../services/fortune/compatibilityService';
 import { storage } from '../services/storage/storageService';
-import { BloodType, CompatibilityResult, Gender, MBTI } from '../types';
+import { BloodType, CompatibilityResult, Gender, MBTI, PartnerInput } from '../types';
 import { MBTI_LIST } from '../data/mbtiData';
 import { isValidDate } from '../utils/date';
 import { analysisTheme, colors, gradients } from '../theme/colors';
@@ -65,17 +68,25 @@ export default function CompatibilityScreen() {
   const hourOk = hh === '' || (+hh >= 0 && +hh <= 23);
   const ok = !!name.trim() && dateOk && !!gender && !!mbti && !!blood && hourOk;
 
-  const analyze = async () => {
-    if (!user || !ok) return;
-    const r = await getCompatibilityEngine().analyze(user, {
+  const run = async (partner: PartnerInput) => {
+    if (!user) return;
+    const r = await getCompatibilityEngine().analyze(user, partner);
+    await storage.saveCompatibility(r);
+    setResult(r);
+  };
+  const analyze = () => {
+    if (!ok) return;
+    run({
       nickname: name.trim(),
       birthDate: `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`,
       birthTime: hh ? `${hh.padStart(2, '0')}:00` : null,
       gender: gender!, mbti: mbti!, bloodType: blood!,
     });
-    await storage.saveCompatibility(r);
-    setResult(r);
   };
+
+  // 친구 초대 링크로 들어오면 상대 정보로 바로 궁합을 계산한다
+  const { params } = useRoute<RouteProp<TabParamList, 'Compatibility'>>();
+  useEffect(() => { if (params?.partner) run(params.partner); }, [params?.partner]);
 
   if (!user) return null;
 
@@ -132,6 +143,12 @@ export default function CompatibilityScreen() {
               <ReportArea rk={rk} item={item} basis={<CompatDeep u={user} r={result} today={today} />} />
             </>
           );
+        })()}
+
+        {(() => {
+          const item = ITEMS.crush(result.target.nickname, result.target.birthDate);
+          if (!owned(item.key)) return <PriceCard item={item} />;
+          return <CrushView u={user} r={result} today={today} />;
         })()}
 
         <PrimaryButton label="다른 사람과 궁합 보기" variant="soft" onPress={() => setResult(null)} style={{ marginTop: 24 }} />

@@ -30,6 +30,8 @@ export const ITEMS = {
     const P = PURPOSE.find(p => p[0] === pk)!;
     return { key: 'lucky-' + pk, title: P[2] + ' 길일 TOP 5', cost: 50, scope: '7일 동안 볼 수 있어요', until: addDays(today, 7), desc: 'TOP 5 상세 이유 · 귀인일 · 피해야 할 날 · 당일 팁' };
   },
+  spouse: (): Item => ({ key: 'spouse', title: '미래 배우자 리포트', cost: 300, scope: '한 번 열면 계속 볼 수 있어요', desc: '배우자의 성격 · 외모 분위기 · 찰떡 MBTI와 띠 · 만나는 시기와 장소 · 첫 만남 · 인연을 끌어오는 법' }),
+  crush: (name: string, birthDate: string): Item => ({ key: 'crush-' + name + '-' + birthDate, title: name + '님의 속마음', cost: 150, scope: '이 상대의 속마음은 계속 볼 수 있어요', desc: '나를 향한 마음 온도 · 나를 어떤 사람으로 느끼는지 · 3개월 관계 흐름 · 연락하기 좋은 날 · 다가가는 법' }),
   compat: (name: string, birthDate: string): Item => ({
     key: 'compat-' + name + '-' + birthDate, title: name + '님과 심층 궁합', cost: 150, scope: '이 상대와의 궁합은 계속 볼 수 있어요',
     desc: '11개 섹션 궁합 리포트 · 끌림 · 성격 · 대화 · 연애 · 결혼 · 금전 · 갈등과 화해 · 서로에게 보내는 편지',
@@ -42,9 +44,9 @@ export const BUNDLE: Item = {
 };
 
 export const PRICE_TABLE: [string, string][] = [
-  ['오늘의 운세 · 4가지 분석 · 종합', '무료'], ['주간 운세 · 기본 궁합', '무료'], ['월별 상세운세', '100P / 월'], ['신년운세', '300P / 해'],
+  ['오늘의 운세 · 4가지 분석 · 종합', '무료'], ['주간 운세 · 기본 궁합', '무료'], ['찰떡 MBTI · 사주 캐릭터 · 오늘의 부적', '무료'], ['월별 상세운세', '100P / 월'], ['신년운세', '300P / 해'],
   ['상세 사주 해석', '300P · 소장'], ['평생운 · 10년 대운', '500P · 소장'], ['테마 운세 (연애 · 재물 · 직업)', '각 200P · 소장'],
-  ['심층 궁합', '150P / 상대 1명'], ['길일 찾기', '50P / 목적별 7일'], ['인생 패키지', '1,100P (1,400P → 21% 할인)'],
+  ['심층 궁합', '150P / 상대 1명'], ['그 사람의 속마음', '150P / 상대 1명'], ['미래 배우자 리포트', '300P · 소장'], ['길일 찾기', '50P / 목적별 7일'], ['인생 패키지', '1,100P (1,400P → 21% 할인)'],
 ];
 
 export const fmtP = (n: number) => n.toLocaleString('ko-KR') + 'P';

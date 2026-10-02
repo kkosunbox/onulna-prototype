@@ -1,28 +1,29 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { AnalysisResult } from '../types';
+import { AnalysisResult, PartnerInput } from '../types';
 import { CategoryKey } from '../theme/colors';
 import { ThemeKind } from '../services/premium/catalog';
 
 export type TabParamList = {
   Home: undefined;
   Fortune: undefined;
-  Compatibility: undefined;
+  Content: undefined;
+  Compatibility: { partner?: PartnerInput } | undefined;
   MyPage: undefined;
 };
 
 export type RootStackParamList = {
   Onboarding: undefined;
   Login: undefined;
+  EmailLogin: undefined;
   SignUp: undefined;
   FindPassword: undefined;
-  SocialLogin: { provider: 'kakao' | 'naver' };
+  SocialLogin: { provider: 'kakao' | 'naver' | 'apple' | 'google' };
   ProfileSetup: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
   CategoryDetail: { category: CategoryKey };
   AnalysisDetail: { source: AnalysisResult['source'] };
   CombinedAnalysis: undefined;
   Share: undefined;
-  PremiumHub: undefined;
   Wallet: undefined;
   SajuDeep: undefined;
   Life: undefined;
@@ -30,6 +31,10 @@ export type RootStackParamList = {
   Monthly: { y: number; m: number } | undefined;
   Theme: { kind: ThemeKind };
   Lucky: undefined;
+  MbtiMatch: undefined;
+  Character: undefined;
+  Talisman: undefined;
+  Spouse: undefined;
 };
 
 declare global {

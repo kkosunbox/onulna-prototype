@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -16,33 +16,24 @@ import Icon from '../components/Icon';
 import Reveal from '../components/Reveal';
 import HomeSkeleton from '../components/Skeleton';
 import Disclaimer from '../components/Disclaimer';
-import { Coin, PriceTag, Seal } from '../components/premium/Kit';
+import { Coin, PriceTag } from '../components/premium/Kit';
 import { usePremium } from '../context/PremiumContext';
-import { PremiumKey, defaultItem, openPremium } from '../navigation/premium';
 import { ITEMS } from '../services/premium/catalog';
-import { LinearGradient } from 'expo-linear-gradient';
-import { colors, gradients } from '../theme/colors';
-import { radius, SCREEN_PX, shadow, txt } from '../theme/typography';
+import { mbtiMatches, sajuCharacter, todayTalisman } from '../services/content/freeContent';
+import { clearPendingInvite, getPendingInvite, inviteUrl, shareLink } from '../services/share/linkShare';
+import { PartnerInput } from '../types';
+import { colors } from '../theme/colors';
+import { fonts, radius, SCREEN_PX, txt } from '../theme/typography';
 import { formatKoreanDate } from '../utils/date';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
-const PREMIUM_TILES = (today: string) => {
-  const ny = Number(today.slice(0, 4)) + 1;
-  return ([
-    ['life', '圖', '평생운', '초년 · 중년 · 말년'],
-    ['newyear', '年', '신년운세', `${ny}년 미리보기`],
-    ['monthly', '月', '월별 상세운세', '달력과 좋은 날'],
-    ['lucky', '日', '길일 찾기', '이사 · 계약 · 고백'],
-  ] as [Exclude<PremiumKey, 'lounge'>, string, string, string][]).map(([key, ch, title, desc]) => ({
-    key, ch, title, desc, item: key === 'newyear' ? ITEMS.newyear(ny) : defaultItem(key, today),
-  }));
-};
-
 export default function HomeScreen() {
   const nav = useNavigation<Nav>();
   const { user, fortune, today, fortuneLoading, refreshFortune } = useApp();
-  const { points } = usePremium();
+  const { points, toast } = usePremium();
+  const [invite, setInvite] = useState<PartnerInput | null>(null);
+  useEffect(() => { getPendingInvite().then(setInvite); }, []);
 
   const top = (
     <View style={s.topBar}>
@@ -69,6 +60,28 @@ export default function HomeScreen() {
   }
   const f = fortune.combined;
   const a = fortune.analyses;
+  const tal = todayTalisman(user, today);
+  const match = mbtiMatches(user.mbti).best[0];
+  const ch = sajuCharacter(user);
+
+  const sendInvite = async () => {
+    const r = await shareLink(`${user.nickname}님이 궁합을 보자고 해요 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, inviteUrl(user));
+    if (r === 'copied') toast('초대 링크를 복사했어요. 친구에게 보내 보세요');
+  };
+  const openInvite = async () => {
+    if (!invite) return;
+    await clearPendingInvite();
+    setInvite(null);
+    nav.navigate('Tabs', { screen: 'Compatibility', params: { partner: invite } });
+  };
+
+  // 오늘의 무료 콘텐츠 — 결과의 일부를 미리 보여줘 누르고 싶게
+  const FREE: { k: string; big: string; title: string; sub: string; go(): void; tone?: 'paper' }[] = [
+    { k: 'tal', big: tal.hanja, title: '오늘의 부적', sub: tal.keyword, go: () => nav.navigate('Talisman'), tone: 'paper' },
+    { k: 'mbti', big: match.type, title: '찰떡 MBTI', sub: `${match.nickname} · ${match.score}점`, go: () => nav.navigate('MbtiMatch') },
+    { k: 'char', big: ch.hanja, title: '사주 캐릭터', sub: ch.name, go: () => nav.navigate('Character') },
+    { k: 'inv', big: '和', title: '친구 궁합 초대', sub: '링크로 보내기', go: sendInvite },
+  ];
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }} edges={['top']}>
@@ -78,27 +91,43 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={fortuneLoading} onRefresh={() => refreshFortune()} tintColor={colors.purple} />}
       >
-        {/* 첫 화면: 인사 → 히어로 한 장에 오늘의 모든 핵심 */}
         <Reveal>
           <Text style={txt.title}>{user.nickname}님의 오늘</Text>
           <Text style={[txt.small, { marginTop: 2, marginBottom: 16 }]}>{formatKoreanDate(today)}</Text>
         </Reveal>
+
+        {invite ? (
+          <PressableScale onPress={openInvite} style={s.invite} scaleTo={0.98} accessibilityLabel={`${invite.nickname}님과 궁합 보기`}>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 26, color: colors.seal }}>和</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{invite.nickname}님이 궁합을 신청했어요</Text>
+              <Text style={txt.small}>눌러서 둘의 궁합 결과 바로 보기</Text>
+            </View>
+            <Icon name="chevronRight" size={18} color={colors.inkMute} />
+          </PressableScale>
+        ) : null}
+
         <Reveal delay={90}>
-          <TodayHero
-            fortune={f}
-            onOpenStory={() => nav.navigate('CombinedAnalysis')}
-            onOpenCategory={c => nav.navigate('CategoryDetail', { category: c })}
-          />
+          <TodayHero fortune={f} onOpenStory={() => nav.navigate('CombinedAnalysis')} onOpenCategory={c => nav.navigate('CategoryDetail', { category: c })} />
         </Reveal>
         <Reveal delay={180} style={{ marginTop: 12 }}>
           <LuckyStrip f={f} />
         </Reveal>
 
-        {/* 행동 조언 */}
         <SectionHeader title="오늘의 행동" />
         <ActionTabs good={f.goodActions} avoid={f.avoidActions} />
 
-        {/* 4가지 관점 */}
+        <SectionHeader title="무료로 즐기기" caption="결과를 친구에게 공유해 보세요" action="전체 보기" onAction={() => nav.navigate('Tabs', { screen: 'Content' })} />
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -SCREEN_PX }} contentContainerStyle={{ paddingHorizontal: SCREEN_PX, gap: 10 }}>
+          {FREE.map(x => (
+            <PressableScale key={x.k} onPress={x.go} style={[s.freeCard, x.tone === 'paper' && s.paper]} scaleTo={0.96} accessibilityLabel={x.title}>
+              <Text style={[s.freeBig, x.tone === 'paper' && { color: '#A5321F' }]} numberOfLines={1}>{x.big}</Text>
+              <Text style={[s.freeTitle, x.tone === 'paper' && { color: '#3A2410' }]}>{x.title}</Text>
+              <Text style={[txt.caption, x.tone === 'paper' && { color: '#7A5A2A' }]} numberOfLines={1}>{x.sub}</Text>
+            </PressableScale>
+          ))}
+        </ScrollView>
+
         <SectionHeader title="4가지 관점" caption="오늘의 운세는 이렇게 만들어졌어요" action="종합 보기" onAction={() => nav.navigate('CombinedAnalysis')} />
         <View style={s.grid}>
           <View style={s.gridRow}>
@@ -111,40 +140,22 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <PressableScale onPress={() => nav.navigate('CombinedAnalysis')} style={s.story} accessibilityLabel="네 가지 결과를 엮은 이야기 보기">
+        <SectionHeader title="더 깊이 보기" caption="앞부분은 무료로 미리 볼 수 있어요" />
+        <PressableScale onPress={() => nav.navigate('Spouse')} style={s.premium} scaleTo={0.985} accessibilityLabel="미래 배우자 리포트">
           <View style={{ flex: 1 }}>
-            <Text style={s.storyTitle}>네 가지 결과를 엮은 이야기</Text>
-            <Text style={s.storySub}>공통 키워드 {f.commonKeywords.length || 1}개 · 오늘의 한 문단</Text>
+            <View style={{ flexDirection: 'row', gap: 6 }}>
+              <View style={s.newTag}><Text style={s.newText}>NEW</Text></View>
+              <PriceTag item={ITEMS.spouse()} />
+            </View>
+            <Text style={s.premiumTitle}>미래 배우자 리포트</Text>
+            <Text style={s.premiumDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
           </View>
-          <View style={s.storyArrow}><Icon name="chevronRight" size={18} color={colors.white} strokeWidth={2.2} /></View>
+          <Text style={{ fontFamily: fonts.serif, fontSize: 44, color: colors.moon }}>緣</Text>
         </PressableScale>
-
-        {/* 프리미엄 콘텐츠 — 앞부분은 무료 미리보기 */}
-        <SectionHeader title="더 깊이 보기" caption="앞부분은 무료로 미리 볼 수 있어요" action="전체 보기" onAction={() => nav.navigate('PremiumHub')} />
-        <PressableScale onPress={() => nav.navigate('PremiumHub')} style={[s.premiumWrap, shadow.hero]} scaleTo={0.985} accessibilityLabel="프리미엄 콘텐츠 보기">
-          <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.premium}>
-            <Text style={{ fontSize: 28, color: colors.moon, fontWeight: '700' }}>圖</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 16, fontWeight: '700', color: colors.white }}>프리미엄 콘텐츠</Text>
-              <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)' }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>
-            </View>
-            <Icon name="chevronRight" size={18} color={colors.white} strokeWidth={2.2} />
-          </LinearGradient>
+        <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Content' })} style={s.allLink} scaleTo={0.98}>
+          <Text style={{ fontSize: 14, fontWeight: '600', color: colors.purple }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>
+          <Icon name="chevronRight" size={16} color={colors.purple} />
         </PressableScale>
-        <View style={[s.grid, { marginTop: 12 }]}>
-          {[0, 2].map(r => (
-            <View key={r} style={s.gridRow}>
-              {PREMIUM_TILES(today).slice(r, r + 2).map(t => (
-                <PressableScale key={t.key} onPress={() => (t.key === 'newyear' ? nav.navigate('NewYear', { year: Number(today.slice(0, 4)) + 1 }) : openPremium(nav, t.key))} style={s.ptile} accessibilityLabel={t.title}>
-                  <Seal ch={t.ch} size={40} />
-                  <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 12 }}>{t.title}</Text>
-                  <Text style={[txt.small, { marginTop: 2 }]}>{t.desc}</Text>
-                  <View style={{ position: 'absolute', top: 14, right: 14 }}><PriceTag item={t.item} /></View>
-                </PressableScale>
-              ))}
-            </View>
-          ))}
-        </View>
 
         <Disclaimer />
       </ScrollView>
@@ -155,15 +166,19 @@ export default function HomeScreen() {
 const s = StyleSheet.create({
   topBar: { height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: SCREEN_PX, paddingRight: 10 },
   iconBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  grid: { gap: 12 },
-  gridRow: { flexDirection: 'row', gap: 12 },
-  story: { marginTop: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: colors.lavenderSoft, borderRadius: radius.lg, padding: 18, borderWidth: 1, borderColor: colors.lavender },
-  storyTitle: { fontSize: 15, fontWeight: '700', color: colors.purple, letterSpacing: -0.3 },
-  storySub: { fontSize: 12, color: colors.purpleSoft, marginTop: 3 },
   ptPill: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
   ptText: { fontSize: 13, fontWeight: '800', color: colors.purple },
-  premiumWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  premium: { borderRadius: radius.lg, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14 },
-  ptile: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, padding: 16, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, ...shadow.card },
-  storyArrow: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  invite: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16, marginBottom: 12, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
+  grid: { gap: 12 },
+  gridRow: { flexDirection: 'row', gap: 12 },
+  freeCard: { width: 132, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  paper: { backgroundColor: '#EED9A4', borderColor: '#D9BE7E' },
+  freeBig: { fontFamily: fonts.serif, fontSize: 30, fontWeight: '600', color: colors.purple, lineHeight: 38 },
+  freeTitle: { fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 10 },
+  premium: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
+  premiumTitle: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.white, marginTop: 10 },
+  premiumDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
+  newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
+  newText: { fontSize: 10, fontWeight: '800', color: colors.white },
+  allLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
 });

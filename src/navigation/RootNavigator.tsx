@@ -12,6 +12,7 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import ProfileSetupScreen from '../screens/ProfileSetupScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
+import EmailLoginScreen from '../screens/auth/EmailLoginScreen';
 import FindPasswordScreen from '../screens/auth/FindPasswordScreen';
 import SocialLoginScreen from '../screens/auth/SocialLoginScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -22,7 +23,11 @@ import CategoryDetailScreen from '../screens/CategoryDetailScreen';
 import AnalysisDetailScreen from '../screens/AnalysisDetailScreen';
 import CombinedAnalysisScreen from '../screens/CombinedAnalysisScreen';
 import ShareScreen from '../screens/ShareScreen';
-import PremiumHubScreen from '../screens/premium/PremiumHubScreen';
+import ContentScreen from '../screens/content/ContentScreen';
+import MbtiMatchScreen from '../screens/content/MbtiMatchScreen';
+import CharacterScreen from '../screens/content/CharacterScreen';
+import TalismanScreen from '../screens/content/TalismanScreen';
+import SpouseScreen from '../screens/content/SpouseScreen';
 import WalletScreen from '../screens/premium/WalletScreen';
 import SajuDeepScreen from '../screens/premium/SajuDeepScreen';
 import LifeScreen from '../screens/premium/LifeScreen';
@@ -40,6 +45,7 @@ function MainTabs() {
     <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={p => <BottomNavigation {...p} />}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Fortune" component={FortuneScreen} />
+      <Tab.Screen name="Content" component={ContentScreen} />
       <Tab.Screen name="Compatibility" component={CompatibilityScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
     </Tab.Navigator>
@@ -74,6 +80,7 @@ export default function RootNavigator() {
         ) : !account ? (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="EmailLogin" component={EmailLoginScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
             <Stack.Screen name="SocialLogin" component={SocialLoginScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
@@ -87,7 +94,10 @@ export default function RootNavigator() {
             <Stack.Screen name="AnalysisDetail" component={AnalysisDetailScreen} />
             <Stack.Screen name="CombinedAnalysis" component={CombinedAnalysisScreen} />
             <Stack.Screen name="Share" component={ShareScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
-            <Stack.Screen name="PremiumHub" component={PremiumHubScreen} />
+            <Stack.Screen name="MbtiMatch" component={MbtiMatchScreen} />
+            <Stack.Screen name="Character" component={CharacterScreen} />
+            <Stack.Screen name="Talisman" component={TalismanScreen} />
+            <Stack.Screen name="Spouse" component={SpouseScreen} />
             <Stack.Screen name="Wallet" component={WalletScreen} />
             <Stack.Screen name="SajuDeep" component={SajuDeepScreen} />
             <Stack.Screen name="Life" component={LifeScreen} />

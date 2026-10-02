@@ -5,15 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PressableScale from '../../components/PressableScale';
 import Icon from '../../components/Icon';
 import { Crescent } from '../../components/BrandMark';
-import { CheckRow, DemoNote, SocialButton } from '../../components/auth/AuthKit';
+import { CheckRow, DemoNote, Mark, SocialButton } from '../../components/auth/AuthKit';
 import { useApp } from '../../context/AppContext';
 import { usePremium } from '../../context/PremiumContext';
 import { RootStackParamList } from '../../navigation/types';
+import { SOCIAL_LABEL } from '../../services/auth/authService';
 import { colors } from '../../theme/colors';
 import { radius, txt } from '../../theme/typography';
 
 /**
- * 카카오·네이버 로그인 (데모)
+ * 카카오·네이버·Apple·Google 로그인 (데모)
  * 실제 연동 시 이 화면 대신 각 사의 OAuth 동의 화면이 열리고, 돌아온 인가 코드를 서버에서 토큰으로 바꾼다.
  */
 export default function SocialLoginScreen() {
@@ -21,14 +22,15 @@ export default function SocialLoginScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'SocialLogin'>>();
   const { signInWithProvider } = useApp();
   const { toast } = usePremium();
-  const kakao = params.provider === 'kakao';
-  const brand = kakao ? '카카오' : '네이버';
+  const p = params.provider;
+  const brand = SOCIAL_LABEL[p];
+  const LOGO_BG = { kakao: '#FEE500', naver: '#03C75A', apple: '#000000', google: '#FFFFFF' }[p];
   const [emailOk, setEmailOk] = useState(true);
   const [busy, setBusy] = useState(false);
 
   const agree = async () => {
     setBusy(true);
-    await signInWithProvider(params.provider, { name: kakao ? '카카오 사용자' : '네이버 사용자', email: emailOk ? (kakao ? 'demo@kakao.com' : 'demo@naver.com') : null });
+    await signInWithProvider(p, { name: `${brand} 사용자`, email: emailOk ? `demo@${p === 'apple' ? 'icloud' : p === 'google' ? 'gmail' : p}.com` : null });
     toast(`${brand} 계정으로 로그인했어요`);
   };
 
@@ -41,8 +43,8 @@ export default function SocialLoginScreen() {
       </View>
       <View style={s.body}>
         <View style={s.logos}>
-          <View style={[s.logo, { backgroundColor: kakao ? '#FEE500' : '#03C75A' }]}>
-            <Text style={{ fontSize: 22, fontWeight: '800', color: kakao ? '#191919' : '#fff' }}>{kakao ? 'K' : 'N'}</Text>
+          <View style={[s.logo, { backgroundColor: LOGO_BG }, p === 'google' && { borderWidth: 1, borderColor: '#DADCE0' }]}>
+            <Mark provider={p} size={28} />
           </View>
           <View style={s.dots}>{[0, 1, 2].map(i => <View key={i} style={s.dot} />)}</View>
           <View style={[s.logo, { backgroundColor: colors.heroBg }]}><Crescent size={26} color={colors.moon} cut={colors.heroBg} /></View>

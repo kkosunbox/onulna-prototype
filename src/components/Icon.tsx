@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { colors } from '../theme/colors';
 
-export type IconName = 'home' | 'sparkle' | 'heart' | 'user' | 'share' | 'chevronRight' | 'chevronLeft' | 'bell' | 'crown' | 'refresh' | 'check' | 'close' | 'clock' | 'palette' | 'mail';
+export type IconName = 'home' | 'sparkle' | 'heart' | 'user' | 'share' | 'chevronRight' | 'chevronLeft' | 'bell' | 'crown' | 'refresh' | 'check' | 'close' | 'clock' | 'palette' | 'mail' | 'grid';
 
 const PATHS: Record<IconName, string> = {
   home: 'M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z',
@@ -19,6 +19,7 @@ const PATHS: Record<IconName, string> = {
   close: 'M6 6l12 12 M18 6 6 18',
   clock: 'M12 7.5V12l3 2',
   palette: 'M12 4a8 8 0 1 0 0 16c1.2 0 1.6-1 1-1.9-.7-1 0-2.1 1.2-2.1H17a3 3 0 0 0 3-3c0-5-3.6-9-8-9z',
+  grid: 'M4.5 4.5h6v6h-6z M13.5 4.5h6v6h-6z M4.5 13.5h6v6h-6z M13.5 13.5h6v6h-6z',
   mail: 'M4.5 6.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z M4 7.5l8 6 8-6',
 };
 

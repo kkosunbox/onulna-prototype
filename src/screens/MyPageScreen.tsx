@@ -137,7 +137,7 @@ export default function MyPageScreen() {
             <Text style={{ color: colors.white, fontSize: 14, fontWeight: '700' }}>충전</Text>
           </PressableScale>
         </View>
-        {([['記', '이용 내역 · 요금 안내', () => nav.navigate('Wallet')], ['圖', `프리미엄 콘텐츠 · 보유 ${ownedCount}개`, () => nav.navigate('PremiumHub')]] as const).map(([e, t, go]) => (
+        {([['記', '이용 내역 · 요금 안내', () => nav.navigate('Wallet')], ['圖', `프리미엄 콘텐츠 · 보유 ${ownedCount}개`, () => nav.navigate('Tabs', { screen: 'Content' })]] as const).map(([e, t, go]) => (
           <PressableScale key={e} onPress={go} style={[s.row, s.topBorder]} scaleTo={0.98}>
             <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
             <Text style={[s.rowLabel, { fontWeight: '600' }]}>{t}</Text>

@@ -9,7 +9,7 @@ export type PremiumKey = 'lounge' | 'sajuDeep' | 'life' | 'newyear' | 'monthly' 
 type Nav = Pick<NavigationProp<ParamListBase>, 'navigate'>;
 
 export function openPremium(nav: Nav, key: PremiumKey) {
-  if (key === 'lounge') return nav.navigate('PremiumHub');
+  if (key === 'lounge') return nav.navigate('Tabs', { screen: 'Content' });
   if (key === 'sajuDeep') return nav.navigate('SajuDeep');
   if (key === 'life') return nav.navigate('Life');
   if (key === 'newyear') return nav.navigate('NewYear');
