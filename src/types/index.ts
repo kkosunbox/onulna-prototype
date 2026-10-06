@@ -109,4 +109,6 @@ export interface PeriodFortune {
   summary: string;
   flow: { label: string; score: number }[];
   focus: string;
+  /** 분야별 운세 — 점수 · 풀이 · 가장 좋은 때(요일·주차·달) */
+  cats: Record<'love' | 'money' | 'work' | 'relationship', { score: number; text: string; best: string }>;
 }

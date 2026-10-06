@@ -22,6 +22,10 @@ const TABS: { key: Period; label: string }[] = [
   { key: 'daily', label: '오늘' }, { key: 'weekly', label: '주간' }, { key: 'monthly', label: '월간' }, { key: 'yearly', label: '연간' },
 ];
 const CHART_H = 120;
+const CATS: CategoryKey[] = ['love', 'money', 'work', 'relationship'];
+/** 목록에 가격만 보여주기 위한 대표 상품 */
+const CONSULT_ITEM = { ...ITEMS.consult('preview'), title: '고민 상담 1회' };
+const CRUSH_ITEM = { ...ITEMS.crush('', ''), key: 'crush-preview', title: '그 사람의 속마음' };
 
 function FlowBar({ label, score, best, index }: { label: string; score: number; best: boolean; index: number }) {
   const reduced = useReducedMotion();
@@ -45,6 +49,7 @@ export default function FortuneScreen() {
   const { user, fortune, today } = useApp();
   const nav = useNavigation();
   const [tab, setTab] = useState<Period>('daily');
+  const [open, setOpen] = useState<CategoryKey | null>(null);
   const period = useMemo(() => (user && tab !== 'daily' ? getPeriodFortune(user, today, tab) : null), [user, today, tab]);
   if (!user || !fortune) return null;
   const f = fortune.combined;
@@ -54,9 +59,29 @@ export default function FortuneScreen() {
   const summary = tab === 'daily' ? f.summary : period?.summary ?? '';
   const bestScore = period ? Math.max(...period.flow.map(x => x.score)) : 0;
 
+  // 이 기간에 가장 약한 분야를 먼저 추천하고, 기간에 맞는 유료 콘텐츠를 덧붙인다
+  const scoreOf = (k: CategoryKey) => (tab === 'daily' ? f[k] : period?.cats[k].score ?? 0);
+  const weak = CATS.reduce((a, b) => (scoreOf(b) < scoreOf(a) ? b : a));
+  const { y: ty, m: tm } = parseISO(today);
+  const R = {
+    love: { key: 'theme-love', title: `${label} 연애운이 아쉽다면`, desc: '연애·결혼 운세 · 잘 맞는 사람 · 인연이 오는 해', item: ITEMS.theme('love'), go: () => nav.navigate('Theme', { kind: 'love' }) },
+    money: { key: 'theme-money', title: `${label} 재물운이 아쉽다면`, desc: '재물 운세 · 돈 버는 방식 · 재물이 모이는 시기', item: ITEMS.theme('money'), go: () => nav.navigate('Theme', { kind: 'money' }) },
+    work: { key: 'theme-career', title: `${label} 직장운이 아쉽다면`, desc: '직업·적성 운세 · 커리어 상승기 · 이직 타이밍', item: ITEMS.theme('career'), go: () => nav.navigate('Theme', { kind: 'career' }) },
+    relationship: { key: 'consult', title: '사람 때문에 고민이라면', desc: '말 못 할 고민 상담 · 사주가 익명으로 답해요', item: CONSULT_ITEM, go: () => nav.navigate('Consult') },
+    consult: { key: 'consult', title: '말 못 할 고민 상담', desc: '200자로 털어놓으면 사주가 답해요 · 결론부터 · 행동하기 좋은 날', item: CONSULT_ITEM, go: () => nav.navigate('Consult') },
+    lucky: { key: 'lucky', title: '길일 찾기', desc: '이사 · 계약 · 고백 · 면접하기 좋은 날 TOP 5', item: ITEMS.lucky('move', today), go: () => nav.navigate('Lucky') },
+    crush: { key: 'crush', title: '그 사람의 속마음', desc: '마음 온도 · 연인 가능성 · 연락하기 좋은 날', item: CRUSH_ITEM, go: () => nav.navigate('Tabs', { screen: 'Compatibility' }) },
+    monthly: { key: 'monthly', title: `${tm}월 상세운세`, desc: '운세 달력 · 주차별 흐름 · 좋은 날 활용법 · 이달의 미션', item: ITEMS.monthly(ty, tm), go: () => nav.navigate('Monthly') },
+    newyear: { key: 'newyear', title: `${ty}년 신년운세`, desc: '올해의 사자성어 · 분야별 6대 운세 · 12개월 하나하나', item: ITEMS.newyear(ty), go: () => nav.navigate('NewYear') },
+    life: { key: 'life', title: '평생운 · 10년 대운', desc: '인생 그래프 · 황금기와 위기 · 앞으로 10년', item: ITEMS.life(), go: () => nav.navigate('Life') },
+    spouse: { key: 'spouse', title: '미래 배우자 리포트', desc: '어떤 사람을, 언제, 어디서 만나게 될까?', item: ITEMS.spouse(), go: () => nav.navigate('Spouse') },
+  };
+  const BY_TAB: Record<Period, (keyof typeof R)[]> = { daily: ['consult', 'spouse'], weekly: ['lucky', 'crush'], monthly: ['monthly', 'lucky'], yearly: ['newyear', 'life'] };
+  const recs = [R[weak], ...BY_TAB[tab].map(k => R[k])].filter((r, i, a) => a.findIndex(x => x.key === r.key) === i).slice(0, 3);
+
   return (
     <Screen largeTitle="운세">
-      <Segmented<Period> options={TABS} value={tab} onChange={setTab} />
+      <Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
 
       <Card style={s.summary}>
         <ScoreRing key={tab} score={score} size={84} stroke={7} color={colors.purpleSoft} track={colors.lavenderSoft} textColor={colors.purple} />
@@ -69,18 +94,25 @@ export default function FortuneScreen() {
         </View>
       </Card>
 
-      {tab === 'daily' ? (
-        <>
-          <SectionHeader title="분야별 운세" />
-          <Card style={{ paddingVertical: 4 }}>
-            {(['love', 'money', 'work', 'relationship'] as CategoryKey[]).map((k, i) => (
-              <View key={k} style={i > 0 ? s.border : null}>
-                <CategoryRow category={k} score={f[k]} text={f.categoryTexts[k]} delay={i * 80} onPress={() => nav.navigate('CategoryDetail', { category: k })} />
-              </View>
-            ))}
-          </Card>
-        </>
-      ) : period ? (
+      <SectionHeader title={`${label} 분야별 운세`} caption={tab === 'daily' ? '눌러서 자세히 보기' : '눌러서 풀이 펼치기'} />
+      <Card style={{ paddingVertical: 4 }}>
+        {CATS.map((k, i) => {
+          const c = tab === 'daily' ? { score: f[k], text: f.categoryTexts[k], best: '' } : period?.cats[k];
+          if (!c) return null;
+          return (
+            <View key={`${tab}-${k}`} style={i > 0 ? s.border : null}>
+              <CategoryRow
+                category={k} score={c.score} text={c.text} delay={i * 80}
+                badge={c.best ? `${c.best}${tab === 'weekly' ? '요일' : ''} 최고` : undefined}
+                lines={tab !== 'daily' && open === k ? 4 : 1}
+                onPress={() => (tab === 'daily' ? nav.navigate('CategoryDetail', { category: k }) : setOpen(open === k ? null : k))}
+              />
+            </View>
+          );
+        })}
+      </Card>
+
+      {period ? (
         <>
           <SectionHeader title={tab === 'weekly' ? '요일별 흐름' : tab === 'monthly' ? '주차별 흐름' : '월별 흐름'} />
           <Card style={s.chart}>
@@ -88,15 +120,13 @@ export default function FortuneScreen() {
               <FlowBar key={`${tab}-${x.label}`} label={x.label} score={x.score} best={x.score === bestScore} index={i} />
             ))}
           </Card>
-          {tab === 'yearly' ? (
-            <LockCard title="신년운세 보기" desc="올해의 사자성어 · 띠 궁합 · 분기 전략 · 새해 미리보기" item={ITEMS.newyear(parseISO(today).y)} onPress={() => nav.navigate('NewYear')} />
-          ) : tab === 'weekly' ? (
-            <LockCard title="길일 찾기" desc="이사 · 계약 · 고백 · 면접하기 좋은 날" item={ITEMS.lucky('move', today)} onPress={() => nav.navigate('Lucky')} />
-          ) : (
-            <LockCard title={`${parseISO(today).m}월 상세운세 보기`} desc="운세 달력 · 4가지 관점 · 좋은 날 · 이달의 미션" item={ITEMS.monthly(parseISO(today).y, parseISO(today).m)} onPress={() => nav.navigate('Monthly')} />
-          )}
         </>
       ) : null}
+
+      <SectionHeader title="더 깊이 보기" caption={`${label}의 흐름에 맞춰 골랐어요`} />
+      {recs.map((r, i) => (
+        <LockCard key={r.key} title={r.title} desc={r.desc} item={r.item} onPress={r.go} mt={i === 0 ? 0 : 10} />
+      ))}
       <Disclaimer />
     </Screen>
   );
