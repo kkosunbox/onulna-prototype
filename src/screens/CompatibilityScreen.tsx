@@ -32,6 +32,7 @@ import { analysisTheme, colors, gradients } from '../theme/colors';
 import { fonts, radius, shadow, txt } from '../theme/typography';
 import ShareCta from '../components/ShareCta';
 import { compatSpec, crushSpec } from '../services/share/shareSpecs';
+import { inviteUrl, shareLink } from '../services/share/linkShare';
 
 const BARS: { k: 'love' | 'personality' | 'conversation' | 'money'; l: string; c: string; e: string }[] = [
   { k: 'love', l: '연애 궁합', c: colors.love, e: '緣' },
@@ -55,7 +56,7 @@ function Avatar({ name, light }: { name: string; light?: boolean }) {
 
 export default function CompatibilityScreen() {
   const { user, today } = useApp();
-  const { owned } = usePremium();
+  const { owned, toast } = usePremium();
   const [name, setName] = useState('');
   const [y, setY] = useState(''); const [m, setM] = useState(''); const [d, setD] = useState('');
   const [hh, setHh] = useState('');
@@ -65,6 +66,11 @@ export default function CompatibilityScreen() {
   const [result, setResult] = useState<CompatibilityResult | null>(null);
   const [showMbti, setShowMbti] = useState(false);
 
+  const sendInvite = async () => {
+    if (!user) return;
+    const r = await shareLink(`${user.nickname}님이 궁합 보자고 보냈어요. 생일만 넣으면 둘의 궁합이 바로 나와요.`, inviteUrl(user));
+    if (r === 'copied') toast('초대 링크를 복사했어요. 상대에게 보내 보세요');
+  };
   const dateFilled = y.length === 4 && !!m && !!d;
   const dateOk = isValidDate(+y, +m, +d);
   const hourOk = hh === '' || (+hh >= 0 && +hh <= 23);
@@ -172,12 +178,34 @@ export default function CompatibilityScreen() {
       subtitle="상대의 정보로 네 가지 관점의 궁합을 봐요"
       footer={<PrimaryButton label="궁합 보기" onPress={analyze} disabled={!ok} />}
     >
-      <Card style={s.form}>
-        <View style={s.me}>
-          <Avatar name={user.nickname} light />
-          <Text style={txt.bodyStrong}>{user.nickname}님과</Text>
-          <Text style={txt.small}>{user.mbti} · {user.bloodType}형</Text>
+      {/* 두 사람의 책력 — 내 낙관 · 和 · 아직 비어 있는 상대 낙관 */}
+      <View style={s.pairSheet}>
+        <View style={s.pairCol}>
+          <View style={[s.pairSeal, { backgroundColor: colors.seal }]}><Text style={s.pairSealText}>{user.nickname.slice(0, 1)}</Text></View>
+          <Text style={s.pairName}>{user.nickname}</Text>
+          <Text style={txt.caption}>{user.mbti} · {user.bloodType}형</Text>
         </View>
+        <View style={s.pairMid}>
+          <View style={s.pairLine} />
+          <Text style={s.pairHan}>和</Text>
+          <View style={s.pairLine} />
+        </View>
+        <View style={s.pairCol}>
+          <View style={[s.pairSeal, s.pairEmpty]}><Text style={[s.pairSealText, { color: colors.inkMute }]}>{name.trim() ? name.trim().slice(0, 1) : '?'}</Text></View>
+          <Text style={s.pairName}>{name.trim() || '그 사람'}</Text>
+          <Text style={txt.caption}>{mbti && blood ? `${mbti} · ${blood}형` : '정보를 채워 주세요'}</Text>
+        </View>
+      </View>
+      <PressableScale onPress={sendInvite} style={s.inviteRow} scaleTo={0.98} accessibilityLabel="상대에게 링크로 궁합 신청 받기">
+        <Text style={s.inviteHan}>信</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>생일을 모른다면, 링크로 신청받기</Text>
+          <Text style={txt.caption}>상대가 링크를 열면 둘의 궁합이 바로 나와요</Text>
+        </View>
+        <Icon name="share" size={18} color={colors.purple} />
+      </PressableScale>
+
+      <Card style={s.form}>
 
         <View>
           <Label>상대 이름</Label>
@@ -235,6 +263,17 @@ export default function CompatibilityScreen() {
 }
 
 const s = StyleSheet.create({
+  pairSheet: { flexDirection: 'row', alignItems: 'center', marginTop: 4, padding: 18, borderRadius: radius.xl, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love + '40' },
+  pairCol: { flex: 1, alignItems: 'center', gap: 4 },
+  pairSeal: { width: 54, height: 54, borderRadius: 6, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-5deg' }] },
+  pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, transform: [{ rotate: '5deg' }] },
+  pairSealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: '#FBF4E8' },
+  pairName: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 6 },
+  pairMid: { width: 64, flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 34 },
+  pairLine: { flex: 1, height: 1, backgroundColor: colors.love, opacity: 0.5 },
+  pairHan: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '700', color: colors.love },
+  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 14, borderRadius: radius.lg, borderWidth: 1, borderStyle: 'dashed', borderColor: colors.lineStrong },
+  inviteHan: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.purpleSoft, width: 28, textAlign: 'center' },
   form: { gap: 20, padding: 20 },
   me: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   fieldLabel: { fontSize: 13, fontWeight: '700', color: colors.inkSub, marginBottom: 8 },

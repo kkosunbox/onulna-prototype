@@ -14,6 +14,7 @@ import { Item, fmtP } from '../../services/premium/catalog';
 import { SrcKey } from '../../services/premium/engine';
 import { analysisTheme, colors, gradients } from '../../theme/colors';
 import { fonts, radius, shadow, txt } from '../../theme/typography';
+import { HeadTitle } from '../SectionHeader';
 
 export const scoreColor = (v: number) => (v >= 85 ? colors.purple : v >= 75 ? colors.purpleSoft : colors.inkMute);
 
@@ -66,8 +67,8 @@ export function HeadRow({ item, caption }: { item?: Item | null; caption: string
 export function SubHead({ title, caption, first }: { title: string; caption?: string; first?: boolean }) {
   return (
     <View style={{ marginTop: first ? 12 : 32, marginBottom: 12 }}>
-      <Text style={txt.h2} accessibilityRole="header">{title}</Text>
-      {caption ? <Text style={[txt.small, { marginTop: 2 }]}>{caption}</Text> : null}
+      <HeadTitle title={title} />
+      {caption ? <Text style={[txt.small, { marginTop: 3 }]}>{caption}</Text> : null}
     </View>
   );
 }
@@ -156,6 +157,9 @@ export function Hero({ children, style }: { children: React.ReactNode; style?: S
   return (
     <View style={[{ borderRadius: radius.xl, backgroundColor: colors.heroBg, marginTop: 12 }, shadow.hero, { marginTop: flat.marginTop ?? 12 }]}>
       <View style={[{ borderRadius: radius.xl, padding: 20, overflow: 'hidden', backgroundColor: colors.heroBg }, style, { marginTop: 0 }]}>
+        {/* 책력 테두리: 안쪽 가는 선 + 모서리 꺾쇠 (장식, 터치 없음) */}
+        <View pointerEvents="none" style={s.heroFrame} />
+        {(['tl', 'tr', 'bl', 'br'] as const).map(k => <View key={k} pointerEvents="none" style={[s.heroCorner, s[k]]} />)}
         {children}
       </View>
     </View>
@@ -315,6 +319,12 @@ export function FortuneCalendar({ days, first, today, sel, best, onSelect }: { d
 }
 
 const s = StyleSheet.create({
+  heroFrame: { position: 'absolute', top: 6, left: 6, right: 6, bottom: 6, borderRadius: radius.xl - 6, borderWidth: 0.6, borderColor: 'rgba(217,184,114,0.28)' },
+  heroCorner: { position: 'absolute', width: 9, height: 9, borderColor: 'rgba(217,184,114,0.75)' },
+  tl: { top: 10, left: 10, borderTopWidth: 1, borderLeftWidth: 1 },
+  tr: { top: 10, right: 10, borderTopWidth: 1, borderRightWidth: 1 },
+  bl: { bottom: 10, left: 10, borderBottomWidth: 1, borderLeftWidth: 1 },
+  br: { bottom: 10, right: 10, borderBottomWidth: 1, borderRightWidth: 1 },
   row4: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   pill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.xs },

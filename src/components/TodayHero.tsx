@@ -23,6 +23,8 @@ export default function TodayHero({ fortune: f, onOpenStory, onOpenCategory }: P
   return (
     <View style={[s.shadowWrap, shadow.hero]}>
       <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.card}>
+        <View pointerEvents="none" style={s.frame} />
+        {(['tl', 'tr', 'bl', 'br'] as const).map(k => <View key={k} pointerEvents="none" style={[s.corner, s[k]]} />)}
 
         <PressableScale onPress={onOpenStory} scaleTo={0.985} accessibilityLabel={`오늘의 종합운 ${f.totalScore}점, ${f.summary} 자세히 보기`}>
           <View style={s.top}>
@@ -64,6 +66,12 @@ export default function TodayHero({ fortune: f, onOpenStory, onOpenCategory }: P
 const s = StyleSheet.create({
   shadowWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   card: { borderRadius: radius.xl, padding: 20, overflow: 'hidden' },
+  frame: { position: 'absolute', top: 6, left: 6, right: 6, bottom: 6, borderRadius: radius.xl - 6, borderWidth: 0.6, borderColor: 'rgba(217,184,114,0.28)' },
+  corner: { position: 'absolute', width: 9, height: 9, borderColor: 'rgba(217,184,114,0.75)' },
+  tl: { top: 10, left: 10, borderTopWidth: 1, borderLeftWidth: 1 },
+  tr: { top: 10, right: 10, borderTopWidth: 1, borderRightWidth: 1 },
+  bl: { bottom: 10, left: 10, borderBottomWidth: 1, borderLeftWidth: 1 },
+  br: { bottom: 10, right: 10, borderBottomWidth: 1, borderRightWidth: 1 },
   top: { flexDirection: 'row', alignItems: 'center', gap: 18 },
   eyebrow: { color: 'rgba(255,255,255,0.7)', fontSize: 12, fontWeight: '600', marginBottom: 2 },
   summary: { fontFamily: fonts.serif, color: colors.white, fontSize: 17, lineHeight: 24, fontWeight: '600', letterSpacing: -0.4, marginTop: 6 },
