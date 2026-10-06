@@ -268,7 +268,7 @@ const s = StyleSheet.create({
   pairSeal: { width: 54, height: 54, borderRadius: 6, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-5deg' }] },
   pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, transform: [{ rotate: '5deg' }] },
   pairSealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: '#FBF4E8' },
-  pairName: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 6 },
+  pairName: { fontFamily: fonts.display, fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 6 },
   pairMid: { width: 64, flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 34 },
   pairLine: { flex: 1, height: 1, backgroundColor: colors.love, opacity: 0.5 },
   pairHan: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '700', color: colors.love },

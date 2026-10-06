@@ -47,7 +47,10 @@
 규칙: 한 화면에서 주홍은 한 곳만 써요. 그라데이션과 빛 번짐은 쓰지 않아요.
 
 ## 서체
-- 제목·숫자·워드마크: **Hahmlet**(명조) / 본문: **IBM Plex Sans KR**
+- **제목 · 본문 · UI: Pretendard** — 로고의 둥근 단선 레터링과 어울리는 현대 고딕. 굵기 400(본문) · 500(작은 글) · 600(강조) · 700(제목)
+- **강조: Noto Serif KR** — 큰 숫자(점수) · 한자 낙관 · 책력 카드 제목 · 인용 풀이. 한자까지 같은 서체라 화면마다 한자 모양이 달라지지 않아요
+- 코드: `src/theme/typography.ts` — `fonts.display`(제목) · `fonts.serif`(강조) · `sansW(굵기)`(본문). 네이티브는 굵기별 파일(`assets/fonts`, Noto는 `@expo-google-fonts/noto-serif-kr`)
+- 라이선스: 둘 다 SIL Open Font License (`assets/fonts/LICENSE-*.txt`)
 - 한자는 표식으로만 써요(緣 연애, 財 재물, 業 직장, 人 관계, 封 잠금).
 
 ## 말투 (AI 같지 않게)

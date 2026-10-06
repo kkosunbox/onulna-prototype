@@ -81,7 +81,7 @@ export default function LoginScreen() {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.cream },
   hero: { flex: 1, justifyContent: 'center', paddingHorizontal: 32 },
-  headline: { fontFamily: fonts.serif, fontSize: 20, lineHeight: 28, fontWeight: '600', color: colors.inkSub, letterSpacing: -0.4, marginTop: 22 },
+  headline: { fontFamily: fonts.display, fontSize: 21, lineHeight: 29, fontWeight: '700', color: colors.ink, letterSpacing: -0.6, marginTop: 22 },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
   logoText: { fontFamily: fonts.serif, fontSize: 44, lineHeight: 56, fontWeight: '800', color: colors.purple, letterSpacing: -1, marginTop: 20 },
   logoDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.moon, marginTop: 22 },
@@ -93,7 +93,7 @@ const s = StyleSheet.create({
   helpPillText: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
   gift: { marginBottom: 32, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
   giftWho: { fontSize: 13, fontWeight: '800', color: colors.love },
-  giftLine: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 27, fontWeight: '700', color: colors.ink, marginTop: 6 },
+  giftLine: { fontFamily: fonts.display, fontSize: 19, lineHeight: 27, fontWeight: '700', color: colors.ink, marginTop: 6 },
   helpRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: colors.line },
   helpText: { fontSize: 15, color: colors.ink, fontWeight: '500' },
 });

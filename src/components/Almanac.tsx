@@ -132,6 +132,6 @@ const s = StyleSheet.create({
   qtext: { fontFamily: fonts.serif, fontSize: 16.5, lineHeight: 27, fontWeight: '500', color: colors.ink, marginTop: 6 },
   fig: { marginTop: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, padding: 18 },
   figHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 },
-  figTitle: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: colors.ink },
+  figTitle: { fontFamily: fonts.display, fontSize: 15, fontWeight: '700', color: colors.ink },
   figCap: { fontSize: 11.5, color: colors.inkMute, fontWeight: '600' },
 });

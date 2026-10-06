@@ -59,6 +59,6 @@ const s = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   stage: { width: 120, height: 120, alignItems: 'center', justifyContent: 'center' },
   top: { alignItems: 'center', justifyContent: 'center' },
-  title: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 28, fontWeight: '600', letterSpacing: -0.4, textAlign: 'center', marginTop: 36, color: colors.ink },
+  title: { fontFamily: fonts.display, fontSize: 19, lineHeight: 28, fontWeight: '700', letterSpacing: -0.4, textAlign: 'center', marginTop: 36, color: colors.ink },
   msg: { fontSize: 13, marginTop: 10, textAlign: 'center', color: colors.inkMute },
 });

@@ -180,7 +180,7 @@ const s = StyleSheet.create({
   freeTag: { paddingHorizontal: 7, paddingVertical: 3, borderRadius: 6, backgroundColor: colors.okBg },
   freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
   hot: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  hotTitle: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.white, marginTop: 10 },
+  hotTitle: { fontFamily: fonts.display, fontSize: 19, fontWeight: '700', color: colors.white, marginTop: 10 },
   hotDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
   hotHanja: { fontFamily: fonts.serif, fontSize: 44, color: colors.moon, marginLeft: 12 },
   newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },

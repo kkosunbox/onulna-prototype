@@ -203,10 +203,10 @@ const s = StyleSheet.create({
   freeBig: { fontFamily: fonts.serif, fontSize: 30, fontWeight: '600', color: colors.purple, lineHeight: 38 },
   freeTitle: { fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 10 },
   premium: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  premiumTitle: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.white, marginTop: 10 },
+  premiumTitle: { fontFamily: fonts.display, fontSize: 19, fontWeight: '700', color: colors.white, marginTop: 10 },
   premiumDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
   newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
   newText: { fontSize: 10, fontWeight: '800', color: colors.white },
-  tomorrow: { fontFamily: fonts.serif, fontSize: 16, fontWeight: '600', color: colors.inkSub, textAlign: 'center', marginTop: 32 },
+  tomorrow: { fontFamily: fonts.display, fontSize: 16, fontWeight: '700', color: colors.inkSub, textAlign: 'center', marginTop: 32 },
   allLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
 });
