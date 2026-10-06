@@ -143,7 +143,7 @@ function factsFor(rk: ReportCtx) {
 
 export function buildReportPrompt(rk: ReportCtx, O: Outline, i: number, facts: string) {
   const secs = O.parts[i]; const prev = O.parts.slice(0, i).flat().map(s => s[0]); const nm = rk.user.nickname;
-  return `당신은 운세 콘텐츠 앱 "WHO AM I?"의 수석 작가입니다. 아래 [데이터]는 앱이 계산한 ${rk.kind === 'compat' ? '두 사람의' : nm + '님의'} 사주(명리), 태국 점성술, MBTI, 혈액형 분석 결과입니다.
+  return `당신은 운세 콘텐츠 앱 "운Pick"의 수석 작가입니다. 아래 [데이터]는 앱이 계산한 ${rk.kind === 'compat' ? '두 사람의' : nm + '님의'} 사주(명리), 태국 점성술, MBTI, 혈액형 분석 결과입니다.
 
 임무: "${O.title}" 리포트의 일부를 씁니다. 네 가지 관점을 따로따로 설명하지 말고, 하나의 목소리로 엮은 종합 풀이를 씁니다.
 

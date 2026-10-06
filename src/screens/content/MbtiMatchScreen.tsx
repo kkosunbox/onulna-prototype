@@ -6,7 +6,7 @@ import Card from '../../components/Card';
 import ScoreBar from '../../components/ScoreBar';
 import PressableScale from '../../components/PressableScale';
 import ShareActions from '../../components/ShareActions';
-import { LogoMark } from '../../components/BrandMark';
+import BrandMark from '../../components/BrandMark';
 import { SubHead, scoreColor } from '../../components/premium/Kit';
 import { useApp } from '../../context/AppContext';
 import { mbtiMatches } from '../../services/content/freeContent';
@@ -31,7 +31,7 @@ export default function MbtiMatchScreen() {
       <FriendCompare route="MbtiMatch" spec={mbtiSpec(u)} />
       {/* 공유 카드 */}
       <View ref={card} collapsable={false} style={s.card}>
-        <View style={s.brand}><Text style={s.brandText}>WHO AM I</Text><LogoMark size={17} fg={'#F4EDDF'} /></View>
+        <View style={s.brand}><BrandMark light size={15} /></View>
         <Text style={s.eyebrow}>{u.mbti} {u.nickname}님의 찰떡 MBTI는</Text>
         <Text style={s.big}>{top.type}</Text>
         <Text style={s.nick}>{top.nickname} · 궁합 {top.score}점</Text>

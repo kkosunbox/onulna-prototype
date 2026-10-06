@@ -1,4 +1,4 @@
-# WHO AM I? — 나는 어떤 사람일까
+# 운Pick — 오늘의 운, 하나만 Pick!
 
 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 나를 알아가는 Expo(React Native + TypeScript) 앱.
 

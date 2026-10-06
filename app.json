@@ -1,38 +1,38 @@
 {
   "expo": {
-    "name": "WHO AM I?",
-    "slug": "whoami-saju",
-    "scheme": "whoami",
+    "name": "운Pick",
+    "slug": "woonpick",
+    "scheme": "woonpick",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#F3EEE4",
-    "description": "나는 어떤 사람일까? 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 나를 알아가는 운세 앱.",
+    "description": "오늘의 운, 하나만 Pick! 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽는 오늘의 운세.",
     "primaryColor": "#22293F",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.whoamisaju.ios",
+      "bundleIdentifier": "com.woonpick.ios",
       "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "CFBundleDisplayName": "WHO AM I?"
+        "CFBundleDisplayName": "운Pick"
       }
     },
     "android": {
-      "package": "com.whoamisaju.android",
+      "package": "com.woonpick.android",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#22293F"
+        "backgroundColor": "#F4EDDF"
       },
       "permissions": []
     },
     "web": {
       "bundler": "metro",
       "output": "single",
-      "name": "WHO AM I? · 나는 어떤 사람일까",
-      "shortName": "WHO AM I?",
+      "name": "운Pick · 오늘의 운, 하나만 Pick!",
+      "shortName": "운Pick",
       "themeColor": "#22293F",
       "backgroundColor": "#F3EEE4",
       "favicon": "./assets/favicon.png"

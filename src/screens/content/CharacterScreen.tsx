@@ -5,7 +5,7 @@ import Screen from '../../components/Screen';
 import Card from '../../components/Card';
 import PressableScale from '../../components/PressableScale';
 import ShareActions from '../../components/ShareActions';
-import { LogoMark } from '../../components/BrandMark';
+import BrandMark from '../../components/BrandMark';
 import { Bullet, SubHead } from '../../components/premium/Kit';
 import { useApp } from '../../context/AppContext';
 import { sajuCharacter } from '../../services/content/freeContent';
@@ -27,7 +27,7 @@ export default function CharacterScreen() {
     <Screen title="나의 사주 캐릭터" back>
       <FriendCompare route="Character" spec={characterSpec(u)} />
       <View ref={card} collapsable={false} style={s.card}>
-        <View style={s.brand}><Text style={s.brandText}>WHO AM I</Text><LogoMark size={17} fg={'#F4EDDF'} /></View>
+        <View style={s.brand}><BrandMark light size={15} /></View>
         <View style={[s.seal, { borderColor: colors.moon }]}><Text style={s.sealText}>{c.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은</Text>
         <Text style={s.name}>{c.name}</Text>

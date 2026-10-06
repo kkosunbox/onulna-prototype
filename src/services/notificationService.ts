@@ -6,7 +6,7 @@
 import { storage, NotificationSettings } from './storage/storageService';
 
 const TEMPLATES = [
-  (n: string) => `${n}님, 오늘의 나는 어떤 흐름일까요?`,
+  (n: string) => `${n}님, 오늘의 운이 도착했어요. 하나 Pick 해 보세요.`,
   () => '오늘 가장 힘이 실리는 분야는 어디일까요?',
   (n: string) => `${n}님의 오늘 키워드가 나왔어요.`,
 ];

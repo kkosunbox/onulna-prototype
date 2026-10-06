@@ -13,7 +13,7 @@ export default function LegalScreen() {
   const d = LEGAL[params.doc];
   return (
     <Screen title={d.title} back>
-      <Text style={[txt.caption, { marginBottom: 8 }]}>WHO AM I? · 시행일 {LEGAL_UPDATED}</Text>
+      <Text style={[txt.caption, { marginBottom: 8 }]}>운Pick · 시행일 {LEGAL_UPDATED}</Text>
       {d.sections.map(([h, b]) => (
         <View key={h} style={s.sec}>
           <Text style={s.h}>{h}</Text>

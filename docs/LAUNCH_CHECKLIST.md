@@ -3,7 +3,7 @@
 상태: ✅ 완료 · 🔴 출시 차단(반드시 해결) · 🟡 권장
 
 ## 브랜드 · 디자인
-- ✅ 브랜드명 **WHO AM I?**, 로고(물음표 + 我 낙관) · 워드마크 · 슬로건 "나는 어떤 사람일까"
+- ✅ 브랜드명 **운Pick**(운픽), 로고(운! — 느낌표 점이 낙관) · 워드마크 · 슬로건 "오늘의 운, 하나만 Pick!" · 시안 5종 비교(`docs/logo-concepts.png`)
 - ✅ 앱 아이콘 1024 · 안드로이드 적응형 · 스플래시 · 파비콘 (`assets/`, `npm run icons`)
 - ✅ AI 느낌 제거: 초승달·별·반짝이 아이콘·밤하늘 로딩·문장 끝 이모지·"엔진/AI" 문구
 - ✅ 공유 카드 한지 단일 테마 1080×1920
@@ -11,20 +11,20 @@
 ### 이름 · 도메인 확인 결과 (2026-10-06 조회)
 | 항목 | 결과 |
 |---|---|
-| App Store "후엠아이" | ❌ 같은 이름 있음: "후엠아이 - 전국민 앱테크…" (Whomi Global Inc, 라이프스타일, 평가 562개) → **한글 표기 사용 금지** |
-| App Store "Who Am I?" / "Who Am I" | ❌ 같은 이름 다수 (라이프스타일·게임) → 스토어 이름은 `WHO AM I? - 사주로 읽는 나` |
-| 사주·운세 분야의 WHO AM I | ✅ 없음 (Google Play "who am i 사주" 검색에도 없음) |
-| whoami.app · whoami.kr · whoami.co.kr | ❌ 이미 등록됨 |
-| **whoamisaju.com · whoamisaju.kr** | ✅ 미등록 (RDAP·whois 확인) → **추천** |
-| askwhoami.com · mywhoami.app · whoamii.app · whoamikr.com | ✅ 미등록 (예비) |
+| App Store "운픽" / "운 Pick" | ✅ 같은 이름 없음 |
+| Google Play "운픽" | ✅ 같은 이름 없음 (리픽·데이픽 등 '~픽' 앱은 있음) |
+| App Store "오늘의 운" | ⚠️ 이름에 "오늘의 운세"가 들어간 운세 앱 6개 이상 → 풀네임이 아닌 '운Pick'을 이름으로 |
+| unpick.app · unpick.kr · unpick.co.kr | ❌ 등록됨 (영어 'unpick'은 '풀다·되돌리다'라는 뜻) |
+| **woonpick.com · woonpick.app · woonpick.kr** | ✅ 미등록 → **추천** |
+| (참고) 이전 후보 | 한장·WHO AM I?·I AM WHO — 'WHO AM I'는 동명 앱 다수, '후엠아이'는 다른 회사 앱 존재 |
 
-- 🔴 **도메인 등록**: whoamisaju.com(+ .kr)을 먼저 확보하세요. 조회 시점 이후 다른 사람이 등록할 수 있어요.
-- 🔴 **상표**: 'WHO AM I'는 흔한 영어 문구라 문자 상표 단독 등록이 어렵고, 국내 '후엠아이'(후미글로벌)와 발음이 겹쳐 이의가 나올 수 있어요. **도형 상표(물음표 + 我 낙관)**와 'WHO AM I? 사주' 결합 상표로 9·41·45류 출원을 변리사와 검토하세요(KIPRIS 사전 검색 필수).
-- 🔴 문의 메일 `help@whoamisaju.com`은 도메인 확보 후 실제로 만들어야 해요.
+- 🔴 **도메인 등록**: woonpick.com · woonpick.app · woonpick.kr을 먼저 확보하세요(조회 이후 선점될 수 있어요). 사용자가 unpick으로 잘못 칠 수 있으니 앱·공유 링크에는 항상 도메인을 그대로 노출하세요.
+- 🔴 **상표**: KIPRIS에서 '운픽/운Pick'(9·41·45류) 확인 후 문자+도형(운! 마크) 상표 출원을 변리사와 검토하세요.
+- 🔴 문의 메일 `help@woonpick.com`은 도메인 확보 후 만들어야 해요.
 
 ## 앱 설정 (`app.json`)
 - ✅ 이름 · 버전 1.0.0 · buildNumber/versionCode 1 · 아이콘 · 스플래시 · 암호화 신고(ITSAppUsesNonExemptEncryption=false)
-- 🔴 번들 ID `com.whoamisaju.ios` / `com.whoamisaju.android`은 제안값이에요(도메인 역순). Apple Developer / Play Console 계정에서 실제로 등록해 확정하세요.
+- 🔴 번들 ID `com.woonpick.ios` / `com.woonpick.android`은 제안값이에요(도메인 역순). Apple Developer / Play Console 계정에서 실제로 등록해 확정하세요.
 - 🟡 EAS 설정(`eas.json`) 만들기, 실기기 빌드 테스트(iOS·Android)
 
 ## 심사 정책 (반드시)

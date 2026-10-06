@@ -3,7 +3,7 @@ import json, html
 UPDATED = '2026년 10월 6일'
 OP = '[운영자명]'; MAIL = '[문의 이메일]'
 TERMS = [
- ('제1조 (목적)', f'이 약관은 {OP}(이하 "회사")가 제공하는 모바일 앱 "WHO AM I?"(이하 "서비스")의 이용 조건과 절차, 회사와 이용자의 권리·의무를 정하는 것을 목적으로 합니다.'),
+ ('제1조 (목적)', f'이 약관은 {OP}(이하 "회사")가 제공하는 모바일 앱 "운Pick"(이하 "서비스")의 이용 조건과 절차, 회사와 이용자의 권리·의무를 정하는 것을 목적으로 합니다.'),
  ('제2조 (서비스의 성격)', '서비스가 제공하는 운세·사주·궁합·상담 등 모든 콘텐츠는 재미와 참고를 위한 것입니다. 의료·법률·투자·금융 등 중요한 결정의 근거가 될 수 없으며, 이용자는 이를 이해하고 스스로 판단하여 이용합니다.'),
  ('제3조 (회원가입과 계정)', '① 이용자는 이메일 또는 카카오·네이버·Apple·Google 계정으로 가입할 수 있습니다.\n② 만 14세 미만은 가입할 수 없습니다.\n③ 이용자는 계정 정보를 스스로 관리해야 하며, 타인에게 양도하거나 빌려줄 수 없습니다.'),
  ('제4조 (포인트와 유료 콘텐츠)', '① 포인트는 서비스 안의 유료 콘텐츠를 여는 데에만 쓸 수 있으며 현금으로 바꿀 수 없습니다.\n② 유료 콘텐츠의 가격과 열람 기간(소장·기간제)은 구매 화면에 표시합니다.\n③ 구매한 포인트는 사용하지 않은 경우 구매일로부터 7일 이내에 청약을 철회할 수 있습니다. 이미 연 콘텐츠는 디지털 콘텐츠의 특성상 철회가 제한될 수 있습니다.\n④ 앱 마켓을 통한 결제의 환불은 각 마켓의 정책을 따릅니다.\n⑤ 출석·공유 등으로 무료 지급된 포인트는 환불 대상이 아닙니다.'),
@@ -30,13 +30,13 @@ ts = "/**\n * 이용약관 · 개인정보처리방침 — public/terms.html · 
 open('src/content/legal.ts','w',encoding='utf-8').write(ts)
 for k,(t,secs) in DOCS.items():
     body=''.join(f'<h2>{html.escape(a)}</h2><p>{html.escape(b).replace(chr(10),"<br>")}</p>' for a,b in secs)
-    page=f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{t} · WHO AM I?</title>
+    page=f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{t} · 운Pick</title>
 <link rel="icon" href="/favicon.ico"><style>
 :root{{--bg:#F3EEE4;--ink:#1C1A17;--sub:#58524A;--line:#DCD3C3;--accent:#A8402B}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#151411;--ink:#EDE7DB;--sub:#BDB4A4;--line:#38342D;--accent:#D58A8C}}}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;word-break:keep-all}}
 main{{max-width:720px;margin:0 auto;padding:40px 16px 64px}}h1{{font-family:AppleMyungjo,"Nanum Myeongjo",serif;font-size:26px;margin:0 0 4px}}
 .meta{{color:var(--sub);font-size:13px;padding-bottom:20px;border-bottom:1px solid var(--line)}}h2{{font-size:16px;margin:28px 0 6px;color:var(--accent)}}p{{margin:0;color:var(--sub)}}
-</style></head><body><main><h1>{t}</h1><div class="meta">WHO AM I? · 시행일 {UPDATED}</div>{body}</main></body></html>'''
+</style></head><body><main><h1>{t}</h1><div class="meta">운Pick · 시행일 {UPDATED}</div>{body}</main></body></html>'''
     open(f'public/{k}.html','w',encoding='utf-8').write(page)
 print('ok')

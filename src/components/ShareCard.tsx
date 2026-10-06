@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { LogoMark } from './BrandMark';
+import BrandMark from './BrandMark';
 import { ShareSpec } from '../services/share/shareSpecs';
 import { parseISO } from '../utils/date';
 import { seededRandom } from '../utils/seed';
@@ -57,8 +57,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           {/* 제호 */}
           <View style={s.mast}>
             <View style={s.brand}>
-              <Text style={s.brandText}>WHO AM I</Text>
-              <LogoMark size={17} />
+              <BrandMark size={15} />
             </View>
             <Text style={s.issue}>第 {doy} 號 · {y}.{String(m).padStart(2, '0')}.{String(d).padStart(2, '0')}</Text>
           </View>
@@ -126,7 +125,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           <View style={s.foot}>
             <Text style={[s.hook, KEEP]} numberOfLines={2}>{spec.hook}</Text>
             <View style={s.footRow}>
-              <Text style={s.url}>생일만 넣으면 30초 · WHO AM I?</Text>
+              <Text style={s.url}>생일만 넣으면 30초 · 운Pick</Text>
               <Text style={s.cta}>내 결과 보기 →</Text>
             </View>
           </View>
