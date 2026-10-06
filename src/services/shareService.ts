@@ -15,7 +15,7 @@ export async function shareCardImage(
   ref: RefObject<View | null>,
   opts: { file?: string; text?: string; url?: string; mode?: 'share' | 'save' } = {},
 ): Promise<ShareResult> {
-  const { file = 'onulna', text, url, mode = 'save' } = opts;
+  const { file = 'hanjang', text, url, mode = 'save' } = opts;
   try {
     if (!ref.current) return 'failed';
     if (Platform.OS === 'web') {

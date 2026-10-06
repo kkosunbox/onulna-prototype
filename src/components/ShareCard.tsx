@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { Crescent } from './BrandMark';
+import { LogoMark } from './BrandMark';
 import { ShareSpec } from '../services/share/shareSpecs';
 import { parseISO } from '../utils/date';
 import { seededRandom } from '../utils/seed';
@@ -57,11 +57,11 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           {/* 제호 */}
           <View style={s.mast}>
             <View style={s.brand}>
-              <Crescent size={14} color={C.accent} cut={C.bg} />
-              <Text style={s.brandText}>오늘나</Text>
-              <Text style={s.brandSub}>冊曆</Text>
+              <LogoMark size={16} />
+              <Text style={s.brandText}>한장</Text>
+              <Text style={s.brandSub}>日曆</Text>
             </View>
-            <Text style={s.issue}>第 {doy} 號 · {y}.{String(m).padStart(2, '0')}.{String(d).padStart(2, '0')}</Text>
+            <Text style={s.issue}>第 {doy} 張 · {y}.{String(m).padStart(2, '0')}.{String(d).padStart(2, '0')}</Text>
           </View>
           <View style={s.rule} />
           <View style={s.ruleThin} />
@@ -127,7 +127,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           <View style={s.foot}>
             <Text style={[s.hook, KEEP]} numberOfLines={2}>{spec.hook}</Text>
             <View style={s.footRow}>
-              <Text style={s.url}>생일만 넣으면 30초 · onulna</Text>
+              <Text style={s.url}>생일만 넣으면 30초 · 앱 '한장'</Text>
               <Text style={s.cta}>내 결과 보기 →</Text>
             </View>
           </View>

@@ -9,7 +9,7 @@ import { radius, shadow } from '../theme/typography';
 
 const ITEMS: Record<string, { label: string; icon: IconName }> = {
   Home: { label: '홈', icon: 'home' },
-  Fortune: { label: '운세', icon: 'sparkle' },
+  Fortune: { label: '운세', icon: 'sheet' },
   Content: { label: '콘텐츠', icon: 'grid' },
   Compatibility: { label: '궁합', icon: 'heart' },
   MyPage: { label: '마이', icon: 'user' },

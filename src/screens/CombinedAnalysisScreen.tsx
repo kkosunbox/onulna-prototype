@@ -7,7 +7,7 @@ import KeywordChip from '../components/KeywordChip';
 import ActionTabs from '../components/ActionTabs';
 import SectionHeader from '../components/SectionHeader';
 import Disclaimer from '../components/Disclaimer';
-import { Crescent } from '../components/BrandMark';
+import { LogoMark } from '../components/BrandMark';
 import { useApp } from '../context/AppContext';
 import { analysisTheme, colors, gradients } from '../theme/colors';
 import { radius, shadow, txt } from '../theme/typography';
@@ -60,7 +60,7 @@ export default function CombinedAnalysisScreen() {
 
       <View style={[s.storyWrap, shadow.hero]}>
         <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={s.story}>
-          <View style={s.storyHead}><Crescent size={14} color={colors.moon} cut="#5A46A8" /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
+          <View style={s.storyHead}><LogoMark size={16} /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
           <Text style={s.storyText}>{f.combinedStory}</Text>
         </LinearGradient>
       </View>
@@ -69,7 +69,7 @@ export default function CombinedAnalysisScreen() {
       <ActionTabs good={f.goodActions} avoid={f.avoidActions} />
 
       <Text style={[txt.caption, { marginTop: 16, textAlign: 'center' }]}>
-        {fortune.engine === 'ai' ? 'AI가 네 가지 결과를 종합했어요' : '종합 규칙 엔진으로 만든 결과예요'}
+        사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽은 풀이예요
       </Text>
       <Disclaimer compact />
     </Screen>

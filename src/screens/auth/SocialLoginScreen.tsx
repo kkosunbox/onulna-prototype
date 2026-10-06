@@ -4,7 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PressableScale from '../../components/PressableScale';
 import Icon from '../../components/Icon';
-import { Crescent } from '../../components/BrandMark';
+import { LogoMark } from '../../components/BrandMark';
 import { CheckRow, DemoNote, Mark, SocialButton } from '../../components/auth/AuthKit';
 import { useApp } from '../../context/AppContext';
 import { usePremium } from '../../context/PremiumContext';
@@ -47,9 +47,9 @@ export default function SocialLoginScreen() {
             <Mark provider={p} size={28} />
           </View>
           <View style={s.dots}>{[0, 1, 2].map(i => <View key={i} style={s.dot} />)}</View>
-          <View style={[s.logo, { backgroundColor: colors.heroBg }]}><Crescent size={26} color={colors.moon} cut={colors.heroBg} /></View>
+          <View style={[s.logo, { backgroundColor: colors.heroBg }]}><LogoMark size={34} /></View>
         </View>
-        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>오늘나에서 {brand} 계정 정보를{'\n'}요청해요</Text>
+        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>한장에서 {brand} 계정 정보를{'\n'}요청해요</Text>
         <Text style={[txt.small, { textAlign: 'center', marginTop: 6 }]}>동의하면 별도 가입 없이 바로 시작할 수 있어요.</Text>
 
         <View style={s.card}>

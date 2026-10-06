@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { View } from 'react-native';
-import { Crescent } from '../components/BrandMark';
+import { LogoMark } from '../components/BrandMark';
 import { NavigationContainer, DefaultTheme, createNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,6 +23,7 @@ import CategoryDetailScreen from '../screens/CategoryDetailScreen';
 import AnalysisDetailScreen from '../screens/AnalysisDetailScreen';
 import CombinedAnalysisScreen from '../screens/CombinedAnalysisScreen';
 import ShareScreen from '../screens/ShareScreen';
+import LegalScreen from '../screens/LegalScreen';
 import ConsultScreen from '../screens/content/ConsultScreen';
 import PastLifeScreen from '../screens/content/PastLifeScreen';
 import ContentScreen from '../screens/content/ContentScreen';
@@ -70,7 +71,7 @@ export default function RootNavigator() {
   if (booting) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.cream }}>
-        <Crescent size={40} />
+        <LogoMark size={52} />
       </View>
     );
   }
@@ -86,6 +87,7 @@ export default function RootNavigator() {
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
             <Stack.Screen name="SocialLogin" component={SocialLoginScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="Legal" component={LegalScreen} />
           </>
         ) : !user ? (
           <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
@@ -102,6 +104,7 @@ export default function RootNavigator() {
             <Stack.Screen name="Spouse" component={SpouseScreen} />
             <Stack.Screen name="Consult" component={ConsultScreen} />
             <Stack.Screen name="PastLife" component={PastLifeScreen} />
+            <Stack.Screen name="Legal" component={LegalScreen} />
             <Stack.Screen name="Wallet" component={WalletScreen} />
             <Stack.Screen name="SajuDeep" component={SajuDeepScreen} />
             <Stack.Screen name="Life" component={LifeScreen} />

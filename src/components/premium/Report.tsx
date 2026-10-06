@@ -220,6 +220,10 @@ export default function ReportArea({ rk, item, basis }: { rk: ReportCtx; item: I
   const { owned } = usePremium();
   const own = owned(item.key);
   const O = outline(rk);
+  // 종합 풀이 서버가 없으면: 목차·안내 없이 실제 풀이(basis)를 그대로 — 열람 전에는 흐리게 미리보기
+  if (!reportAvailable()) {
+    return own ? <>{basis}</> : <LockGate item={item}>{basis}</LockGate>;
+  }
   return (
     <>
       <RepTOC O={O} owned={own} />

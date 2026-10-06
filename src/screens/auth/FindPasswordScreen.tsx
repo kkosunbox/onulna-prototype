@@ -69,7 +69,7 @@ export default function FindPasswordScreen() {
       {step === 1 ? (
         <View style={{ marginTop: 28 }}>
           <FieldLabel>이메일</FieldLabel>
-          <TextField value={email} onChangeText={t => { setEmail(t); setErr(null); }} placeholder="example@onulna.app" keyboardType="email-address" autoCapitalize="none" autoComplete="email" returnKeyType="send" onSubmitEditing={send} invalid={!!err} />
+          <TextField value={email} onChangeText={t => { setEmail(t); setErr(null); }} placeholder="name@example.com" keyboardType="email-address" autoCapitalize="none" autoComplete="email" returnKeyType="send" onSubmitEditing={send} invalid={!!err} />
           <FieldError>{err}</FieldError>
         </View>
       ) : (

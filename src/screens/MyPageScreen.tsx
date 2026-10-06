@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Platform, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Screen from '../components/Screen';
@@ -7,7 +7,7 @@ import Card from '../components/Card';
 import PressableScale from '../components/PressableScale';
 import SectionHeader from '../components/SectionHeader';
 import Icon, { IconName } from '../components/Icon';
-import { Crescent } from '../components/BrandMark';
+import { BRAND, LogoMark } from '../components/BrandMark';
 import Disclaimer from '../components/Disclaimer';
 import { useApp } from '../context/AppContext';
 import { usePremium } from '../context/PremiumContext';
@@ -19,6 +19,7 @@ import { notificationService } from '../services/notificationService';
 import { MBTI_INFO } from '../data/mbtiData';
 import { colors, gradients } from '../theme/colors';
 import { radius, shadow, txt } from '../theme/typography';
+import appJson from '../../app.json';
 
 const HOURS = [7, 8, 9];
 
@@ -79,7 +80,7 @@ export default function MyPageScreen() {
               <Text style={s.name}>{user.nickname}</Text>
               <Text style={s.meta}>{MBTI_INFO[user.mbti].nickname} {user.mbti} · {user.bloodType}형</Text>
             </View>
-            <Crescent size={22} color={colors.moon} cut="#4A358F" />
+            <LogoMark size={24} />
           </View>
           {fortune ? (
             <View style={s.todayRow}>
@@ -151,6 +152,17 @@ export default function MyPageScreen() {
         <Row icon="user" label="로그인 방법" value={account ? (account.master ? '관리자(마스터)' : providerLabel(account.provider)) : '-'} />
         <Row icon="mail" label="이메일" value={account?.email ?? '제공 안 함'} last />
       </Card>
+      <SectionHeader title="정보" />
+      <Card style={s.group}>
+        {([['이용약관', () => nav.navigate('Legal', { doc: 'terms' })], ['개인정보처리방침', () => nav.navigate('Legal', { doc: 'privacy' })], ['문의하기', () => Linking.openURL('mailto:help@hanjang.app?subject=' + encodeURIComponent('[한장] 문의'))]] as const).map(([t, go], i, a) => (
+          <PressableScale key={t} onPress={go} style={[s.row, i < a.length - 1 && s.border]} scaleTo={0.98}>
+            <Text style={s.rowLabel}>{t}</Text>
+            <Icon name="chevronRight" size={18} color={colors.inkMute} />
+          </PressableScale>
+        ))}
+      </Card>
+      <Text style={[txt.caption, { textAlign: 'center', marginTop: 10 }]}>{BRAND.name} {appJson.expo.version} · {BRAND.slogan}</Text>
+
       <View style={s.accountActions}>
         <PressableScale onPress={() => signOut()} hitSlop={8}><Text style={s.accountLink}>로그아웃</Text></PressableScale>
         <View style={s.sep} />

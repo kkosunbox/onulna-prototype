@@ -6,7 +6,7 @@ import Card from '../../components/Card';
 import PressableScale from '../../components/PressableScale';
 import ShareActions from '../../components/ShareActions';
 import FriendCompare from '../../components/FriendCompare';
-import { Crescent } from '../../components/BrandMark';
+import { LogoMark } from '../../components/BrandMark';
 import { SubHead } from '../../components/premium/Kit';
 import { useApp } from '../../context/AppContext';
 import { pastLife } from '../../services/content/freeContent';
@@ -26,7 +26,7 @@ export default function PastLifeScreen() {
     <Screen title="전생 테스트" back>
       <FriendCompare route="PastLife" spec={spec} />
       <View style={s.card}>
-        <View style={s.brand}><Crescent size={14} color={colors.moon} cut={colors.heroBg} /><Text style={s.brandText}>오늘나</Text></View>
+        <View style={s.brand}><LogoMark size={16} /><Text style={s.brandText}>한장</Text></View>
         <View style={s.seal}><Text style={s.sealText}>{P.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은 전생에</Text>
         <Text style={s.name}>{P.title}</Text>

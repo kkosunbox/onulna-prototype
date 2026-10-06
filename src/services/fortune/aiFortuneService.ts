@@ -28,7 +28,7 @@ export function buildPrompt(input: CombinedFortuneInput) {
   const strip = (a: CombinedFortuneInput['saju']) => ({ headline: a.headline, description: a.description, tags: a.tags });
   return {
     system:
-      '너는 운세 콘텐츠 앱 "오늘나"의 작가다. 사주·태국 점성술·MBTI·혈액형 분석 결과를 하나의 이야기로 종합한다. ' +
+      '너는 운세 콘텐츠 앱 "한장"의 작가다. 사주·태국 점성술·MBTI·혈액형 분석 결과를 하나의 이야기로 종합한다. ' +
       '재미와 참고를 위한 콘텐츠이며, 미래를 단정하거나 과학적 예측처럼 표현하지 않는다. ' +
       '금전·건강·법률 결정을 운세만으로 내리도록 유도하지 않는다. 반드시 JSON만 출력한다.',
     user: JSON.stringify({

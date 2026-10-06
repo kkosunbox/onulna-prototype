@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Crescent } from '../../components/BrandMark';
+import { LogoMark } from '../../components/BrandMark';
 import PressableScale from '../../components/PressableScale';
 import BottomSheet from '../../components/BottomSheet';
 import Icon from '../../components/Icon';
@@ -48,13 +48,10 @@ export default function LoginScreen() {
             <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
           </View>
         ) : null}
-        <Text style={s.headline}>매일 아침,{'\n'}나를 읽는 네 가지 관점</Text>
-        <View style={s.logo}>
-          <Crescent size={30} color={colors.purple} cut={colors.cream} />
-          <Text style={s.logoText}>오늘나</Text>
-          <View style={s.logoDot} />
-        </View>
-        <Text style={[txt.small, { marginTop: 14 }]}>사주 · 태국 점성술 · MBTI · 혈액형</Text>
+        <View style={{ transform: [{ rotate: '-4deg' }], alignSelf: 'flex-start' }}><LogoMark size={72} /></View>
+        <Text style={s.logoText}>한장</Text>
+        <Text style={s.headline}>매일 한 장, 나를 읽다</Text>
+        <Text style={[txt.small, { marginTop: 6 }]}>사주 · 태국 점성술 · MBTI · 혈액형</Text>
       </View>
 
       <View style={s.bottom}>
@@ -84,9 +81,9 @@ export default function LoginScreen() {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.cream },
   hero: { flex: 1, justifyContent: 'center', paddingHorizontal: 32 },
-  headline: { fontSize: 22, lineHeight: 32, fontWeight: '600', color: colors.ink, letterSpacing: -0.5 },
+  headline: { fontFamily: fonts.serif, fontSize: 20, lineHeight: 28, fontWeight: '600', color: colors.inkSub, letterSpacing: -0.4, marginTop: 6 },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
-  logoText: { fontFamily: fonts.serif, fontSize: 40, fontWeight: '600', color: colors.purple, letterSpacing: -1.2 },
+  logoText: { fontFamily: fonts.serif, fontSize: 52, lineHeight: 64, fontWeight: '800', color: colors.purple, letterSpacing: -2, marginTop: 20 },
   logoDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.moon, marginTop: 22 },
   bottom: { alignItems: 'center', paddingBottom: 20, paddingHorizontal: 24 },
   caption: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },

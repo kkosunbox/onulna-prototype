@@ -1,6 +1,11 @@
-# 오늘나 — 4가지 관점으로 보는 나의 오늘
+# 한장 — 매일 한 장, 나를 읽다
 
-사주 · 태국 점성술 · MBTI · 혈액형을 종합해 개인 맞춤 운세를 보여주는 Expo(React Native + TypeScript) MVP.
+사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 오늘의 운세를 한 장에 담는 Expo(React Native + TypeScript) 앱.
+
+- 브랜드 가이드: [docs/BRAND.md](docs/BRAND.md)
+- 스토어 등록 정보: [docs/STORE_LISTING.md](docs/STORE_LISTING.md)
+- 출시 전 체크리스트: [docs/LAUNCH_CHECKLIST.md](docs/LAUNCH_CHECKLIST.md)
+- 아이콘·스플래시 다시 만들기: `npm run icons`
 
 ## 실행
 

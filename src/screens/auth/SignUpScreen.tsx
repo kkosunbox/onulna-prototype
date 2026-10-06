@@ -11,6 +11,7 @@ import { usePremium } from '../../context/PremiumContext';
 import { AuthError, isEmail, isStrongPassword } from '../../services/auth/authService';
 import { colors } from '../../theme/colors';
 import { radius, txt } from '../../theme/typography';
+import { useNavigation } from '@react-navigation/native';
 
 type AgreeKey = 'age' | 'terms' | 'privacy' | 'marketing';
 const AGREES: { k: AgreeKey; label: string; required: boolean }[] = [
@@ -20,13 +21,14 @@ const AGREES: { k: AgreeKey; label: string; required: boolean }[] = [
   { k: 'marketing', label: '[선택] 아침 운세·이벤트 알림 받기', required: false },
 ];
 const DOC: Partial<Record<AgreeKey, string>> = {
-  terms: '서비스 이용약관(예시)\n· 운세 콘텐츠는 재미와 참고를 위한 것이며 중요한 결정의 근거가 될 수 없어요.\n· 포인트는 콘텐츠 열람에만 쓸 수 있어요.',
-  privacy: '개인정보 수집·이용(예시)\n· 항목: 이메일, 닉네임, 생년월일·출생시간, 성별, MBTI, 혈액형\n· 목적: 맞춤 운세 제공\n· 보관: 회원 탈퇴 시까지',
+  terms: '운세 콘텐츠는 재미와 참고를 위한 것이며 중요한 결정의 근거가 될 수 없어요. 포인트는 콘텐츠 열람에만 쓸 수 있어요.',
+  privacy: '항목: 이메일, 닉네임, 생년월일·출생시간, 성별, MBTI, 혈액형 · 목적: 맞춤 운세 제공 · 보관: 회원 탈퇴 시까지',
 };
 
 /** 이메일 가입: 입력은 두 칸만, 약관은 마지막에 시트 한 장으로 */
 export default function SignUpScreen() {
   const { signUp } = useApp();
+  const nav = useNavigation();
   const { toast } = usePremium();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
@@ -65,7 +67,7 @@ export default function SignUpScreen() {
       <View style={{ marginTop: 28, gap: 20 }}>
         <View>
           <FieldLabel>이메일</FieldLabel>
-          <TextField value={email} onChangeText={t => { setEmail(t); setErr(null); }} placeholder="example@onulna.app" keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" autoFocus invalid={emailBad || !!err} />
+          <TextField value={email} onChangeText={t => { setEmail(t); setErr(null); }} placeholder="name@example.com" keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" autoFocus invalid={emailBad || !!err} />
           <FieldError>{emailBad ? '이메일 형식을 확인해 주세요.' : err}</FieldError>
         </View>
         <View>
@@ -89,7 +91,14 @@ export default function SignUpScreen() {
           {AGREES.map(a => (
             <CheckRow key={a.k} checked={agree[a.k]} label={a.label} onPress={() => setAgree(x => ({ ...x, [a.k]: !x[a.k] }))} onView={DOC[a.k] ? () => setDoc(d => (d === a.k ? null : a.k)) : undefined} />
           ))}
-          {doc && DOC[doc] ? <Text style={s.doc}>{DOC[doc]}</Text> : null}
+          {doc && DOC[doc] ? (
+            <View style={s.docBox}>
+              <Text style={s.doc}>{DOC[doc]}</Text>
+              <PressableScale onPress={() => { setSheet(false); nav.navigate('Legal', { doc: doc === 'privacy' ? 'privacy' : 'terms' }); }} hitSlop={8}>
+                <Text style={s.docLink}>전문 보기 →</Text>
+              </PressableScale>
+            </View>
+          ) : null}
         </View>
         <PrimaryButton label={busy ? '가입 중…' : '동의하고 가입하기'} onPress={submit} disabled={!requiredOk || busy} style={{ marginTop: 16 }} />
       </BottomSheet>
@@ -103,5 +112,7 @@ const s = StyleSheet.create({
   all: { marginTop: 16, height: 52, borderRadius: radius.md, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
   allOn: { backgroundColor: colors.navy, borderColor: colors.navy },
   allText: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  doc: { marginTop: 8, padding: 12, borderRadius: 10, backgroundColor: colors.cream, fontSize: 12, lineHeight: 18, color: colors.inkSub },
+  docBox: { marginTop: 8, padding: 12, borderRadius: 10, backgroundColor: colors.cream },
+  doc: { fontSize: 12, lineHeight: 18, color: colors.inkSub },
+  docLink: { fontSize: 12, fontWeight: '700', color: colors.purple, marginTop: 6 },
 });

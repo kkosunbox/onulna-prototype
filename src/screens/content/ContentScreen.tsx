@@ -39,7 +39,7 @@ export default function ContentScreen() {
   useEffect(() => { loadNotify().then(setNotify); }, []);
 
   const invite = async () => {
-    const r = await shareLink(`${user.nickname}님이 궁합을 보자고 해요 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, inviteUrl(user));
+    const r = await shareLink(`${user.nickname}님이 궁합 보자고 보냈어요. 생일만 넣으면 둘의 궁합이 바로 나와요.`, inviteUrl(user));
     if (r === 'copied') toast('초대 링크를 복사했어요. 친구에게 보내 보세요');
   };
 

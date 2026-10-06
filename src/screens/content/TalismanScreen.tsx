@@ -31,7 +31,7 @@ export default function TalismanScreen() {
             <View style={s.line} />
             <Text style={s.mantra}>{t.mantra}</Text>
             <Text style={s.meta}>{u.nickname} · 오늘의 {t.keyword}</Text>
-            <View style={s.stamp}><Text style={s.stampText}>오늘나</Text></View>
+            <View style={s.stamp}><Text style={s.stampText}>한장</Text></View>
           </View>
         </View>
       </View>

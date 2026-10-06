@@ -38,6 +38,7 @@ export type RootStackParamList = {
   Spouse: undefined;
   Consult: { id?: string } | undefined;
   PastLife: undefined;
+  Legal: { doc: 'terms' | 'privacy' };
 };
 
 declare global {
