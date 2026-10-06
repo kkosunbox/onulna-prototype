@@ -28,3 +28,10 @@ export function defaultItem(key: Exclude<PremiumKey, 'lounge'>, today: string): 
   if (key === 'lucky') return ITEMS.lucky('move', today);
   return ITEMS.theme(key.slice(6) as ThemeKind);
 }
+
+/** 친구 결과 링크의 화면 이름 → 이동 */
+export function openFriendRoute(nav: Nav, c: string) {
+  if (c === 'Home' || c === 'Compatibility') return nav.navigate('Tabs', { screen: c });
+  if (c === 'Theme') return nav.navigate('Theme', { kind: 'love' });
+  return nav.navigate(c);
+}

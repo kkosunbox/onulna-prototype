@@ -14,6 +14,7 @@ import { MBTI_INFO } from '../../data/mbtiData';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
 import { mbtiSpec } from '../../services/share/shareSpecs';
+import FriendCompare from '../../components/FriendCompare';
 
 /** 무료: 나와 가장 잘 맞는 MBTI */
 export default function MbtiMatchScreen() {
@@ -27,6 +28,7 @@ export default function MbtiMatchScreen() {
 
   return (
     <Screen title="찰떡 MBTI" back>
+      <FriendCompare route="MbtiMatch" spec={mbtiSpec(u)} />
       {/* 공유 카드 */}
       <View ref={card} collapsable={false} style={s.card}>
         <View style={s.brand}><Crescent size={14} color={colors.moon} cut={colors.heroBg} /><Text style={s.brandText}>오늘나</Text></View>

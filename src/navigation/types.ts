@@ -36,6 +36,8 @@ export type RootStackParamList = {
   Character: undefined;
   Talisman: undefined;
   Spouse: undefined;
+  Consult: { id?: string } | undefined;
+  PastLife: undefined;
 };
 
 declare global {

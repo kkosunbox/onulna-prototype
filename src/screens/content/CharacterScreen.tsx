@@ -13,6 +13,7 @@ import { ELEMENT_INFO } from '../../data/sajuData';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
 import { characterSpec } from '../../services/share/shareSpecs';
+import FriendCompare from '../../components/FriendCompare';
 
 /** 무료: 일주(60갑자)로 보는 나의 사주 캐릭터 */
 export default function CharacterScreen() {
@@ -24,6 +25,7 @@ export default function CharacterScreen() {
 
   return (
     <Screen title="나의 사주 캐릭터" back>
+      <FriendCompare route="Character" spec={characterSpec(u)} />
       <View ref={card} collapsable={false} style={s.card}>
         <View style={s.brand}><Crescent size={14} color={colors.moon} cut={colors.heroBg} /><Text style={s.brandText}>오늘나</Text></View>
         <View style={[s.seal, { borderColor: colors.moon }]}><Text style={s.sealText}>{c.hanja}</Text></View>

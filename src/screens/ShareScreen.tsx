@@ -11,7 +11,7 @@ import { usePremium } from '../context/PremiumContext';
 import { RootStackParamList } from '../navigation/types';
 import { shareCardImage } from '../services/shareService';
 import { todaySpec } from '../services/share/shareSpecs';
-import { appUrl, shareLink } from '../services/share/linkShare';
+import { useShare } from '../services/share/useShare';
 import { colors } from '../theme/colors';
 import { shadow, txt } from '../theme/typography';
 
@@ -20,6 +20,7 @@ export default function ShareScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'Share'>>();
   const { fortune, user, today } = useApp();
   const { toast } = usePremium();
+  const { sendLink, urlOf, reward } = useShare();
   const ref = useRef<View>(null);
   const [theme, setTheme] = useState<CardTheme>('paper');
   const [busy, setBusy] = useState<'share' | 'save' | null>(null);
@@ -28,14 +29,12 @@ export default function ShareScreen() {
 
   const run = async (mode: 'share' | 'save') => {
     setBusy(mode);
-    const r = await shareCardImage(ref, { file: spec.file, text: spec.text, url: appUrl(), mode });
+    const r = await shareCardImage(ref, { file: spec.file, text: spec.text, url: urlOf(spec), mode });
     setBusy(null);
     if (r === 'saved') toast(mode === 'share' ? '이미지를 저장했어요. 인스타 스토리에 올려 보세요' : '이미지를 저장했어요');
+    if (r === 'saved' || r === 'shared') reward(spec);
   };
-  const copy = async () => {
-    const r = await shareLink(spec.text);
-    if (r === 'copied') toast('링크를 복사했어요. 친구에게 붙여 넣어 보내세요');
-  };
+  const copy = () => sendLink(spec);
 
   return (
     <Screen

@@ -8,6 +8,7 @@ import { todayTalisman } from '../../services/content/freeContent';
 import { formatKoreanDate } from '../../utils/date';
 import { fonts, txt } from '../../theme/typography';
 import { talismanSpec } from '../../services/share/shareSpecs';
+import FriendCompare from '../../components/FriendCompare';
 
 const PAPER = '#EED9A4';
 const INK = '#A5321F';
@@ -21,6 +22,7 @@ export default function TalismanScreen() {
 
   return (
     <Screen title="오늘의 부적" back>
+      <FriendCompare route="Talisman" spec={talismanSpec(u, today)} />
       <View style={{ alignItems: 'center' }}>
         <View ref={card} collapsable={false} style={s.paper}>
           <View style={s.frame}>

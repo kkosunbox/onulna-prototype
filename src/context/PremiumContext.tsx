@@ -32,6 +32,9 @@ interface PremiumState {
   openCharge(i: number): void;
   attend(): void;
   toggleMission(key: string): void;
+  /** 공유 보상: 콘텐츠마다 하루 한 번, 하루 최대 3번 +10P. 받았으면 true */
+  rewardShare(key: string): boolean;
+  shareRewardsLeft: number;
   toast(msg: string): void;
   goWallet?: () => void;
   setGoWallet(fn: () => void): void;
@@ -41,8 +44,10 @@ interface PremiumState {
 const K = {
   get points() { return scopedKey('points'); }, get history() { return scopedKey('history'); }, get unlocks() { return scopedKey('unlocks'); },
   get attend() { return scopedKey('attend'); }, get missions() { return scopedKey('missions'); },
+  get shareReward() { return scopedKey('shareReward'); },
 };
 const Ctx = createContext<PremiumState | null>(null);
+export const SHARE_P = 10, SHARE_DAILY = 3;
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
   const { account, user, today } = useApp();
@@ -52,6 +57,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
   const [unlocks, setUnlocks] = useState<Unlocks>({});
   const [lastAttend, setLastAttend] = useState<string | null>(null);
   const [missions, setMissions] = useState<Record<string, boolean>>({});
+  const [shared, setShared] = useState<{ date: string; keys: string[] }>({ date: '', keys: [] });
   const [sheet, setSheet] = useState<Sheet>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -71,6 +77,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
         setPoints(p); setHistory(h ?? []); setUnlocks(u ?? {}); setLastAttend(a);
       }
       setMissions(m ?? {});
+      setShared((await read<{ date: string; keys: string[] }>(K.shareReward)) ?? { date: '', keys: [] });
       setReady(true);
     })();
   }, [account?.id, user?.id]);
@@ -131,6 +138,17 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
       setMissions(next);
       AsyncStorage.setItem(K.missions, JSON.stringify(next)).catch(() => {});
     },
+    rewardShare: key => {
+      const cur = shared.date === today ? shared : { date: today, keys: [] };
+      if (cur.keys.includes(key) || cur.keys.length >= SHARE_DAILY) return false;
+      const next = { date: today, keys: [...cur.keys, key] };
+      setShared(next);
+      AsyncStorage.setItem(K.shareReward, JSON.stringify(next)).catch(() => {});
+      apply({ points: points + SHARE_P, history: [{ t: '적립', label: '공유 보상', amt: SHARE_P, date: today }, ...history] });
+      setTimeout(() => toast(`공유 고마워요! +${SHARE_P}P`), 400);
+      return true;
+    },
+    shareRewardsLeft: SHARE_DAILY - (shared.date === today ? shared.keys.length : 0),
     toast,
     goWallet: () => goWalletRef.current?.(),
     setGoWallet: fn => { goWalletRef.current = fn; },

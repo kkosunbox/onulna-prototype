@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import Icon from '../../components/Icon';
 import { SocialCircle } from '../../components/auth/AuthKit';
 import { usePremium } from '../../context/PremiumContext';
 import { SocialProvider } from '../../services/auth/authService';
+import { getFriendResult, getPendingInvite } from '../../services/share/linkShare';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
 
@@ -19,6 +20,16 @@ export default function LoginScreen() {
   const nav = useNavigation();
   const { toast } = usePremium();
   const [help, setHelp] = useState(false);
+  // 친구가 보낸 결과·궁합 초대 링크로 들어왔다면 가입 전에 먼저 보여준다
+  const [gift, setGift] = useState<{ who: string; what: string; line: string } | null>(null);
+  useEffect(() => {
+    (async () => {
+      const f = await getFriendResult();
+      if (f) return setGift({ who: f.n, what: `'${f.k}' 결과를 보냈어요`, line: f.h });
+      const inv = await getPendingInvite();
+      if (inv) setGift({ who: inv.nickname, what: '궁합을 신청했어요', line: '가입하면 둘의 궁합이 바로 나와요' });
+    })();
+  }, []);
 
   const helpItem = (label: string, onPress: () => void) => (
     <PressableScale key={label} onPress={() => { setHelp(false); onPress(); }} style={s.helpRow} scaleTo={0.98}>
@@ -30,6 +41,13 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={s.root}>
       <View style={s.hero}>
+        {gift ? (
+          <View style={s.gift}>
+            <Text style={s.giftWho}>{gift.who}님이 {gift.what}</Text>
+            <Text style={s.giftLine} numberOfLines={2}>“{gift.line}”</Text>
+            <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
+          </View>
+        ) : null}
         <Text style={s.headline}>매일 아침,{'\n'}나를 읽는 네 가지 관점</Text>
         <View style={s.logo}>
           <Crescent size={30} color={colors.purple} cut={colors.cream} />
@@ -76,6 +94,9 @@ const s = StyleSheet.create({
   emailLink: { fontSize: 15, fontWeight: '600', color: colors.inkSub, textDecorationLine: 'underline' },
   helpPill: { marginTop: 28, paddingHorizontal: 16, paddingVertical: 9, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.lineStrong },
   helpPillText: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
+  gift: { marginBottom: 32, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
+  giftWho: { fontSize: 13, fontWeight: '800', color: colors.love },
+  giftLine: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 27, fontWeight: '700', color: colors.ink, marginTop: 6 },
   helpRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: colors.line },
   helpText: { fontSize: 15, color: colors.ink, fontWeight: '500' },
 });

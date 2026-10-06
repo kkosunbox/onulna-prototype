@@ -14,6 +14,7 @@ import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
 import ShareCta, { ShareIconButton } from '../../components/ShareCta';
 import { spouseSpec } from '../../services/share/shareSpecs';
+import FriendCompare from '../../components/FriendCompare';
 
 /** 프리미엄: 미래 배우자 리포트 — 첫 화면은 무료로 보여주고 나머지는 잠금 */
 export default function SpouseScreen() {
@@ -26,6 +27,7 @@ export default function SpouseScreen() {
 
   return (
     <Screen title="미래 배우자 리포트" back right={<ShareIconButton item={item} spec={spouseSpec(u, today)} />}>
+      <FriendCompare route="Spouse" spec={spouseSpec(u, today)} />
       <HeadRow item={item} caption={`배우자의 별 · ${el.ko}(${el.hanja})`} />
       <Hero style={{ alignItems: 'center', paddingVertical: 26 }}>
         <Text style={heroTxt.eyebrow}>{u.nickname}님의 미래 배우자는</Text>

@@ -99,3 +99,35 @@ export function todayTalisman(u: User, today: string) {
     score: f.totalScore,
   };
 }
+
+/* ---------- 전생 테스트 ---------- */
+/** 년지(띠)로 시대·장소, 일간 오행 × MBTI 기질로 신분, 일지로 장면을 정한다 */
+const ERA = ['고려의 개경', '조선의 한양', '신라의 서라벌', '백제의 사비성', '송나라의 항저우', '르네상스의 피렌체', '고대 이집트의 테베', '에도 시대의 교토', '빅토리아 시대의 런던', '고대 그리스의 아테네', '실크로드의 사마르칸트', '발해의 상경성'];
+const ROLE: Record<Element, [string, string]> = {
+  wood: ['의원', '서당 훈장'], fire: ['궁중 화원', '떠돌이 광대'], earth: ['큰 객주의 상인', '도자기 장인'],
+  metal: ['호위 무사', '대장장이'], water: ['밤하늘을 읽던 점성가', '떠돌이 시인'],
+};
+const SCENE = [
+  '밤마다 몰래 책을 읽다 새벽을 맞곤 했어요', '사람들이 고민이 생기면 가장 먼저 찾아오는 사람이었어요', '큰 장이 서는 날이면 누구보다 바빴어요',
+  '아무도 모르는 비밀 하나를 평생 지켰어요', '먼 길을 떠나 낯선 땅에서 이름을 알렸어요', '한 사람을 오래 기다린 이야기가 전해져요',
+  '작은 마을의 분쟁을 지혜롭게 풀어 존경받았어요', '누구보다 아름다운 것을 알아보는 눈이 있었어요', '위기 때마다 침착하게 사람들을 이끌었어요',
+  '말 한마디로 사람들을 웃게 만들었어요', '손재주로 만든 물건이 궁궐까지 올라갔어요', '계절이 바뀔 때마다 새로운 곳으로 떠났어요',
+];
+export interface PastLife { title: string; era: string; role: string; scene: string; carried: string; karma: string; bond: string; hanja: string }
+export function pastLife(u: Pick<User, 'birthDate' | 'birthTime' | 'mbti'>): PastLife {
+  const ch = buildChart(u.birthDate, u.birthTime);
+  const st = ch.day.stem, el = STEMS[st].element;
+  const role = ROLE[el][u.mbti[1] === 'N' ? 1 : 0];
+  const era = ERA[ch.year.branch];
+  const per = STEM_PERSONA[st];
+  const bondBr = BRANCH_GOOD(ch.day.branch)[0];
+  return {
+    title: `${era.split('의 ')[0]}의 ${role}`,
+    era, role,
+    scene: SCENE[(ch.day.branch + st) % 12],
+    carried: per.str[0],
+    karma: per.watch,
+    bond: `${BRANCHES[bondBr].animal}띠`,
+    hanja: '前',
+  };
+}

@@ -19,8 +19,9 @@ import Disclaimer from '../components/Disclaimer';
 import { Coin, PriceTag } from '../components/premium/Kit';
 import { usePremium } from '../context/PremiumContext';
 import { ITEMS } from '../services/premium/catalog';
-import { mbtiMatches, sajuCharacter, todayTalisman } from '../services/content/freeContent';
-import { clearPendingInvite, getPendingInvite, inviteUrl, shareLink } from '../services/share/linkShare';
+import { mbtiMatches, pastLife, sajuCharacter, todayTalisman } from '../services/content/freeContent';
+import { FriendResult, clearPendingInvite, getFriendResult, markFriendSeen, getPendingInvite, inviteUrl, shareLink } from '../services/share/linkShare';
+import { openFriendRoute } from '../navigation/premium';
 import { PartnerInput } from '../types';
 import { colors } from '../theme/colors';
 import { fonts, radius, SCREEN_PX, txt } from '../theme/typography';
@@ -33,7 +34,8 @@ export default function HomeScreen() {
   const { user, fortune, today, fortuneLoading, refreshFortune } = useApp();
   const { points, toast } = usePremium();
   const [invite, setInvite] = useState<PartnerInput | null>(null);
-  useEffect(() => { getPendingInvite().then(setInvite); }, []);
+  const [friend, setFriend] = useState<FriendResult | null>(null);
+  useEffect(() => { getPendingInvite().then(setInvite); getFriendResult().then(f => setFriend(f && !f.seen ? f : null)); }, []);
 
   const top = (
     <View style={s.topBar}>
@@ -63,6 +65,7 @@ export default function HomeScreen() {
   const tal = todayTalisman(user, today);
   const match = mbtiMatches(user.mbti).best[0];
   const ch = sajuCharacter(user);
+  const pl = pastLife(user);
 
   const sendInvite = async () => {
     const r = await shareLink(`${user.nickname}님이 궁합을 보자고 해요 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, inviteUrl(user));
@@ -80,6 +83,7 @@ export default function HomeScreen() {
     { k: 'tal', big: tal.hanja, title: '오늘의 부적', sub: tal.keyword, go: () => nav.navigate('Talisman'), tone: 'paper' },
     { k: 'mbti', big: match.type, title: '찰떡 MBTI', sub: `${match.nickname} · ${match.score}점`, go: () => nav.navigate('MbtiMatch') },
     { k: 'char', big: ch.hanja, title: '사주 캐릭터', sub: ch.name, go: () => nav.navigate('Character') },
+    { k: 'past', big: '前', title: '전생 테스트', sub: pl.title, go: () => nav.navigate('PastLife') },
     { k: 'inv', big: '和', title: '친구 궁합 초대', sub: '링크로 보내기', go: sendInvite },
   ];
 
@@ -102,6 +106,17 @@ export default function HomeScreen() {
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{invite.nickname}님이 궁합을 신청했어요</Text>
               <Text style={txt.small}>눌러서 둘의 궁합 결과 바로 보기</Text>
+            </View>
+            <Icon name="chevronRight" size={18} color={colors.inkMute} />
+          </PressableScale>
+        ) : null}
+
+        {friend ? (
+          <PressableScale onPress={() => { markFriendSeen(); setFriend(null); openFriendRoute(nav, friend.c); }} style={s.invite} scaleTo={0.98} accessibilityLabel={`${friend.n}님이 보낸 결과 보기`}>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 26, color: colors.seal }}>比</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }} numberOfLines={1}>{friend.n}님의 '{friend.k}' 결과가 도착했어요</Text>
+              <Text style={txt.small} numberOfLines={1}>{friend.h} · 나도 해보고 비교하기</Text>
             </View>
             <Icon name="chevronRight" size={18} color={colors.inkMute} />
           </PressableScale>
@@ -151,6 +166,16 @@ export default function HomeScreen() {
             <Text style={s.premiumDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
           </View>
           <Text style={{ fontFamily: fonts.serif, fontSize: 44, color: colors.moon }}>緣</Text>
+        </PressableScale>
+        <PressableScale onPress={() => nav.navigate('Consult')} style={[s.premium, { marginTop: 10 }]} scaleTo={0.985} accessibilityLabel="말 못 할 고민 상담">
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', gap: 6 }}>
+              <View style={s.newTag}><Text style={s.newText}>NEW</Text></View>
+            </View>
+            <Text style={s.premiumTitle}>말 못 할 고민 상담</Text>
+            <Text style={s.premiumDesc}>200자로 털어놓으면 사주가 익명으로 답해요 · 100P</Text>
+          </View>
+          <Text style={{ fontFamily: fonts.serif, fontSize: 44, color: colors.moon }}>談</Text>
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Content' })} style={s.allLink} scaleTo={0.98}>
           <Text style={{ fontSize: 14, fontWeight: '600', color: colors.purple }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>

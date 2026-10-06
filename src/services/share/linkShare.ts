@@ -34,17 +34,49 @@ export function inviteUrl(u: User) {
   return `${appUrl()}/?invite=${encodeURIComponent(code)}`;
 }
 
-/** 앱을 연 링크에 초대가 있으면 저장해 두고 주소창에서는 지운다 (웹) */
+/** 앱을 연 링크에 초대(?invite) · 친구 결과(?r)가 있으면 저장해 두고 주소창에서는 지운다 (웹) */
 export async function captureInvite() {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return;
-  const code = new URLSearchParams(window.location.search).get('invite');
-  if (!code) return;
-  try {
-    const o = dec(code);
-    const partner: PartnerInput = { nickname: String(o.n).slice(0, 12), birthDate: o.b, birthTime: o.t ?? null, gender: o.g, mbti: o.m, bloodType: o.bl };
-    await AsyncStorage.setItem(PENDING, JSON.stringify(partner));
-  } catch { /* 잘못된 링크는 무시 */ }
+  const q = new URLSearchParams(window.location.search);
+  const code = q.get('invite'), rc = q.get('r');
+  if (!code && !rc) return;
+  if (code) {
+    try {
+      const o = dec(code);
+      const partner: PartnerInput = { nickname: String(o.n).slice(0, 12), birthDate: o.b, birthTime: o.t ?? null, gender: o.g, mbti: o.m, bloodType: o.bl };
+      await AsyncStorage.setItem(PENDING, JSON.stringify(partner));
+    } catch { /* 잘못된 링크는 무시 */ }
+  }
+  if (rc) {
+    try {
+      const o = dec(rc);
+      if (RESULT_ROUTES.includes(o.c)) {
+        const fr: FriendResult = { c: o.c, k: String(o.k ?? '').slice(0, 20), n: String(o.n).slice(0, 12), h: String(o.h).slice(0, 40) };
+        await AsyncStorage.setItem(FRIEND, JSON.stringify(fr));
+      }
+    } catch { /* 잘못된 링크는 무시 */ }
+  }
   window.history.replaceState(null, '', window.location.pathname);
+}
+
+/* ---------- 친구 결과 링크 (공유 → 비교 → 답장 공유) ---------- */
+/** 결과 링크로 열 수 있는 화면 (그 외 값은 무시) */
+export const RESULT_ROUTES = ['MbtiMatch', 'Character', 'Talisman', 'PastLife', 'Spouse', 'Consult', 'Life', 'SajuDeep', 'NewYear', 'Monthly', 'Lucky', 'Theme', 'Home', 'Compatibility'];
+export interface FriendResult { c: string; k: string; n: string; h: string; seen?: boolean }
+const FRIEND = 'onulna:friendResult';
+
+/** 내 결과를 담은 링크 — c: 열 화면, k: 콘텐츠 이름, n: 보낸 사람, h: 결과 한 줄 */
+export function resultUrl(r: FriendResult) {
+  return `${appUrl()}/?r=${encodeURIComponent(enc({ c: r.c, k: r.k, n: r.n, h: r.h.slice(0, 40) }))}`;
+}
+export async function getFriendResult(): Promise<FriendResult | null> {
+  try { return JSON.parse((await AsyncStorage.getItem(FRIEND)) ?? 'null'); } catch { return null; }
+}
+export const clearFriendResult = () => AsyncStorage.removeItem(FRIEND);
+/** 홈 알림을 한 번 눌렀으면 다시 띄우지 않는다 (비교 카드는 닫을 때까지 유지) */
+export async function markFriendSeen() {
+  const f = await getFriendResult();
+  if (f) await AsyncStorage.setItem(FRIEND, JSON.stringify({ ...f, seen: true }));
 }
 
 export async function getPendingInvite(): Promise<PartnerInput | null> {

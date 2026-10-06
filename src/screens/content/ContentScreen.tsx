@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -8,6 +8,8 @@ import Ico from '../../components/Ico';
 import PressableScale from '../../components/PressableScale';
 import PrimaryButton from '../../components/PrimaryButton';
 import Disclaimer from '../../components/Disclaimer';
+import BottomSheet from '../../components/BottomSheet';
+import { ContentEntry, UPCOMING, loadNotify, toggleNotify } from '../../services/content/registry';
 import { Coin, Pill, PriceTag, SubHead } from '../../components/premium/Kit';
 import { useApp } from '../../context/AppContext';
 import { usePremium } from '../../context/PremiumContext';
@@ -32,6 +34,9 @@ export default function ContentScreen() {
   const { points, owned, openUnlock, toast } = usePremium();
   if (!user) return null;
   const bOwned = owned(BUNDLE.key);
+  const [notify, setNotify] = useState<string[]>([]);
+  const [peek, setPeek] = useState<ContentEntry | null>(null);
+  useEffect(() => { loadNotify().then(setNotify); }, []);
 
   const invite = async () => {
     const r = await shareLink(`${user.nickname}님이 궁합을 보자고 해요 💌 생일만 넣으면 둘의 궁합이 바로 나와요`, inviteUrl(user));
@@ -42,6 +47,7 @@ export default function ContentScreen() {
     ['性', '찰떡 MBTI', '나와 가장 잘 맞는 유형', () => nav.navigate('MbtiMatch')],
     ['命', '사주 캐릭터', '60가지 중 나는 누구?', () => nav.navigate('Character')],
     ['符', '오늘의 부적', '매일 바뀌는 행운 카드', () => nav.navigate('Talisman')],
+    ['前', '전생 테스트', '나는 전생에 누구였을까?', () => nav.navigate('PastLife')],
     ['和', '친구 궁합 초대', '링크 하나로 궁합 보기', invite],
   ];
 
@@ -70,6 +76,14 @@ export default function ContentScreen() {
 
       <SubHead title="지금 가장 많이 보는" caption="새로 나온 프리미엄 콘텐츠" />
       <View style={{ gap: 10 }}>
+        <PressableScale onPress={() => nav.navigate('Consult')} style={s.hot} scaleTo={0.98}>
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '800', color: colors.purple }}>100P</Text></Pill></View>
+            <Text style={s.hotTitle}>말 못 할 고민 상담</Text>
+            <Text style={s.hotDesc}>누구에게도 못 한 고민, 사주가 익명으로 답해 드려요</Text>
+          </View>
+          <Text style={s.hotHanja}>談</Text>
+        </PressableScale>
         <PressableScale onPress={() => nav.navigate('Spouse')} style={s.hot} scaleTo={0.98}>
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><PriceTag item={ITEMS.spouse()} /></View>
@@ -117,7 +131,42 @@ export default function ContentScreen() {
           </Card>
         </View>
       ))}
+      <SubHead title="곧 오픈" caption="먼저 알림 받고 가장 먼저 보세요" />
+      <View style={s.grid}>
+        {UPCOMING.filter(c => c.status === 'soon').map(c => (
+          <PressableScale key={c.key} onPress={() => setPeek(c)} style={s.soon} scaleTo={0.97} accessibilityLabel={`${c.title} 곧 오픈`}>
+            <View style={s.freeHead}>
+              <Text style={s.soonH}>{c.hanja}</Text>
+              {notify.includes(c.key) ? <Icon name="bell" size={14} color={colors.seal} /> : <Text style={[s.soonTier, c.tier === 'free' && { color: colors.success }]}>{c.tier === 'free' ? '무료' : `${c.cost}P`}</Text>}
+            </View>
+            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 8 }} numberOfLines={1}>{c.title}</Text>
+            <Text style={[txt.caption, { marginTop: 2 }]} numberOfLines={1}>{c.hook}</Text>
+          </PressableScale>
+        ))}
+      </View>
       <Disclaimer compact />
+      <BottomSheet visible={!!peek} onClose={() => setPeek(null)}>
+        {peek ? (
+          <>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+              <Ico ch={peek.hanja} size={48} />
+              <View style={{ flex: 1 }}>
+                <Text style={txt.caption}>곧 오픈 · {peek.tier === 'free' ? '무료' : `${peek.cost}P`}</Text>
+                <Text style={txt.h2}>{peek.title}</Text>
+              </View>
+            </View>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 18, fontWeight: '600', color: colors.purple, marginTop: 16 }}>“{peek.hook}”</Text>
+            <Text style={[txt.body, { marginTop: 8, fontSize: 14 }]}>{peek.desc}</Text>
+            <PrimaryButton
+              label={notify.includes(peek.key) ? '알림 신청됨 · 취소하기' : '오픈하면 알려주세요'}
+              variant={notify.includes(peek.key) ? 'soft' : 'solid'}
+              icon={<Icon name="bell" size={18} color={notify.includes(peek.key) ? colors.purple : colors.white} />}
+              onPress={async () => { const on = !notify.includes(peek.key); setNotify(await toggleNotify(peek.key)); toast(on ? '오픈하면 가장 먼저 알려드릴게요' : '알림을 취소했어요'); }}
+              style={{ marginTop: 20 }}
+            />
+          </>
+        ) : null}
+      </BottomSheet>
     </Screen>
   );
 }
@@ -141,4 +190,7 @@ const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },
+  soon: { width: '48%', flexGrow: 1, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderStyle: 'dashed' },
+  soonH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: colors.inkMute },
+  soonTier: { fontSize: 11, fontWeight: '800', color: colors.purpleSoft },
 });

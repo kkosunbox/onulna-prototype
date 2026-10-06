@@ -23,6 +23,8 @@ import CategoryDetailScreen from '../screens/CategoryDetailScreen';
 import AnalysisDetailScreen from '../screens/AnalysisDetailScreen';
 import CombinedAnalysisScreen from '../screens/CombinedAnalysisScreen';
 import ShareScreen from '../screens/ShareScreen';
+import ConsultScreen from '../screens/content/ConsultScreen';
+import PastLifeScreen from '../screens/content/PastLifeScreen';
 import ContentScreen from '../screens/content/ContentScreen';
 import MbtiMatchScreen from '../screens/content/MbtiMatchScreen';
 import CharacterScreen from '../screens/content/CharacterScreen';
@@ -98,6 +100,8 @@ export default function RootNavigator() {
             <Stack.Screen name="Character" component={CharacterScreen} />
             <Stack.Screen name="Talisman" component={TalismanScreen} />
             <Stack.Screen name="Spouse" component={SpouseScreen} />
+            <Stack.Screen name="Consult" component={ConsultScreen} />
+            <Stack.Screen name="PastLife" component={PastLifeScreen} />
             <Stack.Screen name="Wallet" component={WalletScreen} />
             <Stack.Screen name="SajuDeep" component={SajuDeepScreen} />
             <Stack.Screen name="Life" component={LifeScreen} />
