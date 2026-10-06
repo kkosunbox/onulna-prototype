@@ -45,7 +45,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 function MainTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={p => <BottomNavigation {...p} />}>
+    <Tab.Navigator backBehavior="history" screenOptions={{ headerShown: false }} tabBar={p => <BottomNavigation {...p} />}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Fortune" component={FortuneScreen} />
       <Tab.Screen name="Content" component={ContentScreen} />

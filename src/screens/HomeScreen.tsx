@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/types';
+import { useHasTabHistory, useTabBack } from '../navigation/tabBack';
 import TodayHero from '../components/TodayHero';
-import LuckyStrip from '../components/LuckyStrip';
 import AnalysisTile from '../components/AnalysisTile';
 import ActionTabs from '../components/ActionTabs';
 import SectionHeader from '../components/SectionHeader';
@@ -38,9 +38,18 @@ export default function HomeScreen() {
   const [friend, setFriend] = useState<FriendResult | null>(null);
   useEffect(() => { getPendingInvite().then(setInvite); getFriendResult().then(f => setFriend(f && !f.seen ? f : null)); }, []);
 
+  const tabBack = useTabBack();
+  const hasHistory = useHasTabHistory();
   const top = (
     <View style={s.topBar}>
-      <BrandMark />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {hasHistory ? (
+          <PressableScale onPress={tabBack} hitSlop={10} style={[s.iconBtn, { marginLeft: -12 }]} accessibilityLabel="뒤로 가기" scaleTo={0.9}>
+            <Icon name="chevronLeft" size={24} />
+          </PressableScale>
+        ) : null}
+        <BrandMark />
+      </View>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
         <PressableScale onPress={() => nav.navigate('Wallet')} style={s.ptPill} scaleTo={0.94} accessibilityLabel={`내 포인트 ${points}P`}>
           <Coin size={16} />
@@ -124,10 +133,7 @@ export default function HomeScreen() {
         ) : null}
 
         <Reveal delay={90}>
-          <TodayHero fortune={f} onOpenStory={() => nav.navigate('CombinedAnalysis')} onOpenCategory={c => nav.navigate('CategoryDetail', { category: c })} />
-        </Reveal>
-        <Reveal delay={180} style={{ marginTop: 12 }}>
-          <LuckyStrip f={f} />
+          <TodayHero fortune={f} today={today} onOpenStory={() => nav.navigate('CombinedAnalysis')} onOpenCategory={c => nav.navigate('CategoryDetail', { category: c })} />
         </Reveal>
 
         <SectionHeader title="오늘의 행동" />

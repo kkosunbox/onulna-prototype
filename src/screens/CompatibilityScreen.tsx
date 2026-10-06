@@ -100,7 +100,7 @@ export default function CompatibilityScreen() {
 
   if (result) {
     return (
-      <Screen largeTitle="우리 둘의 궁합">
+      <Screen largeTitle="우리 둘의 궁합" onBack={() => setResult(null)}>
         <View style={[s.heroWrap, shadow.hero]}>
           <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.hero}>
             <View style={s.pair}>
