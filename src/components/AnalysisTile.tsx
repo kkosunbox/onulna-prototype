@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import PressableScale from './PressableScale';
 import { AnalysisResult } from '../types';
 import { analysisTheme, colors } from '../theme/colors';
-import { fonts, radius, shadow } from '../theme/typography';
+import { fonts, radius, shadow, sansW } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
 
 const KICKER = { saju: '四柱', thai: '七曜', mbti: '性向', blood: '血型' } as const;
@@ -36,10 +36,10 @@ const s = StyleSheet.create({
   seal: { position: 'absolute', top: 12, right: 12, width: 30, height: 30, borderRadius: 3, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-6deg' }] },
   sealText: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 20, fontWeight: '700', color: '#FBF4E8' },
   kicker: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '700', letterSpacing: 2 },
-  label: { fontSize: 11, color: colors.inkMute, fontWeight: '600', marginTop: 2 },
-  headline: { fontFamily: fonts.serif, fontSize: 15.5, lineHeight: 22, fontWeight: '700', color: colors.ink, letterSpacing: -0.3, marginTop: 12, flex: 1 },
+  label: { fontSize: 12, color: colors.inkMute, fontWeight: '600', marginTop: 2 },
+  headline: { ...sansW('700'), fontSize: 15, lineHeight: 21, color: colors.ink, letterSpacing: -0.3, marginTop: 12, flex: 1 },
   foot: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: colors.lineStrong, borderStyle: 'dashed' },
   tag: { borderWidth: 1.2, borderRadius: 3, paddingHorizontal: 7, paddingVertical: 2, transform: [{ rotate: '-1.5deg' }] },
-  tagText: { fontSize: 11, fontWeight: '800' },
-  more: { fontSize: 11.5, fontWeight: '700', color: colors.inkMute },
+  tagText: { fontSize: 11.5, fontWeight: '800' },
+  more: { fontSize: 12, fontWeight: '700', color: colors.inkMute },
 });

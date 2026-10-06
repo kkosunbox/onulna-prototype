@@ -81,6 +81,6 @@ const s = StyleSheet.create({
   divider: { height: 1, backgroundColor: 'rgba(255,255,255,0.18)', marginVertical: 16 },
   cats: { flexDirection: 'row', gap: 12 },
   cat: { flex: 1, gap: 4 },
-  catLabel: { color: 'rgba(255,255,255,0.72)', fontSize: 11, fontWeight: '600' },
+  catLabel: { color: 'rgba(255,255,255,0.78)', fontSize: 12, fontWeight: '600' },
   catScore: { fontFamily: fonts.serif, color: colors.white, fontSize: 20, fontWeight: '600', letterSpacing: -0.5, fontVariant: ['tabular-nums'] },
 });

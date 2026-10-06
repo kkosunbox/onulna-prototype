@@ -10,7 +10,7 @@ import Disclaimer from '../components/Disclaimer';
 import { LogoMark } from '../components/BrandMark';
 import { useApp } from '../context/AppContext';
 import { analysisTheme, colors, gradients } from '../theme/colors';
-import { fonts, radius, shadow, txt } from '../theme/typography';
+import { fonts, radius, shadow, txt, sansW } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
 import { AlmanacHero, Figure } from '../components/Almanac';
 
@@ -86,5 +86,5 @@ const s = StyleSheet.create({
   story: { borderRadius: radius.xl, padding: 22 },
   storyHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   storyLabel: { color: colors.moon, fontSize: 13, fontWeight: '700' },
-  storyText: { fontFamily: fonts.serif, color: colors.white, fontSize: 16, lineHeight: 28, marginTop: 12, letterSpacing: -0.2 },
+  storyText: { ...sansW('400'), color: colors.white, fontSize: 15.5, lineHeight: 26, marginTop: 12, letterSpacing: -0.2 },
 });

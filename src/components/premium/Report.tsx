@@ -16,7 +16,7 @@ import {
   reportAvailable, stopReport, subscribeReports,
 } from '../../services/report/reportService';
 import { colors } from '../../theme/colors';
-import { fonts, radius, shadow, txt } from '../../theme/typography';
+import { fonts, radius, shadow, txt, sansW } from '../../theme/typography';
 
 function useReportState(key: string) {
   const [, force] = useReducer(x => x + 1, 0);
@@ -253,13 +253,13 @@ const s = StyleSheet.create({
   rsecLine: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   rhead: { flexDirection: 'row', gap: 14, alignItems: 'flex-start', marginBottom: 16 },
   rnum: { width: 34, height: 34, borderRadius: 8, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
-  rtitle: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 26, fontWeight: '600', letterSpacing: -0.5, color: colors.ink },
+  rtitle: { fontFamily: fonts.display, fontSize: 19, lineHeight: 26, fontWeight: '700', letterSpacing: -0.5, color: colors.ink },
   rlead: { fontSize: 14, lineHeight: 20, color: colors.seal, fontWeight: '500', marginTop: 3 },
-  rp: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 29, color: colors.ink, letterSpacing: -0.3, marginTop: 14 },
+  rp: { ...sansW('400'), fontSize: 16, lineHeight: 27, color: colors.ink, letterSpacing: -0.3, marginTop: 14 },
   rsub: { backgroundColor: colors.cream, borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: 16 },
-  rsubP: { fontFamily: fonts.serif, fontSize: 15, lineHeight: 26, color: colors.inkSub, marginTop: 6 },
+  rsubP: { ...sansW('400'), fontSize: 15, lineHeight: 24, color: colors.inkSub, marginTop: 6 },
   rpts: { marginTop: 18, backgroundColor: colors.lavenderSoft, borderLeftWidth: 3, borderLeftColor: colors.seal, borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: 12, borderBottomRightRadius: 12, paddingVertical: 14, paddingHorizontal: 16 },
-  rptsHead: { fontSize: 11, fontWeight: '800', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
+  rptsHead: { fontSize: 12, fontWeight: '800', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
   rpt: { flexDirection: 'row', gap: 8, alignItems: 'flex-start', paddingVertical: 4 },
   ghost: { height: 12, borderRadius: 6, backgroundColor: colors.line, marginTop: 12 },
   note: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 16, paddingHorizontal: 18 },

@@ -34,5 +34,5 @@ const s = StyleSheet.create({
   swatch: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.card, shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 3, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   value: { fontSize: 13, fontWeight: '700', color: colors.ink },
   big: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '600', color: colors.purple, height: 24, lineHeight: 24, fontVariant: ['tabular-nums'] },
-  label: { fontSize: 11, color: colors.inkMute, fontWeight: '500' },
+  label: { fontSize: 12, color: colors.inkMute, fontWeight: '500' },
 });

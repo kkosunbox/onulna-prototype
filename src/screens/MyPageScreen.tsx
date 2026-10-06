@@ -24,7 +24,7 @@ import { storage, NotificationSettings } from '../services/storage/storageServic
 import { notificationService } from '../services/notificationService';
 import { MBTI_INFO, MBTI_LIST } from '../data/mbtiData';
 import { colors, gradients } from '../theme/colors';
-import { radius, shadow, txt } from '../theme/typography';
+import { fonts, radius, shadow, txt } from '../theme/typography';
 import appJson from '../../app.json';
 
 const HOURS = [7, 8, 9];
@@ -231,7 +231,7 @@ const s = StyleSheet.create({
   meta: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 2 },
   todayRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(255,255,255,0.22)' },
   todayLabel: { fontSize: 13, color: 'rgba(255,255,255,0.72)', fontWeight: '600' },
-  todayScore: { fontSize: 17, color: colors.moon, fontWeight: '800' },
+  todayScore: { fontFamily: fonts.serif, fontSize: 18, color: colors.moon, fontWeight: '700' },
   group: { paddingVertical: 2, paddingHorizontal: 16 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 54 },
   border: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },

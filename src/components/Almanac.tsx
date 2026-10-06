@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
-import { fonts, radius } from '../theme/typography';
+import { fonts, radius, sansW } from '../theme/typography';
 import { parseISO, weekdayOf } from '../utils/date';
 
 /**
@@ -108,7 +108,7 @@ const s = StyleSheet.create({
   br: { bottom: 5, right: 5, borderBottomWidth: 1, borderRightWidth: 1 },
   mast: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   kicker: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '700', letterSpacing: 2 },
-  date: { fontSize: 11, fontWeight: '600', color: colors.inkMute, letterSpacing: 0.4 },
+  date: { fontSize: 12, fontWeight: '600', color: colors.inkMute, letterSpacing: 0.4 },
   rule: { height: 1.2, marginTop: 8, opacity: 0.8 },
   ruleThin: { height: 0.5, marginTop: 2, opacity: 0.6 },
   body: { marginTop: 16, paddingRight: 54, minHeight: 64 },
@@ -124,14 +124,14 @@ const s = StyleSheet.create({
   lrow: { flexDirection: 'row', gap: 14, paddingVertical: 14 },
   ldash: { borderTopWidth: 1, borderTopColor: colors.lineStrong, borderStyle: 'dashed' },
   lnum: { width: 18, fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', textAlign: 'center', marginTop: 1 },
-  lk: { fontSize: 11.5, fontWeight: '700', color: colors.inkMute, letterSpacing: 0.3 },
-  lv: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 23, fontWeight: '600', color: colors.ink, marginTop: 3 },
+  lk: { fontSize: 12, fontWeight: '700', color: colors.inkMute, letterSpacing: 0.3 },
+  lv: { ...sansW('600'), fontSize: 16, lineHeight: 23, color: colors.ink, marginTop: 3 },
   quote: { flexDirection: 'row', gap: 14, marginTop: 14, paddingVertical: 4 },
   qbar: { width: 3, borderRadius: 2 },
-  qlabel: { fontSize: 11.5, fontWeight: '800', letterSpacing: 1 },
-  qtext: { fontFamily: fonts.serif, fontSize: 16.5, lineHeight: 27, fontWeight: '500', color: colors.ink, marginTop: 6 },
+  qlabel: { fontSize: 12, fontWeight: '800', letterSpacing: 1 },
+  qtext: { ...sansW('400'), fontSize: 16, lineHeight: 26, color: colors.ink, marginTop: 6 },
   fig: { marginTop: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, padding: 18 },
   figHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 },
   figTitle: { fontFamily: fonts.display, fontSize: 15, fontWeight: '700', color: colors.ink },
-  figCap: { fontSize: 11.5, color: colors.inkMute, fontWeight: '600' },
+  figCap: { fontSize: 12, color: colors.inkMute, fontWeight: '600' },
 });

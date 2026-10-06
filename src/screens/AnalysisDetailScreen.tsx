@@ -169,10 +169,10 @@ function BloodFigure({ b, tone }: { b: BloodType; tone: string }) {
 }
 
 const s = StyleSheet.create({
-  note: { fontSize: 11.5, color: colors.inkMute, textAlign: 'center', marginTop: 16 },
+  note: { fontSize: 12, color: colors.inkMute, textAlign: 'center', marginTop: 16 },
   pillars: { flexDirection: 'row', gap: 8 },
   pillar: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: radius.md, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.cream },
-  pLabel: { fontSize: 11, fontWeight: '700', color: colors.inkMute },
+  pLabel: { fontSize: 12, fontWeight: '700', color: colors.inkMute },
   pHan: { fontFamily: fonts.serif, fontSize: 26, lineHeight: 34, fontWeight: '700', marginTop: 2 },
   pUnknown: { fontSize: 12, color: colors.inkMute, marginTop: 24, marginBottom: 20 },
   subTitle: { fontSize: 12, fontWeight: '700', color: colors.inkSub, marginTop: 18, marginBottom: 8 },
@@ -186,7 +186,7 @@ const s = StyleSheet.create({
   dot: { width: 22, height: 22, borderRadius: 11, borderWidth: 2 },
   todayRing: { shadowColor: '#000', shadowOpacity: 0, borderWidth: 3, transform: [{ scale: 1.12 }] },
   dayL: { fontSize: 13, fontWeight: '600', color: colors.inkSub },
-  planet: { fontSize: 10.5, color: colors.inkMute },
+  planet: { fontSize: 12, color: colors.inkMute },
   todayMark: { width: 14, height: 3, borderRadius: 2 },
   figNote: { marginTop: 16, paddingLeft: 10, borderLeftWidth: 2, fontSize: 13, lineHeight: 19, color: colors.inkSub },
   axisHead: { flexDirection: 'row', justifyContent: 'space-between' },

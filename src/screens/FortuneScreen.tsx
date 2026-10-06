@@ -140,7 +140,7 @@ const s = StyleSheet.create({
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   chart: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, paddingTop: 22, height: CHART_H + 80 },
   col: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6, height: '100%' },
-  colScore: { fontSize: 10, color: colors.inkMute, fontWeight: '700' },
+  colScore: { fontSize: 11, color: colors.inkMute, fontWeight: '700' },
   colBar: { width: '72%', maxWidth: 26, borderRadius: 6 },
-  colLabel: { fontSize: 11, color: colors.inkSub },
+  colLabel: { fontSize: 12, color: colors.inkSub },
 });

@@ -20,7 +20,7 @@ const light = {
   frame: '#E2DCD0', // 데스크톱 웹에서 앱 바깥
   ink: '#1C1A17',
   inkSub: '#58524A',
-  inkMute: '#968E81',
+  inkMute: '#736B5F',
   line: '#E8E1D4',
   lineStrong: '#DCD3C3',
   love: '#A84A50', loveBg: '#F3E4E0',
@@ -48,7 +48,7 @@ const dark: typeof light = {
   frame: '#0D0C0A',
   ink: '#EDE7DB',
   inkSub: '#BDB4A4',
-  inkMute: '#8A8273',
+  inkMute: '#9A9283',
   line: '#2B2823',
   lineStrong: '#38342D',
   love: '#D58A8C', loveBg: '#35221F',

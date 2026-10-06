@@ -57,7 +57,7 @@ export default function ScoreRing({
         />
       </Svg>
       <AnimatedNumber value={progress} initial={startsFinished ? score : 0} style={{ fontFamily: fonts.serif, fontSize: size * 0.32, fontWeight: '500', color: textColor, letterSpacing: -1, fontVariant: ['tabular-nums'] }} />
-      {label ? <Text style={{ fontSize: 11, fontWeight: '600', color: textColor, opacity: 0.65, marginTop: -2 }}>{label}</Text> : null}
+      {label ? <Text style={{ fontSize: 12, fontWeight: '600', color: textColor, opacity: 0.75, marginTop: -2 }}>{label}</Text> : null}
     </View>
   );
 }

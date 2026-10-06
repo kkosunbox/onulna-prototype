@@ -13,7 +13,7 @@ import { fonts } from '../theme/typography';
  * 모든 간격은 8pt(4pt) 단위. 캡처(html2canvas)에서도 그대로 나오도록 View·Text만 쓴다.
  */
 const C = {
-  bg: '#F4EDDF', ink: '#1C1A17', mute: '#857C6E', line: '#CDBFA6', accent: '#A8402B',
+  bg: '#F4EDDF', ink: '#1C1A17', mute: '#6F675B', line: '#CDBFA6', accent: '#A8402B',
   seal: '#B5432E', sealInk: '#FBF4E8', wm: 'rgba(28,26,23,0.045)', fiber: '#8A6F45',
 };
 
@@ -145,9 +145,9 @@ const s = StyleSheet.create({
   corner: { position: 'absolute', width: 10, height: 10, borderColor: C.accent, opacity: 0.7 },
   mast: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   brand: { flexDirection: 'row', alignItems: 'flex-end', gap: 1 },
-  brandText: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '800', letterSpacing: 0.6, color: C.ink },
-  brandSub: { fontFamily: fonts.serif, fontSize: 10, fontWeight: '600', color: C.mute, letterSpacing: 1 },
-  issue: { fontSize: 9.5, fontWeight: '600', letterSpacing: 0.4, color: C.mute },
+  brandText: { fontFamily: fonts.display, fontSize: 14, fontWeight: '800', letterSpacing: 0.6, color: C.ink },
+  brandSub: { fontSize: 11, fontWeight: '600', color: C.mute, letterSpacing: 1 },
+  issue: { fontSize: 11, fontWeight: '600', letterSpacing: 0.4, color: C.mute },
   rule: { height: 1.5, marginTop: 8, backgroundColor: C.ink },
   ruleThin: { height: 0.5, marginTop: 2, backgroundColor: C.ink },
   kindRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
@@ -171,19 +171,19 @@ const s = StyleSheet.create({
   bigLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.8, paddingBottom: 8, color: C.mute },
   stats: { flexDirection: 'row', borderTopWidth: 1, borderBottomWidth: 1, borderColor: C.line, marginTop: 8 },
   stat: { flex: 1, paddingVertical: 6, paddingHorizontal: 8 },
-  statK: { fontSize: 9.5, fontWeight: '700', letterSpacing: 0.6, color: C.mute },
+  statK: { fontSize: 11, fontWeight: '700', letterSpacing: 0.6, color: C.mute },
   statV: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 20, fontWeight: '700', marginTop: 2, color: C.ink },
   teaser: { marginTop: 12, borderWidth: 1, borderStyle: 'dashed', borderColor: C.line, borderRadius: 4, padding: 8, backgroundColor: 'rgba(255,253,248,0.5)' },
   teaserHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   lock: { width: 18, height: 18, borderRadius: 2, backgroundColor: C.seal, alignItems: 'center', justifyContent: 'center' },
   lockText: { fontFamily: fonts.serif, fontSize: 11, lineHeight: 14, fontWeight: '700', color: C.sealInk },
   teaserLabel: { flex: 1, fontSize: 12, fontWeight: '700', color: C.ink },
-  teaserOpen: { fontSize: 9.5, fontWeight: '700', color: C.accent },
+  teaserOpen: { fontSize: 11, fontWeight: '700', color: C.accent },
   bars: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 8 },
   bar: { height: 8, borderRadius: 4, backgroundColor: C.ink },
   foot: { marginTop: 12 },
   hook: { fontFamily: fonts.serif, fontSize: 17, lineHeight: 24, fontWeight: '700', letterSpacing: -0.4, color: C.ink },
   footRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 },
-  url: { fontSize: 10, fontWeight: '600', color: C.mute },
+  url: { fontSize: 11, fontWeight: '600', color: C.mute },
   cta: { fontSize: 11, fontWeight: '800', color: C.accent },
 });

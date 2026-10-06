@@ -34,5 +34,5 @@ const s = StyleSheet.create({
   compact: { minHeight: 44 },
   sel: { backgroundColor: colors.navy, borderColor: colors.navy },
   label: { fontSize: 16, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
-  sub: { fontSize: 11, fontWeight: '500', color: colors.inkMute, marginTop: 1 },
+  sub: { fontSize: 12, fontWeight: '500', color: colors.inkMute, marginTop: 1 },
 });

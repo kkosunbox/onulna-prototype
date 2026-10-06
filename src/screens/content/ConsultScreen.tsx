@@ -20,7 +20,7 @@ import {
 } from '../../services/content/consult';
 import { consultSpec } from '../../services/share/shareSpecs';
 import { colors } from '../../theme/colors';
-import { fonts, radius, txt } from '../../theme/typography';
+import { fonts, radius, txt, sansW } from '../../theme/typography';
 
 const EXAMPLES = [
   '헤어진 지 3개월, 아직도 연락할지 말지 매일 고민돼요',
@@ -230,7 +230,7 @@ const s = StyleSheet.create({
   histH: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.seal, width: 28, textAlign: 'center' },
   direct: { marginTop: 12, borderLeftWidth: 3, borderLeftColor: colors.seal },
   directK: { fontSize: 12, fontWeight: '800', color: colors.seal, letterSpacing: 1 },
-  directV: { fontFamily: fonts.serif, fontSize: 17, lineHeight: 26, fontWeight: '600', color: colors.ink, marginTop: 6 },
+  directV: { ...sansW('600'), fontSize: 16.5, lineHeight: 25, color: colors.ink, marginTop: 6 },
   q: { padding: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, marginBottom: 12 },
   bars: { flexDirection: 'row', alignItems: 'flex-end', gap: 14, height: 120, marginTop: 16 },
   barCol: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6 },
@@ -239,5 +239,5 @@ const s = StyleSheet.create({
   day: { flex: 1, alignItems: 'center', paddingVertical: 14, borderRadius: radius.lg, backgroundColor: colors.loveBg },
   closing: { marginTop: 24, alignItems: 'center', paddingVertical: 24 },
   idiom: { fontFamily: fonts.serif, fontSize: 28, fontWeight: '700', color: colors.seal, letterSpacing: 4 },
-  closeText: { fontFamily: fonts.serif, fontSize: 17, lineHeight: 26, fontWeight: '600', color: colors.ink, textAlign: 'center', marginTop: 14 },
+  closeText: { ...sansW('600'), fontSize: 16, lineHeight: 25, color: colors.ink, textAlign: 'center', marginTop: 14 },
 });

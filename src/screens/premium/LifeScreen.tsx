@@ -228,7 +228,7 @@ const s = StyleSheet.create({
   goldCard: { flex: 1, padding: 16, backgroundColor: colors.moneyBg, borderRadius: radius.lg },
   dp: { width: 44, height: 44, borderRadius: 12, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   nowTag: { backgroundColor: colors.seal, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 4 },
-  nowText: { color: colors.white, fontSize: 9, fontWeight: '700' },
+  nowText: { color: colors.white, fontSize: 10.5, fontWeight: '700' },
   drow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11 },
   dd: { width: 40, alignItems: 'center' },
 });

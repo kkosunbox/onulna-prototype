@@ -81,7 +81,7 @@ const s = StyleSheet.create({
   bonusText: { fontSize: 11, fontWeight: '800', color: colors.badge },
   won: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '600', color: colors.inkSub },
   bestTag: { position: 'absolute', top: -9, right: 16, backgroundColor: colors.seal, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
-  bestText: { color: colors.white, fontSize: 10, fontWeight: '800' },
+  bestText: { color: colors.white, fontSize: 11, fontWeight: '800' },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, gap: 8 },
   line: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
 });

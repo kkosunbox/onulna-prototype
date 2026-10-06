@@ -23,7 +23,9 @@ if (Platform.OS === 'web' && typeof document !== 'undefined' && !document.getEle
   document.head.appendChild(pre);
   const style = document.createElement('style');
   // react-native-web 기본 글꼴 클래스보다 우선하되, 글꼴을 지정한 요소(r-fontFamily)와 중첩 텍스트는 건드리지 않는다
-  style.textContent = `[class*="css-text-"]:not([class*="r-fontFamily"]):not([class*="textHasAncestor"]),[class*="css-textinput-"]:not([class*="r-fontFamily"]){font-family:${fonts.sans};letter-spacing:-.2px}`;
+  style.textContent = `[class*="css-text-"]:not([class*="r-fontFamily"]):not([class*="textHasAncestor"]),[class*="css-textinput-"]:not([class*="r-fontFamily"]){font-family:${fonts.sans};letter-spacing:-.2px}` +
+    // 한국어는 낱말 단위로 줄바꿈(단어 중간에서 끊기지 않게), 너무 긴 영문·숫자만 예외로 끊고, 마지막 줄에 한 글자만 남지 않게
+    `[class*="css-text-"]{word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}`;
   document.head.appendChild(style);
 }
 

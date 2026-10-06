@@ -5,6 +5,7 @@ import ScoreBar from './ScoreBar';
 import Icon from './Icon';
 import { CategoryKey, categoryTheme, colors } from '../theme/colors';
 import Ico from './Ico';
+import { fonts } from '../theme/typography';
 
 /** 분야별 운세 한 줄: 아이콘 · 이름 · 점수 · 막대 · 한 문장 */
 export default function CategoryRow({ category, score, text, onPress, delay, badge, lines = 1 }: { category: CategoryKey; score: number; text?: string; onPress(): void; delay?: number; badge?: string; lines?: number }) {
@@ -32,8 +33,8 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14 },
   head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   label: { fontSize: 15, fontWeight: '700', color: colors.ink, letterSpacing: -0.3 },
-  score: { fontSize: 17, fontWeight: '800', fontVariant: ['tabular-nums'] },
-  text: { fontSize: 13, color: colors.inkSub },
+  score: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  text: { fontSize: 13.5, lineHeight: 20, color: colors.inkSub },
   badge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
   badgeText: { fontSize: 11, fontWeight: '700' },
 });
