@@ -1,26 +1,26 @@
 {
   "expo": {
-    "name": "한장",
-    "slug": "hanjang",
-    "scheme": "hanjang",
+    "name": "WHO AM I?",
+    "slug": "whoami-saju",
+    "scheme": "whoami",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#F3EEE4",
-    "description": "매일 한 장, 나를 읽다. 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽는 오늘의 운세.",
+    "description": "나는 어떤 사람일까? 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 나를 알아가는 운세 앱.",
     "primaryColor": "#22293F",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "app.hanjang.ios",
+      "bundleIdentifier": "com.whoamisaju.ios",
       "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "CFBundleDisplayName": "한장"
+        "CFBundleDisplayName": "WHO AM I?"
       }
     },
     "android": {
-      "package": "app.hanjang.android",
+      "package": "com.whoamisaju.android",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -31,8 +31,8 @@
     "web": {
       "bundler": "metro",
       "output": "single",
-      "name": "한장 · 매일 한 장, 나를 읽다",
-      "shortName": "한장",
+      "name": "WHO AM I? · 나는 어떤 사람일까",
+      "shortName": "WHO AM I?",
       "themeColor": "#22293F",
       "backgroundColor": "#F3EEE4",
       "favicon": "./assets/favicon.png"

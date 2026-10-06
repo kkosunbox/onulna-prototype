@@ -6,8 +6,8 @@
 import { storage, NotificationSettings } from './storage/storageService';
 
 const TEMPLATES = [
-  (n: string) => `${n}님, 오늘의 한 장이 넘어갔어요. 오늘은 어떤 날일까요?`,
-  () => '오늘 가장 힘이 실리는 분야는 어디일까요? 한 장 넘겨 보세요.',
+  (n: string) => `${n}님, 오늘의 나는 어떤 흐름일까요?`,
+  () => '오늘 가장 힘이 실리는 분야는 어디일까요?',
   (n: string) => `${n}님의 오늘 키워드가 나왔어요.`,
 ];
 

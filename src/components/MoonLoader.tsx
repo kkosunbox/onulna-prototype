@@ -8,8 +8,8 @@ import { fonts } from '../theme/typography';
 interface Props { title: string; messages?: string[]; variant?: 'night' | 'light' }
 
 /**
- * 조용한 로딩: 일력이 한 장씩 넘어간다(맨 위 장이 살짝 들려 사라지고 다음 장이 드러남) + 교차 페이드 문구.
- * 1.6초 주기의 느린 움직임만 쓴다. 이름은 기존 호출부 호환을 위해 유지.
+ * 조용한 로딩: 물음표 마크가 생각하듯 천천히 좌우로 기운다 + 교차 페이드 문구.
+ * 3초 주기의 느린 움직임만 쓴다. 이름은 기존 호출부 호환을 위해 유지.
  */
 export default function MoonLoader({ title, messages = [] }: Props) {
   const reduced = useReducedMotion();
@@ -20,9 +20,8 @@ export default function MoonLoader({ title, messages = [] }: Props) {
   useEffect(() => {
     if (reduced) return;
     const a = Animated.loop(Animated.sequence([
-      Animated.delay(500),
-      Animated.timing(flip, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.cubic), useNativeDriver: true }),
-      Animated.timing(flip, { toValue: 0, duration: 0, useNativeDriver: true }),
+      Animated.timing(flip, { toValue: 1, duration: 1500, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+      Animated.timing(flip, { toValue: 0, duration: 1500, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
     ]));
     a.start();
     return () => a.stop();
@@ -39,16 +38,13 @@ export default function MoonLoader({ title, messages = [] }: Props) {
     return () => clearInterval(t);
   }, [messages.length]);
 
-  const lift = flip.interpolate({ inputRange: [0, 1], outputRange: [0, -46] });
-  const tilt = flip.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-14deg'] });
-  const gone = flip.interpolate({ inputRange: [0, 0.6, 1], outputRange: [1, 0.7, 0] });
+  const tilt = flip.interpolate({ inputRange: [0, 1], outputRange: ['-8deg', '8deg'] });
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.cream }}>
       <View style={s.center}>
         <View style={s.stage}>
-          <LogoMark size={120} />
-          <Animated.View style={[StyleSheet.absoluteFill, s.top, { opacity: gone, transform: [{ translateY: lift }, { rotate: tilt }] }]}>
+          <Animated.View style={{ transform: [{ rotate: tilt }] }}>
             <LogoMark size={120} />
           </Animated.View>
         </View>

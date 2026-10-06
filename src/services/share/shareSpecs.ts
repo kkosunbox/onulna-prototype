@@ -52,7 +52,7 @@ export function todaySpec(u: User, f: CombinedFortune): ShareSpec {
     stats: [['연애', String(f.love)], ['재물', String(f.money)], ['일', String(f.work)]],
     teaser: '오늘 꼭 피해야 할 한 가지',
     hook: '너의 오늘은 몇 점일까?',
-    text: `오늘 내 운세 ${f.totalScore}점, 키워드는 '${f.keywords[0]}'. 너는 오늘 몇 점이야?`, file: 'hanjang-today', route: 'Home', short: `${f.totalScore}점 · ${f.keywords[0]}`,
+    text: `오늘 내 운세 ${f.totalScore}점, 키워드는 '${f.keywords[0]}'. 너는 오늘 몇 점이야?`, file: 'whoami-today', route: 'Home', short: `${f.totalScore}점 · ${f.keywords[0]}`,
   };
 }
 
@@ -65,7 +65,7 @@ export function mbtiSpec(u: User): ShareSpec {
     stats: [['2위', best[1].type], ['3위', best[2].type], ['조심', worst.type]],
     teaser: `${top.type}와 잘 맞는 진짜 이유`,
     hook: '너의 찰떡 MBTI는 뭘까?',
-    text: `내 찰떡 MBTI는 ${top.type}(${top.nickname})래. 너랑 잘 맞는 유형은 뭐야?`, file: 'hanjang-mbti', route: 'MbtiMatch', short: `${top.type}(${top.nickname})`,
+    text: `내 찰떡 MBTI는 ${top.type}(${top.nickname})래. 너랑 잘 맞는 유형은 뭐야?`, file: 'whoami-mbti', route: 'MbtiMatch', short: `${top.type}(${top.nickname})`,
   };
 }
 
@@ -77,7 +77,7 @@ export function characterSpec(u: User): ShareSpec {
     stats: [['일주', c.hanja], ['기운', `${ELEMENT_INFO[c.element].ko}(${ELEMENT_INFO[c.element].hanja})`], ['키워드', c.keyword]],
     teaser: `나와 찰떡인 캐릭터는 '${c.bestFriend.split(' ')[0]} ··'`,
     hook: '너는 60가지 중 어떤 캐릭터일까?',
-    text: `나 사주 캐릭터가 '${c.name}'${josa(c.name, '이래', '래')}. 너는 60가지 중에 뭐 나와?`, file: 'hanjang-character', route: 'Character', short: c.name,
+    text: `나 사주 캐릭터가 '${c.name}'${josa(c.name, '이래', '래')}. 너는 60가지 중에 뭐 나와?`, file: 'whoami-character', route: 'Character', short: c.name,
   };
 }
 
@@ -88,7 +88,7 @@ export function talismanSpec(u: User, today: string): ShareSpec {
     headline: t.mantra, sub: `${t.hanja} · ${t.keyword}`,
     stats: [['행운의 색', t.color], ['숫자', String(t.number)], ['시간', t.time]],
     hook: '오늘 너에게 온 부적은?',
-    text: `오늘 받은 부적: ${t.hanja}(${t.keyword}). "${t.mantra}" 너도 하나 받아 봐.`, file: 'hanjang-talisman', route: 'Talisman', short: `${t.hanja} · ${t.keyword}`,
+    text: `오늘 받은 부적: ${t.hanja}(${t.keyword}). "${t.mantra}" 너도 하나 받아 봐.`, file: 'whoami-talisman', route: 'Talisman', short: `${t.hanja} · ${t.keyword}`,
   };
 }
 
@@ -99,7 +99,7 @@ export function compatSpec(u: User, r: CompatibilityResult): ShareSpec {
     stats: [['연애', String(r.love)], ['대화', String(r.conversation)], ['재물', String(r.money)]],
     teaser: '둘이 가장 부딪히기 쉬운 순간',
     hook: '우리 궁합은 몇 점일까?',
-    text: `${u.nickname} × ${r.target.nickname} 궁합 ${r.total}점 나왔어. 생일만 넣으면 우리 궁합도 바로 나와.`, file: 'hanjang-compat', route: 'Compatibility', short: `궁합 ${r.total}점`,
+    text: `${u.nickname} × ${r.target.nickname} 궁합 ${r.total}점 나왔어. 생일만 넣으면 우리 궁합도 바로 나와.`, file: 'whoami-compat', route: 'Compatibility', short: `궁합 ${r.total}점`,
   };
 }
 
@@ -111,7 +111,7 @@ export function pastLifeSpec(u: User): ShareSpec {
     stats: [['시대', P.era.split('의 ')[0]], ['타고난 재능', P.carried.split(' ')[0]], ['전생 인연', P.bond]],
     teaser: '이번 생에 풀어야 할 숙제',
     hook: '너는 전생에 누구였을까?',
-    text: `나 전생에 '${P.title}'${josa(P.title, '이었대', '였대')}. 너는 전생에 누구였을 것 같아?`, file: 'hanjang-pastlife', route: 'PastLife', short: P.title,
+    text: `나 전생에 '${P.title}'${josa(P.title, '이었대', '였대')}. 너는 전생에 누구였을 것 같아?`, file: 'whoami-pastlife', route: 'PastLife', short: P.title,
   };
 }
 
@@ -125,7 +125,7 @@ export function spouseSpec(u: User, today: string): ShareSpec {
     stats: [['MBTI', R.mbti[0]], ['띠', `${R.animals[0]}띠`], ['나이', R.ageGap.startsWith('동갑') ? '동갑·연하' : R.ageGap.includes('연상') ? '연상' : '상관없음']],
     teaser: '그 사람을 처음 만나는 곳',
     hook: '내 미래 배우자는 어떤 사람일까?',
-    text: `내 미래 배우자는 '${R.headline}'래. ${R.bestYear.yy}년에 인연이 제일 강하다는데, 너는?`, file: 'hanjang-spouse', route: 'Spouse', short: R.headline,
+    text: `내 미래 배우자는 '${R.headline}'래. ${R.bestYear.yy}년에 인연이 제일 강하다는데, 너는?`, file: 'whoami-spouse', route: 'Spouse', short: R.headline,
   };
 }
 
@@ -137,7 +137,7 @@ export function crushSpec(u: User, r: CompatibilityResult, today: string): Share
     stats: [['연인 가능성', `${R.chance}%`], ['나는 그에게', R.tg], ['연락하기 좋은 날', md(R.contact[0].iso)]],
     teaser: '마음을 표현하기 가장 좋은 날',
     hook: '그 사람은 나를 어떻게 생각할까?',
-    text: `그 사람 마음 온도가 ${R.temp}℃래. 너도 궁금한 사람 있으면 봐 봐.`, file: 'hanjang-crush', route: 'Compatibility', short: `마음 온도 ${R.temp}℃`,
+    text: `그 사람 마음 온도가 ${R.temp}℃래. 너도 궁금한 사람 있으면 봐 봐.`, file: 'whoami-crush', route: 'Compatibility', short: `마음 온도 ${R.temp}℃`,
   };
 }
 
@@ -152,7 +152,7 @@ export function lifeSpec(u: User, today: string): ShareSpec {
     stats: st.map(x => [x.label, String(x.score)] as [string, string]),
     teaser: '인생에서 가장 조심해야 할 10년',
     hook: '내 인생의 황금기는 언제일까?',
-    text: `내 인생 최고의 10년은 ${gold.age}세부터래. 너의 황금기는 언제야?`, file: 'hanjang-life', route: 'Life', short: `최고의 10년 ${gold.age}세~`,
+    text: `내 인생 최고의 10년은 ${gold.age}세부터래. 너의 황금기는 언제야?`, file: 'whoami-life', route: 'Life', short: `최고의 10년 ${gold.age}세~`,
   };
 }
 
@@ -165,7 +165,7 @@ export function newYearSpec(u: User, y: number): ShareSpec {
     stats: [['좋은 달', D.best.map(b => b.m).sort((a, b) => a - b).join('·') + '월'], ['연애', String(D.cat.love)], ['재물', String(D.cat.money)]],
     teaser: `${y}년에 조심해야 할 달`,
     hook: `너의 ${y}년은 어떤 해일까?`,
-    text: `내 ${y}년은 '${idiom[0]}(${idiom[1]})'의 해래. 너의 ${y}년은 어떤 해야?`, file: `hanjang-${y}`, route: 'NewYear', short: `${idiom[0]}의 해`,
+    text: `내 ${y}년은 '${idiom[0]}(${idiom[1]})'의 해래. 너의 ${y}년은 어떤 해야?`, file: `whoami-${y}`, route: 'NewYear', short: `${idiom[0]}의 해`,
   };
 }
 
@@ -179,7 +179,7 @@ export function monthlySpec(u: User, y: number, m: number): ShareSpec {
     stats: [['행운의 날', R.best.map(b => b.d).sort((a, b) => a - b).join('·') + '일'], ['키워드', R.kws[0]], ['연애', String(R.cat.love)]],
     teaser: `${m}월에 피해야 할 날`,
     hook: '이번 달 나의 행운의 날은?',
-    text: `내 ${m}월은 '${line[0]}'. 행운의 날은 ${R.best.map(b => b.d).sort((a, b) => a - b).join('·')}일이래. 너는 언제야?`, file: `hanjang-${y}-${m}`, route: 'Monthly', short: line[0],
+    text: `내 ${m}월은 '${line[0]}'. 행운의 날은 ${R.best.map(b => b.d).sort((a, b) => a - b).join('·')}일이래. 너는 언제야?`, file: `whoami-${y}-${m}`, route: 'Monthly', short: line[0],
   };
 }
 
@@ -192,7 +192,7 @@ export function sajuDeepSpec(u: User): ShareSpec {
     stats: [['기운', F.strength], ['용신', `${ELEMENT_INFO[F.yong].ko}(${ELEMENT_INFO[F.yong].hanja})`], ['강점', per.str[0].split(' ')[0]]],
     teaser: '타고난 재물 그릇의 크기',
     hook: '내 사주에 숨겨진 본성은?',
-    text: `나는 '${name}', ${per.core}을 타고났대. 너는 무슨 일주야?`, file: 'hanjang-saju', route: 'SajuDeep', short: name,
+    text: `나는 '${name}', ${per.core}을 타고났대. 너는 무슨 일주야?`, file: 'whoami-saju', route: 'SajuDeep', short: name,
   };
 }
 
@@ -206,7 +206,7 @@ export function themeSpec(u: User, today: string, kind: 'love' | 'money' | 'care
       stats: [['연애운 강한 달', L.ms.map(x => x.m).sort((a, b) => a - b).join('·') + '월'], ['잘 맞는 MBTI', L.types[0]], ['인연의 해', L.yrs[0] ? `${L.yrs[0].yy}` : '—']],
       teaser: '결혼 흐름이 들어오는 시기',
       hook: '나는 어떤 연애를 하는 사람일까?',
-      text: `내 연애 스타일은 '${L.st}'래. 너는 어떤 연애 해?`, file: 'hanjang-love', route: 'Theme', short: L.st,
+      text: `내 연애 스타일은 '${L.st}'래. 너는 어떤 연애 해?`, file: 'whoami-love', route: 'Theme', short: L.st,
     };
   }
   if (kind === 'money') {
@@ -217,7 +217,7 @@ export function themeSpec(u: User, today: string, kind: 'love' | 'money' | 'care
       stats: [['재물 강한 달', M.ms.map(x => x.m).sort((a, b) => a - b).join('·') + '월'], ['재물 기운', `${M.cnt}개`], ['강점', M.t.str.split(' ')[0]]],
       teaser: '재물이 크게 모이는 10년',
       hook: '나는 어떤 부자가 될 사람일까?',
-      text: `내 돈 성향은 '${M.t.name}'래. 너는 어떤 타입이야?`, file: 'hanjang-money', route: 'Theme', short: M.t.name,
+      text: `내 돈 성향은 '${M.t.name}'래. 너는 어떤 타입이야?`, file: 'whoami-money', route: 'Theme', short: M.t.name,
     };
   }
   const C = themeCareer(u, today); const up = C.ups[0];
@@ -227,7 +227,7 @@ export function themeSpec(u: User, today: string, kind: 'love' | 'money' | 'care
     stats: [['커리어 상승기', up ? `${up.age}세~` : '—'], ['일하는 방식', C.style[1].split(' ')[0]], ['추천', C.jobs[2] ?? '—']],
     teaser: '이직·창업하기 좋은 타이밍',
     hook: '나에게 꼭 맞는 일은 뭘까?',
-    text: `나한테 맞는 일은 ${C.jobs[0]}·${C.jobs[1]}래. 너는 뭐 나와?`, file: 'hanjang-career', route: 'Theme', short: `${C.jobs[0]} · ${C.jobs[1]}`,
+    text: `나한테 맞는 일은 ${C.jobs[0]}·${C.jobs[1]}래. 너는 뭐 나와?`, file: 'whoami-career', route: 'Theme', short: `${C.jobs[0]} · ${C.jobs[1]}`,
   };
 }
 
@@ -239,7 +239,7 @@ export function luckySpec(u: User, today: string, pk: PurposeKey): ShareSpec {
     stats: [['2순위', mdw(list[1].iso)], ['3순위', mdw(list[2].iso)], ['행운의 시간', list[0].c.luckyTime]],
     teaser: `${P[2]}할 때 피해야 할 날`,
     hook: `나에게 ${P[2]}하기 좋은 날은?`,
-    text: `내 ${P[2]} 길일은 ${mdw(list[0].iso)}래. 너한테 좋은 날도 찾아봐.`, file: `hanjang-lucky-${pk}`, route: 'Lucky', short: `${P[2]} 길일 ${mdw(list[0].iso)}`,
+    text: `내 ${P[2]} 길일은 ${mdw(list[0].iso)}래. 너한테 좋은 날도 찾아봐.`, file: `whoami-lucky-${pk}`, route: 'Lucky', short: `${P[2]} 길일 ${mdw(list[0].iso)}`,
   };
 }
 
@@ -253,6 +253,6 @@ export function consultSpec(u: User, e: ConsultEntry): ShareSpec {
     stats: [['지금은', MODE_LABEL[A.mode]], ['풀리는 달', A.bestMonth], ['행동하기 좋은 날', A.days[0]?.label.split(' ')[0] ?? '—']],
     teaser: '사주가 알려준 구체적인 해결법 3가지',
     hook: '너의 말 못 할 고민, 사주는 뭐라고 할까?',
-    text: `말 못 할 ${C.label} 고민을 물어봤더니 "${A.headline}"래. 너도 털어놔 봐.`, file: `hanjang-consult-${e.id}`, route: 'Consult', short: `${C.label} 고민 → ${A.headline.split('.')[0]}`,
+    text: `말 못 할 ${C.label} 고민을 물어봤더니 "${A.headline}"래. 너도 털어놔 봐.`, file: `whoami-consult-${e.id}`, route: 'Consult', short: `${C.label} 고민 → ${A.headline.split('.')[0]}`,
   };
 }

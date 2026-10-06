@@ -9,9 +9,9 @@ import { analysisTheme, colors } from '../theme/colors';
 import { fonts, radius, txt } from '../theme/typography';
 
 const PAGES = [
-  { title: '매일 한 장,\n나를 읽다', body: '아침마다 한 장씩 넘기는 나만의 책력이에요.', art: 'sheet' },
-  { title: '네 가지 관점을\n한 장에', body: '사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어요.', art: 'four' },
-  { title: '결과는 한 장으로\n나눠요', body: '친구 결과와 나란히 비교하고, 스토리에도 올려 보세요.', art: 'story' },
+  { title: '나는\n어떤 사람일까?', body: '타고난 기운부터 오늘의 흐름까지, 매일 나를 알아가요.', art: 'sheet' },
+  { title: '네 가지 관점으로\n나를 읽어요', body: '사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어요.', art: 'four' },
+  { title: '나의 답을\n친구와 나눠요', body: '친구 결과와 나란히 비교하고, 스토리에도 올려 보세요.', art: 'story' },
 ] as const;
 
 type Art = (typeof PAGES)[number]['art'];
@@ -21,7 +21,7 @@ function Illustration({ kind }: { kind: Art }) {
   if (kind === 'sheet') {
     return (
       <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
-        <View style={{ transform: [{ rotate: '-4deg' }] }}><LogoMark size={170} /></View>
+        <LogoMark size={190} />
       </View>
     );
   }
@@ -44,7 +44,7 @@ function Illustration({ kind }: { kind: Art }) {
   const r = 78;
   return (
     <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
-      <View style={a.center}><LogoMark size={44} /></View>
+      <View style={a.center}><LogoMark size={40} fg={'#F4EDDF'} /></View>
       {SOURCES.map((k, i) => {
         const ang = (i / 4) * Math.PI * 2 - Math.PI / 4;
         const t = analysisTheme[k];

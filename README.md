@@ -1,6 +1,6 @@
-# 한장 — 매일 한 장, 나를 읽다
+# WHO AM I? — 나는 어떤 사람일까
 
-사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 오늘의 운세를 한 장에 담는 Expo(React Native + TypeScript) 앱.
+사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽어 나를 알아가는 Expo(React Native + TypeScript) 앱.
 
 - 브랜드 가이드: [docs/BRAND.md](docs/BRAND.md)
 - 스토어 등록 정보: [docs/STORE_LISTING.md](docs/STORE_LISTING.md)

@@ -26,7 +26,7 @@ export default function PastLifeScreen() {
     <Screen title="전생 테스트" back>
       <FriendCompare route="PastLife" spec={spec} />
       <View style={s.card}>
-        <View style={s.brand}><LogoMark size={16} /><Text style={s.brandText}>한장</Text></View>
+        <View style={s.brand}><Text style={s.brandText}>WHO AM I</Text><LogoMark size={17} fg={'#F4EDDF'} /></View>
         <View style={s.seal}><Text style={s.sealText}>{P.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은 전생에</Text>
         <Text style={s.name}>{P.title}</Text>

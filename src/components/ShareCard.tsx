@@ -57,11 +57,10 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           {/* 제호 */}
           <View style={s.mast}>
             <View style={s.brand}>
-              <LogoMark size={16} />
-              <Text style={s.brandText}>한장</Text>
-              <Text style={s.brandSub}>日曆</Text>
+              <Text style={s.brandText}>WHO AM I</Text>
+              <LogoMark size={17} />
             </View>
-            <Text style={s.issue}>第 {doy} 張 · {y}.{String(m).padStart(2, '0')}.{String(d).padStart(2, '0')}</Text>
+            <Text style={s.issue}>第 {doy} 號 · {y}.{String(m).padStart(2, '0')}.{String(d).padStart(2, '0')}</Text>
           </View>
           <View style={s.rule} />
           <View style={s.ruleThin} />
@@ -127,7 +126,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
           <View style={s.foot}>
             <Text style={[s.hook, KEEP]} numberOfLines={2}>{spec.hook}</Text>
             <View style={s.footRow}>
-              <Text style={s.url}>생일만 넣으면 30초 · 앱 '한장'</Text>
+              <Text style={s.url}>생일만 넣으면 30초 · WHO AM I?</Text>
               <Text style={s.cta}>내 결과 보기 →</Text>
             </View>
           </View>
@@ -146,8 +145,8 @@ const s = StyleSheet.create({
   frameIn: { flex: 1, borderWidth: 0.5, borderColor: C.line, paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 },
   corner: { position: 'absolute', width: 10, height: 10, borderColor: C.accent, opacity: 0.7 },
   mast: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  brandText: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', letterSpacing: -0.3, color: C.ink },
+  brand: { flexDirection: 'row', alignItems: 'flex-end', gap: 1 },
+  brandText: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '800', letterSpacing: 0.6, color: C.ink },
   brandSub: { fontFamily: fonts.serif, fontSize: 10, fontWeight: '600', color: C.mute, letterSpacing: 1 },
   issue: { fontSize: 9.5, fontWeight: '600', letterSpacing: 0.4, color: C.mute },
   rule: { height: 1.5, marginTop: 8, backgroundColor: C.ink },

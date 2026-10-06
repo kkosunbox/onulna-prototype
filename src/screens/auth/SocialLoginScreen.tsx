@@ -47,9 +47,9 @@ export default function SocialLoginScreen() {
             <Mark provider={p} size={28} />
           </View>
           <View style={s.dots}>{[0, 1, 2].map(i => <View key={i} style={s.dot} />)}</View>
-          <View style={[s.logo, { backgroundColor: colors.heroBg }]}><LogoMark size={34} /></View>
+          <View style={[s.logo, { backgroundColor: colors.heroBg }]}><LogoMark size={38} fg={'#F4EDDF'} /></View>
         </View>
-        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>한장에서 {brand} 계정 정보를{'\n'}요청해요</Text>
+        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>WHO AM I?에서 {brand} 계정 정보를{'\n'}요청해요</Text>
         <Text style={[txt.small, { textAlign: 'center', marginTop: 6 }]}>동의하면 별도 가입 없이 바로 시작할 수 있어요.</Text>
 
         <View style={s.card}>

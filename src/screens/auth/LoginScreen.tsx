@@ -48,9 +48,9 @@ export default function LoginScreen() {
             <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
           </View>
         ) : null}
-        <View style={{ transform: [{ rotate: '-4deg' }], alignSelf: 'flex-start' }}><LogoMark size={72} /></View>
-        <Text style={s.logoText}>한장</Text>
-        <Text style={s.headline}>매일 한 장, 나를 읽다</Text>
+        <LogoMark size={84} />
+        <Text style={s.logoText}>WHO AM I?</Text>
+        <Text style={s.headline}>나는 어떤 사람일까</Text>
         <Text style={[txt.small, { marginTop: 6 }]}>사주 · 태국 점성술 · MBTI · 혈액형</Text>
       </View>
 
@@ -83,7 +83,7 @@ const s = StyleSheet.create({
   hero: { flex: 1, justifyContent: 'center', paddingHorizontal: 32 },
   headline: { fontFamily: fonts.serif, fontSize: 20, lineHeight: 28, fontWeight: '600', color: colors.inkSub, letterSpacing: -0.4, marginTop: 6 },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
-  logoText: { fontFamily: fonts.serif, fontSize: 52, lineHeight: 64, fontWeight: '800', color: colors.purple, letterSpacing: -2, marginTop: 20 },
+  logoText: { fontFamily: fonts.serif, fontSize: 44, lineHeight: 56, fontWeight: '800', color: colors.purple, letterSpacing: 0.5, marginTop: 24 },
   logoDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.moon, marginTop: 22 },
   bottom: { alignItems: 'center', paddingBottom: 20, paddingHorizontal: 24 },
   caption: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },

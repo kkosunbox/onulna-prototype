@@ -60,7 +60,7 @@ export default function CombinedAnalysisScreen() {
 
       <View style={[s.storyWrap, shadow.hero]}>
         <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={s.story}>
-          <View style={s.storyHead}><LogoMark size={16} /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
+          <View style={s.storyHead}><LogoMark size={18} fg={'#F4EDDF'} /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
           <Text style={s.storyText}>{f.combinedStory}</Text>
         </LinearGradient>
       </View>
