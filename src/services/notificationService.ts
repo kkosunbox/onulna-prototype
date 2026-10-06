@@ -4,10 +4,11 @@
  * Notifications.scheduleNotificationAsync({ trigger: { hour, minute, repeats: true } })로 교체.
  */
 import { storage, NotificationSettings } from './storage/storageService';
+import { COPY } from '../content/copy';
 
 const TEMPLATES = [
-  (n: string) => `${n}님, 오늘의 운이 도착했어요. 하나 Pick 해 보세요.`,
-  () => '오늘 가장 힘이 실리는 분야는 어디일까요?',
+  (n: string) => `${n}님, 오늘은 어떤 운을 PICK하시겠어요?`,
+  () => '오늘의 운이 도착했어요. 하나만 PICK해 볼까요?',
   (n: string) => `${n}님의 오늘 키워드가 나왔어요.`,
 ];
 

@@ -9,6 +9,12 @@ import SectionHeader from '../components/SectionHeader';
 import Icon, { IconName } from '../components/Icon';
 import { BRAND, LogoMark } from '../components/BrandMark';
 import Disclaimer from '../components/Disclaimer';
+import BottomSheet from '../components/BottomSheet';
+import OptionChip from '../components/OptionChip';
+import Segmented from '../components/Segmented';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Appearance } from 'react-native';
+import { THEME_KEY, ThemePref, readThemePrefSync } from '../theme/themePref';
 import { useApp } from '../context/AppContext';
 import { usePremium } from '../context/PremiumContext';
 import { Coin } from '../components/premium/Kit';
@@ -16,7 +22,7 @@ import { fmtP } from '../services/premium/catalog';
 import { providerLabel } from '../services/auth/authService';
 import { storage, NotificationSettings } from '../services/storage/storageService';
 import { notificationService } from '../services/notificationService';
-import { MBTI_INFO } from '../data/mbtiData';
+import { MBTI_INFO, MBTI_LIST } from '../data/mbtiData';
 import { colors, gradients } from '../theme/colors';
 import { radius, shadow, txt } from '../theme/typography';
 import appJson from '../../app.json';
@@ -34,8 +40,10 @@ function Row({ icon, label, value, last, right }: { icon: IconName; label: strin
 }
 
 export default function MyPageScreen() {
-  const { user, fortune, resetProfile, account, signOut, deleteAccount } = useApp();
-  const { points, ownedCount } = usePremium();
+  const { user, fortune, resetProfile, account, signOut, deleteAccount, saveUser } = useApp();
+  const { points, ownedCount, toast } = usePremium();
+  const [mbtiSheet, setMbtiSheet] = useState(false);
+  const [theme, setTheme] = useState<ThemePref>(readThemePrefSync());
   const nav = useNavigation();
   const [noti, setNoti] = useState<NotificationSettings | null>(null);
   const [resetArm, setResetArm] = useState(false);
@@ -93,13 +101,28 @@ export default function MyPageScreen() {
 
       <SectionHeader title="내 프로필" caption={resetArm ? '저장된 정보가 모두 지워져요' : undefined} action={resetArm ? '한 번 더 누르면 초기화' : '다시 입력'} onAction={confirmReset} />
       <Card style={s.group}>
-        <Row icon="sparkle" label="MBTI" value={user.mbti} />
+        <PressableScale onPress={() => setMbtiSheet(true)} scaleTo={0.99} accessibilityLabel="MBTI 바꾸기">
+          <Row icon="sparkle" label="MBTI" value={`${user.mbti}${user.mbtiUnknown ? ' (추정)' : ''} ›`} />
+        </PressableScale>
         <Row icon="heart" label="혈액형" value={`${user.bloodType}형`} />
         <Row icon="palette" label="생년월일" value={user.birthDate.replace(/-/g, '.')} />
         <Row icon="clock" label="출생시간" value={user.birthTime ?? '모름'} />
         <Row icon="user" label="성별" value={user.gender === 'female' ? '여성' : '남성'} last={!user.occupation} />
         {user.occupation ? <Row icon="crown" label="직업" value={user.occupation} last /> : null}
       </Card>
+
+      <SectionHeader title="화면 모드" caption={Platform.OS === 'web' ? undefined : '바꾸면 앱을 다시 열 때 모든 화면에 적용돼요'} />
+      <Segmented<ThemePref>
+        options={[{ key: 'system', label: '시스템' }, { key: 'light', label: '라이트' }, { key: 'dark', label: '다크' }]}
+        value={theme}
+        onChange={async t => {
+          setTheme(t);
+          await AsyncStorage.setItem(THEME_KEY, t).catch(() => {});
+          if (Platform.OS === 'web') { location.reload(); return; }
+          Appearance.setColorScheme?.(t === 'system' ? null : t);
+          toast('앱을 다시 열면 모든 화면에 적용돼요');
+        }}
+      />
 
       <SectionHeader title="알림" />
       {noti && (
@@ -184,6 +207,16 @@ export default function MyPageScreen() {
       {deleteArm ? <Text style={[txt.caption, { textAlign: 'center', marginTop: 6 }]}>프로필 · 운세 기록 · 포인트가 모두 지워지고 되돌릴 수 없어요.</Text> : null}
 
       <Disclaimer />
+      <BottomSheet visible={mbtiSheet} onClose={() => setMbtiSheet(false)}>
+        <Text style={txt.h2}>MBTI를 골라 주세요</Text>
+        <Text style={[txt.small, { marginTop: 4 }]}>{user.mbtiUnknown ? '지금은 사주로 추정한 값이에요. 내 MBTI를 고르면 운세가 더 정확해져요.' : '바꾸면 오늘의 운세가 다시 계산돼요.'}</Text>
+        <View style={s.mbtiGrid}>
+          {MBTI_LIST.map(t => (
+            <OptionChip key={t} style={{ width: '23%' }} label={t} sub={MBTI_INFO[t].nickname} selected={!user.mbtiUnknown && user.mbti === t}
+              onPress={async () => { setMbtiSheet(false); await saveUser({ ...user, mbti: t, mbtiUnknown: false }); toast(`MBTI를 ${t}로 바꿨어요`); }} />
+          ))}
+        </View>
+      </BottomSheet>
     </Screen>
   );
 }
@@ -205,6 +238,7 @@ const s = StyleSheet.create({
   rowIcon: { width: 32, height: 32, borderRadius: 10, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   rowLabel: { flex: 1, fontSize: 15, color: colors.ink, fontWeight: '500' },
   rowValue: { fontSize: 15, color: colors.inkSub, fontWeight: '600' },
+  mbtiGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
   hours: { flexDirection: 'row', gap: 8, paddingTop: 14 },
   hour: { flex: 1, height: 40, borderRadius: radius.sm, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   hourOn: { backgroundColor: colors.navy },

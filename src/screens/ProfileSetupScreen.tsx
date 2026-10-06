@@ -15,13 +15,14 @@ import { BloodType, Gender, MBTI, User } from '../types';
 import { MBTI_INFO, MBTI_LIST } from '../data/mbtiData';
 import { isValidDate } from '../utils/date';
 import { motion, useReducedMotion } from '../utils/motion';
+import { guessMbti } from '../utils/mbtiGuess';
 
 /** 4단계: 이름 → 생일·시간 → 성별·혈액형 → MBTI (직업·관심사는 마이에서 나중에) */
 const STEPS = [
   { key: 'name', q: '어떻게 불러드릴까요?', hint: '운세에서 불러드릴 이름이에요.' },
   { key: 'birth', q: '언제 태어났나요?', hint: '양력 기준이에요. 시간은 몰라도 괜찮아요.' },
   { key: 'basic', q: '성별과 혈액형을 알려주세요', hint: '' },
-  { key: 'mbti', q: 'MBTI를 골라주세요', hint: '몰라도 괜찮아요. 4문항으로 간단히 찾아드려요.' },
+  { key: 'mbti', q: 'MBTI를 골라주세요', hint: '몰라도 괜찮아요. 4문항으로 찾거나, 건너뛰어도 돼요.' },
 ] as const;
 
 /** MBTI 간이 테스트 — 축마다 한 문항 */
@@ -32,7 +33,7 @@ const QUIZ: { q: string; a: [string, string]; axis: [string, string] }[] = [
   { q: '여행을 떠날 때 나는?', a: ['일정을 미리 짜둔다', '가서 끌리는 대로 다닌다'], axis: ['J', 'P'] },
 ];
 
-const LOADING_MSGS = ['사주 원국을 세우는 중', '태어난 요일의 행성을 찾는 중', 'MBTI 성향을 읽는 중', '네 가지 결과를 엮는 중'];
+const LOADING_MSGS = ['오늘의 운을 고르는 중', '사주 원국을 세우는 중', '태어난 요일의 행성을 찾는 중', 'MBTI 성향을 읽는 중', '네 가지 결과를 엮는 중'];
 
 export default function ProfileSetupScreen() {
   const { saveUser, signOut } = useApp();
@@ -46,6 +47,7 @@ export default function ProfileSetupScreen() {
   const [gender, setGender] = useState<Gender | null>(null);
   const [blood, setBlood] = useState<BloodType | null>(null);
   const [mbti, setMbti] = useState<MBTI | null>(null);
+  const [skipMbti, setSkipMbti] = useState(false);
   const [quiz, setQuiz] = useState<(0 | 1 | null)[] | null>(null);
 
   // 단계 전환 애니메이션 + 진행 막대
@@ -64,7 +66,7 @@ export default function ProfileSetupScreen() {
   const hourOk = hh !== '' && Number(hh) >= 0 && Number(hh) <= 23;
   const minOk = mm === '' || (Number(mm) >= 0 && Number(mm) <= 59);
   const timeOk = unknownTime || (hourOk && minOk);
-  const canNext = [nickname.trim().length > 0, dateOk && timeOk, !!gender && !!blood, !!mbti][step];
+  const canNext = [nickname.trim().length > 0, dateOk && timeOk, !!gender && !!blood, !!mbti || skipMbti][step];
 
   const answer = (i: number, v: 0 | 1) => {
     const next = [...(quiz ?? [null, null, null, null])] as (0 | 1 | null)[];
@@ -75,12 +77,15 @@ export default function ProfileSetupScreen() {
 
   const finish = () => {
     setGenerating(true);
+    const birth = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    const time = `${hh.padStart(2, '0')}:${(mm || '0').padStart(2, '0')}`;
     const user: User = {
       id: `local-${Date.now().toString(36)}`,
       nickname: nickname.trim(),
-      birthDate: `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`,
-      birthTime: unknownTime ? null : `${hh.padStart(2, '0')}:${(mm || '0').padStart(2, '0')}`,
-      gender: gender!, mbti: mbti!, bloodType: blood!,
+      birthDate: birth,
+      birthTime: unknownTime ? null : time,
+      gender: gender!, bloodType: blood!,
+      ...(mbti && !skipMbti ? { mbti } : { mbti: guessMbti(birth, unknownTime ? null : time), mbtiUnknown: true }),
       interests: [],
       createdAt: new Date().toISOString(),
     };
@@ -183,12 +188,16 @@ export default function ProfileSetupScreen() {
                 <>
                   <View style={s.grid}>
                     {MBTI_LIST.map(t => (
-                      <OptionChip key={t} style={s.mbtiCell} label={t} sub={MBTI_INFO[t].nickname} selected={mbti === t} onPress={() => setMbti(t)} />
+                      <OptionChip key={t} style={s.mbtiCell} label={t} sub={MBTI_INFO[t].nickname} selected={mbti === t} onPress={() => { setMbti(t); setSkipMbti(false); }} />
                     ))}
                   </View>
-                  <PressableScale onPress={() => { setQuiz([null, null, null, null]); setMbti(null); }} style={s.quizBtn} scaleTo={0.97}>
+                  <PressableScale onPress={() => { setQuiz([null, null, null, null]); setMbti(null); setSkipMbti(false); }} style={s.quizBtn} scaleTo={0.97}>
                     <Text style={s.quizBtnText}>MBTI를 몰라요 · 4문항으로 찾기</Text>
                   </PressableScale>
+                  <PressableScale onPress={() => { setSkipMbti(v => !v); setMbti(null); }} style={[s.mbtiSkip, skipMbti && s.skipOn]} scaleTo={0.97} accessibilityState={{ selected: skipMbti }}>
+                    <Text style={[s.skipText, skipMbti && { color: colors.white }]}>{skipMbti ? '✓ ' : ''}잘 모르겠어요 · 나중에 할게요</Text>
+                  </PressableScale>
+                  {skipMbti ? <Text style={[txt.small, { marginTop: 8 }]}>괜찮아요. 사주로 비슷한 성향을 추정해 두고 "(추정)"으로 표시할게요. 마이 탭에서 언제든 바꿀 수 있어요.</Text> : null}
                 </>
               ))}
             </View>
@@ -215,6 +224,9 @@ const s = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mbtiCell: { width: '23%' },
   error: { color: colors.danger, fontSize: 12, marginTop: 8 },
+  mbtiSkip: { marginTop: 10, height: 48, borderRadius: radius.md, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
+  skipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
+  skipText: { fontSize: 14, fontWeight: '600', color: colors.inkSub },
   quizBtn: { marginTop: 16, height: 48, borderRadius: radius.md, borderWidth: 1, borderStyle: 'dashed', borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
   quizBtnText: { fontSize: 14, fontWeight: '600', color: colors.purple },
   quizQ: { fontSize: 15, fontWeight: '700', color: colors.ink },

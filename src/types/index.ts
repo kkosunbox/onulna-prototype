@@ -14,6 +14,8 @@ export interface User {
   birthTime: string | null; // HH:mm, 모르면 null
   gender: Gender;
   mbti: MBTI;
+  /** 가입 때 MBTI를 건너뛰어 사주로 추정한 값이면 true */
+  mbtiUnknown?: boolean;
   bloodType: BloodType;
   occupation?: string;
   interests?: Interest[];

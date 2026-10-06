@@ -12,6 +12,7 @@ import { SocialProvider } from '../../services/auth/authService';
 import { getFriendResult, getPendingInvite } from '../../services/share/linkShare';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import { COPY } from '../../content/copy';
 
 const PROVIDERS: SocialProvider[] = ['kakao', 'naver', 'apple', 'google'];
 
@@ -50,8 +51,8 @@ export default function LoginScreen() {
         ) : null}
         <LogoMark size={76} />
         <Text style={s.logoText}>운Pick</Text>
-        <Text style={s.headline}>오늘의 운, 하나만 Pick!</Text>
-        <Text style={[txt.small, { marginTop: 6 }]}>사주 · 태국 점성술 · MBTI · 혈액형</Text>
+        <Text style={s.headline}>{COPY.ask}</Text>
+        <Text style={[txt.small, { marginTop: 6 }]}>{COPY.pickMe}</Text>
       </View>
 
       <View style={s.bottom}>

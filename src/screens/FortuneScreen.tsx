@@ -17,6 +17,7 @@ import { Period } from '../types';
 import { CategoryKey, colors } from '../theme/colors';
 import { radius, txt } from '../theme/typography';
 import { motion, useReducedMotion } from '../utils/motion';
+import { COPY } from '../content/copy';
 
 const TABS: { key: Period; label: string }[] = [
   { key: 'daily', label: '오늘' }, { key: 'weekly', label: '주간' }, { key: 'monthly', label: '월간' }, { key: 'yearly', label: '연간' },
@@ -80,7 +81,7 @@ export default function FortuneScreen() {
   const recs = [R[weak], ...BY_TAB[tab].map(k => R[k])].filter((r, i, a) => a.findIndex(x => x.key === r.key) === i).slice(0, 3);
 
   return (
-    <Screen largeTitle="운세">
+    <Screen largeTitle="운세" subtitle={COPY.four}>
       <Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
 
       <Card style={s.summary}>

@@ -1,11 +1,13 @@
 /**
  * 책력(冊曆) 디자인 시스템 — 한지 바탕 · 먹색 남색 · 낙관(도장) 붉은색.
- * 시스템 다크 모드를 따른다(앱 시작 시 결정, 바꾸면 새로고침 후 반영).
+ * 화면 모드는 마이 > 화면 모드(시스템·라이트·다크)를 따른다. 앱 시작 시 결정(index.ts가 먼저 읽음).
  * - purple: 글자·강조용 (다크에서 밝아짐)   - navy: 채움용 (버튼·선택 상태, 다크에서도 그대로)
  */
 import { Appearance } from 'react-native';
+import { readThemePrefSync } from './themePref';
 
-export const isDark = Appearance.getColorScheme() === 'dark';
+const pref = readThemePrefSync();
+export const isDark = pref === 'dark' ? true : pref === 'light' ? false : Appearance.getColorScheme() === 'dark';
 
 const light = {
   purple: '#22293F',

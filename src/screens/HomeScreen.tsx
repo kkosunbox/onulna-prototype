@@ -26,6 +26,7 @@ import { PartnerInput } from '../types';
 import { colors } from '../theme/colors';
 import { fonts, radius, SCREEN_PX, txt } from '../theme/typography';
 import { formatKoreanDate } from '../utils/date';
+import { COPY } from '../content/copy';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
@@ -132,7 +133,7 @@ export default function HomeScreen() {
         <SectionHeader title="오늘의 행동" />
         <ActionTabs good={f.goodActions} avoid={f.avoidActions} />
 
-        <SectionHeader title="무료로 즐기기" caption="결과를 친구에게 공유해 보세요" action="전체 보기" onAction={() => nav.navigate('Tabs', { screen: 'Content' })} />
+        <SectionHeader title="무료로 즐기기" caption={COPY.friend} action="전체 보기" onAction={() => nav.navigate('Tabs', { screen: 'Content' })} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -SCREEN_PX }} contentContainerStyle={{ paddingHorizontal: SCREEN_PX, gap: 10 }}>
           {FREE.map(x => (
             <PressableScale key={x.k} onPress={x.go} style={[s.freeCard, x.tone === 'paper' && s.paper]} scaleTo={0.96} accessibilityLabel={x.title}>
@@ -155,7 +156,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <SectionHeader title="더 깊이 보기" caption="앞부분은 무료로 미리 볼 수 있어요" />
+        <SectionHeader title="더 깊이 보기" caption={COPY.deeper} />
         <PressableScale onPress={() => nav.navigate('Spouse')} style={s.premium} scaleTo={0.985} accessibilityLabel="미래 배우자 리포트">
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 6 }}>
@@ -182,6 +183,7 @@ export default function HomeScreen() {
           <Icon name="chevronRight" size={16} color={colors.purple} />
         </PressableScale>
 
+        <Text style={s.tomorrow}>{COPY.tomorrow}</Text>
         <Disclaimer />
       </ScrollView>
     </SafeAreaView>
@@ -205,5 +207,6 @@ const s = StyleSheet.create({
   premiumDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
   newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
   newText: { fontSize: 10, fontWeight: '800', color: colors.white },
+  tomorrow: { fontFamily: fonts.serif, fontSize: 16, fontWeight: '600', color: colors.inkSub, textAlign: 'center', marginTop: 32 },
   allLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
 });

@@ -8,12 +8,13 @@ import { ShareSpec } from '../services/share/shareSpecs';
 import { useShare } from '../services/share/useShare';
 import { colors } from '../theme/colors';
 import { fonts, radius, txt } from '../theme/typography';
+import { COPY } from '../content/copy';
 
 /**
  * 무료 결과 아래 공유 블록 — 결과를 본 직후가 가장 공유하고 싶은 순간이라 크게 보여준다.
  * 링크로 보내면 친구가 열었을 때 내 결과와 친구 결과가 나란히 비교된다.
  */
-export default function ShareActions({ spec, title = '친구는 어떤 결과일까?' }: { spec: ShareSpec; title?: string }) {
+export default function ShareActions({ spec, title = COPY.friend }: { spec: ShareSpec; title?: string }) {
   const nav = useNavigation();
   const { shareRewardsLeft } = usePremium();
   const { sendLink } = useShare();

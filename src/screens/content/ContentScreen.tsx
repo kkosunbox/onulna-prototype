@@ -18,6 +18,7 @@ import { inviteUrl, shareLink } from '../../services/share/linkShare';
 import { PremiumKey, defaultItem, openPremium } from '../../navigation/premium';
 import { colors } from '../../theme/colors';
 import { fonts, radius, txt } from '../../theme/typography';
+import { COPY } from '../../content/copy';
 
 type Entry = [PremiumKey, string, string, string];
 const LIST: [string, Entry[]][] = [
@@ -52,7 +53,7 @@ export default function ContentScreen() {
   ];
 
   return (
-    <Screen largeTitle="콘텐츠" right={undefined}>
+    <Screen largeTitle="콘텐츠" subtitle={COPY.content} right={undefined}>
       <PressableScale onPress={() => nav.navigate('Wallet')} style={s.points} scaleTo={0.98}>
         <Coin size={18} />
         <Text style={{ fontSize: 14, fontWeight: '700', color: colors.purple }}>{fmtP(points)}</Text>
@@ -60,7 +61,7 @@ export default function ContentScreen() {
         <Icon name="chevronRight" size={16} color={colors.inkMute} />
       </PressableScale>
 
-      <SubHead title="무료로 즐기기" caption="결과를 친구에게 공유해 보세요" />
+      <SubHead title="무료로 즐기기" caption={COPY.friend} />
       <View style={s.grid}>
         {FREE.map(([ch, t, d, go]) => (
           <PressableScale key={t} onPress={go} style={s.free} scaleTo={0.97} accessibilityLabel={t}>
