@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import Screen from '../components/Screen';
-import ShareCard, { CARD_THEMES, CardTheme } from '../components/ShareCard';
+import ShareCard from '../components/ShareCard';
 import PrimaryButton from '../components/PrimaryButton';
-import Segmented from '../components/Segmented';
 import Icon from '../components/Icon';
 import { useApp } from '../context/AppContext';
 import { usePremium } from '../context/PremiumContext';
@@ -22,7 +21,6 @@ export default function ShareScreen() {
   const { toast } = usePremium();
   const { sendLink, urlOf, reward } = useShare();
   const ref = useRef<View>(null);
-  const [theme, setTheme] = useState<CardTheme>('paper');
   const [busy, setBusy] = useState<'share' | 'save' | null>(null);
   const spec = params?.spec ?? (fortune && user ? todaySpec(user, fortune.combined) : null);
   if (!spec) return null;
@@ -40,7 +38,7 @@ export default function ShareScreen() {
     <Screen
       title="공유하기"
       back
-      contentStyle={{ alignItems: 'center', paddingTop: 4 }}
+      contentStyle={{ alignItems: 'center', justifyContent: 'center', flexGrow: 1, paddingTop: 12 }}
       footer={
         <View style={{ gap: 4 }}>
           <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -51,11 +49,8 @@ export default function ShareScreen() {
         </View>
       }
     >
-      <View style={{ alignSelf: 'stretch', marginBottom: 16 }}>
-        <Segmented<CardTheme> options={CARD_THEMES.map(([key, label]) => ({ key, label }))} value={theme} onChange={setTheme} />
-      </View>
       <View style={[s.shadow, shadow.hero]}>
-        <ShareCard ref={ref} spec={spec} today={today} theme={theme} />
+        <ShareCard ref={ref} spec={spec} today={today} />
       </View>
       <Text style={[txt.caption, { marginTop: 12, textAlign: 'center' }]}>인스타그램 스토리에 꼭 맞는 9:16 크기예요{'\n'}가려진 내용은 앱에서만 볼 수 있어요</Text>
     </Screen>
