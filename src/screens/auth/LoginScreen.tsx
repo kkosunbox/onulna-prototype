@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { LogoMark } from '../../components/BrandMark';
+import BrandMark from '../../components/BrandMark';
 import PressableScale from '../../components/PressableScale';
 import BottomSheet from '../../components/BottomSheet';
 import Icon from '../../components/Icon';
@@ -49,8 +49,7 @@ export default function LoginScreen() {
             <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
           </View>
         ) : null}
-        <LogoMark size={76} />
-        <Text style={s.logoText}>운Pick</Text>
+        <BrandMark size={58} />
         <Text style={s.headline}>{COPY.ask}</Text>
         <Text style={[txt.small, { marginTop: 6 }]}>{COPY.pickMe}</Text>
       </View>
@@ -82,7 +81,7 @@ export default function LoginScreen() {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.cream },
   hero: { flex: 1, justifyContent: 'center', paddingHorizontal: 32 },
-  headline: { fontFamily: fonts.serif, fontSize: 20, lineHeight: 28, fontWeight: '600', color: colors.inkSub, letterSpacing: -0.4, marginTop: 6 },
+  headline: { fontFamily: fonts.serif, fontSize: 20, lineHeight: 28, fontWeight: '600', color: colors.inkSub, letterSpacing: -0.4, marginTop: 22 },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
   logoText: { fontFamily: fonts.serif, fontSize: 44, lineHeight: 56, fontWeight: '800', color: colors.purple, letterSpacing: -1, marginTop: 20 },
   logoDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.moon, marginTop: 22 },

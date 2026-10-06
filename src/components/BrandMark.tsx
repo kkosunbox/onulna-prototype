@@ -1,42 +1,50 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Svg, { G, Rect, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, Path } from 'react-native-svg';
 import { colors } from '../theme/colors';
-import { fonts } from '../theme/typography';
 
 /** 브랜드 — 화면 문구와 공유 문구가 모두 여기서 가져간다 (docs/BRAND.md) */
 export const BRAND = { name: '운Pick', ko: '운픽', slogan: '오늘의 운, 하나만 Pick!', store: '운Pick - 오늘의 운, 하나만 Pick' };
 
 /**
- * 로고 마크 — 명조 '운' + 느낌표. 느낌표의 점 자리는 붉은 낙관.
- * 오늘의 운을 하나 뽑았을 때의 "운!" 하는 감탄. 앱 아이콘(assets/icon.png)과 같은 도형.
- * fg: 글자 색(밝은 바탕엔 먹남색, 어두운 바탕엔 한지색)
+ * 운Pick 로고는 글꼴이 아니라 직접 그린 단선 레터링이다(획 두께 11 · 둥근 끝 · scripts/render-icons.js 와 같은 패스).
+ * 시그니처: '운'의 ㅜ 기둥 자리에 놓인 붉은 낙관 사각형 — 오늘 뽑은(Pick) 그 한 점.
  */
-export function LogoMark({ size = 24, fg = colors.navy }: { size?: number; fg?: string }) {
+const STROKE = { fill: 'none', strokeWidth: 11, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
+
+function Un({ fg }: { fg: string }) {
   return (
-    <Svg width={size * 1.2} height={size} viewBox="14 24 68 56" accessibilityLabel={BRAND.name}>
-      <SvgText x={40} y={67} fontFamily={fonts.serif} fontWeight="800" fontSize={47} fill={fg} textAnchor="middle" letterSpacing={-1}>운</SvgText>
-      <Rect x={68.5} y={29} width={7.4} height={28} rx={3.7} fill={fg} />
-      <G rotation={-8} origin="72.2, 67.5">
-        <Rect x={67.2} y={62.5} width={10} height={10} rx={1.2} fill={colors.seal} />
-      </G>
+    <>
+      <Ellipse cx={50} cy={24.5} rx={20} ry={15} stroke={fg} {...STROKE} />
+      <Path d="M14 52.5 H86" stroke={fg} {...STROKE} />
+      {/* 낙관: 16×16 사각형을 (50,65) 기준 -8° 돌린 꼭짓점 — 회전 속성 없이 그려 어디서나 같은 위치 */}
+      <Path d="M41.4 58.6 L56.4 56.5 L58.6 71.4 L43.6 73.5 Z" fill={colors.seal} stroke={colors.seal} strokeWidth={1.6} strokeLinejoin="round" />
+      <Path d="M26 74 V86.5 H83" stroke={fg} {...STROKE} />
+    </>
+  );
+}
+
+/** 마크: '운' 레터링 (앱 아이콘과 같음). fg: 획 색 — 밝은 바탕엔 먹남색, 어두운 바탕엔 한지색 */
+export function LogoMark({ size = 24, fg = colors.purple }: { size?: number; fg?: string }) {
+  return (
+    <Svg width={size} height={size} viewBox="2 2 96 96" accessibilityLabel={BRAND.name}>
+      <Un fg={fg} />
     </Svg>
   );
 }
 
-/** 워드마크: 운Pick + 낙관 점 */
-export default function BrandMark({ light = false, size = 20 }: { light?: boolean; size?: number }) {
+/** 워드마크: 운Pick 레터링 하나 (첫 화면 · 헤더 · 공유 카드). size = 높이 */
+export default function BrandMark({ light = false, size = 22 }: { light?: boolean; size?: number }) {
   const fg = light ? '#F4EDDF' : colors.purple;
   return (
-    <View style={s.row} accessibilityLabel={BRAND.name}>
-      <Text style={[s.word, { fontSize: size, lineHeight: size * 1.25, color: fg }]}>{BRAND.name}</Text>
-      <View style={[s.dot, { width: size * 0.26, height: size * 0.26, marginBottom: size * 0.2 }]} />
-    </View>
+    <Svg width={(size * 281) / 92} height={size} viewBox="-6 2 281 92" accessibilityLabel={BRAND.name}>
+      <Un fg={fg} />
+      <G x={110}>
+        <Path d="M0 86.5 V13 H15 A18.5 18.5 0 0 1 15 50 H0" stroke={fg} {...STROKE} />
+        <Path d="M55 44 V86.5" stroke={fg} {...STROKE} />
+        <Circle cx={55} cy={22} r={7} fill={fg} />
+        <Path d="M110 52 A18.5 18.5 0 1 0 110 80" stroke={fg} {...STROKE} />
+        <Path d="M128 13 V86.5 M128 67 L151 44 M135 61 L153 86.5" stroke={fg} {...STROKE} />
+      </G>
+    </Svg>
   );
 }
-
-const s = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'flex-end', gap: 2 },
-  word: { fontFamily: fonts.serif, fontWeight: '800', letterSpacing: -0.4 },
-  dot: { borderRadius: 1, backgroundColor: colors.seal, transform: [{ rotate: '-8deg' }] },
-});
