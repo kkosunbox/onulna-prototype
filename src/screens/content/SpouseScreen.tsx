@@ -31,7 +31,7 @@ export default function SpouseScreen() {
       <HeadRow item={item} caption={`배우자의 별 · ${el.ko}(${el.hanja})`} />
       <Hero style={{ alignItems: 'center', paddingVertical: 26 }}>
         <Text style={heroTxt.eyebrow}>{u.nickname}님의 미래 배우자는</Text>
-        <Text style={[heroTxt.summ, { fontSize: 22, lineHeight: 30, textAlign: 'center', marginTop: 8 }]}>{R.headline}</Text>
+        <Text style={[heroTxt.summ, { fontSize: 24, lineHeight: 32, textAlign: 'center', marginTop: 8 }]}>{R.headline}</Text>
         <View style={{ flexDirection: 'row', gap: 6, marginTop: 16 }}>
           <DarkChip gold>{R.mbti[0]}</DarkChip>
           <DarkChip>{R.animals[0]}띠</DarkChip>
@@ -140,7 +140,7 @@ export default function SpouseScreen() {
         <Text style={[txt.caption, { marginTop: 14, marginBottom: 8 }]}>앞으로 1년 중 연애운이 강한 달</Text>
         <View style={{ flexDirection: 'row', gap: 8 }}>
           {R.months.map(x => (
-            <View key={`${x.y}-${x.m}`} style={s.month}><Text style={txt.caption}>{x.y}년</Text><Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.love }}>{x.m}월</Text></View>
+            <View key={`${x.y}-${x.m}`} style={s.month}><Text style={txt.caption}>{x.y}년</Text><Text style={{ fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.love }}>{x.m}월</Text></View>
           ))}
         </View>
 
@@ -177,11 +177,11 @@ export default function SpouseScreen() {
 
 const s = StyleSheet.create({
   heroLine: { alignSelf: 'stretch', height: 1, backgroundColor: colors.line, marginVertical: 18 },
-  heroNum: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '600', color: colors.seal },
+  heroNum: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.seal },
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
   grid: { flexDirection: 'row', gap: 12 },
   cell: { flex: 1, alignItems: 'center', gap: 4 },
-  big: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '600', color: colors.purple, textAlign: 'center' },
+  big: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.purple, textAlign: 'center' },
   avoid: { marginTop: 14, padding: 12, borderRadius: radius.md, backgroundColor: colors.cream },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },

@@ -56,7 +56,7 @@ function Illustration({ kind }: { kind: Art }) {
         const t = analysisTheme[k];
         return (
           <View key={k} style={[a.orb, { backgroundColor: t.bg, transform: [{ translateX: Math.cos(ang) * r }, { translateY: Math.sin(ang) * r }] }]}>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '800', color: t.color }}>{t.emoji}</Text>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: t.color }}>{t.emoji}</Text>
             <Text style={[a.orbLabel, { color: t.color }]}>{t.label}</Text>
           </View>
         );
@@ -108,7 +108,7 @@ export default function OnboardingScreen() {
         renderItem={({ item }) => (
           <View style={{ width, paddingHorizontal: 24 }}>
             <Illustration kind={item.art} />
-            <Text style={[txt.title, { fontSize: 28, lineHeight: 38, marginTop: 32 }]}>{item.title}</Text>
+            <Text style={[txt.title, { fontSize: 24, lineHeight: 32, marginTop: 32 }]}>{item.title}</Text>
             <Text style={[txt.body, { marginTop: 10 }]}>{item.body}</Text>
           </View>
         )}
@@ -129,7 +129,7 @@ export default function OnboardingScreen() {
 
 const s = StyleSheet.create({
   top: { height: 52, paddingHorizontal: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  skip: { fontSize: 14, color: colors.inkMute, fontWeight: '600' },
+  skip: { fontSize: 15, color: colors.inkMute, fontWeight: '600' },
   bottom: { paddingHorizontal: 24, paddingBottom: 12, gap: 20 },
   dots: { flexDirection: 'row', gap: 6 },
   dot: { height: 6, borderRadius: 3 },
@@ -138,10 +138,10 @@ const s = StyleSheet.create({
 const a = StyleSheet.create({
   paper: { width: 160, height: 250, backgroundColor: '#FFFFFF', borderRadius: 22, padding: 4, borderWidth: 1, borderColor: '#EEEAE9', shadowColor: '#E5707D', shadowOpacity: 0.16, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 6 },
   paperIn: { flex: 1, padding: 12 },
-  paperKind: { fontSize: 11, fontWeight: '700', color: '#E5707D', letterSpacing: 1.6 },
-  paperHead: { fontFamily: fonts.display, fontSize: 19, lineHeight: 25, fontWeight: '700', color: '#1A1A1A', marginTop: 8, letterSpacing: -0.6 },
+  paperKind: { fontSize: 11, fontWeight: '700', color: '#E5707D', letterSpacing: 1.8 },
+  paperHead: { fontFamily: fonts.display, fontSize: 18, lineHeight: 26, fontWeight: '700', color: '#1A1A1A', marginTop: 8, letterSpacing: -0.4 },
   paperSeal: { position: 'absolute', right: 12, top: 12, width: 30, height: 30, borderRadius: 10, backgroundColor: '#FDEEF0', alignItems: 'center', justifyContent: 'center' },
-  paperSealText: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '700', color: '#E5707D' },
+  paperSealText: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: '#E5707D' },
   paperBars: { flexDirection: 'row', flexWrap: 'wrap', gap: 3, borderRadius: 10, backgroundColor: '#F1EEF9', padding: 7 },
   paperBar: { height: 5, borderRadius: 3, backgroundColor: '#5B4B94', opacity: 0.6 },
   paperHook: { fontFamily: fonts.display, fontSize: 11, fontWeight: '700', color: '#1A1A1A', marginTop: 8 },
@@ -155,7 +155,7 @@ const a = StyleSheet.create({
   orb: { position: 'absolute', width: 60, height: 60, borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.card },
   orbLabel: { position: 'absolute', bottom: -20, fontSize: 11, fontWeight: '700', width: 90, textAlign: 'center' },
   mini: { width: 200, paddingVertical: 24, borderRadius: radius.xl, alignItems: 'center' },
-  miniLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 12 },
-  miniScore: { fontFamily: fonts.serif, color: '#fff', fontSize: 40, fontWeight: '500', letterSpacing: -1 },
+  miniLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 13 },
+  miniScore: { fontFamily: fonts.serif, color: '#fff', fontSize: 40, fontWeight: '800', letterSpacing: -1.2 },
   miniChip: { marginTop: 12, backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)', borderRadius: 6, paddingHorizontal: 12, paddingVertical: 6 },
 });

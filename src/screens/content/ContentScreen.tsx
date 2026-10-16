@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NewBadge, PromoCard } from '../../components/HeroCard';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -56,7 +57,7 @@ export default function ContentScreen() {
     <Screen largeTitle="콘텐츠" subtitle={COPY.content} right={undefined}>
       <PressableScale onPress={() => nav.navigate('Wallet')} style={s.points} scaleTo={0.98}>
         <Coin size={18} />
-        <Text style={{ fontSize: 14, fontWeight: '700', color: colors.purple }}>{fmtP(points)}</Text>
+        <Text style={{ fontSize: 15, fontWeight: '700', color: colors.purple }}>{fmtP(points)}</Text>
         <Text style={[txt.small, { flex: 1 }]}>· 출석하고 매일 10P 받기</Text>
         <Icon name="chevronRight" size={16} color={colors.inkMute} />
       </PressableScale>
@@ -77,30 +78,9 @@ export default function ContentScreen() {
 
       <SubHead title="지금 가장 많이 보는" caption="새로 나온 프리미엄 콘텐츠" />
       <View style={{ gap: 10 }}>
-        <PressableScale onPress={() => nav.navigate('Consult')} style={s.hot} scaleTo={0.98}>
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '700', color: colors.purple }}>100P</Text></Pill></View>
-            <Text style={s.hotTitle}>말 못 할 고민 상담</Text>
-            <Text style={s.hotDesc}>누구에게도 못 한 고민, 사주가 익명으로 답해 드려요</Text>
-          </View>
-          <Ico ch="談" size={56} color={colors.saju} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
-        </PressableScale>
-        <PressableScale onPress={() => nav.navigate('Spouse')} style={s.hot} scaleTo={0.98}>
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><PriceTag item={ITEMS.spouse()} /></View>
-            <Text style={s.hotTitle}>미래 배우자 리포트</Text>
-            <Text style={s.hotDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
-          </View>
-          <Ico ch="緣" size={56} color={colors.love} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
-        </PressableScale>
-        <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Compatibility' })} style={s.hot} scaleTo={0.98}>
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '700', color: colors.purple }}>150P</Text></Pill></View>
-            <Text style={s.hotTitle}>그 사람의 속마음</Text>
-            <Text style={s.hotDesc}>궁합을 본 뒤 상대의 마음 온도와 연락하기 좋은 날까지</Text>
-          </View>
-          <Ico ch="心" size={56} color={colors.relation} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
-        </PressableScale>
+        <PromoCard badges={<><NewBadge /><Pill><Text style={txt.micro}>100P</Text></Pill></>} title="말 못 할 고민 상담" desc="누구에게도 못 한 고민, 사주가 익명으로 답해 드려요" ch="談" color={colors.saju} onPress={() => nav.navigate('Consult')} />
+        <PromoCard badges={<><NewBadge /><PriceTag item={ITEMS.spouse()} /></>} title="미래 배우자 리포트" desc="어떤 사람을, 언제, 어디서 만나게 될까?" ch="緣" color={colors.love} onPress={() => nav.navigate('Spouse')} />
+        <PromoCard badges={<><NewBadge /><Pill><Text style={txt.micro}>150P</Text></Pill></>} title="그 사람의 속마음" desc="궁합을 본 뒤 상대의 마음 온도와 연락하기 좋은 날까지" ch="心" color={colors.relation} onPress={() => nav.navigate('Tabs', { screen: 'Compatibility' })} />
       </View>
 
       <Card style={s.bundle}>
@@ -140,7 +120,7 @@ export default function ContentScreen() {
               <Ico ch={c.hanja} size={36} color={colors.inkMute} />
               {notify.includes(c.key) ? <Icon name="bell" size={14} color={colors.seal} /> : <Text style={[s.soonTier, c.tier === 'free' && { color: colors.success }]}>{c.tier === 'free' ? '무료' : `${c.cost}P`}</Text>}
             </View>
-            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 8 }} numberOfLines={1}>{c.title}</Text>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 8 }} numberOfLines={1}>{c.title}</Text>
             <Text style={[txt.caption, { marginTop: 2 }]} numberOfLines={1}>{c.hook}</Text>
           </PressableScale>
         ))}
@@ -156,8 +136,8 @@ export default function ContentScreen() {
                 <Text style={txt.h2}>{peek.title}</Text>
               </View>
             </View>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 17, fontWeight: '600', color: colors.purple, marginTop: 16 }}>“{peek.hook}”</Text>
-            <Text style={[txt.body, { marginTop: 8, fontSize: 14 }]}>{peek.desc}</Text>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.purple, marginTop: 16 }}>“{peek.hook}”</Text>
+            <Text style={[txt.body, { marginTop: 8, fontSize: 15 }]}>{peek.desc}</Text>
             <PrimaryButton
               label={notify.includes(peek.key) ? '알림 신청됨 · 취소하기' : '오픈하면 알려주세요'}
               variant={notify.includes(peek.key) ? 'soft' : 'solid'}
@@ -173,15 +153,15 @@ export default function ContentScreen() {
 }
 
 const s = StyleSheet.create({
-  points: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  points: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  free: { width: '48%', flexGrow: 1, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  free: { width: '48%', flexGrow: 1, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   freeHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   freeTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: colors.okBg },
   freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
   hot: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: radius.lg, backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.line },
-  hotTitle: { fontFamily: fonts.display, fontSize: 17, fontWeight: '700', color: colors.ink, marginTop: 10 },
-  hotDesc: { fontSize: 14, lineHeight: 19, color: colors.inkSub, marginTop: 3 },
+  hotTitle: { fontFamily: fonts.display, fontSize: 18, fontWeight: '700', color: colors.ink, marginTop: 10 },
+  hotDesc: { fontSize: 15, lineHeight: 23, color: colors.inkSub, marginTop: 3 },
   hotHanja: { fontFamily: fonts.serif, fontSize: 40, color: colors.seal, marginLeft: 12 },
   newTag: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 999, backgroundColor: colors.seal },
   newText: { fontSize: 11, fontWeight: '700', color: colors.white },
@@ -191,7 +171,7 @@ const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },
-  soon: { width: '48%', flexGrow: 1, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderStyle: 'dashed' },
-  soonH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: colors.inkMute },
+  soon: { width: '48%', flexGrow: 1, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderStyle: 'dashed' },
+  soonH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.inkMute },
   soonTier: { fontSize: 11, fontWeight: '700', color: colors.purpleSoft },
 });

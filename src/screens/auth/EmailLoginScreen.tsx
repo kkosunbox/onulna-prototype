@@ -49,6 +49,6 @@ export default function EmailLoginScreen() {
 
 const s = StyleSheet.create({
   links: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 24 },
-  link: { fontSize: 14, color: colors.inkSub, fontWeight: '500' },
+  link: { fontSize: 15, color: colors.inkSub, fontWeight: '500' },
   sep: { width: 1, height: 12, backgroundColor: colors.lineStrong },
 });

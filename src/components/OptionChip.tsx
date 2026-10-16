@@ -9,7 +9,7 @@ interface Props { label: string; sub?: string; selected: boolean; onPress(): voi
 
 export default function OptionChip({ label, sub, selected, onPress, style, compact }: Props) {
   const m = label.match(/^([\u4E00-\u9FFF])\s(.+)$/);
-  const textStyle = [s.label, compact && { fontSize: 14 }, selected && { color: colors.seal, fontWeight: '700' as const }];
+  const textStyle = [s.label, compact && { fontSize: 15 }, selected && { color: colors.seal, fontWeight: '700' as const }];
   return (
     <PressableScale
       onPress={onPress}
@@ -33,6 +33,6 @@ const s = StyleSheet.create({
   base: { minHeight: 52, paddingHorizontal: 6, paddingVertical: 6, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
   compact: { minHeight: 44 },
   sel: { backgroundColor: colors.accentBg, borderColor: colors.seal },
-  label: { fontSize: 16, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
-  sub: { fontSize: 12, fontWeight: '500', color: colors.inkMute, marginTop: 1 },
+  label: { fontSize: 15, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
+  sub: { fontSize: 13, fontWeight: '500', color: colors.inkMute, marginTop: 1 },
 });

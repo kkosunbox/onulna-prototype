@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import HeroCard from '../components/HeroCard';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { TabParamList } from '../navigation/types';
 import CrushView from '../components/premium/Crush';
@@ -101,8 +102,7 @@ export default function CompatibilityScreen() {
   if (result) {
     return (
       <Screen largeTitle="우리 둘의 궁합" onBack={() => setResult(null)}>
-        <View style={[s.heroWrap, shadow.hero]}>
-          <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.hero}>
+        <HeroCard style={s.hero}>
             <View style={s.pair}>
               <Avatar name={user.nickname} light />
               <Icon name="heart" size={18} color={colors.seal} filled />
@@ -111,8 +111,7 @@ export default function CompatibilityScreen() {
             <Text style={s.pairNames}>{user.nickname} · {result.target.nickname}</Text>
             <View style={{ marginVertical: 16 }}><ScoreRing score={result.total} size={128} label="종합 궁합" /></View>
             <Text style={s.heroSummary}>{result.summary}</Text>
-          </LinearGradient>
-        </View>
+          </HeroCard>
 
         <SectionHeader title="분야별 궁합" />
         <Card style={{ gap: 18 }}>
@@ -199,7 +198,7 @@ export default function CompatibilityScreen() {
       <PressableScale onPress={sendInvite} style={s.inviteRow} scaleTo={0.98} accessibilityLabel="상대에게 링크로 궁합 신청 받기">
         <Text style={s.inviteHan}>信</Text>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>생일을 모른다면, 링크로 신청받기</Text>
+          <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>생일을 모른다면, 링크로 신청받기</Text>
           <Text style={txt.caption}>상대가 링크를 열면 둘의 궁합이 바로 나와요</Text>
         </View>
         <Icon name="share" size={18} color={colors.purple} />
@@ -267,13 +266,13 @@ const s = StyleSheet.create({
   pairCol: { flex: 1, alignItems: 'center', gap: 4 },
   pairSeal: { width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
   pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, backgroundColor: colors.card },
-  pairSealText: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '800', color: colors.white },
+  pairSealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.white },
   pairName: { fontFamily: fonts.display, fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 6 },
   pairMid: { width: 64, flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 34 },
   pairLine: { flex: 1, height: 1, backgroundColor: colors.love, opacity: 0.5 },
-  pairHan: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '700', color: colors.love },
-  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
-  inviteHan: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.purpleSoft, width: 28, textAlign: 'center' },
+  pairHan: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.love },
+  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  inviteHan: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.purpleSoft, width: 28, textAlign: 'center' },
   form: { gap: 20, padding: 20 },
   me: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   fieldLabel: { fontSize: 13, fontWeight: '700', color: colors.inkSub, marginBottom: 8 },
@@ -281,18 +280,18 @@ const s = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   mbtiCell: { width: '23.8%' },
   select: { height: 52, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  selectText: { fontSize: 17, fontWeight: '500', color: colors.ink },
-  error: { color: colors.danger, fontSize: 12, marginTop: 6 },
+  selectText: { fontSize: 16, fontWeight: '500', color: colors.ink },
+  error: { color: colors.danger, fontSize: 13, marginTop: 6 },
   avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: colors.line },
-  avatarText: { fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 16 },
+  avatarText: { fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 15 },
   heroWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  hero: { borderRadius: radius.xl, padding: 24, alignItems: 'center' },
+  hero: { alignItems: 'center' },
   pair: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   pairNames: { color: colors.inkSub, fontSize: 13, fontWeight: '600', marginTop: 8 },
-  heroSummary: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, fontWeight: '700', letterSpacing: -0.4, textAlign: 'center' },
+  heroSummary: { fontFamily: fonts.serif, color: colors.ink, fontSize: 18, fontWeight: '700', letterSpacing: -0.4, textAlign: 'center' },
   barHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   barLabel: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  barScore: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  barScore: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', fontVariant: ['tabular-nums'] },
   point: { paddingLeft: 24 },
   pointBand: { position: 'absolute', left: 10, top: 18, bottom: 18, width: 3, borderRadius: 2 },
   pointTitle: { fontSize: 13, fontWeight: '700' },

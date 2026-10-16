@@ -21,5 +21,5 @@ export default function PrimaryButton({ label, onPress, disabled, variant = 'sol
 const s = StyleSheet.create({
   wrap: { borderRadius: radius.pill },
   inner: { height: 56, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 },
-  label: { color: colors.white, fontSize: 16, fontWeight: '700', letterSpacing: -0.3 },
+  label: { color: colors.white, fontSize: 15, fontWeight: '700', letterSpacing: -0.2 },
 });

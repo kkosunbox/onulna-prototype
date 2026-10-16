@@ -34,13 +34,13 @@ export default function AnalysisTile({ analysis, onPress }: { analysis: Analysis
 }
 
 const s = StyleSheet.create({
-  tile: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, padding: 18, borderWidth: 1, borderColor: colors.line, minHeight: 196 },
+  tile: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, padding: 20, borderWidth: 1, borderColor: colors.line, minHeight: 196 },
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  kicker: { fontFamily: fonts.serif, fontSize: 12, fontWeight: '700', letterSpacing: 2, opacity: 0.8 },
-  label: { fontSize: 12, color: colors.inkMute, fontWeight: '600', marginTop: 14 },
-  headline: { ...sansW('700'), fontSize: 15, lineHeight: 22, color: colors.ink, letterSpacing: -0.4, marginTop: 4, flex: 1 },
+  kicker: { fontFamily: fonts.serif, fontSize: 11, fontWeight: '700', letterSpacing: 1.8, opacity: 0.8 },
+  label: { fontSize: 13, color: colors.inkMute, fontWeight: '600', marginTop: 14 },
+  headline: { ...sansW('700'), fontSize: 15, lineHeight: 23, color: colors.ink, letterSpacing: -0.2, marginTop: 4, flex: 1 },
   foot: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14 },
   tag: { borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
-  tagText: { fontSize: 12, fontWeight: '700' },
-  more: { fontSize: 12, fontWeight: '700', color: colors.seal },
+  tagText: { fontSize: 13, fontWeight: '700' },
+  more: { fontSize: 13, fontWeight: '700', color: colors.seal },
 });

@@ -65,8 +65,8 @@ function Compose() {
     <Screen title="말 못 할 고민 상담" back>
       <Hero>
         <Text style={heroTxt.eyebrow}>익명 · 이 기기에만 저장돼요</Text>
-        <Text style={[heroTxt.summ, { fontSize: 22, lineHeight: 30 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
-        <Text style={{ fontSize: 13, lineHeight: 20, color: colors.inkSub, marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
+        <Text style={[heroTxt.summ, { fontSize: 24, lineHeight: 32 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
+        <Text style={{ fontSize: 13, lineHeight: 19, color: colors.inkSub, marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
       </Hero>
 
       <SubHead title="어떤 고민인가요?" />
@@ -86,7 +86,7 @@ function Compose() {
       <TextField
         value={text} onChangeText={onText} multiline maxLength={CONSULT_CONFIG.maxLen}
         placeholder={`예) ${EXAMPLES[new Date(today).getDate() % EXAMPLES.length]}`}
-        style={{ height: 140, fontSize: 15, lineHeight: 22 }}
+        style={{ height: 140, fontSize: 15, lineHeight: 23 }}
         accessibilityLabel="고민 내용"
       />
       <View style={s.between}>
@@ -101,7 +101,7 @@ function Compose() {
           <View style={{ gap: 8, marginTop: 12 }}>
             {CRISIS_LINES.map(([k, v]) => (
               <PressableScale key={k} onPress={() => Linking.openURL(`tel:${v.replace(/-/g, '')}`)} style={s.line} scaleTo={0.98} accessibilityLabel={`${k} ${v}에 전화하기`}>
-                <Text style={{ fontSize: 14, color: colors.ink }}>{k}</Text><Text style={{ fontSize: 17, fontWeight: '700', color: colors.love }}>{v}</Text>
+                <Text style={{ fontSize: 15, color: colors.ink }}>{k}</Text><Text style={{ fontSize: 18, fontWeight: '700', color: colors.love }}>{v}</Text>
               </PressableScale>
             ))}
           </View>
@@ -122,7 +122,7 @@ function Compose() {
               <PressableScale key={e.id} onPress={() => nav.push('Consult', { id: e.id })} style={[s.hist, i > 0 && s.histLine]} scaleTo={0.98}>
                 <Text style={s.histH}>{catOf(e.cat).hanja}</Text>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '600', color: colors.ink }} numberOfLines={1}>{e.text}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: '600', color: colors.ink }} numberOfLines={1}>{e.text}</Text>
                   <Text style={txt.caption}>{catOf(e.cat).label} · {e.at.replace(/-/g, '.')}</Text>
                 </View>
               </PressableScale>
@@ -152,12 +152,12 @@ function Answer({ id }: { id: string }) {
       <FriendCompare route="Consult" spec={spec} />
       <PressableScale onPress={() => setShowQ(!showQ)} style={s.q} scaleTo={0.99}>
         <Text style={txt.caption}>나의 고민 · {C.label} · 나만 볼 수 있어요</Text>
-        <Text style={[txt.body, { fontSize: 14, marginTop: 4 }]} numberOfLines={showQ ? undefined : 2}>{e.text}</Text>
+        <Text style={[txt.body, { fontSize: 15, marginTop: 4 }]} numberOfLines={showQ ? undefined : 2}>{e.text}</Text>
       </PressableScale>
 
       <Hero>
         <Text style={heroTxt.eyebrow}>{C.hanja} {C.label} 고민에 대한 답</Text>
-        <Text style={[heroTxt.summ, { fontSize: 19, lineHeight: 29 }]}>{A.headline}</Text>
+        <Text style={[heroTxt.summ, { fontSize: 18, lineHeight: 26 }]}>{A.headline}</Text>
         <View style={{ flexDirection: 'row', gap: 6, marginTop: 14 }}>
           <DarkChip gold>{MODE_LABEL[A.mode]}</DarkChip>
           <DarkChip>풀리는 달 {A.bestMonth}</DarkChip>
@@ -200,7 +200,7 @@ function Answer({ id }: { id: string }) {
 
       <SubHead title="06 · 행동하기 좋은 날" caption="앞으로 30일 중 이 고민에 힘이 실리는 날" />
       <View style={{ flexDirection: 'row', gap: 8 }}>
-        {A.days.map(d => <View key={d.iso} style={s.day}><Text style={{ fontSize: 14, fontWeight: '700', color: colors.love }}>{d.label}</Text></View>)}
+        {A.days.map(d => <View key={d.iso} style={s.day}><Text style={{ fontSize: 15, fontWeight: '700', color: colors.love }}>{d.label}</Text></View>)}
       </View>
 
       <Card style={s.closing}>
@@ -220,24 +220,24 @@ const s = StyleSheet.create({
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   chip: { width: '23%', flexGrow: 1, alignItems: 'center', paddingVertical: 12, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   chipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
-  chipH: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '700', color: colors.purple },
-  chipT: { fontSize: 12, fontWeight: '600', color: colors.inkSub, marginTop: 2 },
+  chipH: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.purple },
+  chipT: { fontSize: 13, fontWeight: '600', color: colors.inkSub, marginTop: 2 },
   between: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
   crisis: { marginTop: 16, borderWidth: 1.5, borderColor: colors.love },
   line: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 12, borderRadius: radius.md, backgroundColor: colors.loveBg },
   hist: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   histLine: { borderTopWidth: 1, borderTopColor: colors.line },
-  histH: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.seal, width: 28, textAlign: 'center' },
+  histH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.seal, width: 28, textAlign: 'center' },
   direct: { marginTop: 12, borderLeftWidth: 3, borderLeftColor: colors.seal },
-  directK: { fontSize: 12, fontWeight: '700', color: colors.seal, letterSpacing: 1 },
-  directV: { ...sansW('600'), fontSize: 16, lineHeight: 25, color: colors.ink, marginTop: 6 },
-  q: { padding: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, marginBottom: 12 },
+  directK: { fontSize: 13, fontWeight: '700', color: colors.seal, letterSpacing: 1 },
+  directV: { ...sansW('600'), fontSize: 15, lineHeight: 23, color: colors.ink, marginTop: 6 },
+  q: { padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, marginBottom: 12 },
   bars: { flexDirection: 'row', alignItems: 'flex-end', gap: 14, height: 120, marginTop: 16 },
   barCol: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6 },
   barV: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '600', color: colors.inkMute },
   bar: { width: '50%', borderRadius: 6 },
   day: { flex: 1, alignItems: 'center', paddingVertical: 14, borderRadius: radius.lg, backgroundColor: colors.loveBg },
   closing: { marginTop: 24, alignItems: 'center', paddingVertical: 24 },
-  idiom: { fontFamily: fonts.serif, fontSize: 28, fontWeight: '700', color: colors.seal, letterSpacing: 4 },
-  closeText: { ...sansW('600'), fontSize: 16, lineHeight: 25, color: colors.ink, textAlign: 'center', marginTop: 14 },
+  idiom: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.seal, letterSpacing: 4 },
+  closeText: { ...sansW('600'), fontSize: 15, lineHeight: 23, color: colors.ink, textAlign: 'center', marginTop: 14 },
 });

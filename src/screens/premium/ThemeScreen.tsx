@@ -32,7 +32,7 @@ function MonthTiles({ ms, k, color, bg }: { ms: { y: number; m: number; love: nu
       {ms.map(x => (
         <View key={`${x.y}-${x.m}`} style={[s.mtile, { backgroundColor: bg }]}>
           <Text style={txt.caption}>{x.y}년</Text>
-          <Text style={{ fontSize: 22, fontWeight: '700', color }}>{x.m}월</Text>
+          <Text style={{ fontSize: 24, fontWeight: '800', color }}>{x.m}월</Text>
           <Text style={txt.small}>{x[k]}점</Text>
         </View>
       ))}
@@ -79,8 +79,8 @@ export default function ThemeScreen() {
     hero = (
       <Hero>
         <Text style={heroTxt.eyebrow}>나의 연애 스타일</Text>
-        <Text style={[heroTxt.summ, { fontSize: 19 }]}>{L.st}</Text>
-        <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 6 }}>{u.bloodType}형답게 {L.blood}.</Text>
+        <Text style={[heroTxt.summ, { fontSize: 18 }]}>{L.st}</Text>
+        <Text style={{ fontSize: 15, color: colors.inkSub, marginTop: 6 }}>{u.bloodType}형답게 {L.blood}.</Text>
       </Hero>
     );
     basis = (
@@ -102,12 +102,12 @@ export default function ThemeScreen() {
         <View style={[s.grid2, { marginTop: 12 }]}>
           <Card style={s.cell2}>
             <Text style={txt.caption}>천간합 · 끌리는 일간</Text>
-            <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 4, color: colors.ink }}>{STEMS[partnerStem].ko}({STEMS[partnerStem].hanja})일간</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 4, color: colors.ink }}>{STEMS[partnerStem].ko}({STEMS[partnerStem].hanja})일간</Text>
             <Text style={[txt.small, { marginTop: 4 }]}>{STEMS[F.ds].hanja}{STEMS[partnerStem].hanja}합 — 서로 강하게 끌리는 조합이에요</Text>
           </Card>
           <Card style={s.cell2}>
             <Text style={txt.caption}>잘 맞는 띠</Text>
-            <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 4, color: colors.ink }}>{goodAnimals.join(' · ')}띠</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 4, color: colors.ink }}>{goodAnimals.join(' · ')}띠</Text>
             <Text style={[txt.small, { marginTop: 4 }]}>{BRANCHES[ch.year.branch].animal}띠와 합을 이루는 띠예요</Text>
           </Card>
         </View>
@@ -133,11 +133,11 @@ export default function ThemeScreen() {
     const seun = Array.from({ length: 5 }, (_, i) => { const y = cy + i; const yp = pFrom(y - 4); return { y, yp, gG: tgGroup(tenGod(F.ds, yp.stem)) }; });
     hero = (
       <Hero style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
-        <Text style={{ fontSize: 40, color: colors.seal, fontWeight: '700' }}>{M.t.emoji}</Text>
+        <Text style={{ fontSize: 40, color: colors.seal, fontWeight: '800' }}>{M.t.emoji}</Text>
         <View style={{ flex: 1 }}>
           <Text style={heroTxt.eyebrow}>나의 돈 성향</Text>
-          <Text style={[heroTxt.summ, { fontSize: 19 }]}>{M.t.name}</Text>
-          <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 4 }}>{M.t.desc}</Text>
+          <Text style={[heroTxt.summ, { fontSize: 18 }]}>{M.t.name}</Text>
+          <Text style={{ fontSize: 15, color: colors.inkSub, marginTop: 4 }}>{M.t.desc}</Text>
         </View>
       </Hero>
     );
@@ -169,8 +169,8 @@ export default function ThemeScreen() {
         <Card style={{ paddingVertical: 2, paddingHorizontal: 16 }}>
           {seun.map((x, i) => (
             <View key={x.y} style={[s.drow, i ? s.topLine : null]}>
-              <View style={s.dd}><Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{BRANCHES[x.yp.branch].animal}</Text></View>
-              <Text style={{ flex: 1, fontSize: 14, lineHeight: 20, color: colors.ink }}>{FIELD[x.gG].money}</Text>
+              <View style={s.dd}><Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{BRANCHES[x.yp.branch].animal}</Text></View>
+              <Text style={{ flex: 1, fontSize: 15, lineHeight: 23, color: colors.ink }}>{FIELD[x.gG].money}</Text>
             </View>
           ))}
         </Card>
@@ -200,7 +200,7 @@ export default function ThemeScreen() {
       <>
         <SubHead title="01 · 직업 유형" />
         <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
-          <Text style={{ fontSize: 32, fontWeight: '700', color: colors.purpleSoft }}>{type[0]}</Text>
+          <Text style={{ fontSize: 40, fontWeight: '800', color: colors.purpleSoft }}>{type[0]}</Text>
           <View style={{ flex: 1 }}><Text style={txt.h3}>{type[1]}</Text><Text style={[txt.small, { marginTop: 2 }]}>{type[2]}</Text></View>
         </Card>
         <Card style={{ marginTop: 10 }}>
@@ -220,9 +220,9 @@ export default function ThemeScreen() {
         <Card><Text style={txt.h3}>{lead}</Text>{F.topTG.length ? <Para>{TG_INFO[F.topTG[0].i].trait}</Para> : null}</Card>
         <SubHead title="05 · 일할 때 강점과 약점" />
         <Card>
-          <Text style={{ fontSize: 12, fontWeight: '700', color: colors.success }}>강점</Text>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.success }}>강점</Text>
           {F.topTG.slice(0, 3).map(x => <Bullet key={x.i} color={colors.success}>{TG_INFO[x.i].talent}에 재능</Bullet>)}
-          <Text style={{ fontSize: 12, fontWeight: '700', color: colors.thai, marginTop: 12 }}>보완점</Text>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.thai, marginTop: 12 }}>보완점</Text>
           {F.topTG.slice(0, 2).map(x => <Bullet key={x.i} color="#C27A2C">{TG_INFO[x.i].care}</Bullet>)}
         </Card>
         <SubHead title="06 · 4가지 관점으로 본 적성" />
@@ -235,8 +235,8 @@ export default function ThemeScreen() {
         <Card style={{ paddingVertical: 2, paddingHorizontal: 16 }}>
           {seun.map((x, i) => (
             <View key={x.y} style={[s.drow, i ? s.topLine : null]}>
-              <View style={s.dd}><Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{GROUP_KO[x.gG]}</Text></View>
-              <Text style={{ flex: 1, fontSize: 14, lineHeight: 20, color: colors.ink }}>{FIELD[x.gG].work}</Text>
+              <View style={s.dd}><Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{GROUP_KO[x.gG]}</Text></View>
+              <Text style={{ flex: 1, fontSize: 15, lineHeight: 23, color: colors.ink }}>{FIELD[x.gG].work}</Text>
             </View>
           ))}
         </Card>

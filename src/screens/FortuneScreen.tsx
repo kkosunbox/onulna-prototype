@@ -136,11 +136,11 @@ export default function FortuneScreen() {
 const s = StyleSheet.create({
   summary: { flexDirection: 'row', alignItems: 'center', gap: 16, marginTop: 16 },
   focus: { alignSelf: 'flex-start', marginTop: 10, backgroundColor: colors.lavenderSoft, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 5 },
-  focusText: { fontSize: 12, fontWeight: '700', color: colors.purple },
+  focusText: { fontSize: 13, fontWeight: '700', color: colors.purple },
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   chart: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, paddingTop: 22, height: CHART_H + 80 },
   col: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6, height: '100%' },
   colScore: { fontSize: 11, color: colors.inkMute, fontWeight: '700' },
   colBar: { width: '72%', maxWidth: 26, borderRadius: 6 },
-  colLabel: { fontSize: 12, color: colors.inkSub },
+  colLabel: { fontSize: 13, color: colors.inkSub },
 });

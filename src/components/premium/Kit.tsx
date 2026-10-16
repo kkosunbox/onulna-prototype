@@ -9,6 +9,7 @@ import Card from '../Card';
 import Icon from '../Icon';
 import PrimaryButton from '../PrimaryButton';
 import Ico from '../Ico';
+import HeroCard from '../HeroCard';
 import { usePremium } from '../../context/PremiumContext';
 import { Item, fmtP } from '../../services/premium/catalog';
 import { SrcKey } from '../../services/premium/engine';
@@ -66,9 +67,9 @@ export function HeadRow({ item, caption }: { item?: Item | null; caption: string
 /* ---------- 글 ---------- */
 export function SubHead({ title, caption, first }: { title: string; caption?: string; first?: boolean }) {
   return (
-    <View style={{ marginTop: first ? 12 : 32, marginBottom: 12 }}>
+    <View style={{ marginTop: first ? 8 : 32, marginBottom: 12 }}>
       <HeadTitle title={title} />
-      {caption ? <Text style={[txt.small, { marginTop: 3 }]}>{caption}</Text> : null}
+      {caption ? <Text style={[txt.small, { marginTop: 4 }]}>{caption}</Text> : null}
     </View>
   );
 }
@@ -105,7 +106,7 @@ export function ActRow({ ok = true, children, icon }: { ok?: boolean; children: 
   return (
     <View style={s.actRow}>
       <View style={[s.mark, { backgroundColor: ok ? colors.okBg : colors.careBg }]}><Icon name={name} size={14} color={tone} strokeWidth={2.4} /></View>
-      <Text style={{ flex: 1, fontSize: 15, lineHeight: 22, color: colors.ink }}>{children}</Text>
+      <Text style={{ flex: 1, fontSize: 15, lineHeight: 23, color: colors.ink }}>{children}</Text>
     </View>
   );
 }
@@ -116,8 +117,8 @@ export function ViewRow({ k, children }: { k: SrcKey; children: React.ReactNode 
   return (
     <View style={s.viewRow}>
       <View style={[s.vdot, { borderColor: t.color }]}><Text style={{ fontFamily: fonts.serif, fontSize: 13, fontWeight: '600', color: t.color }}>{t.emoji}</Text></View>
-      <Text style={{ flex: 1, fontSize: 14, lineHeight: 21, color: colors.ink }}>
-        <Text style={{ color: t.color, fontSize: 12, fontWeight: '700' }}>{t.label}  </Text>{children}
+      <Text style={{ flex: 1, fontSize: 15, lineHeight: 23, color: colors.ink }}>
+        <Text style={{ color: t.color, fontSize: 13, fontWeight: '700' }}>{t.label}  </Text>{children}
       </Text>
     </View>
   );
@@ -153,26 +154,17 @@ export function Seal({ ch, size = 36 }: { ch: string; bg?: string; size?: number
 
 /* ---------- 히어로 ---------- */
 export function Hero({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) {
-  const flat = StyleSheet.flatten(style) ?? {};
-  return (
-    <View style={[{ borderRadius: radius.xl, backgroundColor: colors.card, marginTop: 12 }, shadow.hero, { marginTop: flat.marginTop ?? 12 }]}>
-      <View style={[{ borderRadius: radius.xl, padding: 22, overflow: 'hidden', borderWidth: 1, borderColor: colors.line }, style, { marginTop: 0 }]}>
-        {/* 파스텔 그라데이션 바탕 (장식, 터치 없음) */}
-        <LinearGradient pointerEvents="none" colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-        {children}
-      </View>
-    </View>
-  );
+  return <HeroCard style={[{ marginTop: 12 }, style]}>{children}</HeroCard>;
 }
 export const heroTxt = StyleSheet.create({
-  eyebrow: { color: colors.seal, fontSize: 12, fontWeight: '700', letterSpacing: 0.4 },
-  summ: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, lineHeight: 27, fontWeight: '700', letterSpacing: -0.5, marginTop: 6 },
-  body: { color: colors.inkSub, fontSize: 14, lineHeight: 22, marginTop: 8 },
+  eyebrow: { color: colors.seal, fontSize: 13, fontWeight: '700', letterSpacing: 0.4 },
+  summ: { fontFamily: fonts.serif, color: colors.ink, fontSize: 18, lineHeight: 26, fontWeight: '700', letterSpacing: -0.4, marginTop: 6 },
+  body: { color: colors.inkSub, fontSize: 15, lineHeight: 23, marginTop: 8 },
 });
 export function DarkChip({ children, gold }: { children: React.ReactNode; gold?: boolean }) {
   return (
     <View style={[s.darkChip, gold && { backgroundColor: colors.seal, borderColor: colors.seal }]}>
-      <Text style={{ color: gold ? colors.white : colors.ink, fontSize: 14, fontWeight: '600' }}>{children}</Text>
+      <Text style={{ color: gold ? colors.white : colors.ink, fontSize: 15, fontWeight: '600' }}>{children}</Text>
     </View>
   );
 }
@@ -327,22 +319,22 @@ const s = StyleSheet.create({
   row4: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   pill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.xs },
-  pillText: { fontSize: 12, fontWeight: '700', color: colors.purple },
+  pillText: { fontSize: 13, fontWeight: '700', color: colors.purple },
   para: { fontSize: 15, lineHeight: 23, color: colors.inkSub },
   bullet: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', paddingVertical: 4 },
   bulletDot: { width: 6, height: 6, borderRadius: 3, marginTop: 8 },
   tip: { marginTop: 12, backgroundColor: colors.lavenderSoft, borderRadius: radius.md, paddingVertical: 12, paddingHorizontal: 14 },
-  tipTitle: { fontSize: 12, fontWeight: '700', color: colors.purpleSoft, marginBottom: 2 },
-  tipText: { fontSize: 14, lineHeight: 21, color: colors.ink },
-  soft: { backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender, borderRadius: radius.lg, padding: 18 },
+  tipTitle: { fontSize: 13, fontWeight: '700', color: colors.purpleSoft, marginBottom: 2 },
+  tipText: { fontSize: 15, lineHeight: 23, color: colors.ink },
+  soft: { backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender, borderRadius: radius.lg, padding: 20 },
   actRow: { flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
   mark: { width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   viewRow: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', paddingVertical: 9 },
   vdot: { width: 28, height: 28, borderRadius: 9, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   topLine: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   infoRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
-  infoIco: { width: 24, textAlign: 'center', fontSize: 16, fontWeight: '700', color: colors.purpleSoft },
-  infoVal: { flex: 1, fontSize: 14, fontWeight: '600', color: colors.ink, textAlign: 'right' },
+  infoIco: { width: 24, textAlign: 'center', fontSize: 15, fontWeight: '700', color: colors.purpleSoft },
+  infoVal: { flex: 1, fontSize: 15, fontWeight: '600', color: colors.ink, textAlign: 'right' },
   darkChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   lpill: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 14, paddingVertical: 9, borderRadius: radius.pill },
   ychip: { minWidth: 64, height: 52, paddingHorizontal: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
@@ -350,11 +342,11 @@ const s = StyleSheet.create({
   ychipText: { fontSize: 15, fontWeight: '700', color: colors.ink },
   ychipSub: { fontSize: 11, fontWeight: '600', color: colors.inkMute, marginTop: 1 },
   rank: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
-  rankText: { fontSize: 14, fontWeight: '700', color: colors.purpleSoft },
+  rankText: { fontSize: 15, fontWeight: '700', color: colors.purpleSoft },
   lockWrap: { marginTop: 12, minHeight: 420 },
   lockBlur: { maxHeight: 440, overflow: 'hidden', opacity: 0.5 },
   lockPanel: { position: 'absolute', left: 4, right: 4, top: 40, backgroundColor: colors.card, borderRadius: 16, paddingVertical: 24, paddingHorizontal: 20, alignItems: 'center', borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, shadowColor: '#28200A', shadowOpacity: 0.22, shadowRadius: 25, shadowOffset: { width: 0, height: 20 }, elevation: 12 },
-  priceCard: { marginTop: 24, backgroundColor: colors.card, borderRadius: radius.lg, padding: 18, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.lineStrong },
+  priceCard: { marginTop: 24, backgroundColor: colors.card, borderRadius: radius.lg, padding: 20, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.lineStrong },
   barCol: { flex: 1, height: '100%', alignItems: 'center', justifyContent: 'flex-end', gap: 5 },
   barScore: { fontSize: 11, fontWeight: '700', color: colors.inkMute },
   barLabel: { fontSize: 11, color: colors.inkSub, fontWeight: '500' },
@@ -364,7 +356,7 @@ const s = StyleSheet.create({
   cd: { flex: 1, aspectRatio: 1, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
   cdToday: { borderWidth: 2, borderColor: colors.seal },
   cdSel: { borderWidth: 2, borderColor: colors.purple },
-  cdD: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '600', color: colors.ink, lineHeight: 15 },
-  cdS: { fontSize: 11, fontWeight: '600', color: colors.inkSub, lineHeight: 13 },
+  cdD: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '600', color: colors.ink, lineHeight: 19 },
+  cdS: { fontSize: 11, fontWeight: '600', color: colors.inkSub, lineHeight: 15 },
   cdDot: { position: 'absolute', top: 4, right: 4, width: 5, height: 5, borderRadius: 3, backgroundColor: colors.moon },
 });

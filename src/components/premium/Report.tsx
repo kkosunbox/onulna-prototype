@@ -36,12 +36,12 @@ export function RepTOC({ O, owned }: { O: Outline; owned: boolean }) {
     <View style={s.toc}>
       <View style={s.tocHead}>
         <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>이 리포트에 담긴 내용</Text>
-        <Text style={{ fontSize: 12, fontWeight: '700', color: colors.purpleSoft }}>{all.length}개 섹션 · 약 {approxChars(all.length)} 자</Text>
+        <Text style={{ fontSize: 13, fontWeight: '700', color: colors.purpleSoft }}>{all.length}개 섹션 · 약 {approxChars(all.length)} 자</Text>
       </View>
       {all.map((x, i) => (
         <View key={x[0]} style={s.tocRow}>
           <Text style={s.tocNum}>{String(i + 1).padStart(2, '0')}</Text>
-          <Text style={{ fontSize: 14, fontWeight: '600', color: colors.ink, flex: 1 }}>{x[0]}</Text>
+          <Text style={{ fontSize: 15, fontWeight: '600', color: colors.ink, flex: 1 }}>{x[0]}</Text>
         </View>
       ))}
       <Text style={s.tocFoot}>사주 · 태국 점성술 · MBTI · 혈액형을 하나의 이야기로 엮은 맞춤 풀이예요{owned ? '' : ' · 구매 후 바로 작성돼요'}</Text>
@@ -116,7 +116,7 @@ function RSection({ sec, n, last }: { sec: ReportSection; n: number; last: boole
           {pts.map((p, i) => (
             <View key={i} style={s.rpt}>
               <View style={{ marginTop: 4 }}><Icon name="check" size={14} color={colors.purple} strokeWidth={2.6} /></View>
-              <Inline text={p} style={{ flex: 1, fontSize: 15, lineHeight: 22, fontWeight: '600', color: colors.ink }} />
+              <Inline text={p} style={{ flex: 1, fontSize: 15, lineHeight: 23, fontWeight: '600', color: colors.ink }} />
             </View>
           ))}
         </View>
@@ -171,7 +171,7 @@ function ReportBody({ rk }: { rk: ReportCtx }) {
       {running ? (
         <View style={s.prog}>
           <View style={s.between}>
-            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{secs.length ? `${secs.length}/${total} 섹션 작성 중` : '풀이 구상 중…'}</Text>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{secs.length ? `${secs.length}/${total} 섹션 작성 중` : '풀이 구상 중…'}</Text>
             <PressableScale onPress={() => stopReport(rk.key)} hitSlop={8}><Text style={s.link}>멈추기</Text></PressableScale>
           </View>
           <View style={s.bar}><View style={[s.barFill, { width: `${Math.max(4, (secs.length / total) * 100)}%` }]} /></View>
@@ -204,7 +204,7 @@ export function Basis({ children, initiallyOpen }: { children: React.ReactNode; 
   return (
     <View style={{ marginTop: 24 }}>
       <PressableScale onPress={() => { LayoutAnimation.easeInEaseOut(); setOpen(o => !o); }} style={s.summary} scaleTo={0.98} accessibilityState={{ expanded: open }}>
-        <Text style={{ fontSize: 14, fontWeight: '700', color: colors.inkSub }}>계산 근거 · 상세 데이터</Text>
+        <Text style={{ fontSize: 15, fontWeight: '700', color: colors.inkSub }}>계산 근거 · 상세 데이터</Text>
         <View style={{ transform: [{ rotate: open ? '90deg' : '0deg' }] }}><Icon name="chevronRight" size={16} color={colors.inkMute} /></View>
       </PressableScale>
       {open ? children : null}
@@ -247,19 +247,19 @@ const s = StyleSheet.create({
   tocHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   tocRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 9, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.line },
   tocNum: { width: 22, fontSize: 11, fontWeight: '700', color: colors.purpleSoft, fontVariant: ['tabular-nums'] },
-  tocFoot: { fontSize: 12, color: colors.inkMute, marginTop: 12, lineHeight: 18 },
+  tocFoot: { fontSize: 13, color: colors.inkMute, marginTop: 12, lineHeight: 19 },
   paper: { marginTop: 16, backgroundColor: colors.card, borderRadius: 16, borderWidth: 1, borderColor: colors.line, paddingVertical: 4, paddingHorizontal: 22, ...shadow.card },
   rsec: { paddingVertical: 28 },
   rsecLine: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   rhead: { flexDirection: 'row', gap: 14, alignItems: 'flex-start', marginBottom: 16 },
   rnum: { width: 34, height: 34, borderRadius: 8, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
-  rtitle: { fontFamily: fonts.display, fontSize: 19, lineHeight: 26, fontWeight: '700', letterSpacing: -0.5, color: colors.ink },
-  rlead: { fontSize: 14, lineHeight: 20, color: colors.seal, fontWeight: '500', marginTop: 3 },
-  rp: { ...sansW('400'), fontSize: 16, lineHeight: 27, color: colors.ink, letterSpacing: -0.3, marginTop: 14 },
+  rtitle: { fontFamily: fonts.display, fontSize: 18, lineHeight: 26, fontWeight: '700', letterSpacing: -0.4, color: colors.ink },
+  rlead: { fontSize: 15, lineHeight: 23, color: colors.seal, fontWeight: '500', marginTop: 3 },
+  rp: { ...sansW('400'), fontSize: 15, lineHeight: 23, color: colors.ink, letterSpacing: -0.2, marginTop: 14 },
   rsub: { backgroundColor: colors.cream, borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: 16 },
-  rsubP: { ...sansW('400'), fontSize: 15, lineHeight: 24, color: colors.inkSub, marginTop: 6 },
+  rsubP: { ...sansW('400'), fontSize: 15, lineHeight: 23, color: colors.inkSub, marginTop: 6 },
   rpts: { marginTop: 18, backgroundColor: colors.lavenderSoft, borderLeftWidth: 3, borderLeftColor: colors.seal, borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: 12, borderBottomRightRadius: 12, paddingVertical: 14, paddingHorizontal: 16 },
-  rptsHead: { fontSize: 12, fontWeight: '700', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
+  rptsHead: { fontSize: 13, fontWeight: '700', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
   rpt: { flexDirection: 'row', gap: 8, alignItems: 'flex-start', paddingVertical: 4 },
   ghost: { height: 12, borderRadius: 6, backgroundColor: colors.line, marginTop: 12 },
   note: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 16, paddingHorizontal: 18 },

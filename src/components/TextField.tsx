@@ -29,6 +29,6 @@ const s = StyleSheet.create({
   box: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.md, borderWidth: 1, borderColor: colors.lineStrong, paddingRight: 14 },
   focus: { borderColor: colors.seal },
   invalid: { borderColor: colors.danger },
-  input: { flex: 1, minHeight: 52, paddingHorizontal: 14, fontSize: 17, fontWeight: '500', color: colors.ink, fontVariant: ['tabular-nums'] },
+  input: { flex: 1, minHeight: 52, paddingHorizontal: 14, fontSize: 16, fontWeight: '500', color: colors.ink, fontVariant: ['tabular-nums'] },
   suffix: { fontSize: 15, fontWeight: '500', color: colors.inkMute },
 });

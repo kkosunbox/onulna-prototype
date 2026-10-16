@@ -25,7 +25,7 @@ import { sajuDeepSpec } from '../../services/share/shareSpecs';
 const EK = (e: keyof typeof ELEMENT_INFO) => ELEMENT_INFO[e].ko;
 
 function Cell({ p, stem }: { p: Pillar | null; stem: boolean }) {
-  if (!p) return <View style={[s.pc, { backgroundColor: colors.line }]}><Text style={{ fontSize: 19, fontWeight: '700', color: colors.inkMute }}>?</Text></View>;
+  if (!p) return <View style={[s.pc, { backgroundColor: colors.line }]}><Text style={{ fontSize: 18, fontWeight: '700', color: colors.inkMute }}>?</Text></View>;
   const o = stem ? STEMS[p.stem] : BRANCHES[p.branch];
   return (
     <View style={[s.pc, { backgroundColor: EL_HEX[o.element] }]}>
@@ -39,7 +39,7 @@ function Cell({ p, stem }: { p: Pillar | null; stem: boolean }) {
 function Meter({ label, color, value, max, labelW = 46, h = 10 }: { label: string; color: string; value: number; max: number; labelW?: number; h?: number }) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-      <Text style={{ width: labelW, fontSize: 14, fontWeight: '700', color }}>{label}</Text>
+      <Text style={{ width: labelW, fontSize: 15, fontWeight: '700', color }}>{label}</Text>
       <View style={{ flex: 1, height: h, borderRadius: h / 2, backgroundColor: colors.line, overflow: 'hidden' }}>
         <View style={{ width: `${(value / max) * 100}%`, height: h, borderRadius: h / 2, backgroundColor: color }} />
       </View>
@@ -102,8 +102,8 @@ export default function SajuDeepScreen() {
           {gk.map(k => (
             <View key={k}>
               <View style={s.between}>
-                <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink, flex: 1 }}>{GROUP_KO[k]} <Text style={[txt.caption, { fontWeight: '500' }]}>{GROUP_DESC[k]}</Text></Text>
-                <Text style={{ fontSize: 14, fontWeight: '700', color: colors.purple }}>{g[k]}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, flex: 1 }}>{GROUP_KO[k]} <Text style={[txt.caption, { fontWeight: '500' }]}>{GROUP_DESC[k]}</Text></Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.purple }}>{g[k]}</Text>
               </View>
               <View style={s.track}><View style={[s.fill, { width: `${(g[k] / gmx) * 100}%` }]} /></View>
             </View>
@@ -125,7 +125,7 @@ export default function SajuDeepScreen() {
         {([['용신', '가장 필요한 기운', F.yong], ['희신', '용신을 돕는 기운', F.hee], ['기신', '조심할 기운', F.gi]] as const).map(([l, d, e]) => (
           <Card key={l} style={s.cell3}>
             <Text style={txt.caption}>{l}</Text>
-            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 17 }}>{ELEMENT_INFO[e].hanja}</Text></View>
+            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ fontFamily: fonts.serif, color: colors.white, fontWeight: '700', fontSize: 18 }}>{ELEMENT_INFO[e].hanja}</Text></View>
             <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{elName(e)}</Text>
             <Text style={[txt.caption, { marginTop: 2, textAlign: 'center' }]}>{d}</Text>
           </Card>
@@ -139,7 +139,7 @@ export default function SajuDeepScreen() {
       <SubHead title="04 · 일주론" caption={dayName + ' · 나를 가장 잘 보여주는 기둥'} />
       <Hero style={{ marginTop: 0 }}>
         <Text style={heroTxt.eyebrow}>{dayName} ({me.hanja}{BRANCHES[ch.day.branch].hanja}日柱)</Text>
-        <Text style={[heroTxt.summ, { fontSize: 19 }]}>{per.emoji} {per.img} 위에 {BRANCHES[ch.day.branch].animal}가 앉은 모습</Text>
+        <Text style={[heroTxt.summ, { fontSize: 18 }]}>{per.emoji} {per.img} 위에 {BRANCHES[ch.day.branch].animal}가 앉은 모습</Text>
         <Text style={[heroTxt.body, { fontSize: 15, lineHeight: 23, marginTop: 10 }]}>{me.ko}{EK(me.element)}({me.hanja})는 {per.core}을 가진 기운이에요. 아래 {BRANCHES[ch.day.branch].ko}({BRANCHES[ch.day.branch].hanja})는 {EK(BRANCHES[ch.day.branch].element)} 기운으로, 일간에게 {TG[dayTG]}이 돼요. {TG_INFO[dayTG].trait} {seat[0]}</Text>
       </Hero>
       <Card style={{ marginTop: 12 }}>
@@ -227,7 +227,7 @@ export default function SajuDeepScreen() {
           return (
             <View key={a.name}>
               <View style={s.between}>
-                <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{a.name}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{a.name}</Text>
                 <Pill>{verdict + (verdict !== '균형' ? ' · ' + Math.max(pos, neg) + '/4' : '')}</Pill>
               </View>
               <View style={s.axrow}>
@@ -298,10 +298,10 @@ const s = StyleSheet.create({
   hid: { fontSize: 11, color: colors.inkMute, textAlign: 'center', letterSpacing: 1 },
   st12: { fontSize: 11, fontWeight: '700', color: colors.purpleSoft, textAlign: 'center' },
   pc: { borderRadius: 12, alignItems: 'center', justifyContent: 'center', paddingVertical: 10, minHeight: 68 },
-  pcBig: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '600', lineHeight: 28, color: colors.white },
+  pcBig: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', lineHeight: 32, color: colors.white },
   pcSmall: { fontSize: 11, fontWeight: '600', color: 'rgba(255,255,255,0.9)', marginTop: 2 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', columnGap: 12, rowGap: 4, marginTop: 10 },
-  legendT: { fontSize: 12, color: colors.inkMute },
+  legendT: { fontSize: 13, color: colors.inkMute },
   track: { height: 6, borderRadius: 3, backgroundColor: colors.line, overflow: 'hidden', marginTop: 6 },
   fill: { height: 6, borderRadius: 3, backgroundColor: colors.purpleSoft },
   gauge: { height: 10, borderRadius: 5, marginTop: 6 },
@@ -309,7 +309,7 @@ const s = StyleSheet.create({
   grid3: { flexDirection: 'row', gap: 8 },
   cell3: { flex: 1, paddingVertical: 14, paddingHorizontal: 8, alignItems: 'center' },
   eld: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginVertical: 8 },
-  label: { fontSize: 12, fontWeight: '700' },
+  label: { fontSize: 13, fontWeight: '700' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
   axrow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 10 },
   axline: { flex: 1, height: 30, borderRadius: 15, backgroundColor: colors.cream },

@@ -27,5 +27,5 @@ export default function LegalScreen() {
 const s = StyleSheet.create({
   sec: { paddingVertical: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   h: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  b: { fontSize: 14, lineHeight: 22, color: colors.inkSub, marginTop: 6 },
+  b: { fontSize: 15, lineHeight: 23, color: colors.inkSub, marginTop: 6 },
 });

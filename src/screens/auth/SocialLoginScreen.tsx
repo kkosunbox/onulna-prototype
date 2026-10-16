@@ -63,7 +63,7 @@ export default function SocialLoginScreen() {
       </View>
       <View style={s.footer}>
         <SocialButton provider={params.provider} onPress={agree} label={busy ? '로그인 중…' : `동의하고 ${brand}로 계속하기`} />
-        <PressableScale onPress={() => nav.goBack()} style={{ alignSelf: 'center', padding: 12 }}><Text style={{ fontSize: 14, color: colors.inkMute }}>취소</Text></PressableScale>
+        <PressableScale onPress={() => nav.goBack()} style={{ alignSelf: 'center', padding: 12 }}><Text style={{ fontSize: 15, color: colors.inkMute }}>취소</Text></PressableScale>
       </View>
     </SafeAreaView>
   );
@@ -78,6 +78,6 @@ const s = StyleSheet.create({
   dots: { flexDirection: 'row', gap: 5 },
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: colors.lineStrong },
   card: { backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 16, paddingVertical: 10, marginTop: 8 },
-  cardHead: { fontSize: 12, fontWeight: '700', color: colors.inkMute, marginBottom: 2, marginTop: 4 },
+  cardHead: { fontSize: 13, fontWeight: '700', color: colors.inkMute, marginBottom: 2, marginTop: 4 },
   footer: { paddingHorizontal: 24, paddingBottom: 8 },
 });

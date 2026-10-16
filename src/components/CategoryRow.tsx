@@ -32,9 +32,9 @@ export default function CategoryRow({ category, score, text, onPress, delay, bad
 const s = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14 },
   head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  label: { fontSize: 15, fontWeight: '700', color: colors.ink, letterSpacing: -0.3 },
-  score: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '700', fontVariant: ['tabular-nums'] },
-  text: { fontSize: 14, lineHeight: 20, color: colors.inkSub },
+  label: { fontSize: 15, fontWeight: '700', color: colors.ink, letterSpacing: -0.2 },
+  score: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  text: { fontSize: 15, lineHeight: 23, color: colors.inkSub },
   badge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
   badgeText: { fontSize: 11, fontWeight: '700' },
 });

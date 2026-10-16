@@ -74,7 +74,7 @@ export default function NewYearScreen() {
         {([['천간 십성', TG[sTG], GROUP_KO[sG]], ['지지 십성', TG[bTG], GROUP_KO[bG]], ['12운성', STAGE12[st], STAGE12_INFO[st].split(' · ')[1]]] as const).map(([l, v, d]) => (
           <Card key={l} style={s.cell3}>
             <Text style={txt.caption}>{l}</Text>
-            <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 6, color: colors.purple }}>{v}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 6, color: colors.purple }}>{v}</Text>
             <Text style={[txt.caption, { marginTop: 2, textAlign: 'center' }]}>{d}</Text>
           </Card>
         ))}
@@ -89,10 +89,10 @@ export default function NewYearScreen() {
       <Card style={{ paddingVertical: 4, paddingHorizontal: 18 }}>
         {[[D.zodiac[0] === '본명년' ? '本' : '合', `${D.zodiac[0]} · ${D.myAnimal}띠 × ${D.animal}해`, D.zodiac[1]], ...flags.map(f => [f[0], f[1], f[2]]), ...(sj ? [] : [['安', '삼재 아님', `${D.myAnimal}띠는 올해 삼재에 해당하지 않아요.`]])].map(([e, t, d], i) => (
           <View key={t} style={[s.flag, i ? s.topLine : null]}>
-            <Text style={{ fontSize: 19, fontWeight: '700', color: colors.purpleSoft }}>{e}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purpleSoft }}>{e}</Text>
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{t}</Text>
-              <Text style={[txt.body, { fontSize: 14, marginTop: 2 }]}>{d}</Text>
+              <Text style={[txt.body, { fontSize: 15, marginTop: 2 }]}>{d}</Text>
             </View>
           </View>
         ))}
@@ -108,8 +108,8 @@ export default function NewYearScreen() {
           return (
             <Card key={k}>
               <View style={s.between}>
-                <Text style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
-                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
               </View>
               <View style={{ marginTop: 10, marginBottom: 2 }}><ScoreBar value={v} color={colors.purpleSoft} /></View>
               <Para>{fieldTxt(k as FieldKey)}</Para>
@@ -127,13 +127,13 @@ export default function NewYearScreen() {
             <Card key={x.m} onPress={() => goMonth(x.m)} accessibilityLabel={`${x.m}월 상세운세`}>
               <View style={s.between}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                  <Text style={{ fontSize: 17, fontWeight: '700', color: colors.ink }}>{x.m}월</Text>
+                  <Text style={{ fontSize: 18, fontWeight: '700', color: colors.ink }}>{x.m}월</Text>
                   <Text style={txt.caption}>{pText(mp)} · {TG[tenGod(F.ds, mp.stem)]}</Text>
                 </View>
-                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(x.total) }}>{x.total}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: scoreColor(x.total) }}>{x.total}</Text>
               </View>
               <Text style={[txt.bodyStrong, { marginTop: 6 }]}>{MONTH_LINE[mg][0]}</Text>
-              <Text style={[txt.body, { fontSize: 14, marginTop: 2 }]}>{MONTH_LINE[mg][1]} 이달은 {categoryTheme[best].label}이 가장 강해요.</Text>
+              <Text style={[txt.body, { fontSize: 15, marginTop: 2 }]}>{MONTH_LINE[mg][1]} 이달은 {categoryTheme[best].label}이 가장 강해요.</Text>
               <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
                 {CATS.map(c => <Text key={c} style={txt.caption}>{categoryTheme[c].emoji} {x[c]}</Text>)}
               </View>
@@ -149,8 +149,8 @@ export default function NewYearScreen() {
           return (
             <Card key={i} style={s.cell2}>
               <Text style={{ fontSize: 13, fontWeight: '700', color: colors.purpleSoft }}>{i + 1}분기 · {i * 3 + 1}~{i * 3 + 3}월</Text>
-              <Text style={{ fontSize: 22, fontWeight: '800', marginTop: 4, color: scoreColor(v) }}>{v}</Text>
-              <Text style={[txt.bodyStrong, { marginTop: 2, fontSize: 14 }]}>{Q_TEXT(v)}</Text>
+              <Text style={{ fontSize: 24, fontWeight: '800', marginTop: 4, color: scoreColor(v) }}>{v}</Text>
+              <Text style={[txt.bodyStrong, { marginTop: 2, fontSize: 15 }]}>{Q_TEXT(v)}</Text>
               <Text style={[txt.small, { marginTop: 4 }]}>핵심 달 {bm.m}월 · {bm.kw[0]}</Text>
             </Card>
           );
@@ -179,7 +179,7 @@ export default function NewYearScreen() {
       <ChipSelect<number> items={[[cy, cy + '년', '올해'], [cy + 1, cy + 1 + '년', '새해 미리보기']]} value={y} onChange={setY} />
       <Hero style={{ alignItems: 'center', paddingVertical: 24 }}>
         <Text style={heroTxt.eyebrow}>{y}년 {STEMS[D.yp.stem].ko}{BRANCHES[D.yp.branch].ko}년 · {D.animal}의 해</Text>
-        <Text style={{ fontSize: 28, fontWeight: '800', letterSpacing: 2, marginTop: 10, color: colors.ink }}>{idiom[0]}</Text>
+        <Text style={{ fontSize: 24, fontWeight: '800', letterSpacing: 2, marginTop: 10, color: colors.ink }}>{idiom[0]}</Text>
         <Text style={{ fontSize: 13, color: colors.seal, marginTop: 2 }}>{idiom[1]} · {idiom[2]}</Text>
         <View style={{ marginTop: 16 }}><ScoreRing key={y} score={D.total} size={108} stroke={8} label="올해 종합" /></View>
         <View style={s.chips}>{D.kws.map(k => <KeywordChip key={k} label={k} tone="onDark" />)}</View>

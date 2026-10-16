@@ -14,7 +14,7 @@ export default function Ico({ ch, size = 36, color: c, style }: { ch: string; si
   const color = c ?? PALETTE[(ch.codePointAt(0) ?? 0) % PALETTE.length];
   return (
     <View style={[s.box, { width: size, height: size, borderRadius: Math.min(13, size / 3), backgroundColor: tint(color) }, style]}>
-      <Text style={{ fontFamily: fonts.serif, fontSize: Math.round(size * 0.42), fontWeight: '700', color }}>{ch}</Text>
+      <Text style={{ fontFamily: fonts.serif, fontSize: size <= 36 ? 15 : size <= 44 ? 18 : 24, fontWeight: '700', color }}>{ch}</Text>
     </View>
   );
 }

@@ -113,6 +113,6 @@ const s = StyleSheet.create({
   allOn: { backgroundColor: colors.navy, borderColor: colors.navy },
   allText: { fontSize: 15, fontWeight: '700', color: colors.ink },
   docBox: { marginTop: 8, padding: 12, borderRadius: 10, backgroundColor: colors.cream },
-  doc: { fontSize: 12, lineHeight: 18, color: colors.inkSub },
-  docLink: { fontSize: 12, fontWeight: '700', color: colors.purple, marginTop: 6 },
+  doc: { fontSize: 13, lineHeight: 19, color: colors.inkSub },
+  docLink: { fontSize: 13, fontWeight: '700', color: colors.purple, marginTop: 6 },
 });

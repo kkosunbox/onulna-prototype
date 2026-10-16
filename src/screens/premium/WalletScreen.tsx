@@ -18,7 +18,7 @@ export default function WalletScreen() {
         <Text style={heroTxt.eyebrow}>보유 포인트</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 2 }}>
           <Coin size={30} />
-          <Text style={{ fontSize: 40, fontWeight: '800', letterSpacing: -1, color: colors.ink }}>{points.toLocaleString('ko-KR')}</Text>
+          <Text style={{ fontSize: 40, fontWeight: '800', letterSpacing: -1.2, color: colors.ink }}>{points.toLocaleString('ko-KR')}</Text>
         </View>
         <Text style={{ fontSize: 13, color: colors.inkSub, marginTop: 4 }}>1,000원 = 100P · 보유 콘텐츠 {ownedCount}개</Text>
       </Hero>
@@ -38,7 +38,7 @@ export default function WalletScreen() {
           <PressableScale key={w} onPress={() => openCharge(i)} style={[s.pack, i === 3 && { borderColor: colors.purpleSoft }]} accessibilityLabel={`${fmtP(p + b)} ${w}원`}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
               <Coin size={20} />
-              <Text style={{ fontSize: 17, fontWeight: '700', color: colors.ink }}>{fmtP(p)}</Text>
+              <Text style={{ fontSize: 18, fontWeight: '700', color: colors.ink }}>{fmtP(p)}</Text>
               {b ? <View style={s.bonus}><Text style={s.bonusText}>+{b} 보너스</Text></View> : null}
             </View>
             <Text style={s.won}>{w.toLocaleString('ko-KR')}원</Text>
@@ -51,8 +51,8 @@ export default function WalletScreen() {
       <Card style={{ paddingVertical: 4, paddingHorizontal: 16 }}>
         {PRICE_TABLE.map(([a, b], i) => (
           <View key={a} style={[s.row, i > 0 && s.line]}>
-            <Text style={{ fontSize: 14, color: colors.ink, flex: 1 }}>{a}</Text>
-            <Text style={{ fontSize: 14, fontWeight: '700', color: b === '무료' ? colors.success : colors.purple }}>{b}</Text>
+            <Text style={{ fontSize: 15, color: colors.ink, flex: 1 }}>{a}</Text>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: b === '무료' ? colors.success : colors.purple }}>{b}</Text>
           </View>
         ))}
       </Card>
@@ -62,7 +62,7 @@ export default function WalletScreen() {
         {history.length ? history.slice(0, 12).map((h, i) => (
           <View key={i} style={[s.row, i > 0 && s.line]}>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{h.label}</Text>
+              <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{h.label}</Text>
               <Text style={txt.caption}>{h.date.replace(/-/g, '.')} · {h.t}</Text>
             </View>
             <Text style={{ fontSize: 15, fontWeight: '700', color: h.amt > 0 ? colors.purple : colors.inkMute }}>{h.amt > 0 ? '+' : ''}{h.amt}P</Text>

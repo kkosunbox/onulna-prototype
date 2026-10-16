@@ -238,10 +238,10 @@ function Toast({ msg }: { msg: string }) {
 
 const s = StyleSheet.create({
   center: { textAlign: 'center' },
-  sumBox: { backgroundColor: colors.cream, borderRadius: radius.lg, padding: 16, marginTop: 18, marginBottom: 12, gap: 10 },
+  sumBox: { backgroundColor: colors.cream, borderRadius: radius.lg, padding: 20, marginTop: 18, marginBottom: 12, gap: 10 },
   sumRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   sumVal: { fontSize: 15, fontWeight: '700', color: colors.ink },
   hr: { height: 1, backgroundColor: colors.lineStrong },
   toast: { position: 'absolute', alignSelf: 'center', backgroundColor: '#1A1A1A', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 10, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 15, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
-  toastText: { color: colors.white, fontSize: 14, fontWeight: '600' },
+  toastText: { color: colors.white, fontSize: 15, fontWeight: '600' },
 });

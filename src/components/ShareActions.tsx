@@ -40,9 +40,9 @@ export default function ShareActions({ spec, title = COPY.friend }: { spec: Shar
 }
 
 const s = StyleSheet.create({
-  box: { marginTop: 16, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong },
+  box: { marginTop: 16, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong },
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  title: { fontFamily: fonts.display, fontSize: 17, fontWeight: '700', color: colors.ink },
+  title: { fontFamily: fonts.display, fontSize: 18, fontWeight: '700', color: colors.ink },
   badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
   badgeText: { fontSize: 11, fontWeight: '700', color: colors.white },
   row: { flexDirection: 'row', gap: 8, marginTop: 12 },

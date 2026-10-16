@@ -74,7 +74,7 @@ export default function CategoryDetailScreen() {
 
 const s = StyleSheet.create({
   scoreRow: { flexDirection: 'row', alignItems: 'center', gap: 16, marginTop: 18, paddingTop: 16, borderTopWidth: 1, borderTopColor: 'rgba(0,0,0,0.08)', borderStyle: 'dashed' },
-  scoreNote: { fontSize: 14, lineHeight: 20, color: colors.inkSub },
+  scoreNote: { fontSize: 15, lineHeight: 23, color: colors.inkSub },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   rowLabel: { width: 104, fontSize: 13, fontWeight: '600', color: colors.inkSub },
   track: { flex: 1, height: 8, borderRadius: 4, backgroundColor: colors.line, overflow: 'hidden' },

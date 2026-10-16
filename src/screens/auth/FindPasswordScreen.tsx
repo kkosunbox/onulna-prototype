@@ -80,7 +80,7 @@ export default function FindPasswordScreen() {
             <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
               <TextField containerStyle={{ flex: 1 }} value={code} onChangeText={t => { setCode(t.replace(/\D/g, '').slice(0, 6)); setErr(null); }} placeholder="6자리 숫자" keyboardType="number-pad" maxLength={6} autoComplete="one-time-code" textContentType="oneTimeCode" invalid={!!err && /인증번호/.test(err)} />
               <PressableScale onPress={send} disabled={left > 0 || busy} style={{ height: 52, paddingHorizontal: 14, borderRadius: 10, borderWidth: 1, borderColor: colors.lineStrong, backgroundColor: colors.card, justifyContent: 'center', opacity: left > 0 ? 0.5 : 1 }}>
-                <Text style={{ fontSize: 14, fontWeight: '600', color: colors.inkSub }}>{left > 0 ? `재발송 ${left}초` : '재발송'}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '600', color: colors.inkSub }}>{left > 0 ? `재발송 ${left}초` : '재발송'}</Text>
               </PressableScale>
             </View>
             <Text style={[txt.caption, { marginTop: 6 }]}>인증번호는 10분 동안 유효해요.</Text>

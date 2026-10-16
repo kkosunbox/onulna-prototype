@@ -92,8 +92,8 @@ export default function LifeScreen() {
           const head = (
             <>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 12, fontWeight: '700', opacity: 0.8, color: cur ? colors.ink : colors.purple }}>{x.label} · {x.range}</Text>
-                <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 2, color: cur ? colors.ink : colors.purple }}>{x.headline}</Text>
+                <Text style={{ fontSize: 13, fontWeight: '700', opacity: 0.8, color: cur ? colors.ink : colors.purple }}>{x.label} · {x.range}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 2, color: cur ? colors.ink : colors.purple }}>{x.headline}</Text>
               </View>
               <Text style={{ fontSize: 24, fontWeight: '800', color: cur ? colors.ink : colors.purple }}>{x.score}</Text>
             </>
@@ -108,8 +108,8 @@ export default function LifeScreen() {
                 <View style={s.fgrid}>
                   {([['財', '재물', STAGE_FIELD[x.rel].money], ['業', '일', STAGE_FIELD[x.rel].work], ['緣', '연애·가정', STAGE_FIELD[x.rel].love], ['康', '건강', STAGE_FIELD[x.rel].health]] as const).map(([e, l, t]) => (
                     <View key={l} style={s.fcell}>
-                      <Text style={{ fontSize: 12, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
-                      <Text style={{ fontSize: 13, lineHeight: 18, color: colors.inkSub }}>{t}</Text>
+                      <Text style={{ fontSize: 13, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
+                      <Text style={{ fontSize: 13, lineHeight: 19, color: colors.inkSub }}>{t}</Text>
                     </View>
                   ))}
                 </View>
@@ -127,8 +127,8 @@ export default function LifeScreen() {
       <View style={s.grid2}>
         {gold.map((d, gi) => (
           <View key={d.age} style={[s.goldCard]}>
-            <Text style={{ fontSize: 12, fontWeight: '700', color: colors.money }}>吉 황금기</Text>
-            <Text style={{ fontSize: 19, fontWeight: '700', marginTop: 4, color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
+            <Text style={{ fontSize: 13, fontWeight: '700', color: colors.money }}>吉 황금기</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 4, color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
             <Text style={[txt.small, { marginTop: 2 }]}>{pText(d.p)} · {tenName(d.rel)}</Text>
             <Text style={{ fontSize: 13, marginTop: 6, lineHeight: 19, color: colors.ink }}>{[STAGE_FIELD[d.rel].work, STAGE_FIELD[d.rel].money][gi]}</Text>
           </View>
@@ -136,7 +136,7 @@ export default function LifeScreen() {
       </View>
       {care.map(d => (
         <Card key={d.age} style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 12, fontWeight: '700', color: colors.thai }}>愼 숨 고르기 구간 · {d.age}~{d.age + 9}세</Text>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.thai }}>愼 숨 고르기 구간 · {d.age}~{d.age + 9}세</Text>
           <Para>{pText(d.p)} 대운은 상대적으로 흐름이 잔잔해요. {STAGE_FIELD[d.rel].health} 큰 확장보다 내실을 다지면 다음 대운에서 크게 도약해요.</Para>
         </Card>
       ))}
@@ -150,7 +150,7 @@ export default function LifeScreen() {
             <Card key={d.age} style={cur ? { borderWidth: 1.5, borderColor: colors.purpleSoft } : null}>
               <View style={s.between}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1 }}>
-                  <View style={s.dp}><Text style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.purple, fontWeight: '600' }}>{STEMS[d.p.stem].hanja}{BRANCHES[d.p.branch].hanja}</Text></View>
+                  <View style={s.dp}><Text style={{ fontFamily: fonts.serif, fontSize: 15, color: colors.purple, fontWeight: '600' }}>{STEMS[d.p.stem].hanja}{BRANCHES[d.p.branch].hanja}</Text></View>
                   <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                       <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
@@ -159,7 +159,7 @@ export default function LifeScreen() {
                     <Text style={txt.caption}>{cy - now + d.age}~{cy - now + d.age + 9}년 · {TG[stg]} / {TG[btg]} · {STAGE12[s12]}</Text>
                   </View>
                 </View>
-                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(d.score) }}>{d.score}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: scoreColor(d.score) }}>{d.score}</Text>
               </View>
               <Para mt={10}>{DAEUN_TEXT[d.rel]}</Para>
               <Text style={[txt.small, { marginTop: 6 }]}>財 {STAGE_FIELD[d.rel].money}</Text>
@@ -182,9 +182,9 @@ export default function LifeScreen() {
       <Card style={{ paddingVertical: 2, paddingHorizontal: 16 }}>
         {seun.map((x, i) => (
           <PressableScale key={x.y} disabled={i >= 2} onPress={() => nav.navigate('NewYear', { year: x.y })} style={[s.drow, i ? s.topLine : null]} scaleTo={0.98}>
-            <View style={s.dd}><Text style={{ fontFamily: fonts.serif, fontSize: 14, fontWeight: '600', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{x.age}세</Text></View>
+            <View style={s.dd}><Text style={{ fontFamily: fonts.serif, fontSize: 15, fontWeight: '600', color: colors.ink }}>{x.y}</Text><Text style={{ fontSize: 11, color: colors.inkMute }}>{x.age}세</Text></View>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 14, fontWeight: '600', color: colors.ink }}>{PERIOD_TEXT.year[x.rel][0]}</Text>
+              <Text style={{ fontSize: 15, fontWeight: '600', color: colors.ink }}>{PERIOD_TEXT.year[x.rel][0]}</Text>
               <Text style={txt.caption}>{pText(x.yp)} · {TG[x.tg]} · {BRANCHES[x.yp.branch].animal}의 해</Text>
             </View>
             <Text style={{ fontWeight: '700', color: scoreColor(x.sc) }}>{x.sc}</Text>
@@ -225,7 +225,7 @@ const s = StyleSheet.create({
   fcell: { width: '48%', flexGrow: 1, backgroundColor: colors.cream, borderRadius: radius.sm, paddingVertical: 10, paddingHorizontal: 12, gap: 3 },
   topLine: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   grid2: { flexDirection: 'row', gap: 12 },
-  goldCard: { flex: 1, padding: 16, backgroundColor: colors.moneyBg, borderRadius: radius.lg },
+  goldCard: { flex: 1, padding: 20, backgroundColor: colors.moneyBg, borderRadius: radius.lg },
   dp: { width: 44, height: 44, borderRadius: 12, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   nowTag: { backgroundColor: colors.seal, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 4 },
   nowText: { color: colors.white, fontSize: 11, fontWeight: '700' },

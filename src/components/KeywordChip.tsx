@@ -15,7 +15,7 @@ type Tone = 'default' | 'strong' | 'onDark' | 'muted';
 export default function KeywordChip({ label, tone = 'default', hash = false }: { label: string; tone?: Tone; emoji?: boolean; hash?: boolean }) {
   return (
     <View style={[s.chip, s[tone]]}>
-      <Text style={[s.text, tone === 'strong' ? { color: colors.white } : tone === 'onDark' ? { color: colors.inkSub } : tone === 'muted' ? { color: colors.inkMute, fontSize: 12 } : null]}>
+      <Text style={[s.text, tone === 'strong' ? { color: colors.white } : tone === 'onDark' ? { color: colors.inkSub } : tone === 'muted' ? { color: colors.inkMute, fontSize: 13 } : null]}>
         {hash ? '#' : ''}{label}
       </Text>
     </View>
@@ -28,5 +28,5 @@ const s = StyleSheet.create({
   strong: { backgroundColor: colors.navy },
   onDark: { backgroundColor: colors.card + 'C0', borderWidth: 1, borderColor: colors.line },
   muted: { backgroundColor: colors.lavenderSoft, paddingHorizontal: 10, paddingVertical: 5 },
-  text: { fontSize: 13, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
+  text: { fontSize: 13, fontWeight: '600', color: colors.ink, letterSpacing: -0.1 },
 });

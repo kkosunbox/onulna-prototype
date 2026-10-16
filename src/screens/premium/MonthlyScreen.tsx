@@ -86,7 +86,7 @@ export default function MonthlyScreen() {
       <SubHead title="01 · 이달의 사주 기운" caption={'월운(月運) · ' + pText(mp)} />
       <View style={s.grid3}>
         {([['천간', TG[sTG]], ['지지', TG[bTG]], ['12운성', STAGE12[st]]] as const).map(([l, v]) => (
-          <Card key={l} style={s.cell3}><Text style={txt.caption}>{l}</Text><Text style={{ fontSize: 17, fontWeight: '700', marginTop: 6, color: colors.purple }}>{v}</Text></Card>
+          <Card key={l} style={s.cell3}><Text style={txt.caption}>{l}</Text><Text style={{ fontSize: 18, fontWeight: '700', marginTop: 6, color: colors.purple }}>{v}</Text></Card>
         ))}
       </View>
       <Card style={{ marginTop: 12 }}>
@@ -105,8 +105,8 @@ export default function MonthlyScreen() {
           return (
             <Card key={k}>
               <View style={s.between}>
-                <Text style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
-                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
               </View>
               <View style={{ marginTop: 10, marginBottom: 2 }}><ScoreBar value={v} color={colors.purpleSoft} /></View>
               <Para>{FIELD[sG][k as FieldKey] + extra}</Para>
@@ -123,7 +123,7 @@ export default function MonthlyScreen() {
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{w.w + 1}주차 <Text style={[txt.caption, { fontWeight: '500' }]}>{R.m}/{w.from} ~ {R.m}/{w.to}</Text></Text>
               <Text style={{ fontWeight: '700', color: scoreColor(w.av) }}>{w.av}</Text>
             </View>
-            <Text style={[txt.body, { fontSize: 14, marginTop: 6 }]}>{emojiFor(w.kw)} "{w.kw}"이 이끄는 한 주예요. 가장 좋은 날은 {w.bd.d}일({WEEK[weekdayOf(w.bd.iso)]}).</Text>
+            <Text style={[txt.body, { fontSize: 15, marginTop: 6 }]}>{emojiFor(w.kw)} "{w.kw}"이 이끄는 한 주예요. 가장 좋은 날은 {w.bd.d}일({WEEK[weekdayOf(w.bd.iso)]}).</Text>
             <Text style={[txt.small, { marginTop: 4 }]}>이번 주 실천 · {w.act}</Text>
           </Card>
         ))}
@@ -134,11 +134,11 @@ export default function MonthlyScreen() {
         <FortuneCalendar days={R.days} first={R.first} today={today} sel={calSel} best={bestSet} onSelect={iso => setCalSel(c => (c === iso ? null : iso))} />
         {picked ? (
           <View style={s.calInfo}>
-            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{picked.d}일 {WEEK[weekdayOf(picked.iso)]}요일 · {pText(dayPillar(picked.iso))}일 · {picked.total}점</Text>
+            <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{picked.d}일 {WEEK[weekdayOf(picked.iso)]}요일 · {pText(dayPillar(picked.iso))}일 · {picked.total}점</Text>
             <Text style={{ fontSize: 13, color: colors.inkSub }}>{picked.c.summary}</Text>
-            <Text style={{ fontSize: 12, color: colors.inkMute }}>緣 {picked.c.love} · 財 {picked.c.money} · 業 {picked.c.work} · 人 {picked.c.relationship} · 행운의 시간 {picked.c.luckyTime}</Text>
-            <Text style={{ fontSize: 12, color: colors.success }}>✓ {picked.c.goodActions[0]}</Text>
-            <Text style={{ fontSize: 12, color: colors.danger }}>✕ {picked.c.avoidActions[0]}</Text>
+            <Text style={{ fontSize: 13, color: colors.inkMute }}>緣 {picked.c.love} · 財 {picked.c.money} · 業 {picked.c.work} · 人 {picked.c.relationship} · 행운의 시간 {picked.c.luckyTime}</Text>
+            <Text style={{ fontSize: 13, color: colors.success }}>✓ {picked.c.goodActions[0]}</Text>
+            <Text style={{ fontSize: 13, color: colors.danger }}>✕ {picked.c.avoidActions[0]}</Text>
           </View>
         ) : null}
       </Card>
@@ -150,11 +150,11 @@ export default function MonthlyScreen() {
           return (
             <View key={x.iso} style={[s.drow, i ? s.topLine : null, isToday && s.drowToday]}>
               <View style={s.dd}>
-                <Text style={{ fontFamily: fonts.serif, fontSize: 16, fontWeight: '600', color: colors.ink }}>{x.d}</Text>
+                <Text style={{ fontFamily: fonts.serif, fontSize: 15, fontWeight: '600', color: colors.ink }}>{x.d}</Text>
                 <Text style={{ fontSize: 11, color: weekdayOf(x.iso) === 0 ? colors.seal : colors.inkMute }}>{WEEK[weekdayOf(x.iso)]}</Text>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 14, fontWeight: '600', lineHeight: 20, color: colors.ink }}>{x.c.summary}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '600', lineHeight: 23, color: colors.ink }}>{x.c.summary}</Text>
                 <Text style={[txt.caption, { marginTop: 2 }]}>{pText(dp)} · {TG[tenGod(F.ds, dp.stem)]} · {emojiFor(x.c.keywords[0])} {x.c.keywords[0]} · {x.c.luckyTime}</Text>
               </View>
               <Text style={{ fontSize: 15, fontWeight: '700', color: scoreColor(x.total) }}>{x.total}{bestSet.has(x.d) ? ' 吉' : ''}</Text>
@@ -172,7 +172,7 @@ export default function MonthlyScreen() {
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{x.d}일 {WEEK[weekdayOf(x.iso)]}요일</Text>
               <Text style={txt.small}>{x.c.summary} 중요한 약속·결정에 좋아요.</Text>
             </View>
-            <Text style={{ color: colors.purple, fontSize: 17, fontWeight: '700' }}>{x.total}</Text>
+            <Text style={{ color: colors.purple, fontSize: 18, fontWeight: '700' }}>{x.total}</Text>
           </View>
         ))}
         {R.low.map(x => (
@@ -182,7 +182,7 @@ export default function MonthlyScreen() {
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{x.d}일 {WEEK[weekdayOf(x.iso)]}요일</Text>
               <Text style={txt.small}>{x.c.avoidActions[0]}을(를) 피하고, 큰 결정은 하루 미뤄보세요.</Text>
             </View>
-            <Text style={{ color: colors.inkMute, fontSize: 17, fontWeight: '700' }}>{x.total}</Text>
+            <Text style={{ color: colors.inkMute, fontSize: 18, fontWeight: '700' }}>{x.total}</Text>
           </View>
         ))}
       </Card>

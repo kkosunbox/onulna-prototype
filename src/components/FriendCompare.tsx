@@ -45,14 +45,14 @@ export default function FriendCompare({ route, spec }: { route: string; spec: Sh
 const KEEP = (Platform.OS === 'web' ? { wordBreak: 'keep-all' } : {}) as object;
 
 const s = StyleSheet.create({
-  box: { marginBottom: 16, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
+  box: { marginBottom: 16, padding: 20, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
   head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   label: { fontSize: 13, fontWeight: '700', color: colors.love },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
   cell: { flex: 1, padding: 12, borderRadius: radius.md, backgroundColor: colors.card, minHeight: 72 },
   me: { backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.seal + '55' },
-  val: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 22, fontWeight: '700', color: colors.ink, marginTop: 4 },
-  vs: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '700', color: colors.love },
+  val: { fontFamily: fonts.serif, fontSize: 15, lineHeight: 23, fontWeight: '700', color: colors.ink, marginTop: 4 },
+  vs: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: colors.love },
   reply: { marginTop: 12, height: 46, borderRadius: radius.md, backgroundColor: colors.love, alignItems: 'center', justifyContent: 'center' },
   replyText: { fontSize: 15, fontWeight: '700', color: colors.white },
 });

@@ -24,7 +24,7 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
       </Hero>
       <View style={s.chance}>
         <Text style={{ fontSize: 13, fontWeight: '700', color: colors.ink }}>연인으로 발전할 가능성</Text>
-        <Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '600', color: colors.love }}>{R.chance}%</Text>
+        <Text style={{ fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.love }}>{R.chance}%</Text>
       </View>
 
       <SubHead title="01 · 그 사람에게 나는" />
@@ -63,12 +63,12 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
       <SubHead title="05 · 연락하기 좋은 날" caption="앞으로 3주 중 두 사람의 연애 흐름이 겹치는 날" />
       <View style={{ flexDirection: 'row', gap: 8 }}>
         {R.contact.map(c => (
-          <View key={c.iso} style={s.day}><Text style={{ fontSize: 14, fontWeight: '700', color: colors.love }}>{c.label}</Text></View>
+          <View key={c.iso} style={s.day}><Text style={{ fontSize: 15, fontWeight: '700', color: colors.love }}>{c.label}</Text></View>
         ))}
       </View>
       <Card style={{ marginTop: 10 }}>
         <Text style={txt.caption}>마음을 표현하기 가장 좋은 날 · 앞으로 60일 중</Text>
-        <Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.love, marginTop: 4 }}>{R.confess.label}</Text>
+        <Text style={{ fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.love, marginTop: 4 }}>{R.confess.label}</Text>
         <Text style={[txt.small, { marginTop: 4 }]}>{R.confess.time} · {R.confess.place} 같은 곳이 좋아요</Text>
       </Card>
 
@@ -83,7 +83,7 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
       </Card>
       <SoftCard style={{ marginTop: 10 }}>
         <Text style={[txt.h3, { color: colors.purple }]}>이렇게 먼저 연락해 보세요</Text>
-        <View style={{ gap: 8, marginTop: 10 }}>{R.messages.map(m => <Text key={m} style={{ fontSize: 15, lineHeight: 22, color: colors.ink }}>{m}</Text>)}</View>
+        <View style={{ gap: 8, marginTop: 10 }}>{R.messages.map(m => <Text key={m} style={{ fontSize: 15, lineHeight: 23, color: colors.ink }}>{m}</Text>)}</View>
       </SoftCard>
       <Text style={[txt.caption, { textAlign: 'center', marginTop: 12 }]}>재미로 보는 콘텐츠예요. 상대의 진짜 마음은 대화로 확인해 주세요.</Text>
     </>
@@ -91,7 +91,7 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
 }
 
 const s = StyleSheet.create({
-  chance: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg },
+  chance: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, padding: 20, borderRadius: radius.lg, backgroundColor: colors.loveBg },
   day: { flex: 1, alignItems: 'center', paddingVertical: 14, borderRadius: radius.lg, backgroundColor: colors.loveBg },
 });
 

@@ -70,8 +70,8 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
         <View style={{ marginTop: 6 }}>
           {sajuRows.map(([e, t, d], i) => (
             <View key={t} style={[{ paddingVertical: 12 }, i ? s.topLine : null]}>
-              <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{e ? e + ' ' : ''}{t}</Text>
-              <Text style={[txt.body, { fontSize: 14, marginTop: 4 }]}>{d}</Text>
+              <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{e ? e + ' ' : ''}{t}</Text>
+              <Text style={[txt.body, { fontSize: 15, marginTop: 4 }]}>{d}</Text>
             </View>
           ))}
         </View>
@@ -86,10 +86,10 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
           return (
             <View key={x[0]} style={[{ paddingVertical: 10 }, s.topLine]}>
               <View style={s.between}>
-                <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink }}>{x[0]} · {a[x[1]]} × {b[x[1]]}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{x[0]} · {a[x[1]]} × {b[x[1]]}</Text>
                 <Pill tone={sm ? 'ok' : 'care'}>{sm ? '닮음' : '다름'}</Pill>
               </View>
-              <Text style={[txt.body, { fontSize: 14, marginTop: 4 }]}>{sm ? x[2] : x[3] + ' ' + x[4]}</Text>
+              <Text style={[txt.body, { fontSize: 15, marginTop: 4 }]}>{sm ? x[2] : x[3] + ' ' + x[4]}</Text>
             </View>
           );
         })}
@@ -111,7 +111,7 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
         <SoftCard style={{ marginTop: 10 }}>
           <Text style={[txt.h3, { color: colors.purple }]}>이렇게 말해 보세요</Text>
           <View style={{ gap: 10, marginTop: 10 }}>
-            {diff.map(x => <Text key={x[0]} style={{ fontSize: 15, lineHeight: 22, color: colors.ink }}><Text style={{ color: colors.purpleSoft, fontSize: 12, fontWeight: '700' }}>{x[0]}  </Text>{x[4]}</Text>)}
+            {diff.map(x => <Text key={x[0]} style={{ fontSize: 15, lineHeight: 23, color: colors.ink }}><Text style={{ color: colors.purpleSoft, fontSize: 13, fontWeight: '700' }}>{x[0]}  </Text>{x[4]}</Text>)}
           </View>
         </SoftCard>
       ) : null}
@@ -120,8 +120,8 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
       <View style={{ flexDirection: 'row', gap: 12 }}>
         {([[nmA, nmB, A, b], [nmB, nmA, B, a]] as [string, string, SajuFull, string][]).map(([me, you, X, ym]) => (
           <Card key={me} style={{ flex: 1, padding: 16 }}>
-            <Text style={{ fontSize: 12, fontWeight: '700', color: colors.purpleSoft }}>{me}님께</Text>
-            <Text style={{ fontSize: 14, lineHeight: 21, marginTop: 6, color: colors.ink }}>{you}님은 {ym[2] === 'F' ? '공감과 다정한 말' : '구체적인 행동과 해결'}에서 사랑을 느껴요. {X.strength === '신강' ? '가끔은 주도권을 내려놓고 맞춰주세요.' : '내 마음을 조금 더 분명히 표현해 주세요.'}</Text>
+            <Text style={{ fontSize: 13, fontWeight: '700', color: colors.purpleSoft }}>{me}님께</Text>
+            <Text style={{ fontSize: 15, lineHeight: 23, marginTop: 6, color: colors.ink }}>{you}님은 {ym[2] === 'F' ? '공감과 다정한 말' : '구체적인 행동과 해결'}에서 사랑을 느껴요. {X.strength === '신강' ? '가끔은 주도권을 내려놓고 맞춰주세요.' : '내 마음을 조금 더 분명히 표현해 주세요.'}</Text>
           </Card>
         ))}
       </View>
@@ -130,7 +130,7 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
         <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
           {good.map(g => (
             <View key={g.iso} style={s.goodDay}>
-              <Text style={{ fontSize: 19, fontWeight: '700', color: colors.love }}>{g.d}일</Text>
+              <Text style={{ fontSize: 18, fontWeight: '700', color: colors.love }}>{g.d}일</Text>
               <Text style={txt.caption}>{WEEK[weekdayOf(g.iso)]}요일</Text>
             </View>
           ))}
@@ -145,8 +145,8 @@ const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 },
   cpRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 4.5 },
   cpL: { width: 64, textAlign: 'center' },
-  cpH: { flex: 1, textAlign: 'center', fontSize: 14, fontWeight: '700', color: colors.purple },
-  cpV: { flex: 1, textAlign: 'center', fontSize: 14, fontWeight: '600', color: colors.ink },
+  cpH: { flex: 1, textAlign: 'center', fontSize: 15, fontWeight: '700', color: colors.purple },
+  cpV: { flex: 1, textAlign: 'center', fontSize: 15, fontWeight: '600', color: colors.ink },
   topLine: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   goodDay: { flex: 1, alignItems: 'center', backgroundColor: colors.loveBg, borderRadius: radius.md, paddingVertical: 12 },
 });

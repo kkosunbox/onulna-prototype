@@ -34,6 +34,6 @@ export default function ActionTabs({ good, avoid }: { good: string[]; avoid: str
 const s = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   mark: { marginTop: 1, width: 24, height: 24, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
-  item: { fontSize: 15, lineHeight: 21, color: colors.ink, fontWeight: '600', letterSpacing: -0.2 },
-  note: { fontSize: 14, lineHeight: 20, color: colors.inkSub, marginTop: 3 },
+  item: { fontSize: 15, lineHeight: 23, color: colors.ink, fontWeight: '600', letterSpacing: -0.2 },
+  note: { fontSize: 15, lineHeight: 23, color: colors.inkSub, marginTop: 3 },
 });

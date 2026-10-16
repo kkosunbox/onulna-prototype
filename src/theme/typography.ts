@@ -19,17 +19,33 @@ const PRE: Record<string, string> = { '400': 'Pretendard-Regular', '500': 'Prete
 export const sansW = (w: '400' | '500' | '600' | '700' | '800'): TextStyle =>
   Platform.OS === 'web' ? { fontFamily: fonts.sans, fontWeight: w } : { fontFamily: PRE[w] };
 
-/** 숫자·제목에 덧붙이는 명조체 */
+/** 숫자·제목에 덧붙이는 굵은 글꼴(예전 이름 유지) */
 export const serif: TextStyle = { fontFamily: fonts.serif };
 
+/**
+ * 글자 크기는 여섯 단계만 쓴다. 화면을 새로 만들 때도 이 값 밖의 크기는 쓰지 않는다.
+ *  큰 숫자 40 · 제목 24 · 소제목 18 · 본문 15 · 보조 13 · 작은 글 11
+ */
+export const type = {
+  display: { size: 40, line: 46, weight: '800', track: -1.2 },
+  title: { size: 24, line: 32, weight: '800', track: -0.6 },
+  heading: { size: 18, line: 26, weight: '700', track: -0.4 },
+  body: { size: 15, line: 23, weight: '400', track: -0.2 },
+  label: { size: 13, line: 19, weight: '500', track: -0.1 },
+  micro: { size: 11, line: 15, weight: '600', track: 0 },
+} as const;
+
 export const txt = {
-  title: { fontFamily: fonts.display, fontSize: 24, lineHeight: 32, fontWeight: '800', letterSpacing: -0.7, color: colors.ink },
-  h2: { fontFamily: fonts.display, fontSize: 19, lineHeight: 26, fontWeight: '800', letterSpacing: -0.5, color: colors.ink },
-  h3: { ...sansW('700'), fontSize: 17, lineHeight: 24, letterSpacing: -0.4, color: colors.ink },
+  display: { fontFamily: fonts.display, fontSize: 40, lineHeight: 46, fontWeight: '800', letterSpacing: -1.2, color: colors.ink },
+  title: { fontFamily: fonts.display, fontSize: 24, lineHeight: 32, fontWeight: '800', letterSpacing: -0.6, color: colors.ink },
+  h2: { ...sansW('700'), fontSize: 18, lineHeight: 26, letterSpacing: -0.4, color: colors.ink },
+  h3: { ...sansW('700'), fontSize: 18, lineHeight: 26, letterSpacing: -0.4, color: colors.ink },
   body: { ...sansW('400'), fontSize: 15, lineHeight: 23, letterSpacing: -0.2, color: colors.inkSub },
-  bodyStrong: { ...sansW('600'), fontSize: 15, lineHeight: 22, letterSpacing: -0.2, color: colors.ink },
+  bodyStrong: { ...sansW('600'), fontSize: 15, lineHeight: 23, letterSpacing: -0.2, color: colors.ink },
   small: { ...sansW('500'), fontSize: 13, lineHeight: 19, color: colors.inkMute },
-  caption: { ...sansW('500'), fontSize: 12, lineHeight: 17, color: colors.inkMute },
+  caption: { ...sansW('500'), fontSize: 13, lineHeight: 19, color: colors.inkMute },
+  micro: { ...sansW('600'), fontSize: 11, lineHeight: 15, color: colors.inkMute },
+  eyebrow: { ...sansW('700'), fontSize: 11, lineHeight: 15, letterSpacing: 1.8, color: colors.seal },
 } satisfies Record<string, TextStyle>;
 
 /** 반경: 히어로 26 · 카드 22 · 입력 14 · 아이콘 칸 13 · 칩은 알약 */

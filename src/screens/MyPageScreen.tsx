@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import HeroCard from '../components/HeroCard';
 import { Alert, Linking, Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -80,8 +81,7 @@ export default function MyPageScreen() {
   return (
     <Screen largeTitle="마이">
       {/* 브랜드 카드: 홈 히어로와 같은 그라디언트로 앱 전체 톤을 묶는다 */}
-      <View style={[s.cardWrap, shadow.hero]}>
-        <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.card}>
+      <HeroCard style={s.card}>
           <View style={s.cardTop}>
             <View style={s.avatar}><Text style={s.avatarText}>{user.nickname.slice(0, 1)}</Text></View>
             <View style={{ flex: 1 }}>
@@ -96,8 +96,7 @@ export default function MyPageScreen() {
               <Text style={s.todayScore}>{fortune.combined.totalScore}점</Text>
             </View>
           ) : null}
-        </LinearGradient>
-      </View>
+        </HeroCard>
 
       <SectionHeader title="내 프로필" caption={resetArm ? '저장된 정보가 모두 지워져요' : undefined} action={resetArm ? '한 번 더 누르면 초기화' : '다시 입력'} onAction={confirmReset} />
       <Card style={s.group}>
@@ -155,15 +154,15 @@ export default function MyPageScreen() {
           <View style={[s.rowIcon, { width: 42, height: 42, borderRadius: 21 }]}><Coin size={22} /></View>
           <View style={{ flex: 1 }}>
             <Text style={txt.caption}>보유 포인트</Text>
-            <Text style={{ fontSize: 22, fontWeight: '800', color: colors.purple }}>{fmtP(points)}</Text>
+            <Text style={{ fontSize: 24, fontWeight: '800', color: colors.purple }}>{fmtP(points)}</Text>
           </View>
           <PressableScale onPress={() => nav.navigate('Wallet')} style={s.charge} scaleTo={0.95}>
-            <Text style={{ color: colors.white, fontSize: 14, fontWeight: '700' }}>충전</Text>
+            <Text style={{ color: colors.white, fontSize: 15, fontWeight: '700' }}>충전</Text>
           </PressableScale>
         </View>
         {([['記', '이용 내역 · 요금 안내', () => nav.navigate('Wallet')], ['圖', `프리미엄 콘텐츠 · 보유 ${ownedCount}개`, () => nav.navigate('Tabs', { screen: 'Content' })]] as const).map(([e, t, go]) => (
           <PressableScale key={e} onPress={go} style={[s.row, s.topBorder]} scaleTo={0.98}>
-            <Text style={{ fontSize: 17, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
             <Text style={[s.rowLabel, { fontWeight: '600' }]}>{t}</Text>
             <Icon name="chevronRight" size={18} color={colors.inkMute} />
           </PressableScale>
@@ -223,15 +222,15 @@ export default function MyPageScreen() {
 
 const s = StyleSheet.create({
   cardWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  card: { borderRadius: radius.xl, padding: 20 },
+  card: {},
   cardTop: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
-  avatarText: { fontSize: 22, fontWeight: '800', color: colors.purpleDeep },
-  name: { fontSize: 19, fontWeight: '700', color: colors.ink, letterSpacing: -0.5 },
+  avatarText: { fontSize: 24, fontWeight: '800', color: colors.purpleDeep },
+  name: { fontSize: 18, fontWeight: '700', color: colors.ink, letterSpacing: -0.4 },
   meta: { fontSize: 13, color: colors.inkSub, marginTop: 2 },
   todayRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
   todayLabel: { fontSize: 13, color: colors.inkSub, fontWeight: '600' },
-  todayScore: { fontFamily: fonts.serif, fontSize: 17, color: colors.seal, fontWeight: '700' },
+  todayScore: { fontFamily: fonts.serif, fontSize: 18, color: colors.seal, fontWeight: '700' },
   group: { paddingVertical: 2, paddingHorizontal: 16 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 54 },
   border: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
@@ -243,10 +242,10 @@ const s = StyleSheet.create({
   hour: { flex: 1, height: 40, borderRadius: radius.sm, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   hourOn: { backgroundColor: colors.navy },
   hourText: { fontSize: 13, fontWeight: '700', color: colors.purple },
-  preview: { fontSize: 12, color: colors.inkMute, paddingVertical: 14 },
+  preview: { fontSize: 13, color: colors.inkMute, paddingVertical: 14 },
   topBorder: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   accountActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 16 },
-  accountLink: { fontSize: 14, color: colors.inkMute, fontWeight: '500' },
+  accountLink: { fontSize: 15, color: colors.inkMute, fontWeight: '500' },
   sep: { width: 1, height: 12, backgroundColor: colors.lineStrong },
   charge: { height: 40, paddingHorizontal: 16, borderRadius: radius.md, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
 });
