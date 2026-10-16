@@ -47,7 +47,7 @@ const KEEP = (Platform.OS === 'web' ? { wordBreak: 'keep-all' } : {}) as object;
 const s = StyleSheet.create({
   box: { marginBottom: 16, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
   head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  label: { fontSize: 13, fontWeight: '800', color: colors.love },
+  label: { fontSize: 13, fontWeight: '700', color: colors.love },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
   cell: { flex: 1, padding: 12, borderRadius: radius.md, backgroundColor: colors.card, minHeight: 72 },
   me: { backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.seal + '55' },

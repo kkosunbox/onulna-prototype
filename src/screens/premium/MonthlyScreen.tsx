@@ -106,7 +106,7 @@ export default function MonthlyScreen() {
             <Card key={k}>
               <View style={s.between}>
                 <Text style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{e} {l}</Text>
-                <Text style={{ fontSize: 18, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
+                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(v) }}>{v}</Text>
               </View>
               <View style={{ marginTop: 10, marginBottom: 2 }}><ScoreBar value={v} color={colors.purpleSoft} /></View>
               <Para>{FIELD[sG][k as FieldKey] + extra}</Para>

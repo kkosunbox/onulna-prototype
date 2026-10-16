@@ -93,9 +93,9 @@ export default function LifeScreen() {
             <>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 12, fontWeight: '700', opacity: 0.8, color: cur ? colors.ink : colors.purple }}>{x.label} · {x.range}</Text>
-                <Text style={{ fontSize: 18, fontWeight: '800', marginTop: 2, color: cur ? colors.ink : colors.purple }}>{x.headline}</Text>
+                <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 2, color: cur ? colors.ink : colors.purple }}>{x.headline}</Text>
               </View>
-              <Text style={{ fontSize: 26, fontWeight: '800', color: cur ? colors.ink : colors.purple }}>{x.score}</Text>
+              <Text style={{ fontSize: 24, fontWeight: '800', color: cur ? colors.ink : colors.purple }}>{x.score}</Text>
             </>
           );
           return (
@@ -128,7 +128,7 @@ export default function LifeScreen() {
         {gold.map((d, gi) => (
           <View key={d.age} style={[s.goldCard]}>
             <Text style={{ fontSize: 12, fontWeight: '700', color: colors.money }}>吉 황금기</Text>
-            <Text style={{ fontSize: 20, fontWeight: '800', marginTop: 4, color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
+            <Text style={{ fontSize: 19, fontWeight: '700', marginTop: 4, color: colors.ink }}>{d.age}~{d.age + 9}세</Text>
             <Text style={[txt.small, { marginTop: 2 }]}>{pText(d.p)} · {tenName(d.rel)}</Text>
             <Text style={{ fontSize: 13, marginTop: 6, lineHeight: 19, color: colors.ink }}>{[STAGE_FIELD[d.rel].work, STAGE_FIELD[d.rel].money][gi]}</Text>
           </View>
@@ -159,7 +159,7 @@ export default function LifeScreen() {
                     <Text style={txt.caption}>{cy - now + d.age}~{cy - now + d.age + 9}년 · {TG[stg]} / {TG[btg]} · {STAGE12[s12]}</Text>
                   </View>
                 </View>
-                <Text style={{ fontSize: 18, fontWeight: '800', color: scoreColor(d.score) }}>{d.score}</Text>
+                <Text style={{ fontSize: 17, fontWeight: '700', color: scoreColor(d.score) }}>{d.score}</Text>
               </View>
               <Para mt={10}>{DAEUN_TEXT[d.rel]}</Para>
               <Text style={[txt.small, { marginTop: 6 }]}>財 {STAGE_FIELD[d.rel].money}</Text>
@@ -172,7 +172,7 @@ export default function LifeScreen() {
         <>
           <SubHead title="04 · 지금의 대운" caption={`${curD.age}~${curD.age + 9}세 · ${pText(curD.p)}`} />
           <Hero style={{ marginTop: 0 }}>
-            <Text style={{ fontSize: 14.5, lineHeight: 23, color: colors.inkSub }}>지금은 {tenName(curD.rel)} 대운이에요. {DAEUN_TEXT[curD.rel]} 이 10년 동안 {STAGE_FIELD[curD.rel].work} {STAGE_FIELD[curD.rel].love}</Text>
+            <Text style={{ fontSize: 15, lineHeight: 23, color: colors.inkSub }}>지금은 {tenName(curD.rel)} 대운이에요. {DAEUN_TEXT[curD.rel]} 이 10년 동안 {STAGE_FIELD[curD.rel].work} {STAGE_FIELD[curD.rel].love}</Text>
             <Text style={{ fontSize: 13, color: colors.seal, marginTop: 12 }}>남은 기간 약 {Math.max(0, curD.age + 10 - now)}년 · 다음 대운 {pText(nextD?.p ?? curD.p)}</Text>
           </Hero>
         </>
@@ -228,7 +228,7 @@ const s = StyleSheet.create({
   goldCard: { flex: 1, padding: 16, backgroundColor: colors.moneyBg, borderRadius: radius.lg },
   dp: { width: 44, height: 44, borderRadius: 12, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   nowTag: { backgroundColor: colors.seal, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 4 },
-  nowText: { color: colors.white, fontSize: 10.5, fontWeight: '700' },
+  nowText: { color: colors.white, fontSize: 11, fontWeight: '700' },
   drow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11 },
   dd: { width: 40, alignItems: 'center' },
 });

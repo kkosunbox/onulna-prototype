@@ -23,8 +23,8 @@ export const sansW = (w: '400' | '500' | '600' | '700' | '800'): TextStyle =>
 export const serif: TextStyle = { fontFamily: fonts.serif };
 
 export const txt = {
-  title: { fontFamily: fonts.display, fontSize: 26, lineHeight: 34, fontWeight: '800', letterSpacing: -0.8, color: colors.ink },
-  h2: { fontFamily: fonts.display, fontSize: 20, lineHeight: 28, fontWeight: '800', letterSpacing: -0.6, color: colors.ink },
+  title: { fontFamily: fonts.display, fontSize: 24, lineHeight: 32, fontWeight: '800', letterSpacing: -0.7, color: colors.ink },
+  h2: { fontFamily: fonts.display, fontSize: 19, lineHeight: 26, fontWeight: '800', letterSpacing: -0.5, color: colors.ink },
   h3: { ...sansW('700'), fontSize: 17, lineHeight: 24, letterSpacing: -0.4, color: colors.ink },
   body: { ...sansW('400'), fontSize: 15, lineHeight: 23, letterSpacing: -0.2, color: colors.inkSub },
   bodyStrong: { ...sansW('600'), fontSize: 15, lineHeight: 22, letterSpacing: -0.2, color: colors.ink },

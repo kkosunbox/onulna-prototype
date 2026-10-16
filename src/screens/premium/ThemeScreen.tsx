@@ -79,7 +79,7 @@ export default function ThemeScreen() {
     hero = (
       <Hero>
         <Text style={heroTxt.eyebrow}>나의 연애 스타일</Text>
-        <Text style={[heroTxt.summ, { fontSize: 20 }]}>{L.st}</Text>
+        <Text style={[heroTxt.summ, { fontSize: 19 }]}>{L.st}</Text>
         <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 6 }}>{u.bloodType}형답게 {L.blood}.</Text>
       </Hero>
     );
@@ -102,12 +102,12 @@ export default function ThemeScreen() {
         <View style={[s.grid2, { marginTop: 12 }]}>
           <Card style={s.cell2}>
             <Text style={txt.caption}>천간합 · 끌리는 일간</Text>
-            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 4, color: colors.ink }}>{STEMS[partnerStem].ko}({STEMS[partnerStem].hanja})일간</Text>
+            <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 4, color: colors.ink }}>{STEMS[partnerStem].ko}({STEMS[partnerStem].hanja})일간</Text>
             <Text style={[txt.small, { marginTop: 4 }]}>{STEMS[F.ds].hanja}{STEMS[partnerStem].hanja}합 — 서로 강하게 끌리는 조합이에요</Text>
           </Card>
           <Card style={s.cell2}>
             <Text style={txt.caption}>잘 맞는 띠</Text>
-            <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 4, color: colors.ink }}>{goodAnimals.join(' · ')}띠</Text>
+            <Text style={{ fontSize: 17, fontWeight: '700', marginTop: 4, color: colors.ink }}>{goodAnimals.join(' · ')}띠</Text>
             <Text style={[txt.small, { marginTop: 4 }]}>{BRANCHES[ch.year.branch].animal}띠와 합을 이루는 띠예요</Text>
           </Card>
         </View>
@@ -136,7 +136,7 @@ export default function ThemeScreen() {
         <Text style={{ fontSize: 40, color: colors.seal, fontWeight: '700' }}>{M.t.emoji}</Text>
         <View style={{ flex: 1 }}>
           <Text style={heroTxt.eyebrow}>나의 돈 성향</Text>
-          <Text style={[heroTxt.summ, { fontSize: 20 }]}>{M.t.name}</Text>
+          <Text style={[heroTxt.summ, { fontSize: 19 }]}>{M.t.name}</Text>
           <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 4 }}>{M.t.desc}</Text>
         </View>
       </Hero>

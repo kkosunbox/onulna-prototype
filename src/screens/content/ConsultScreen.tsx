@@ -65,7 +65,7 @@ function Compose() {
     <Screen title="말 못 할 고민 상담" back>
       <Hero>
         <Text style={heroTxt.eyebrow}>익명 · 이 기기에만 저장돼요</Text>
-        <Text style={[heroTxt.summ, { fontSize: 21, lineHeight: 30 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
+        <Text style={[heroTxt.summ, { fontSize: 22, lineHeight: 30 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
         <Text style={{ fontSize: 13, lineHeight: 20, color: colors.inkSub, marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
       </Hero>
 
@@ -101,7 +101,7 @@ function Compose() {
           <View style={{ gap: 8, marginTop: 12 }}>
             {CRISIS_LINES.map(([k, v]) => (
               <PressableScale key={k} onPress={() => Linking.openURL(`tel:${v.replace(/-/g, '')}`)} style={s.line} scaleTo={0.98} accessibilityLabel={`${k} ${v}에 전화하기`}>
-                <Text style={{ fontSize: 14, color: colors.ink }}>{k}</Text><Text style={{ fontSize: 17, fontWeight: '800', color: colors.love }}>{v}</Text>
+                <Text style={{ fontSize: 14, color: colors.ink }}>{k}</Text><Text style={{ fontSize: 17, fontWeight: '700', color: colors.love }}>{v}</Text>
               </PressableScale>
             ))}
           </View>
@@ -157,7 +157,7 @@ function Answer({ id }: { id: string }) {
 
       <Hero>
         <Text style={heroTxt.eyebrow}>{C.hanja} {C.label} 고민에 대한 답</Text>
-        <Text style={[heroTxt.summ, { fontSize: 20, lineHeight: 29 }]}>{A.headline}</Text>
+        <Text style={[heroTxt.summ, { fontSize: 19, lineHeight: 29 }]}>{A.headline}</Text>
         <View style={{ flexDirection: 'row', gap: 6, marginTop: 14 }}>
           <DarkChip gold>{MODE_LABEL[A.mode]}</DarkChip>
           <DarkChip>풀리는 달 {A.bestMonth}</DarkChip>
@@ -220,7 +220,7 @@ const s = StyleSheet.create({
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   chip: { width: '23%', flexGrow: 1, alignItems: 'center', paddingVertical: 12, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   chipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
-  chipH: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '700', color: colors.purple },
+  chipH: { fontFamily: fonts.serif, fontSize: 19, fontWeight: '700', color: colors.purple },
   chipT: { fontSize: 12, fontWeight: '600', color: colors.inkSub, marginTop: 2 },
   between: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
   crisis: { marginTop: 16, borderWidth: 1.5, borderColor: colors.love },
@@ -229,8 +229,8 @@ const s = StyleSheet.create({
   histLine: { borderTopWidth: 1, borderTopColor: colors.line },
   histH: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.seal, width: 28, textAlign: 'center' },
   direct: { marginTop: 12, borderLeftWidth: 3, borderLeftColor: colors.seal },
-  directK: { fontSize: 12, fontWeight: '800', color: colors.seal, letterSpacing: 1 },
-  directV: { ...sansW('600'), fontSize: 16.5, lineHeight: 25, color: colors.ink, marginTop: 6 },
+  directK: { fontSize: 12, fontWeight: '700', color: colors.seal, letterSpacing: 1 },
+  directV: { ...sansW('600'), fontSize: 16, lineHeight: 25, color: colors.ink, marginTop: 6 },
   q: { padding: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, marginBottom: 12 },
   bars: { flexDirection: 'row', alignItems: 'flex-end', gap: 14, height: 120, marginTop: 16 },
   barCol: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6 },

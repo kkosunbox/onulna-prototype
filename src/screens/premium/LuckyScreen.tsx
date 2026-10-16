@@ -50,7 +50,7 @@ export default function LuckyScreen() {
           <Text style={txt.caption}>무료로 공개하는 1위</Text>
           <Text style={{ fontSize: 17, fontWeight: '700', color: colors.ink }}>{dateLabel(list[0].iso)}</Text>
         </View>
-        <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purple }}>{list[0].s}</Text>
+        <Text style={{ fontSize: 17, fontWeight: '700', color: colors.purple }}>{list[0].s}</Text>
       </Card>
 
       <LockGate key={item.key} item={item}>
@@ -64,7 +64,7 @@ export default function LuckyScreen() {
                   <Text style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{dateLabel(x.iso)}</Text>
                   <Text style={txt.caption}>{pText(x.dp)}일 · 행운의 시간 {x.c.luckyTime}</Text>
                 </View>
-                <Text style={{ fontSize: 18, fontWeight: '700', color: i === 0 ? colors.purple : colors.purpleSoft }}>{x.s}</Text>
+                <Text style={{ fontSize: 17, fontWeight: '700', color: i === 0 ? colors.purple : colors.purpleSoft }}>{x.s}</Text>
               </View>
               <View style={{ marginTop: 8 }}>{why(x).map(t => <Bullet key={t}>{t}</Bullet>)}</View>
               {x.gw ? <Pill tone="ok" style={{ marginTop: 6, alignSelf: 'flex-start' }}>新 귀인일</Pill> : null}
@@ -75,7 +75,7 @@ export default function LuckyScreen() {
         <Card style={{ paddingVertical: 4, paddingHorizontal: 18 }}>
           {bad.map((x, i) => (
             <View key={x.iso} style={[s.row, { paddingVertical: 12 }, i ? s.topLine : null]}>
-              <Text style={{ fontSize: 18, fontWeight: '700', color: colors.inkMute }}>愼</Text>
+              <Text style={{ fontSize: 17, fontWeight: '700', color: colors.inkMute }}>愼</Text>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{dateLabel(x.iso)}</Text>
                 <Text style={txt.small}>{x.clash ? '일지와 충(沖)하는 날이라 변수가 생기기 쉬워요' : '흐름이 잔잔해 큰일을 벌이기엔 아쉬운 날이에요'}</Text>

@@ -44,7 +44,7 @@ const s = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { fontFamily: fonts.display, fontSize: 17, fontWeight: '700', color: colors.ink },
   badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
-  badgeText: { fontSize: 11, fontWeight: '800', color: colors.white },
+  badgeText: { fontSize: 11, fontWeight: '700', color: colors.white },
   row: { flexDirection: 'row', gap: 8, marginTop: 12 },
   btn: { flex: 1, height: 50, borderRadius: radius.md, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
   soft: { backgroundColor: colors.lavenderSoft },

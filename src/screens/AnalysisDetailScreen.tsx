@@ -113,7 +113,7 @@ function ThaiFigure({ u, today, tone }: { u: User; today: string; tone: string }
           return (
             <View key={k} style={s.day}>
               <View style={[s.dot, { backgroundColor: isMine ? d.hex : 'transparent', borderColor: d.hex }, isToday && s.todayRing]} />
-              <Text style={[s.dayL, (isMine || isToday) && { color: colors.ink, fontWeight: '800' }]}>{WEEK[i]}</Text>
+              <Text style={[s.dayL, (isMine || isToday) && { color: colors.ink, fontWeight: '700' }]}>{WEEK[i]}</Text>
               <Text style={s.planet}>{d.planetKo}</Text>
               {isToday ? <View style={[s.todayMark, { backgroundColor: tone }]} /> : <View style={s.todayMark} />}
             </View>
@@ -173,7 +173,7 @@ const s = StyleSheet.create({
   pillars: { flexDirection: 'row', gap: 8 },
   pillar: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: radius.md, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.cream },
   pLabel: { fontSize: 12, fontWeight: '700', color: colors.inkMute },
-  pHan: { fontFamily: fonts.serif, fontSize: 26, lineHeight: 34, fontWeight: '700', marginTop: 2 },
+  pHan: { fontFamily: fonts.serif, fontSize: 24, lineHeight: 34, fontWeight: '700', marginTop: 2 },
   pUnknown: { fontSize: 12, color: colors.inkMute, marginTop: 24, marginBottom: 20 },
   subTitle: { fontSize: 12, fontWeight: '700', color: colors.inkSub, marginTop: 18, marginBottom: 8 },
   elBar: { flexDirection: 'row', height: 10, borderRadius: 5, overflow: 'hidden', gap: 2 },

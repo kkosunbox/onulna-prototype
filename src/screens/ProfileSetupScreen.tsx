@@ -233,6 +233,6 @@ const s = StyleSheet.create({
   quizBtnText: { fontSize: 14, fontWeight: '600', color: colors.purple },
   quizQ: { fontSize: 15, fontWeight: '700', color: colors.ink },
   result: { alignItems: 'center', padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
-  resultType: { fontSize: 20, fontWeight: '700', color: colors.purple, marginTop: 4 },
+  resultType: { fontSize: 19, fontWeight: '700', color: colors.purple, marginTop: 4 },
   link: { fontSize: 13, color: colors.inkMute, textAlign: 'center', textDecorationLine: 'underline' },
 });

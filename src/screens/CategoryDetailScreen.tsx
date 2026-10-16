@@ -74,12 +74,12 @@ export default function CategoryDetailScreen() {
 
 const s = StyleSheet.create({
   scoreRow: { flexDirection: 'row', alignItems: 'center', gap: 16, marginTop: 18, paddingTop: 16, borderTopWidth: 1, borderTopColor: 'rgba(0,0,0,0.08)', borderStyle: 'dashed' },
-  scoreNote: { fontSize: 13.5, lineHeight: 20, color: colors.inkSub },
+  scoreNote: { fontSize: 14, lineHeight: 20, color: colors.inkSub },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   rowLabel: { width: 104, fontSize: 13, fontWeight: '600', color: colors.inkSub },
   track: { flex: 1, height: 8, borderRadius: 4, backgroundColor: colors.line, overflow: 'hidden' },
   center: { position: 'absolute', left: '50%', width: 1, height: 8, backgroundColor: colors.lineStrong },
   bar: { position: 'absolute', height: 8, borderRadius: 4 },
-  val: { width: 30, textAlign: 'right', fontWeight: '800', fontSize: 13 },
+  val: { width: 30, textAlign: 'right', fontWeight: '700', fontSize: 13 },
   tip: { flexDirection: 'row', alignItems: 'center', gap: 12 },
 });

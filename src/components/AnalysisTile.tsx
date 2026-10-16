@@ -38,9 +38,9 @@ const s = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   kicker: { fontFamily: fonts.serif, fontSize: 12, fontWeight: '700', letterSpacing: 2, opacity: 0.8 },
   label: { fontSize: 12, color: colors.inkMute, fontWeight: '600', marginTop: 14 },
-  headline: { ...sansW('800'), fontSize: 15.5, lineHeight: 22, color: colors.ink, letterSpacing: -0.4, marginTop: 4, flex: 1 },
+  headline: { ...sansW('700'), fontSize: 15, lineHeight: 22, color: colors.ink, letterSpacing: -0.4, marginTop: 4, flex: 1 },
   foot: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14 },
   tag: { borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
-  tagText: { fontSize: 11.5, fontWeight: '700' },
+  tagText: { fontSize: 12, fontWeight: '700' },
   more: { fontSize: 12, fontWeight: '700', color: colors.seal },
 });

@@ -79,7 +79,7 @@ export default function ContentScreen() {
       <View style={{ gap: 10 }}>
         <PressableScale onPress={() => nav.navigate('Consult')} style={s.hot} scaleTo={0.98}>
           <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '800', color: colors.purple }}>100P</Text></Pill></View>
+            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '700', color: colors.purple }}>100P</Text></Pill></View>
             <Text style={s.hotTitle}>말 못 할 고민 상담</Text>
             <Text style={s.hotDesc}>누구에게도 못 한 고민, 사주가 익명으로 답해 드려요</Text>
           </View>
@@ -95,7 +95,7 @@ export default function ContentScreen() {
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Compatibility' })} style={s.hot} scaleTo={0.98}>
           <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '800', color: colors.purple }}>150P</Text></Pill></View>
+            <View style={{ flexDirection: 'row', gap: 6 }}><View style={s.newTag}><Text style={s.newText}>NEW</Text></View><Pill><Text style={{ fontSize: 12, fontWeight: '700', color: colors.purple }}>150P</Text></Pill></View>
             <Text style={s.hotTitle}>그 사람의 속마음</Text>
             <Text style={s.hotDesc}>궁합을 본 뒤 상대의 마음 온도와 연락하기 좋은 날까지</Text>
           </View>
@@ -156,7 +156,7 @@ export default function ContentScreen() {
                 <Text style={txt.h2}>{peek.title}</Text>
               </View>
             </View>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 18, fontWeight: '600', color: colors.purple, marginTop: 16 }}>“{peek.hook}”</Text>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 17, fontWeight: '600', color: colors.purple, marginTop: 16 }}>“{peek.hook}”</Text>
             <Text style={[txt.body, { marginTop: 8, fontSize: 14 }]}>{peek.desc}</Text>
             <PrimaryButton
               label={notify.includes(peek.key) ? '알림 신청됨 · 취소하기' : '오픈하면 알려주세요'}
@@ -180,18 +180,18 @@ const s = StyleSheet.create({
   freeTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: colors.okBg },
   freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
   hot: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: radius.lg, backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.line },
-  hotTitle: { fontFamily: fonts.display, fontSize: 18, fontWeight: '800', color: colors.ink, marginTop: 10 },
-  hotDesc: { fontSize: 13.5, lineHeight: 19, color: colors.inkSub, marginTop: 3 },
-  hotHanja: { fontFamily: fonts.serif, fontSize: 44, color: colors.seal, marginLeft: 12 },
+  hotTitle: { fontFamily: fonts.display, fontSize: 17, fontWeight: '700', color: colors.ink, marginTop: 10 },
+  hotDesc: { fontSize: 14, lineHeight: 19, color: colors.inkSub, marginTop: 3 },
+  hotHanja: { fontFamily: fonts.serif, fontSize: 40, color: colors.seal, marginLeft: 12 },
   newTag: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 999, backgroundColor: colors.seal },
-  newText: { fontSize: 11, fontWeight: '800', color: colors.white },
+  newText: { fontSize: 11, fontWeight: '700', color: colors.white },
   bundle: { marginTop: 24, borderWidth: 1.5, borderColor: colors.seal + '66' },
   bundleTag: { position: 'absolute', top: -10, left: 18, backgroundColor: colors.seal, paddingHorizontal: 10, paddingVertical: 3, borderRadius: 999 },
-  bundleTagText: { color: colors.white, fontSize: 11, fontWeight: '800' },
+  bundleTagText: { color: colors.white, fontSize: 11, fontWeight: '700' },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },
   soon: { width: '48%', flexGrow: 1, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderStyle: 'dashed' },
   soonH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: colors.inkMute },
-  soonTier: { fontSize: 11, fontWeight: '800', color: colors.purpleSoft },
+  soonTier: { fontSize: 11, fontWeight: '700', color: colors.purpleSoft },
 });

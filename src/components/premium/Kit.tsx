@@ -166,7 +166,7 @@ export function Hero({ children, style }: { children: React.ReactNode; style?: S
 }
 export const heroTxt = StyleSheet.create({
   eyebrow: { color: colors.seal, fontSize: 12, fontWeight: '700', letterSpacing: 0.4 },
-  summ: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, lineHeight: 27, fontWeight: '800', letterSpacing: -0.5, marginTop: 6 },
+  summ: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, lineHeight: 27, fontWeight: '700', letterSpacing: -0.5, marginTop: 6 },
   body: { color: colors.inkSub, fontSize: 14, lineHeight: 22, marginTop: 8 },
 });
 export function DarkChip({ children, gold }: { children: React.ReactNode; gold?: boolean }) {
@@ -327,8 +327,8 @@ const s = StyleSheet.create({
   row4: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   pill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.xs },
-  pillText: { fontSize: 12, fontWeight: '800', color: colors.purple },
-  para: { fontSize: 14.5, lineHeight: 23, color: colors.inkSub },
+  pillText: { fontSize: 12, fontWeight: '700', color: colors.purple },
+  para: { fontSize: 15, lineHeight: 23, color: colors.inkSub },
   bullet: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', paddingVertical: 4 },
   bulletDot: { width: 6, height: 6, borderRadius: 3, marginTop: 8 },
   tip: { marginTop: 12, backgroundColor: colors.lavenderSoft, borderRadius: radius.md, paddingVertical: 12, paddingHorizontal: 14 },
@@ -350,13 +350,13 @@ const s = StyleSheet.create({
   ychipText: { fontSize: 15, fontWeight: '700', color: colors.ink },
   ychipSub: { fontSize: 11, fontWeight: '600', color: colors.inkMute, marginTop: 1 },
   rank: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
-  rankText: { fontSize: 14, fontWeight: '800', color: colors.purpleSoft },
+  rankText: { fontSize: 14, fontWeight: '700', color: colors.purpleSoft },
   lockWrap: { marginTop: 12, minHeight: 420 },
   lockBlur: { maxHeight: 440, overflow: 'hidden', opacity: 0.5 },
   lockPanel: { position: 'absolute', left: 4, right: 4, top: 40, backgroundColor: colors.card, borderRadius: 16, paddingVertical: 24, paddingHorizontal: 20, alignItems: 'center', borderWidth: StyleSheet.hairlineWidth, borderColor: colors.lineStrong, shadowColor: '#28200A', shadowOpacity: 0.22, shadowRadius: 25, shadowOffset: { width: 0, height: 20 }, elevation: 12 },
   priceCard: { marginTop: 24, backgroundColor: colors.card, borderRadius: radius.lg, padding: 18, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.lineStrong },
   barCol: { flex: 1, height: '100%', alignItems: 'center', justifyContent: 'flex-end', gap: 5 },
-  barScore: { fontSize: 10.5, fontWeight: '700', color: colors.inkMute },
+  barScore: { fontSize: 11, fontWeight: '700', color: colors.inkMute },
   barLabel: { fontSize: 11, color: colors.inkSub, fontWeight: '500' },
   calRow: { flexDirection: 'row', gap: 5 },
   cw: { flex: 1, textAlign: 'center', fontSize: 11, fontWeight: '700', color: colors.inkMute, paddingBottom: 4 },
@@ -365,6 +365,6 @@ const s = StyleSheet.create({
   cdToday: { borderWidth: 2, borderColor: colors.seal },
   cdSel: { borderWidth: 2, borderColor: colors.purple },
   cdD: { fontFamily: fonts.serif, fontSize: 13, fontWeight: '600', color: colors.ink, lineHeight: 15 },
-  cdS: { fontSize: 10, fontWeight: '600', color: colors.inkSub, lineHeight: 12 },
+  cdS: { fontSize: 11, fontWeight: '600', color: colors.inkSub, lineHeight: 13 },
   cdDot: { position: 'absolute', top: 4, right: 4, width: 5, height: 5, borderRadius: 3, backgroundColor: colors.moon },
 });

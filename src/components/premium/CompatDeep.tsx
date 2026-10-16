@@ -111,7 +111,7 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
         <SoftCard style={{ marginTop: 10 }}>
           <Text style={[txt.h3, { color: colors.purple }]}>이렇게 말해 보세요</Text>
           <View style={{ gap: 10, marginTop: 10 }}>
-            {diff.map(x => <Text key={x[0]} style={{ fontSize: 14.5, lineHeight: 22, color: colors.ink }}><Text style={{ color: colors.purpleSoft, fontSize: 12, fontWeight: '700' }}>{x[0]}  </Text>{x[4]}</Text>)}
+            {diff.map(x => <Text key={x[0]} style={{ fontSize: 15, lineHeight: 22, color: colors.ink }}><Text style={{ color: colors.purpleSoft, fontSize: 12, fontWeight: '700' }}>{x[0]}  </Text>{x[4]}</Text>)}
           </View>
         </SoftCard>
       ) : null}
@@ -130,7 +130,7 @@ export default function CompatDeep({ u, r, today }: { u: User; r: CompatibilityR
         <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
           {good.map(g => (
             <View key={g.iso} style={s.goodDay}>
-              <Text style={{ fontSize: 20, fontWeight: '700', color: colors.love }}>{g.d}일</Text>
+              <Text style={{ fontSize: 19, fontWeight: '700', color: colors.love }}>{g.d}일</Text>
               <Text style={txt.caption}>{WEEK[weekdayOf(g.iso)]}요일</Text>
             </View>
           ))}

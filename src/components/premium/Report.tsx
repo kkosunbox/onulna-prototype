@@ -116,7 +116,7 @@ function RSection({ sec, n, last }: { sec: ReportSection; n: number; last: boole
           {pts.map((p, i) => (
             <View key={i} style={s.rpt}>
               <View style={{ marginTop: 4 }}><Icon name="check" size={14} color={colors.purple} strokeWidth={2.6} /></View>
-              <Inline text={p} style={{ flex: 1, fontSize: 14.5, lineHeight: 22, fontWeight: '600', color: colors.ink }} />
+              <Inline text={p} style={{ flex: 1, fontSize: 15, lineHeight: 22, fontWeight: '600', color: colors.ink }} />
             </View>
           ))}
         </View>
@@ -246,7 +246,7 @@ const s = StyleSheet.create({
   toc: { marginTop: 16, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 18, paddingHorizontal: 20, ...shadow.card },
   tocHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
   tocRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 9, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.line },
-  tocNum: { width: 22, fontSize: 11, fontWeight: '800', color: colors.purpleSoft, fontVariant: ['tabular-nums'] },
+  tocNum: { width: 22, fontSize: 11, fontWeight: '700', color: colors.purpleSoft, fontVariant: ['tabular-nums'] },
   tocFoot: { fontSize: 12, color: colors.inkMute, marginTop: 12, lineHeight: 18 },
   paper: { marginTop: 16, backgroundColor: colors.card, borderRadius: 16, borderWidth: 1, borderColor: colors.line, paddingVertical: 4, paddingHorizontal: 22, ...shadow.card },
   rsec: { paddingVertical: 28 },
@@ -259,7 +259,7 @@ const s = StyleSheet.create({
   rsub: { backgroundColor: colors.cream, borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: 16 },
   rsubP: { ...sansW('400'), fontSize: 15, lineHeight: 24, color: colors.inkSub, marginTop: 6 },
   rpts: { marginTop: 18, backgroundColor: colors.lavenderSoft, borderLeftWidth: 3, borderLeftColor: colors.seal, borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: 12, borderBottomRightRadius: 12, paddingVertical: 14, paddingHorizontal: 16 },
-  rptsHead: { fontSize: 12, fontWeight: '800', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
+  rptsHead: { fontSize: 12, fontWeight: '700', color: colors.purpleSoft, letterSpacing: 0.5, marginBottom: 6 },
   rpt: { flexDirection: 'row', gap: 8, alignItems: 'flex-start', paddingVertical: 4 },
   ghost: { height: 12, borderRadius: 6, backgroundColor: colors.line, marginTop: 12 },
   note: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.line, paddingVertical: 16, paddingHorizontal: 18 },

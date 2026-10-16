@@ -25,7 +25,7 @@ import { sajuDeepSpec } from '../../services/share/shareSpecs';
 const EK = (e: keyof typeof ELEMENT_INFO) => ELEMENT_INFO[e].ko;
 
 function Cell({ p, stem }: { p: Pillar | null; stem: boolean }) {
-  if (!p) return <View style={[s.pc, { backgroundColor: colors.line }]}><Text style={{ fontSize: 20, fontWeight: '700', color: colors.inkMute }}>?</Text></View>;
+  if (!p) return <View style={[s.pc, { backgroundColor: colors.line }]}><Text style={{ fontSize: 19, fontWeight: '700', color: colors.inkMute }}>?</Text></View>;
   const o = stem ? STEMS[p.stem] : BRANCHES[p.branch];
   return (
     <View style={[s.pc, { backgroundColor: EL_HEX[o.element] }]}>
@@ -125,7 +125,7 @@ export default function SajuDeepScreen() {
         {([['용신', '가장 필요한 기운', F.yong], ['희신', '용신을 돕는 기운', F.hee], ['기신', '조심할 기운', F.gi]] as const).map(([l, d, e]) => (
           <Card key={l} style={s.cell3}>
             <Text style={txt.caption}>{l}</Text>
-            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 18 }}>{ELEMENT_INFO[e].hanja}</Text></View>
+            <View style={[s.eld, { backgroundColor: EL_HEX[e] }]}><Text style={{ fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 17 }}>{ELEMENT_INFO[e].hanja}</Text></View>
             <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{elName(e)}</Text>
             <Text style={[txt.caption, { marginTop: 2, textAlign: 'center' }]}>{d}</Text>
           </Card>
@@ -140,7 +140,7 @@ export default function SajuDeepScreen() {
       <Hero style={{ marginTop: 0 }}>
         <Text style={heroTxt.eyebrow}>{dayName} ({me.hanja}{BRANCHES[ch.day.branch].hanja}日柱)</Text>
         <Text style={[heroTxt.summ, { fontSize: 19 }]}>{per.emoji} {per.img} 위에 {BRANCHES[ch.day.branch].animal}가 앉은 모습</Text>
-        <Text style={[heroTxt.body, { fontSize: 14.5, lineHeight: 23, marginTop: 10 }]}>{me.ko}{EK(me.element)}({me.hanja})는 {per.core}을 가진 기운이에요. 아래 {BRANCHES[ch.day.branch].ko}({BRANCHES[ch.day.branch].hanja})는 {EK(BRANCHES[ch.day.branch].element)} 기운으로, 일간에게 {TG[dayTG]}이 돼요. {TG_INFO[dayTG].trait} {seat[0]}</Text>
+        <Text style={[heroTxt.body, { fontSize: 15, lineHeight: 23, marginTop: 10 }]}>{me.ko}{EK(me.element)}({me.hanja})는 {per.core}을 가진 기운이에요. 아래 {BRANCHES[ch.day.branch].ko}({BRANCHES[ch.day.branch].hanja})는 {EK(BRANCHES[ch.day.branch].element)} 기운으로, 일간에게 {TG[dayTG]}이 돼요. {TG_INFO[dayTG].trait} {seat[0]}</Text>
       </Hero>
       <Card style={{ marginTop: 12 }}>
         <Text style={txt.h3}>겉모습과 속마음</Text>
@@ -301,7 +301,7 @@ const s = StyleSheet.create({
   pcBig: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '600', lineHeight: 28, color: colors.white },
   pcSmall: { fontSize: 11, fontWeight: '600', color: 'rgba(255,255,255,0.9)', marginTop: 2 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', columnGap: 12, rowGap: 4, marginTop: 10 },
-  legendT: { fontSize: 11.5, color: colors.inkMute },
+  legendT: { fontSize: 12, color: colors.inkMute },
   track: { height: 6, borderRadius: 3, backgroundColor: colors.line, overflow: 'hidden', marginTop: 6 },
   fill: { height: 6, borderRadius: 3, backgroundColor: colors.purpleSoft },
   gauge: { height: 10, borderRadius: 5, marginTop: 6 },

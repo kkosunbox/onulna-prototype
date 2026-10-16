@@ -40,7 +40,7 @@ export default function CombinedAnalysisScreen() {
                 <View style={s.tags}>
                   {a.tags.map(tag => {
                     const on = common.has(KEYWORDS[tag].label);
-                    return <Text key={tag} style={[s.tagText, on && { color: t.color, fontWeight: '800' }]}>#{KEYWORDS[tag].label}</Text>;
+                    return <Text key={tag} style={[s.tagText, on && { color: t.color, fontWeight: '700' }]}>#{KEYWORDS[tag].label}</Text>;
                   })}
                 </View>
               </View>
@@ -77,7 +77,7 @@ const s = StyleSheet.create({
   seal: { width: 32, height: 32, borderRadius: 11, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
   sealText: { fontFamily: fonts.serif, fontSize: 16, fontWeight: '700', color: colors.white },
   dot: { width: 8, height: 8, borderRadius: 4, marginTop: 5 },
-  itemTitle: { fontSize: 12, fontWeight: '800' },
+  itemTitle: { fontSize: 12, fontWeight: '700' },
   itemHeadline: { fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 4, letterSpacing: -0.3, lineHeight: 21 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 6 },
   tag: { backgroundColor: colors.cream, borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
@@ -86,5 +86,5 @@ const s = StyleSheet.create({
   story: { borderRadius: radius.xl, padding: 22 },
   storyHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   storyLabel: { color: colors.seal, fontSize: 13, fontWeight: '700' },
-  storyText: { ...sansW('400'), color: colors.ink, fontSize: 15.5, lineHeight: 26, marginTop: 12, letterSpacing: -0.2 },
+  storyText: { ...sansW('400'), color: colors.ink, fontSize: 15, lineHeight: 26, marginTop: 12, letterSpacing: -0.2 },
 });

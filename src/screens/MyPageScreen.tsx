@@ -163,7 +163,7 @@ export default function MyPageScreen() {
         </View>
         {([['記', '이용 내역 · 요금 안내', () => nav.navigate('Wallet')], ['圖', `프리미엄 콘텐츠 · 보유 ${ownedCount}개`, () => nav.navigate('Tabs', { screen: 'Content' })]] as const).map(([e, t, go]) => (
           <PressableScale key={e} onPress={go} style={[s.row, s.topBorder]} scaleTo={0.98}>
-            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
+            <Text style={{ fontSize: 17, fontWeight: '700', color: colors.purpleSoft, width: 32, textAlign: 'center' }}>{e}</Text>
             <Text style={[s.rowLabel, { fontWeight: '600' }]}>{t}</Text>
             <Icon name="chevronRight" size={18} color={colors.inkMute} />
           </PressableScale>
@@ -227,11 +227,11 @@ const s = StyleSheet.create({
   cardTop: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
   avatarText: { fontSize: 22, fontWeight: '800', color: colors.purpleDeep },
-  name: { fontSize: 20, fontWeight: '800', color: colors.ink, letterSpacing: -0.5 },
+  name: { fontSize: 19, fontWeight: '700', color: colors.ink, letterSpacing: -0.5 },
   meta: { fontSize: 13, color: colors.inkSub, marginTop: 2 },
   todayRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
   todayLabel: { fontSize: 13, color: colors.inkSub, fontWeight: '600' },
-  todayScore: { fontFamily: fonts.serif, fontSize: 18, color: colors.seal, fontWeight: '700' },
+  todayScore: { fontFamily: fonts.serif, fontSize: 17, color: colors.seal, fontWeight: '700' },
   group: { paddingVertical: 2, paddingHorizontal: 16 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 54 },
   border: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },

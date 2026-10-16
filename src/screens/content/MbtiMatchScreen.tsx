@@ -63,7 +63,7 @@ export default function MbtiMatchScreen() {
                   <Text style={txt.caption}>{b.nickname}</Text>
                 </View>
               </View>
-              <Text style={{ fontFamily: fonts.serif, fontSize: 20, fontWeight: '600', color: scoreColor(b.score) }}>{b.score}</Text>
+              <Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: scoreColor(b.score) }}>{b.score}</Text>
             </View>
             <Text style={[txt.body, { marginTop: 10, fontSize: 14 }]}>{b.reason}</Text>
             <Text style={[txt.small, { marginTop: 4, color: colors.purpleSoft }]}>함께라면 · {b.together}</Text>
@@ -75,7 +75,7 @@ export default function MbtiMatchScreen() {
       <Card>
         <View style={s.between}>
           <Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.ink }}>{worst.type} <Text style={txt.caption}>{worst.nickname}</Text></Text>
-          <Text style={{ fontFamily: fonts.serif, fontSize: 18, color: colors.inkMute }}>{worst.score}</Text>
+          <Text style={{ fontFamily: fonts.serif, fontSize: 17, color: colors.inkMute }}>{worst.score}</Text>
         </View>
         <Text style={[txt.body, { marginTop: 8, fontSize: 14 }]}>보는 방식이 많이 달라 오해가 생기기 쉬워요. 대신 서로의 다름을 인정하면 가장 크게 배우는 사이이기도 해요. {u.mbti}인 내가 '{MBTI_INFO[u.mbti].watch}'만 조심하면 충분해요.</Text>
       </Card>
@@ -106,7 +106,7 @@ const s = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
   brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 14, fontWeight: '600' },
   eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
-  big: { fontFamily: fonts.serif, color: colors.seal, fontSize: 56, fontWeight: '600', letterSpacing: 1, marginTop: 4 },
+  big: { fontFamily: fonts.serif, color: colors.seal, fontSize: 48, fontWeight: '600', letterSpacing: 1, marginTop: 4 },
   nick: { color: colors.ink, fontSize: 15, fontWeight: '600' },
   reason: { color: colors.inkSub, fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 10 },
   rankRow: { flexDirection: 'row', gap: 8, marginTop: 18, alignSelf: 'stretch' },
@@ -115,7 +115,7 @@ const s = StyleSheet.create({
   rankType: { fontFamily: fonts.serif, color: colors.ink, fontSize: 16, fontWeight: '600', marginTop: 2 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   medal: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
-  medalText: { fontSize: 14, fontWeight: '800', color: colors.purpleSoft },
+  medalText: { fontSize: 14, fontWeight: '700', color: colors.purpleSoft },
   more: { fontSize: 13, color: colors.purpleSoft, fontWeight: '600', textAlign: 'center' },
   cta: { marginTop: 24, padding: 18, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender },
 });

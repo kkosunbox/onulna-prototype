@@ -37,7 +37,7 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
           <View style={s.backBtn}><Icon name="chevronLeft" size={20} color={colors.ink} strokeWidth={2.2} /></View>
         </PressableScale>
       ) : <View style={s.iconBtn} />}
-      <Text style={[txt.h3, { fontWeight: '800' }]} numberOfLines={1}>{title}</Text>
+      <Text style={[txt.h3, { fontWeight: '700' }]} numberOfLines={1}>{title}</Text>
       <View style={s.iconBtn}>{right}</View>
     </View>
   );

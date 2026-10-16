@@ -68,7 +68,7 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
       </View>
       <Card style={{ marginTop: 10 }}>
         <Text style={txt.caption}>마음을 표현하기 가장 좋은 날 · 앞으로 60일 중</Text>
-        <Text style={{ fontFamily: fonts.serif, fontSize: 20, fontWeight: '600', color: colors.love, marginTop: 4 }}>{R.confess.label}</Text>
+        <Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.love, marginTop: 4 }}>{R.confess.label}</Text>
         <Text style={[txt.small, { marginTop: 4 }]}>{R.confess.time} · {R.confess.place} 같은 곳이 좋아요</Text>
       </Card>
 
@@ -83,7 +83,7 @@ export default function CrushView({ u, r, today }: { u: User; r: CompatibilityRe
       </Card>
       <SoftCard style={{ marginTop: 10 }}>
         <Text style={[txt.h3, { color: colors.purple }]}>이렇게 먼저 연락해 보세요</Text>
-        <View style={{ gap: 8, marginTop: 10 }}>{R.messages.map(m => <Text key={m} style={{ fontSize: 14.5, lineHeight: 22, color: colors.ink }}>{m}</Text>)}</View>
+        <View style={{ gap: 8, marginTop: 10 }}>{R.messages.map(m => <Text key={m} style={{ fontSize: 15, lineHeight: 22, color: colors.ink }}>{m}</Text>)}</View>
       </SoftCard>
       <Text style={[txt.caption, { textAlign: 'center', marginTop: 12 }]}>재미로 보는 콘텐츠예요. 상대의 진짜 마음은 대화로 확인해 주세요.</Text>
     </>
