@@ -26,10 +26,10 @@ function TabItem({ focused, label, icon, onPress }: { focused: boolean; label: s
       <View style={s.iconBox}>
         <Animated.View style={[s.pill, { opacity: v, transform: [{ scaleX: pillScale }] }]} />
         <View>
-          <Icon name={icon} size={22} color={focused ? colors.purple : colors.inkMute} filled={focused} strokeWidth={focused ? 2 : 1.7} />
+          <Icon name={icon} size={22} color={focused ? colors.seal : colors.inkMute} filled={focused} strokeWidth={focused ? 2 : 1.7} />
         </View>
       </View>
-      <Text style={[s.label, focused && { color: colors.purple, fontWeight: '700' }]}>{label}</Text>
+      <Text style={[s.label, focused && { color: colors.ink, fontWeight: '700' }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -62,9 +62,9 @@ export default function BottomNavigation({ state, navigation }: BottomTabBarProp
 }
 
 const s = StyleSheet.create({
-  bar: { flexDirection: 'row', backgroundColor: colors.card, paddingTop: 8, borderTopLeftRadius: 22, borderTopRightRadius: 22 },
+  bar: { flexDirection: 'row', backgroundColor: colors.card, paddingTop: 8, borderTopLeftRadius: 26, borderTopRightRadius: 26, borderTopWidth: 1, borderColor: colors.line },
   item: { flex: 1, alignItems: 'center', gap: 3 },
   iconBox: { width: 56, height: 30, alignItems: 'center', justifyContent: 'center' },
-  pill: { position: 'absolute', width: 56, height: 30, borderRadius: radius.sm, backgroundColor: colors.lavenderSoft },
+  pill: { position: 'absolute', width: 52, height: 30, borderRadius: radius.pill, backgroundColor: colors.accentBg },
   label: { fontSize: 11, color: colors.inkMute, fontWeight: '500' },
 });

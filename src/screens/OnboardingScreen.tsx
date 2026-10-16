@@ -1,3 +1,5 @@
+import { LinearGradient } from 'expo-linear-gradient';
+import PageBg from '../components/PageBg';
 import React, { useRef, useState } from 'react';
 import { Animated, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -5,7 +7,7 @@ import { useApp } from '../context/AppContext';
 import PrimaryButton from '../components/PrimaryButton';
 import PressableScale from '../components/PressableScale';
 import BrandMark, { LogoMark } from '../components/BrandMark';
-import { analysisTheme, colors } from '../theme/colors';
+import { analysisTheme, colors, gradients } from '../theme/colors';
 import { fonts, radius, txt } from '../theme/typography';
 import { COPY } from '../content/copy';
 
@@ -21,17 +23,19 @@ const SOURCES = ['saju', 'thai', 'mbti', 'blood'] as const;
 function Illustration({ kind }: { kind: Art }) {
   if (kind === 'sheet') {
     return (
-      <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
+      <View style={a.stage}>
+        <LinearGradient pointerEvents="none" colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         <LogoMark size={150} />
       </View>
     );
   }
   if (kind === 'story') {
     return (
-      <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
+      <View style={a.stage}>
+        <LinearGradient pointerEvents="none" colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         <View style={a.paper}>
           <View style={a.paperIn}>
-            <Text style={a.paperKind}>— 전생 테스트</Text>
+            <Text style={a.paperKind}>전생 테스트</Text>
             <Text style={a.paperHead}>발해의{'\n'}서당 훈장</Text>
             <View style={a.paperSeal}><Text style={a.paperSealText}>前</Text></View>
             <View style={{ flex: 1 }} />
@@ -44,14 +48,15 @@ function Illustration({ kind }: { kind: Art }) {
   }
   const r = 78;
   return (
-    <View style={[a.stage, { backgroundColor: colors.lavenderSoft }]}>
-      <View style={a.center}><LogoMark size={28} fg={'#F4EDDF'} /></View>
+    <View style={a.stage}>
+        <LinearGradient pointerEvents="none" colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+      <View style={a.center}><LogoMark size={30} fg={colors.white} /></View>
       {SOURCES.map((k, i) => {
         const ang = (i / 4) * Math.PI * 2 - Math.PI / 4;
         const t = analysisTheme[k];
         return (
           <View key={k} style={[a.orb, { backgroundColor: t.bg, transform: [{ translateX: Math.cos(ang) * r }, { translateY: Math.sin(ang) * r }] }]}>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '600', color: t.color }}>{t.emoji}</Text>
+            <Text style={{ fontFamily: fonts.serif, fontSize: 22, fontWeight: '800', color: t.color }}>{t.emoji}</Text>
             <Text style={[a.orbLabel, { color: t.color }]}>{t.label}</Text>
           </View>
         );
@@ -79,6 +84,7 @@ export default function OnboardingScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }}>
+      <PageBg />
       <View style={s.top}>
         <BrandMark />
         {!last ? (
@@ -111,7 +117,7 @@ export default function OnboardingScreen() {
         <View style={s.dots}>
           {PAGES.map((_, i) => {
             const w = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [6, 22, 6], extrapolate: 'clamp' });
-            const bg = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [colors.lavender, colors.navy, colors.lavender], extrapolate: 'clamp' });
+            const bg = scrollX.interpolate({ inputRange: [(i - 1) * width, i * width, (i + 1) * width], outputRange: [colors.lineStrong, colors.seal, colors.lineStrong], extrapolate: 'clamp' });
             return <Animated.View key={i} style={[s.dot, { width: w, backgroundColor: bg }]} />;
           })}
         </View>
@@ -130,23 +136,23 @@ const s = StyleSheet.create({
 });
 
 const a = StyleSheet.create({
-  paper: { width: 150, height: 250, backgroundColor: '#F4EDDF', padding: 6, transform: [{ rotate: '3deg' }], shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 14, shadowOffset: { width: 0, height: 8 } },
-  paperIn: { flex: 1, borderWidth: 0.5, borderColor: '#CDBFA6', padding: 10 },
-  paperKind: { fontSize: 10, fontWeight: '800', color: '#A8402B', letterSpacing: 1 },
-  paperHead: { fontFamily: fonts.serif, fontSize: 19, lineHeight: 24, fontWeight: '700', color: '#1C1A17', marginTop: 8 },
-  paperSeal: { position: 'absolute', right: 10, top: 22, width: 26, height: 26, borderRadius: 2, backgroundColor: '#B5432E', alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-6deg' }] },
-  paperSealText: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '700', color: '#FBF4E8' },
-  paperBars: { flexDirection: 'row', flexWrap: 'wrap', gap: 3, borderWidth: 0.5, borderStyle: 'dashed', borderColor: '#CDBFA6', padding: 5 },
-  paperBar: { height: 5, borderRadius: 3, backgroundColor: '#1C1A17' },
-  paperHook: { fontFamily: fonts.serif, fontSize: 11, fontWeight: '700', color: '#1C1A17', marginTop: 8 },
-  stage: { height: 300, marginTop: 12, borderRadius: radius.xl, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  paper: { width: 160, height: 250, backgroundColor: '#FFFFFF', borderRadius: 22, padding: 4, borderWidth: 1, borderColor: '#EEEAE9', shadowColor: '#E5707D', shadowOpacity: 0.16, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 6 },
+  paperIn: { flex: 1, padding: 12 },
+  paperKind: { fontSize: 10, fontWeight: '800', color: '#E5707D', letterSpacing: 1.6 },
+  paperHead: { fontFamily: fonts.display, fontSize: 19, lineHeight: 25, fontWeight: '800', color: '#1A1A1A', marginTop: 8, letterSpacing: -0.6 },
+  paperSeal: { position: 'absolute', right: 12, top: 12, width: 30, height: 30, borderRadius: 10, backgroundColor: '#FDEEF0', alignItems: 'center', justifyContent: 'center' },
+  paperSealText: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '800', color: '#E5707D' },
+  paperBars: { flexDirection: 'row', flexWrap: 'wrap', gap: 3, borderRadius: 10, backgroundColor: '#F1EEF9', padding: 7 },
+  paperBar: { height: 5, borderRadius: 3, backgroundColor: '#5B4B94', opacity: 0.6 },
+  paperHook: { fontFamily: fonts.display, fontSize: 11, fontWeight: '800', color: '#1A1A1A', marginTop: 8 },
+  stage: { height: 300, marginTop: 12, borderRadius: radius.xl, alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderWidth: 1, borderColor: colors.line },
   halo: { position: 'absolute', width: 200, height: 200, borderRadius: 100, backgroundColor: colors.moon, opacity: 0.12 },
   moon: { width: 120, height: 120, borderRadius: 60, backgroundColor: colors.moon, overflow: 'hidden' },
   moonCut: { position: 'absolute', width: 120, height: 120, borderRadius: 60, backgroundColor: '#1A1E2B', left: 38, top: -16 },
   star: { position: 'absolute', borderRadius: 2, backgroundColor: '#fff', opacity: 0.8 },
   ring: { position: 'absolute', borderWidth: 1, borderColor: colors.lavender, borderStyle: 'dashed' },
-  center: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
-  orb: { position: 'absolute', width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.lineStrong },
+  center: { width: 64, height: 64, borderRadius: 22, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
+  orb: { position: 'absolute', width: 60, height: 60, borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.card },
   orbLabel: { position: 'absolute', bottom: -20, fontSize: 11, fontWeight: '800', width: 90, textAlign: 'center' },
   mini: { width: 200, paddingVertical: 24, borderRadius: radius.xl, alignItems: 'center' },
   miniLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 12 },

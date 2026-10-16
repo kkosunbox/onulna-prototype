@@ -26,7 +26,7 @@ export default function PastLifeScreen() {
     <Screen title="전생 테스트" back>
       <FriendCompare route="PastLife" spec={spec} />
       <View style={s.card}>
-        <View style={s.brand}><BrandMark light size={15} /></View>
+        <View style={s.brand}><BrandMark size={15} /></View>
         <View style={s.seal}><Text style={s.sealText}>{P.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은 전생에</Text>
         <Text style={s.name}>{P.title}</Text>
@@ -62,12 +62,12 @@ function Row({ k, v }: { k: string; v: string }) {
 const s = StyleSheet.create({
   card: { backgroundColor: colors.heroBg, borderRadius: radius.xl, padding: 22, alignItems: 'center', marginTop: 4 },
   brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
-  brandText: { fontFamily: fonts.serif, color: colors.white, fontSize: 14, fontWeight: '600' },
-  seal: { marginTop: 18, width: 72, height: 72, borderRadius: 8, borderWidth: 2, borderColor: colors.moon, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-5deg' }] },
-  sealText: { fontFamily: fonts.serif, fontSize: 34, fontWeight: '700', color: colors.moon },
-  eyebrow: { color: 'rgba(255,255,255,0.7)', fontSize: 13, marginTop: 18 },
-  name: { fontFamily: fonts.serif, color: colors.white, fontSize: 30, lineHeight: 38, fontWeight: '700', marginTop: 4, textAlign: 'center' },
-  era: { color: colors.moon, fontSize: 13, marginTop: 4 },
-  scene: { color: 'rgba(255,255,255,0.86)', fontSize: 14, lineHeight: 22, marginTop: 16, textAlign: 'center' },
+  brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 14, fontWeight: '600' },
+  seal: { marginTop: 18, width: 72, height: 72, borderRadius: 16, borderWidth: 2, borderColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
+  sealText: { fontFamily: fonts.serif, fontSize: 34, fontWeight: '700', color: colors.seal },
+  eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
+  name: { fontFamily: fonts.serif, color: colors.ink, fontSize: 30, lineHeight: 38, fontWeight: '700', marginTop: 4, textAlign: 'center' },
+  era: { color: colors.seal, fontSize: 13, marginTop: 4 },
+  scene: { color: colors.inkSub, fontSize: 14, lineHeight: 22, marginTop: 16, textAlign: 'center' },
   cta: { marginTop: 24, padding: 18, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender },
 });

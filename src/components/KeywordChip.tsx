@@ -11,11 +11,11 @@ export function emojiFor(label: string) {
 
 type Tone = 'default' | 'strong' | 'onDark' | 'muted';
 
-/** 책력: 칩 안에서는 도장을 생략하고 글자만 */
+/** 알약 칩 — 글자만 */
 export default function KeywordChip({ label, tone = 'default', hash = false }: { label: string; tone?: Tone; emoji?: boolean; hash?: boolean }) {
   return (
     <View style={[s.chip, s[tone]]}>
-      <Text style={[s.text, tone === 'strong' || tone === 'onDark' ? { color: colors.white } : tone === 'muted' ? { color: colors.inkMute, fontSize: 12 } : null]}>
+      <Text style={[s.text, tone === 'strong' ? { color: colors.white } : tone === 'onDark' ? { color: colors.inkSub } : tone === 'muted' ? { color: colors.inkMute, fontSize: 12 } : null]}>
         {hash ? '#' : ''}{label}
       </Text>
     </View>
@@ -23,10 +23,10 @@ export default function KeywordChip({ label, tone = 'default', hash = false }: {
 }
 
 const s = StyleSheet.create({
-  chip: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 12, paddingVertical: 7, borderRadius: radius.xs },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 13, paddingVertical: 7, borderRadius: radius.pill },
   default: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   strong: { backgroundColor: colors.navy },
-  onDark: { backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)' },
-  muted: { backgroundColor: colors.cream, paddingHorizontal: 10, paddingVertical: 5 },
+  onDark: { backgroundColor: colors.card + 'C0', borderWidth: 1, borderColor: colors.line },
+  muted: { backgroundColor: colors.lavenderSoft, paddingHorizontal: 10, paddingVertical: 5 },
   text: { fontSize: 13, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
 });

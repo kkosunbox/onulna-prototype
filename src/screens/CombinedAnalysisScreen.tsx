@@ -51,7 +51,7 @@ export default function CombinedAnalysisScreen() {
 
       <View style={[s.storyWrap, shadow.hero]}>
         <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={s.story}>
-          <View style={s.storyHead}><LogoMark size={18} fg={'#F4EDDF'} /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
+          <View style={s.storyHead}><LogoMark size={18} fg={colors.ink} /><Text style={s.storyLabel}>오늘의 나에게 맞는 이야기</Text></View>
           <Text style={s.storyText}>{f.combinedStory}</Text>
         </LinearGradient>
       </View>
@@ -71,20 +71,20 @@ const s = StyleSheet.create({
   commonBox: { marginTop: 20, backgroundColor: colors.lavenderSoft, borderRadius: radius.lg, padding: 18, borderWidth: 1, borderColor: colors.lavender },
   commonLabel: { fontSize: 12, fontWeight: '700', color: colors.purpleSoft },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10 },
-  list: { marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, paddingHorizontal: 18, ...shadow.card },
+  list: { marginTop: 12, backgroundColor: colors.card, borderRadius: radius.lg, paddingHorizontal: 20, borderWidth: 1, borderColor: colors.line },
   item: { flexDirection: 'row', gap: 12, paddingVertical: 14 },
-  border: { borderTopWidth: 1, borderTopColor: colors.lineStrong, borderStyle: 'dashed' },
-  seal: { width: 30, height: 30, borderRadius: 3, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-5deg' }], marginTop: 2 },
-  sealText: { fontFamily: fonts.serif, fontSize: 16, fontWeight: '700', color: '#FBF4E8' },
+  border: { borderTopWidth: 1, borderTopColor: colors.line },
+  seal: { width: 32, height: 32, borderRadius: 11, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
+  sealText: { fontFamily: fonts.serif, fontSize: 16, fontWeight: '700', color: colors.white },
   dot: { width: 8, height: 8, borderRadius: 4, marginTop: 5 },
   itemTitle: { fontSize: 12, fontWeight: '800' },
   itemHeadline: { fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 4, letterSpacing: -0.3, lineHeight: 21 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 6 },
   tag: { backgroundColor: colors.cream, borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
   tagText: { fontSize: 12, color: colors.inkMute, fontWeight: '600' },
-  storyWrap: { marginTop: 24, borderRadius: radius.xl, backgroundColor: colors.heroBg },
+  storyWrap: { marginTop: 24, borderRadius: radius.xl, backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.line, overflow: 'hidden' },
   story: { borderRadius: radius.xl, padding: 22 },
   storyHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  storyLabel: { color: colors.moon, fontSize: 13, fontWeight: '700' },
-  storyText: { ...sansW('400'), color: colors.white, fontSize: 15.5, lineHeight: 26, marginTop: 12, letterSpacing: -0.2 },
+  storyLabel: { color: colors.seal, fontSize: 13, fontWeight: '700' },
+  storyText: { ...sansW('400'), color: colors.ink, fontSize: 15.5, lineHeight: 26, marginTop: 12, letterSpacing: -0.2 },
 });

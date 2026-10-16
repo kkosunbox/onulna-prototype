@@ -179,8 +179,8 @@ export default function NewYearScreen() {
       <ChipSelect<number> items={[[cy, cy + '년', '올해'], [cy + 1, cy + 1 + '년', '새해 미리보기']]} value={y} onChange={setY} />
       <Hero style={{ alignItems: 'center', paddingVertical: 24 }}>
         <Text style={heroTxt.eyebrow}>{y}년 {STEMS[D.yp.stem].ko}{BRANCHES[D.yp.branch].ko}년 · {D.animal}의 해</Text>
-        <Text style={{ fontSize: 30, fontWeight: '800', letterSpacing: 2, marginTop: 10, color: colors.white }}>{idiom[0]}</Text>
-        <Text style={{ fontSize: 13, color: colors.moon, marginTop: 2 }}>{idiom[1]} · {idiom[2]}</Text>
+        <Text style={{ fontSize: 30, fontWeight: '800', letterSpacing: 2, marginTop: 10, color: colors.ink }}>{idiom[0]}</Text>
+        <Text style={{ fontSize: 13, color: colors.seal, marginTop: 2 }}>{idiom[1]} · {idiom[2]}</Text>
         <View style={{ marginTop: 16 }}><ScoreRing key={y} score={D.total} size={108} stroke={8} label="올해 종합" /></View>
         <View style={s.chips}>{D.kws.map(k => <KeywordChip key={k} label={k} tone="onDark" />)}</View>
       </Hero>

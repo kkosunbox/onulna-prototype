@@ -6,6 +6,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/types';
 import { useHasTabHistory, useTabBack } from '../navigation/tabBack';
+import PageBg from '../components/PageBg';
+import Ico from '../components/Ico';
+import { LinearGradient } from 'expo-linear-gradient';
 import TodayHero from '../components/TodayHero';
 import AnalysisTile from '../components/AnalysisTile';
 import ActionTabs from '../components/ActionTabs';
@@ -23,7 +26,7 @@ import { mbtiMatches, pastLife, sajuCharacter, todayTalisman } from '../services
 import { FriendResult, clearPendingInvite, getFriendResult, markFriendSeen, getPendingInvite, inviteUrl, shareLink } from '../services/share/linkShare';
 import { openFriendRoute } from '../navigation/premium';
 import { PartnerInput } from '../types';
-import { colors } from '../theme/colors';
+import { colors, gradients } from '../theme/colors';
 import { fonts, radius, SCREEN_PX, txt } from '../theme/typography';
 import { formatKoreanDate } from '../utils/date';
 import { COPY } from '../content/copy';
@@ -99,6 +102,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }} edges={['top']}>
+      <PageBg />
       {top}
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: SCREEN_PX, paddingBottom: 32 }}
@@ -106,13 +110,13 @@ export default function HomeScreen() {
         refreshControl={<RefreshControl refreshing={fortuneLoading} onRefresh={() => refreshFortune()} tintColor={colors.purple} />}
       >
         <Reveal>
-          <Text style={txt.title}>{user.nickname}님의 오늘</Text>
-          <Text style={[txt.small, { marginTop: 2, marginBottom: 16 }]}>{formatKoreanDate(today)}</Text>
+          <Text style={s.hello}>{formatKoreanDate(today)}</Text>
+          <Text style={[txt.title, { marginBottom: 18 }]}>{user.nickname}님, 오늘은{'\n'}어떤 운을 PICK할까요?</Text>
         </Reveal>
 
         {invite ? (
           <PressableScale onPress={openInvite} style={s.invite} scaleTo={0.98} accessibilityLabel={`${invite.nickname}님과 궁합 보기`}>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 26, color: colors.seal }}>和</Text>
+            <Ico ch="和" size={40} color={colors.love} />
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{invite.nickname}님이 궁합을 신청했어요</Text>
               <Text style={txt.small}>눌러서 둘의 궁합 결과 바로 보기</Text>
@@ -123,7 +127,7 @@ export default function HomeScreen() {
 
         {friend ? (
           <PressableScale onPress={() => { markFriendSeen(); setFriend(null); openFriendRoute(nav, friend.c); }} style={s.invite} scaleTo={0.98} accessibilityLabel={`${friend.n}님이 보낸 결과 보기`}>
-            <Text style={{ fontFamily: fonts.serif, fontSize: 26, color: colors.seal }}>比</Text>
+            <Ico ch="比" size={40} color={colors.love} />
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }} numberOfLines={1}>{friend.n}님의 '{friend.k}' 결과가 도착했어요</Text>
               <Text style={txt.small} numberOfLines={1}>{friend.h} · 나도 해보고 비교하기</Text>
@@ -136,21 +140,21 @@ export default function HomeScreen() {
           <TodayHero fortune={f} today={today} onOpenStory={() => nav.navigate('CombinedAnalysis')} onOpenCategory={c => nav.navigate('CategoryDetail', { category: c })} />
         </Reveal>
 
-        <SectionHeader title="오늘의 행동" />
+        <SectionHeader eyebrow="ACTION" title="오늘의 행동" caption="작은 행동 하나가 오늘의 운을 바꿔요" />
         <ActionTabs good={f.goodActions} avoid={f.avoidActions} />
 
-        <SectionHeader title="무료로 즐기기" caption={COPY.friend} action="전체 보기" onAction={() => nav.navigate('Tabs', { screen: 'Content' })} />
+        <SectionHeader eyebrow="FREE" title="무료로 즐기기" caption={COPY.friend} action="전체 보기" onAction={() => nav.navigate('Tabs', { screen: 'Content' })} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -SCREEN_PX }} contentContainerStyle={{ paddingHorizontal: SCREEN_PX, gap: 10 }}>
           {FREE.map(x => (
             <PressableScale key={x.k} onPress={x.go} style={[s.freeCard, x.tone === 'paper' && s.paper]} scaleTo={0.96} accessibilityLabel={x.title}>
-              <Text style={[s.freeBig, x.tone === 'paper' && { color: '#A5321F' }]} numberOfLines={1}>{x.big}</Text>
-              <Text style={[s.freeTitle, x.tone === 'paper' && { color: '#3A2410' }]}>{x.title}</Text>
-              <Text style={[txt.caption, x.tone === 'paper' && { color: '#7A5A2A' }]} numberOfLines={1}>{x.sub}</Text>
+              <Text style={[s.freeBig, x.tone === 'paper' && { color: colors.money }]} numberOfLines={1}>{x.big}</Text>
+              <Text style={s.freeTitle}>{x.title}</Text>
+              <Text style={txt.caption} numberOfLines={1}>{x.sub}</Text>
             </PressableScale>
           ))}
         </ScrollView>
 
-        <SectionHeader title="4가지 관점" caption="오늘의 운세는 이렇게 만들어졌어요" action="종합 보기" onAction={() => nav.navigate('CombinedAnalysis')} />
+        <SectionHeader eyebrow="INSIGHT" title="4가지 관점" caption="오늘의 운세는 이렇게 만들어졌어요" action="종합 보기" onAction={() => nav.navigate('CombinedAnalysis')} />
         <View style={s.grid}>
           <View style={s.gridRow}>
             <AnalysisTile analysis={a.saju} onPress={() => nav.navigate('AnalysisDetail', { source: 'saju' })} />
@@ -162,8 +166,9 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <SectionHeader title="더 깊이 보기" caption={COPY.deeper} />
+        <SectionHeader eyebrow="PREMIUM" title="더 깊이 보기" caption={COPY.deeper} />
         <PressableScale onPress={() => nav.navigate('Spouse')} style={s.premium} scaleTo={0.985} accessibilityLabel="미래 배우자 리포트">
+          <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 6 }}>
               <View style={s.newTag}><Text style={s.newText}>NEW</Text></View>
@@ -172,9 +177,10 @@ export default function HomeScreen() {
             <Text style={s.premiumTitle}>미래 배우자 리포트</Text>
             <Text style={s.premiumDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
           </View>
-          <Text style={{ fontFamily: fonts.serif, fontSize: 44, color: colors.moon }}>緣</Text>
+          <Ico ch="緣" size={56} color={colors.love} style={{ backgroundColor: colors.card }} />
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Consult')} style={[s.premium, { marginTop: 10 }]} scaleTo={0.985} accessibilityLabel="말 못 할 고민 상담">
+          <LinearGradient colors={gradients.peach} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', gap: 6 }}>
               <View style={s.newTag}><Text style={s.newText}>NEW</Text></View>
@@ -182,11 +188,11 @@ export default function HomeScreen() {
             <Text style={s.premiumTitle}>말 못 할 고민 상담</Text>
             <Text style={s.premiumDesc}>200자로 털어놓으면 사주가 익명으로 답해요 · 100P</Text>
           </View>
-          <Text style={{ fontFamily: fonts.serif, fontSize: 44, color: colors.moon }}>談</Text>
+          <Ico ch="談" size={56} color={colors.saju} style={{ backgroundColor: colors.card }} />
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Content' })} style={s.allLink} scaleTo={0.98}>
-          <Text style={{ fontSize: 14, fontWeight: '600', color: colors.purple }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>
-          <Icon name="chevronRight" size={16} color={colors.purple} />
+          <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink, flexShrink: 1 }}>평생운 · 신년운세 · 월별운세 · 테마 운세 · 길일</Text>
+          <Icon name="chevronRight" size={16} color={colors.seal} />
         </PressableScale>
 
         <Text style={s.tomorrow}>{COPY.tomorrow}</Text>
@@ -199,20 +205,21 @@ export default function HomeScreen() {
 const s = StyleSheet.create({
   topBar: { height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: SCREEN_PX, paddingRight: 10 },
   iconBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  ptPill: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
+  ptPill: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 34, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  hello: { fontSize: 13, fontWeight: '700', color: colors.seal, letterSpacing: 0.2, marginTop: 4, marginBottom: 6 },
   ptText: { fontSize: 13, fontWeight: '800', color: colors.purple },
-  invite: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16, marginBottom: 12, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
+  invite: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16, marginBottom: 12, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.love + '55' },
   grid: { gap: 12 },
   gridRow: { flexDirection: 'row', gap: 12 },
-  freeCard: { width: 132, padding: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
-  paper: { backgroundColor: '#EED9A4', borderColor: '#D9BE7E' },
-  freeBig: { fontFamily: fonts.serif, fontSize: 30, fontWeight: '600', color: colors.purple, lineHeight: 38 },
-  freeTitle: { fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 10 },
-  premium: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  premiumTitle: { fontFamily: fonts.display, fontSize: 19, fontWeight: '700', color: colors.white, marginTop: 10 },
-  premiumDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
-  newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
+  freeCard: { width: 136, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  paper: { backgroundColor: colors.moneyBg, borderColor: colors.money + '33' },
+  freeBig: { fontFamily: fonts.serif, fontSize: 28, fontWeight: '800', color: colors.ink, lineHeight: 36, letterSpacing: -0.8 },
+  freeTitle: { fontSize: 14.5, fontWeight: '700', color: colors.ink, marginTop: 12 },
+  premium: { flexDirection: 'row', alignItems: 'center', gap: 14, padding: 20, borderRadius: radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: colors.line },
+  premiumTitle: { fontFamily: fonts.display, fontSize: 18, fontWeight: '800', color: colors.ink, marginTop: 10, letterSpacing: -0.5 },
+  premiumDesc: { fontSize: 13.5, lineHeight: 19, color: colors.inkSub, marginTop: 3 },
+  newTag: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.pill, backgroundColor: colors.seal },
   newText: { fontSize: 11, fontWeight: '800', color: colors.white },
-  tomorrow: { fontFamily: fonts.display, fontSize: 16, fontWeight: '700', color: colors.inkSub, textAlign: 'center', marginTop: 32 },
-  allLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
+  tomorrow: { fontFamily: fonts.display, fontSize: 17, fontWeight: '800', color: colors.ink, textAlign: 'center', marginTop: 36 },
+  allLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 10, padding: 18, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
 });

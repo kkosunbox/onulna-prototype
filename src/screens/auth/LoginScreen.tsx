@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PageBg from '../../components/PageBg';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -41,6 +42,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={s.root}>
+      <PageBg />
       <View style={s.hero}>
         {gift ? (
           <View style={s.gift}>
@@ -49,9 +51,13 @@ export default function LoginScreen() {
             <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
           </View>
         ) : null}
-        <BrandMark size={58} />
+        <BrandMark size={52} />
+        <View style={s.dots}>
+          {[colors.love, colors.relation, colors.money, colors.work, colors.saju].map(c => <View key={c} style={[s.dot, { backgroundColor: c }]} />)}
+        </View>
+        <Text style={s.eyebrow}>TODAY'S PICK</Text>
         <Text style={s.headline}>{COPY.ask}</Text>
-        <Text style={[txt.small, { marginTop: 6 }]}>{COPY.pickMe}</Text>
+        <Text style={s.sub}>{COPY.pickMe}</Text>
       </View>
 
       <View style={s.bottom}>
@@ -59,8 +65,8 @@ export default function LoginScreen() {
         <View style={s.circles}>
           {PROVIDERS.map(p => <SocialCircle key={p} provider={p} onPress={() => nav.navigate('SocialLogin', { provider: p })} />)}
         </View>
-        <PressableScale onPress={() => nav.navigate('SignUp')} hitSlop={8} style={{ marginTop: 26 }}>
-          <Text style={s.emailLink}>이메일로 시작하기</Text>
+        <PressableScale onPress={() => nav.navigate('SignUp')} style={s.emailBtn} scaleTo={0.97}>
+          <Text style={s.emailText}>이메일로 시작하기</Text>
         </PressableScale>
         <PressableScale onPress={() => setHelp(true)} style={s.helpPill} scaleTo={0.96}>
           <Text style={s.helpPillText}>로그인에 어려움이 있나요?</Text>
@@ -81,7 +87,13 @@ export default function LoginScreen() {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.cream },
   hero: { flex: 1, justifyContent: 'center', paddingHorizontal: 32 },
-  headline: { fontFamily: fonts.display, fontSize: 21, lineHeight: 29, fontWeight: '700', color: colors.ink, letterSpacing: -0.6, marginTop: 22 },
+  dots: { flexDirection: 'row', gap: 7, marginTop: 34 },
+  dot: { width: 8, height: 8, borderRadius: 4 },
+  eyebrow: { fontSize: 12, fontWeight: '700', letterSpacing: 2.2, color: colors.seal, marginTop: 14 },
+  headline: { fontFamily: fonts.display, fontSize: 30, lineHeight: 38, fontWeight: '800', color: colors.ink, letterSpacing: -0.9, marginTop: 10 },
+  sub: { fontSize: 16, lineHeight: 25, color: colors.inkSub, marginTop: 10 },
+  emailBtn: { marginTop: 24, alignSelf: 'stretch', height: 54, borderRadius: radius.pill, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  emailText: { fontSize: 16, fontWeight: '700', color: colors.white },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
   logoText: { fontFamily: fonts.serif, fontSize: 44, lineHeight: 56, fontWeight: '800', color: colors.purple, letterSpacing: -1, marginTop: 20 },
   logoDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.moon, marginTop: 22 },
@@ -89,9 +101,9 @@ const s = StyleSheet.create({
   caption: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
   circles: { flexDirection: 'row', gap: 16, marginTop: 16 },
   emailLink: { fontSize: 15, fontWeight: '600', color: colors.inkSub, textDecorationLine: 'underline' },
-  helpPill: { marginTop: 28, paddingHorizontal: 16, paddingVertical: 9, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.lineStrong },
+  helpPill: { marginTop: 18, paddingHorizontal: 16, paddingVertical: 9, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.lineStrong },
   helpPillText: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
-  gift: { marginBottom: 32, padding: 16, borderRadius: radius.lg, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love },
+  gift: { marginBottom: 32, padding: 18, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   giftWho: { fontSize: 13, fontWeight: '800', color: colors.love },
   giftLine: { fontFamily: fonts.display, fontSize: 19, lineHeight: 27, fontWeight: '700', color: colors.ink, marginTop: 6 },
   helpRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: colors.line },

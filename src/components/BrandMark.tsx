@@ -42,8 +42,8 @@ export function LogoMark({ size = 24, fg = colors.purple }: { size?: number; fg?
 }
 
 /** 워드마크: 운Pick 레터링 하나 (첫 화면 · 헤더 · 공유 카드). size = 높이 */
-export default function BrandMark({ light = false, size = 22 }: { light?: boolean; size?: number }) {
-  const fg = light ? '#F4EDDF' : colors.purple;
+export default function BrandMark({ light = false, size = 22, fg: fgIn }: { light?: boolean; size?: number; fg?: string }) {
+  const fg = fgIn ?? (light ? '#F4EDDF' : colors.purple);
   return (
     <Svg width={(size * 281) / 92} height={size} viewBox="-6 2 281 92" accessibilityLabel={BRAND.name}>
       <Un fg={fg} />

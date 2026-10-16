@@ -83,7 +83,7 @@ export default function ContentScreen() {
             <Text style={s.hotTitle}>말 못 할 고민 상담</Text>
             <Text style={s.hotDesc}>누구에게도 못 한 고민, 사주가 익명으로 답해 드려요</Text>
           </View>
-          <Text style={s.hotHanja}>談</Text>
+          <Ico ch="談" size={56} color={colors.saju} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Spouse')} style={s.hot} scaleTo={0.98}>
           <View style={{ flex: 1 }}>
@@ -91,7 +91,7 @@ export default function ContentScreen() {
             <Text style={s.hotTitle}>미래 배우자 리포트</Text>
             <Text style={s.hotDesc}>어떤 사람을, 언제, 어디서 만나게 될까?</Text>
           </View>
-          <Text style={s.hotHanja}>緣</Text>
+          <Ico ch="緣" size={56} color={colors.love} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Tabs', { screen: 'Compatibility' })} style={s.hot} scaleTo={0.98}>
           <View style={{ flex: 1 }}>
@@ -99,7 +99,7 @@ export default function ContentScreen() {
             <Text style={s.hotTitle}>그 사람의 속마음</Text>
             <Text style={s.hotDesc}>궁합을 본 뒤 상대의 마음 온도와 연락하기 좋은 날까지</Text>
           </View>
-          <Text style={s.hotHanja}>心</Text>
+          <Ico ch="心" size={56} color={colors.relation} style={{ backgroundColor: colors.card, marginLeft: 12 }} />
         </PressableScale>
       </View>
 
@@ -137,7 +137,7 @@ export default function ContentScreen() {
         {UPCOMING.filter(c => c.status === 'soon').map(c => (
           <PressableScale key={c.key} onPress={() => setPeek(c)} style={s.soon} scaleTo={0.97} accessibilityLabel={`${c.title} 곧 오픈`}>
             <View style={s.freeHead}>
-              <Text style={s.soonH}>{c.hanja}</Text>
+              <Ico ch={c.hanja} size={36} color={colors.inkMute} />
               {notify.includes(c.key) ? <Icon name="bell" size={14} color={colors.seal} /> : <Text style={[s.soonTier, c.tier === 'free' && { color: colors.success }]}>{c.tier === 'free' ? '무료' : `${c.cost}P`}</Text>}
             </View>
             <Text style={{ fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 8 }} numberOfLines={1}>{c.title}</Text>
@@ -177,16 +177,16 @@ const s = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   free: { width: '48%', flexGrow: 1, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   freeHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  freeTag: { paddingHorizontal: 7, paddingVertical: 3, borderRadius: 6, backgroundColor: colors.okBg },
+  freeTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: colors.okBg },
   freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
-  hot: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: radius.xl, backgroundColor: colors.heroBg },
-  hotTitle: { fontFamily: fonts.display, fontSize: 19, fontWeight: '700', color: colors.white, marginTop: 10 },
-  hotDesc: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 3 },
-  hotHanja: { fontFamily: fonts.serif, fontSize: 44, color: colors.moon, marginLeft: 12 },
-  newTag: { paddingHorizontal: 7, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
+  hot: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: radius.lg, backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.line },
+  hotTitle: { fontFamily: fonts.display, fontSize: 18, fontWeight: '800', color: colors.ink, marginTop: 10 },
+  hotDesc: { fontSize: 13.5, lineHeight: 19, color: colors.inkSub, marginTop: 3 },
+  hotHanja: { fontFamily: fonts.serif, fontSize: 44, color: colors.seal, marginLeft: 12 },
+  newTag: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 999, backgroundColor: colors.seal },
   newText: { fontSize: 11, fontWeight: '800', color: colors.white },
-  bundle: { marginTop: 24, borderWidth: 1.5, borderColor: colors.purpleSoft },
-  bundleTag: { position: 'absolute', top: -9, left: 16, backgroundColor: colors.seal, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
+  bundle: { marginTop: 24, borderWidth: 1.5, borderColor: colors.seal + '66' },
+  bundleTag: { position: 'absolute', top: -10, left: 18, backgroundColor: colors.seal, paddingHorizontal: 10, paddingVertical: 3, borderRadius: 999 },
   bundleTagText: { color: colors.white, fontSize: 11, fontWeight: '800' },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },

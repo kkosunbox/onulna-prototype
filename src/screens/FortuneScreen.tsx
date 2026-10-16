@@ -85,7 +85,7 @@ export default function FortuneScreen() {
       <Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
 
       <Card style={s.summary}>
-        <ScoreRing key={tab} score={score} size={84} stroke={7} color={colors.purpleSoft} track={colors.lavenderSoft} textColor={colors.purple} />
+        <ScoreRing key={tab} score={score} size={84} stroke={7} color={colors.seal} track={colors.lavenderSoft} textColor={colors.ink} />
         <View style={{ flex: 1 }}>
           <Text style={txt.caption}>{label}의 흐름</Text>
           <Text style={[txt.bodyStrong, { marginTop: 4 }]}>{summary}</Text>

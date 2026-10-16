@@ -155,32 +155,31 @@ export function Seal({ ch, size = 36 }: { ch: string; bg?: string; size?: number
 export function Hero({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) {
   const flat = StyleSheet.flatten(style) ?? {};
   return (
-    <View style={[{ borderRadius: radius.xl, backgroundColor: colors.heroBg, marginTop: 12 }, shadow.hero, { marginTop: flat.marginTop ?? 12 }]}>
-      <View style={[{ borderRadius: radius.xl, padding: 20, overflow: 'hidden', backgroundColor: colors.heroBg }, style, { marginTop: 0 }]}>
-        {/* 책력 테두리: 안쪽 가는 선 + 모서리 꺾쇠 (장식, 터치 없음) */}
-        <View pointerEvents="none" style={s.heroFrame} />
-        {(['tl', 'tr', 'bl', 'br'] as const).map(k => <View key={k} pointerEvents="none" style={[s.heroCorner, s[k]]} />)}
+    <View style={[{ borderRadius: radius.xl, backgroundColor: colors.card, marginTop: 12 }, shadow.hero, { marginTop: flat.marginTop ?? 12 }]}>
+      <View style={[{ borderRadius: radius.xl, padding: 22, overflow: 'hidden', borderWidth: 1, borderColor: colors.line }, style, { marginTop: 0 }]}>
+        {/* 파스텔 그라데이션 바탕 (장식, 터치 없음) */}
+        <LinearGradient pointerEvents="none" colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         {children}
       </View>
     </View>
   );
 }
 export const heroTxt = StyleSheet.create({
-  eyebrow: { color: 'rgba(255,255,255,0.7)', fontSize: 12, fontWeight: '600' },
-  summ: { fontFamily: fonts.serif, color: colors.white, fontSize: 17, lineHeight: 24, fontWeight: '600', letterSpacing: -0.4, marginTop: 4 },
-  body: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginTop: 8 },
+  eyebrow: { color: colors.seal, fontSize: 12, fontWeight: '700', letterSpacing: 0.4 },
+  summ: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, lineHeight: 27, fontWeight: '800', letterSpacing: -0.5, marginTop: 6 },
+  body: { color: colors.inkSub, fontSize: 14, lineHeight: 22, marginTop: 8 },
 });
 export function DarkChip({ children, gold }: { children: React.ReactNode; gold?: boolean }) {
   return (
-    <View style={[s.darkChip, gold && { backgroundColor: colors.moon, borderColor: colors.moon }]}>
-      <Text style={{ color: gold ? '#161A27' : colors.white, fontSize: 14, fontWeight: '600' }}>{children}</Text>
+    <View style={[s.darkChip, gold && { backgroundColor: colors.seal, borderColor: colors.seal }]}>
+      <Text style={{ color: gold ? colors.white : colors.ink, fontSize: 14, fontWeight: '600' }}>{children}</Text>
     </View>
   );
 }
 export function HeroPill({ label, onPress }: { label: string; onPress(): void }) {
   return (
     <PressableScale onPress={onPress} style={s.lpill} scaleTo={0.95}>
-      <Text style={{ color: colors.white, fontSize: 13, fontWeight: '700' }}>{label}</Text>
+      <Text style={{ color: colors.ink, fontSize: 13, fontWeight: '700' }}>{label}</Text>
     </PressableScale>
   );
 }
@@ -203,7 +202,7 @@ export function ChipSelect<T extends string | number>({ items, value, onChange }
           <View key={String(k)} onLayout={e => { xs.current[String(k)] = e.nativeEvent.layout.x; if (on) scrollTo(String(k), false); }}>
             <PressableScale onPress={() => onChange(k)} haptic scaleTo={0.95} style={[s.ychip, on && s.ychipOn]} accessibilityState={{ selected: on }}>
               <Text style={[s.ychipText, on && { color: colors.white }]}>{l}</Text>
-              {sub ? <Text style={[s.ychipSub, on && { color: 'rgba(255,255,255,0.7)' }]}>{sub}</Text> : null}
+              {sub ? <Text style={[s.ychipSub, on && { color: colors.inkSub }]}>{sub}</Text> : null}
             </PressableScale>
           </View>
         );
@@ -213,7 +212,7 @@ export function ChipSelect<T extends string | number>({ items, value, onChange }
 }
 
 export function Rank({ n, first }: { n: number; first?: boolean }) {
-  return <View style={[s.rank, first && { backgroundColor: colors.navy }]}><Text style={[s.rankText, first && { color: colors.moon }]}>{n}</Text></View>;
+  return <View style={[s.rank, first && { backgroundColor: colors.navy }]}><Text style={[s.rankText, first && { color: colors.white }]}>{n}</Text></View>;
 }
 
 /* ---------- 잠금 ---------- */
@@ -272,8 +271,8 @@ export function MonthBars({ months, height = 170, onPress, max = 95 }: { months:
         const h = Math.max(8, ((x.total - mn + 4) / (mx - mn + 4)) * max);
         return (
           <PressableScale key={x.m} onPress={onPress ? () => onPress(x.m) : undefined} disabled={!onPress} scaleTo={0.92} style={s.barCol} accessibilityLabel={`${x.m}월 ${x.total}점`}>
-            <Text style={[s.barScore, top && { color: colors.purple }]}>{x.total}</Text>
-            <View style={{ width: '70%', height: h, borderRadius: 5, backgroundColor: top ? colors.navy : x.total === mn ? colors.line : colors.lavender }} />
+            <Text style={[s.barScore, top && { color: colors.seal }]}>{x.total}</Text>
+            <View style={{ width: '70%', height: h, borderRadius: 5, backgroundColor: top ? colors.seal : x.total === mn ? colors.line : colors.accentBg }} />
             <Text style={[s.barLabel, top && { color: colors.purple, fontWeight: '700' }]}>{x.m}</Text>
           </PressableScale>
         );
@@ -290,9 +289,9 @@ export function FortuneCalendar({ days, first, today, sel, best, onSelect }: { d
   const rows: typeof cells[] = [];
   for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
   const mix = (t: number) => {
-    // #4F5F8A를 카드색 위에 8~80% 덮은 색 (HTML color-mix와 같음)
+    // 코랄(#E5707D)을 카드색 위에 8~80% 덮은 색 (HTML color-mix와 같음)
     const a = 0.08 + t * 0.72; const base = [1, 3, 5].map(i => parseInt(colors.card.slice(i, i + 2), 16));
-    const [r, g, b] = [0x4f, 0x5f, 0x8a].map((v, i) => Math.round(base[i] + (v - base[i]) * a));
+    const [r, g, b] = [0xe5, 0x70, 0x7d].map((v, i) => Math.round(base[i] + (v - base[i]) * a));
     return `rgb(${r},${g},${b})`;
   };
   return (
@@ -307,7 +306,7 @@ export function FortuneCalendar({ days, first, today, sel, best, onSelect }: { d
             return (
               <PressableScale key={x.iso} onPress={() => onSelect(x.iso)} scaleTo={0.9} style={[s.cd, { backgroundColor: mix(t) }, x.iso === today && s.cdToday, sel === x.iso && s.cdSel]} accessibilityLabel={`${x.d}일 ${x.total}점`}>
                 <Text style={[s.cdD, dark && { color: colors.white }]}>{x.d}</Text>
-                <Text style={[s.cdS, dark && { color: 'rgba(255,255,255,0.8)' }]}>{x.total}</Text>
+                <Text style={[s.cdS, dark && { color: colors.inkSub }]}>{x.total}</Text>
                 {best.has(x.d) ? <View style={s.cdDot} /> : null}
               </PressableScale>
             );
@@ -344,8 +343,8 @@ const s = StyleSheet.create({
   infoRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
   infoIco: { width: 24, textAlign: 'center', fontSize: 16, fontWeight: '700', color: colors.purpleSoft },
   infoVal: { flex: 1, fontSize: 14, fontWeight: '600', color: colors.ink, textAlign: 'right' },
-  darkChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.xs, backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)' },
-  lpill: { backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)', paddingHorizontal: 14, paddingVertical: 9, borderRadius: radius.pill },
+  darkChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  lpill: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 14, paddingVertical: 9, borderRadius: radius.pill },
   ychip: { minWidth: 64, height: 52, paddingHorizontal: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
   ychipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
   ychipText: { fontSize: 15, fontWeight: '700', color: colors.ink },

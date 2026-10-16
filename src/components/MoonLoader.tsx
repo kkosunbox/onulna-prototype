@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PageBg from './PageBg';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { LogoMark } from './BrandMark';
 import { colors } from '../theme/colors';
@@ -42,6 +43,7 @@ export default function MoonLoader({ title, messages = [] }: Props) {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.cream }}>
+      <PageBg />
       <View style={s.center}>
         <View style={s.stage}>
           <Animated.View style={{ transform: [{ rotate: tilt }] }}>

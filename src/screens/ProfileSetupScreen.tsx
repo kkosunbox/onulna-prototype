@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PageBg from '../components/PageBg';
 import { Animated, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '../context/AppContext';
@@ -103,6 +104,7 @@ export default function ProfileSetupScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }}>
+      <PageBg />
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={s.top}>
           <PressableScale onPress={() => go(Math.max(0, step - 1))} hitSlop={10} style={[s.back, { opacity: step ? 1 : 0 }]} disabled={!step} scaleTo={0.9} accessibilityLabel="이전 단계">

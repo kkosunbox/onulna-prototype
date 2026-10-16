@@ -12,7 +12,7 @@ export default function CategoryRow({ category, score, text, onPress, delay, bad
   const t = categoryTheme[category];
   return (
     <PressableScale onPress={onPress} style={s.row} accessibilityLabel={`${t.label} ${score}점`}>
-      <Ico ch={t.emoji} size={42} />
+      <Ico ch={t.emoji} size={42} color={t.color} />
       <View style={{ flex: 1, gap: 6 }}>
         <View style={s.head}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>

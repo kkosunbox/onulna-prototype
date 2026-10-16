@@ -18,9 +18,9 @@ export default function WalletScreen() {
         <Text style={heroTxt.eyebrow}>보유 포인트</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 2 }}>
           <Coin size={30} />
-          <Text style={{ fontSize: 40, fontWeight: '800', letterSpacing: -1, color: colors.white }}>{points.toLocaleString('ko-KR')}</Text>
+          <Text style={{ fontSize: 40, fontWeight: '800', letterSpacing: -1, color: colors.ink }}>{points.toLocaleString('ko-KR')}</Text>
         </View>
-        <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 4 }}>1,000원 = 100P · 보유 콘텐츠 {ownedCount}개</Text>
+        <Text style={{ fontSize: 13, color: colors.inkSub, marginTop: 4 }}>1,000원 = 100P · 보유 콘텐츠 {ownedCount}개</Text>
       </Hero>
 
       <Card onPress={att ? undefined : attend} style={[s.attend, att && { opacity: 0.6 }]} accessibilityLabel="출석 체크">

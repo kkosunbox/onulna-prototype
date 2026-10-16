@@ -80,7 +80,7 @@ export default function ThemeScreen() {
       <Hero>
         <Text style={heroTxt.eyebrow}>나의 연애 스타일</Text>
         <Text style={[heroTxt.summ, { fontSize: 20 }]}>{L.st}</Text>
-        <Text style={{ fontSize: 14, color: 'rgba(255,255,255,0.82)', marginTop: 6 }}>{u.bloodType}형답게 {L.blood}.</Text>
+        <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 6 }}>{u.bloodType}형답게 {L.blood}.</Text>
       </Hero>
     );
     basis = (
@@ -133,11 +133,11 @@ export default function ThemeScreen() {
     const seun = Array.from({ length: 5 }, (_, i) => { const y = cy + i; const yp = pFrom(y - 4); return { y, yp, gG: tgGroup(tenGod(F.ds, yp.stem)) }; });
     hero = (
       <Hero style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
-        <Text style={{ fontSize: 40, color: colors.moon, fontWeight: '700' }}>{M.t.emoji}</Text>
+        <Text style={{ fontSize: 40, color: colors.seal, fontWeight: '700' }}>{M.t.emoji}</Text>
         <View style={{ flex: 1 }}>
           <Text style={heroTxt.eyebrow}>나의 돈 성향</Text>
           <Text style={[heroTxt.summ, { fontSize: 20 }]}>{M.t.name}</Text>
-          <Text style={{ fontSize: 14, color: 'rgba(255,255,255,0.82)', marginTop: 4 }}>{M.t.desc}</Text>
+          <Text style={{ fontSize: 14, color: colors.inkSub, marginTop: 4 }}>{M.t.desc}</Text>
         </View>
       </Hero>
     );

@@ -242,6 +242,6 @@ const s = StyleSheet.create({
   sumRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   sumVal: { fontSize: 15, fontWeight: '700', color: colors.ink },
   hr: { height: 1, backgroundColor: colors.lineStrong },
-  toast: { position: 'absolute', alignSelf: 'center', backgroundColor: colors.heroBg, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 10, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 15, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
+  toast: { position: 'absolute', alignSelf: 'center', backgroundColor: '#1A1A1A', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 10, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 15, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
   toastText: { color: colors.white, fontSize: 14, fontWeight: '600' },
 });

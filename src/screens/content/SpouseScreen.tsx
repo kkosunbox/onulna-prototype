@@ -176,8 +176,8 @@ export default function SpouseScreen() {
 }
 
 const s = StyleSheet.create({
-  heroLine: { alignSelf: 'stretch', height: 1, backgroundColor: 'rgba(255,255,255,0.12)', marginVertical: 18 },
-  heroNum: { fontFamily: fonts.serif, fontSize: 26, fontWeight: '600', color: colors.moon },
+  heroLine: { alignSelf: 'stretch', height: 1, backgroundColor: colors.line, marginVertical: 18 },
+  heroNum: { fontFamily: fonts.serif, fontSize: 26, fontWeight: '600', color: colors.seal },
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
   grid: { flexDirection: 'row', gap: 12 },
   cell: { flex: 1, alignItems: 'center', gap: 4 },

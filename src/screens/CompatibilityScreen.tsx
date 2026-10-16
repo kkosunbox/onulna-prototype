@@ -48,8 +48,8 @@ function Label({ children }: { children: string }) {
 
 function Avatar({ name, light }: { name: string; light?: boolean }) {
   return (
-    <View style={[s.avatar, light && { backgroundColor: colors.moon }]}>
-      <Text style={[s.avatarText, light && { color: colors.purpleDeep }]}>{name.slice(0, 1)}</Text>
+    <View style={[s.avatar, light && { backgroundColor: colors.purpleSoft }]}>
+      <Text style={s.avatarText}>{name.slice(0, 1)}</Text>
     </View>
   );
 }
@@ -105,7 +105,7 @@ export default function CompatibilityScreen() {
           <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 1 }} style={s.hero}>
             <View style={s.pair}>
               <Avatar name={user.nickname} light />
-              <Icon name="heart" size={18} color="rgba(255,255,255,0.7)" filled />
+              <Icon name="heart" size={18} color={colors.seal} filled />
               <Avatar name={result.target.nickname} />
             </View>
             <Text style={s.pairNames}>{user.nickname} · {result.target.nickname}</Text>
@@ -263,16 +263,16 @@ export default function CompatibilityScreen() {
 }
 
 const s = StyleSheet.create({
-  pairSheet: { flexDirection: 'row', alignItems: 'center', marginTop: 4, padding: 18, borderRadius: radius.xl, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.love + '40' },
+  pairSheet: { flexDirection: 'row', alignItems: 'center', marginTop: 4, padding: 20, borderRadius: radius.xl, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.line },
   pairCol: { flex: 1, alignItems: 'center', gap: 4 },
-  pairSeal: { width: 54, height: 54, borderRadius: 6, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-5deg' }] },
-  pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, transform: [{ rotate: '5deg' }] },
-  pairSealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '700', color: '#FBF4E8' },
-  pairName: { fontFamily: fonts.display, fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 6 },
+  pairSeal: { width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
+  pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, backgroundColor: colors.card },
+  pairSealText: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '800', color: colors.white },
+  pairName: { fontFamily: fonts.display, fontSize: 15, fontWeight: '800', color: colors.ink, marginTop: 6 },
   pairMid: { width: 64, flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 34 },
   pairLine: { flex: 1, height: 1, backgroundColor: colors.love, opacity: 0.5 },
   pairHan: { fontFamily: fonts.serif, fontSize: 20, fontWeight: '700', color: colors.love },
-  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 14, borderRadius: radius.lg, borderWidth: 1, borderStyle: 'dashed', borderColor: colors.lineStrong },
+  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 16, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   inviteHan: { fontFamily: fonts.serif, fontSize: 22, fontWeight: '700', color: colors.purpleSoft, width: 28, textAlign: 'center' },
   form: { gap: 20, padding: 20 },
   me: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },
@@ -280,19 +280,19 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', gap: 8 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   mbtiCell: { width: '23.8%' },
-  select: { height: 52, borderRadius: radius.sm, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  select: { height: 52, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   selectText: { fontSize: 17, fontWeight: '500', color: colors.ink },
   error: { color: colors.danger, fontSize: 12, marginTop: 6 },
-  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#4F5F8A', alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.6)' },
+  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: colors.line },
   avatarText: { fontFamily: fonts.serif, color: colors.white, fontWeight: '600', fontSize: 16 },
   heroWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   hero: { borderRadius: radius.xl, padding: 24, alignItems: 'center' },
   pair: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  pairNames: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '600', marginTop: 8 },
-  heroSummary: { fontFamily: fonts.serif, color: colors.white, fontSize: 18, fontWeight: '600', letterSpacing: -0.4, textAlign: 'center' },
+  pairNames: { color: colors.inkSub, fontSize: 13, fontWeight: '600', marginTop: 8 },
+  heroSummary: { fontFamily: fonts.serif, color: colors.ink, fontSize: 19, fontWeight: '800', letterSpacing: -0.4, textAlign: 'center' },
   barHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   barLabel: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  barScore: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '600', fontVariant: ['tabular-nums'] },
+  barScore: { fontFamily: fonts.serif, fontSize: 17, fontWeight: '800', fontVariant: ['tabular-nums'] },
   point: { paddingLeft: 24 },
   pointBand: { position: 'absolute', left: 10, top: 18, bottom: 18, width: 3, borderRadius: 2 },
   pointTitle: { fontSize: 13, fontWeight: '800' },

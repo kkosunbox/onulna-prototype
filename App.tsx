@@ -3,21 +3,16 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
-import { NotoSerifKR_700Bold } from '@expo-google-fonts/noto-serif-kr';
 import { AppProvider } from './src/context/AppContext';
 import { PremiumProvider } from './src/context/PremiumContext';
 import RootNavigator from './src/navigation/RootNavigator';
 import { colors, isDark } from './src/theme/colors';
 import { fonts } from './src/theme/typography';
 
-// 웹: 굵기별 웹폰트(Pretendard · Noto Serif KR)를 불러오고, 글꼴을 따로 지정하지 않은 글자는 Pretendard로
+// 웹: 굵기별 웹폰트(Pretendard)를 불러오고, 글꼴을 따로 지정하지 않은 글자는 Pretendard로
 if (Platform.OS === 'web' && typeof document !== 'undefined' && !document.getElementById('onulna-fonts')) {
-  const link = document.createElement('link');
-  link.id = 'onulna-fonts';
-  link.rel = 'stylesheet';
-  link.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&display=swap';
-  document.head.appendChild(link);
   const pre = document.createElement('link');
+  pre.id = 'onulna-fonts';
   pre.rel = 'stylesheet';
   pre.href = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css';
   document.head.appendChild(pre);
@@ -36,7 +31,6 @@ export default function App() {
     'Pretendard-Medium': require('./assets/fonts/Pretendard-Medium.otf'),
     'Pretendard-SemiBold': require('./assets/fonts/Pretendard-SemiBold.otf'),
     'Pretendard-Bold': require('./assets/fonts/Pretendard-Bold.otf'),
-    'NotoSerifKR-Bold': NotoSerifKR_700Bold,
   });
   const app = (
     <SafeAreaProvider>

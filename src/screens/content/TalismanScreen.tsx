@@ -45,14 +45,14 @@ export default function TalismanScreen() {
 }
 
 const s = StyleSheet.create({
-  paper: { width: 260, aspectRatio: 0.62, backgroundColor: PAPER, padding: 12, marginTop: 4, borderRadius: 4, shadowColor: '#281E0A', shadowOpacity: 0.18, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
-  frame: { flex: 1, borderWidth: 2, borderColor: INK, alignItems: 'center', justifyContent: 'center', padding: 16 },
+  paper: { width: 260, aspectRatio: 0.62, backgroundColor: PAPER, padding: 12, marginTop: 4, borderRadius: 22, shadowColor: '#E5707D', shadowOpacity: 0.18, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
+  frame: { flex: 1, borderWidth: 1.5, borderRadius: 14, borderColor: INK, alignItems: 'center', justifyContent: 'center', padding: 16 },
   top: { position: 'absolute', top: 14, fontSize: 11, color: INK, opacity: 0.8 },
-  hanja: { fontFamily: fonts.serif, fontSize: 120, lineHeight: 140, fontWeight: '700', color: INK },
+  hanja: { fontFamily: fonts.serif, fontSize: 120, lineHeight: 140, fontWeight: '800', color: INK },
   line: { width: 40, height: 2, backgroundColor: INK, marginVertical: 14, opacity: 0.7 },
-  mantra: { fontFamily: fonts.serif, fontSize: 15, lineHeight: 24, color: '#3A2410', textAlign: 'center', fontWeight: '600' },
+  mantra: { fontFamily: fonts.serif, fontSize: 15, lineHeight: 23, color: '#3A2410', textAlign: 'center', fontWeight: '700' },
   meta: { fontSize: 11, color: INK, marginTop: 12, opacity: 0.8 },
-  stamp: { position: 'absolute', bottom: 14, right: 14, borderWidth: 1.5, borderColor: INK, paddingHorizontal: 5, paddingVertical: 3, transform: [{ rotate: '-8deg' }] },
+  stamp: { position: 'absolute', bottom: 14, right: 14, borderWidth: 1.5, borderColor: INK, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 3 },
   stampText: { fontFamily: fonts.serif, fontSize: 11, color: INK, fontWeight: '700' },
 });
 

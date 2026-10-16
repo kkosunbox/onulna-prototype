@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTabBack } from '../navigation/tabBack';
 import PressableScale from './PressableScale';
 import Icon from './Icon';
+import PageBg from './PageBg';
 import { colors } from '../theme/colors';
 import { SCREEN_PX, txt } from '../theme/typography';
 
@@ -32,11 +33,11 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
   const bar = (title || showBack || right) && (
     <View style={s.bar}>
       {showBack ? (
-        <PressableScale onPress={goBack} hitSlop={10} style={s.iconBtn} accessibilityLabel="뒤로 가기" scaleTo={0.9}>
-          <Icon name="chevronLeft" size={24} />
+        <PressableScale onPress={goBack} hitSlop={10} style={[s.iconBtn]} accessibilityLabel="뒤로 가기" scaleTo={0.9}>
+          <View style={s.backBtn}><Icon name="chevronLeft" size={20} color={colors.ink} strokeWidth={2.2} /></View>
         </PressableScale>
       ) : <View style={s.iconBtn} />}
-      <Text style={txt.h3} numberOfLines={1}>{title}</Text>
+      <Text style={[txt.h3, { fontWeight: '800' }]} numberOfLines={1}>{title}</Text>
       <View style={s.iconBtn}>{right}</View>
     </View>
   );
@@ -49,6 +50,7 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bg }} edges={['top']}>
+      {bg === colors.cream ? <PageBg /> : null}
       {bar}
       {scroll ? (
         <ScrollView contentContainerStyle={[s.content, contentStyle]} showsVerticalScrollIndicator={false} refreshControl={refreshControl} keyboardShouldPersistTaps="handled">
@@ -66,6 +68,7 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
 const s = StyleSheet.create({
   bar: { height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 },
   iconBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22 },
+  backBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   largeHead: { paddingTop: 2, paddingBottom: 20 },
   content: { paddingHorizontal: SCREEN_PX, paddingBottom: 32 },
   footer: { paddingHorizontal: SCREEN_PX, paddingTop: 8, paddingBottom: 12 },

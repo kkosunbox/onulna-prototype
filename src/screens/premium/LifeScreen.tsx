@@ -92,10 +92,10 @@ export default function LifeScreen() {
           const head = (
             <>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 12, fontWeight: '700', opacity: 0.8, color: cur ? colors.white : colors.purple }}>{x.label} · {x.range}</Text>
-                <Text style={{ fontSize: 18, fontWeight: '800', marginTop: 2, color: cur ? colors.white : colors.purple }}>{x.headline}</Text>
+                <Text style={{ fontSize: 12, fontWeight: '700', opacity: 0.8, color: cur ? colors.ink : colors.purple }}>{x.label} · {x.range}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '800', marginTop: 2, color: cur ? colors.ink : colors.purple }}>{x.headline}</Text>
               </View>
-              <Text style={{ fontSize: 26, fontWeight: '800', color: cur ? colors.white : colors.purple }}>{x.score}</Text>
+              <Text style={{ fontSize: 26, fontWeight: '800', color: cur ? colors.ink : colors.purple }}>{x.score}</Text>
             </>
           );
           return (
@@ -172,8 +172,8 @@ export default function LifeScreen() {
         <>
           <SubHead title="04 · 지금의 대운" caption={`${curD.age}~${curD.age + 9}세 · ${pText(curD.p)}`} />
           <Hero style={{ marginTop: 0 }}>
-            <Text style={{ fontSize: 14.5, lineHeight: 23, color: 'rgba(255,255,255,0.9)' }}>지금은 {tenName(curD.rel)} 대운이에요. {DAEUN_TEXT[curD.rel]} 이 10년 동안 {STAGE_FIELD[curD.rel].work} {STAGE_FIELD[curD.rel].love}</Text>
-            <Text style={{ fontSize: 13, color: colors.moon, marginTop: 12 }}>남은 기간 약 {Math.max(0, curD.age + 10 - now)}년 · 다음 대운 {pText(nextD?.p ?? curD.p)}</Text>
+            <Text style={{ fontSize: 14.5, lineHeight: 23, color: colors.inkSub }}>지금은 {tenName(curD.rel)} 대운이에요. {DAEUN_TEXT[curD.rel]} 이 10년 동안 {STAGE_FIELD[curD.rel].work} {STAGE_FIELD[curD.rel].love}</Text>
+            <Text style={{ fontSize: 13, color: colors.seal, marginTop: 12 }}>남은 기간 약 {Math.max(0, curD.age + 10 - now)}년 · 다음 대운 {pText(nextD?.p ?? curD.p)}</Text>
           </Hero>
         </>
       ) : null}

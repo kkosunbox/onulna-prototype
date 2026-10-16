@@ -31,8 +31,8 @@ export default function FriendCompare({ route, spec }: { route: string; spec: Sh
         </View>
         <Text style={s.vs}>VS</Text>
         <View style={[s.cell, s.me]}>
-          <Text style={[txt.caption, { color: colors.moon }]}>나</Text>
-          <Text style={[s.val, { color: colors.white }, KEEP]} numberOfLines={2}>{spec.short}</Text>
+          <Text style={[txt.caption, { color: colors.seal }]}>나</Text>
+          <Text style={[s.val, KEEP]} numberOfLines={2}>{spec.short}</Text>
         </View>
       </View>
       <PressableScale onPress={async () => { const r = await sendLink(spec); if (r !== 'cancelled') close(); }} style={s.reply} scaleTo={0.97} haptic>
@@ -50,7 +50,7 @@ const s = StyleSheet.create({
   label: { fontSize: 13, fontWeight: '800', color: colors.love },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
   cell: { flex: 1, padding: 12, borderRadius: radius.md, backgroundColor: colors.card, minHeight: 72 },
-  me: { backgroundColor: colors.heroBg },
+  me: { backgroundColor: colors.heroBg, borderWidth: 1, borderColor: colors.seal + '55' },
   val: { fontFamily: fonts.serif, fontSize: 16, lineHeight: 22, fontWeight: '700', color: colors.ink, marginTop: 4 },
   vs: { fontFamily: fonts.serif, fontSize: 14, fontWeight: '700', color: colors.love },
   reply: { marginTop: 12, height: 46, borderRadius: radius.md, backgroundColor: colors.love, alignItems: 'center', justifyContent: 'center' },

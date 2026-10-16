@@ -88,7 +88,7 @@ export default function MyPageScreen() {
               <Text style={s.name}>{user.nickname}</Text>
               <Text style={s.meta}>{MBTI_INFO[user.mbti].nickname} {user.mbti} · {user.bloodType}형</Text>
             </View>
-            <LogoMark size={26} fg={'#F4EDDF'} />
+            <LogoMark size={26} fg={colors.ink} />
           </View>
           {fortune ? (
             <View style={s.todayRow}>
@@ -131,7 +131,7 @@ export default function MyPageScreen() {
             icon="bell"
             label="아침 운세 알림"
             last={!noti.enabled}
-            right={<Switch value={noti.enabled} onValueChange={v => updateNoti({ ...noti, enabled: v })} trackColor={{ true: colors.purpleSoft, false: colors.lineStrong }} thumbColor={colors.white} ios_backgroundColor={colors.lineStrong} />}
+            right={<Switch value={noti.enabled} onValueChange={v => updateNoti({ ...noti, enabled: v })} trackColor={{ true: colors.seal, false: colors.lineStrong }} thumbColor={colors.white} ios_backgroundColor={colors.lineStrong} />}
           />
           {noti.enabled && (
             <View style={s.hours}>
@@ -225,13 +225,13 @@ const s = StyleSheet.create({
   cardWrap: { borderRadius: radius.xl, backgroundColor: colors.heroBg },
   card: { borderRadius: radius.xl, padding: 20 },
   cardTop: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.moon, alignItems: 'center', justifyContent: 'center' },
+  avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
   avatarText: { fontSize: 22, fontWeight: '800', color: colors.purpleDeep },
-  name: { fontSize: 20, fontWeight: '800', color: colors.white, letterSpacing: -0.5 },
-  meta: { fontSize: 13, color: 'rgba(255,255,255,0.72)', marginTop: 2 },
-  todayRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(255,255,255,0.22)' },
-  todayLabel: { fontSize: 13, color: 'rgba(255,255,255,0.72)', fontWeight: '600' },
-  todayScore: { fontFamily: fonts.serif, fontSize: 18, color: colors.moon, fontWeight: '700' },
+  name: { fontSize: 20, fontWeight: '800', color: colors.ink, letterSpacing: -0.5 },
+  meta: { fontSize: 13, color: colors.inkSub, marginTop: 2 },
+  todayRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 14, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
+  todayLabel: { fontSize: 13, color: colors.inkSub, fontWeight: '600' },
+  todayScore: { fontFamily: fonts.serif, fontSize: 18, color: colors.seal, fontWeight: '700' },
   group: { paddingVertical: 2, paddingHorizontal: 16 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 54 },
   border: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },

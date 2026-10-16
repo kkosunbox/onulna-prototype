@@ -9,7 +9,7 @@ interface Props { label: string; sub?: string; selected: boolean; onPress(): voi
 
 export default function OptionChip({ label, sub, selected, onPress, style, compact }: Props) {
   const m = label.match(/^([\u4E00-\u9FFF])\s(.+)$/);
-  const textStyle = [s.label, compact && { fontSize: 14 }, selected && { color: colors.white }];
+  const textStyle = [s.label, compact && { fontSize: 14 }, selected && { color: colors.seal, fontWeight: '700' as const }];
   return (
     <PressableScale
       onPress={onPress}
@@ -20,19 +20,19 @@ export default function OptionChip({ label, sub, selected, onPress, style, compa
     >
       {m ? (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-          <Seal ch={m[1]} color={selected ? colors.white : colors.inkSub} />
+          <Seal ch={m[1]} color={selected ? colors.seal : colors.inkSub} />
           <Text style={textStyle}>{m[2]}</Text>
         </View>
       ) : <Text style={textStyle}>{label}</Text>}
-      {sub ? <Text style={[s.sub, selected && { color: 'rgba(255,255,255,0.72)' }]}>{sub}</Text> : null}
+      {sub ? <Text style={[s.sub, selected && { color: colors.seal }]}>{sub}</Text> : null}
     </PressableScale>
   );
 }
 
 const s = StyleSheet.create({
-  base: { minHeight: 52, paddingHorizontal: 6, paddingVertical: 6, borderRadius: radius.sm, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
+  base: { minHeight: 52, paddingHorizontal: 6, paddingVertical: 6, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
   compact: { minHeight: 44 },
-  sel: { backgroundColor: colors.navy, borderColor: colors.navy },
+  sel: { backgroundColor: colors.accentBg, borderColor: colors.seal },
   label: { fontSize: 16, fontWeight: '600', color: colors.ink, letterSpacing: -0.2 },
   sub: { fontSize: 12, fontWeight: '500', color: colors.inkMute, marginTop: 1 },
 });

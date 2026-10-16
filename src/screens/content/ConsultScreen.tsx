@@ -66,7 +66,7 @@ function Compose() {
       <Hero>
         <Text style={heroTxt.eyebrow}>익명 · 이 기기에만 저장돼요</Text>
         <Text style={[heroTxt.summ, { fontSize: 21, lineHeight: 30 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
-        <Text style={{ fontSize: 13, lineHeight: 20, color: 'rgba(255,255,255,0.72)', marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
+        <Text style={{ fontSize: 13, lineHeight: 20, color: colors.inkSub, marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
       </Hero>
 
       <SubHead title="어떤 고민인가요?" />
@@ -75,7 +75,7 @@ function Compose() {
           const on = cat === c.key;
           return (
             <PressableScale key={c.key} onPress={() => { setCat(c.key); setPicked(true); }} style={[s.chip, on && s.chipOn]} scaleTo={0.95} accessibilityState={{ selected: on }}>
-              <Text style={[s.chipH, on && { color: colors.moon }]}>{c.hanja}</Text>
+              <Text style={[s.chipH, on && { color: colors.seal }]}>{c.hanja}</Text>
               <Text style={[s.chipT, on && { color: colors.white }]}>{c.label}</Text>
             </PressableScale>
           );

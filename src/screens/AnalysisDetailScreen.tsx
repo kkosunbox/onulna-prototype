@@ -159,7 +159,7 @@ function BloodFigure({ b, tone }: { b: BloodType; tone: string }) {
       <View style={s.bloodRow}>
         {(['A', 'B', 'O', 'AB'] as BloodType[]).map(x => (
           <View key={x} style={[s.blood, x === b ? { backgroundColor: tone, borderColor: tone } : null]}>
-            <Text style={[s.bloodT, x === b && { color: '#FBF4E8' }]}>{x}</Text>
+            <Text style={[s.bloodT, x === b && { color: colors.white }]}>{x}</Text>
             <Text style={[s.bloodS, x === b && { color: 'rgba(251,244,232,0.8)' }]}>형</Text>
           </View>
         ))}

@@ -31,7 +31,7 @@ export default function MbtiMatchScreen() {
       <FriendCompare route="MbtiMatch" spec={mbtiSpec(u)} />
       {/* 공유 카드 */}
       <View ref={card} collapsable={false} style={s.card}>
-        <View style={s.brand}><BrandMark light size={15} /></View>
+        <View style={s.brand}><BrandMark size={15} /></View>
         <Text style={s.eyebrow}>{u.mbti} {u.nickname}님의 찰떡 MBTI는</Text>
         <Text style={s.big}>{top.type}</Text>
         <Text style={s.nick}>{top.nickname} · 궁합 {top.score}점</Text>
@@ -57,7 +57,7 @@ export default function MbtiMatchScreen() {
           <Card key={b.type}>
             <View style={s.between}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                <View style={[s.medal, i === 0 && { backgroundColor: colors.navy }]}><Text style={[s.medalText, i === 0 && { color: colors.moon }]}>{i + 1}</Text></View>
+                <View style={[s.medal, i === 0 && { backgroundColor: colors.navy }]}><Text style={[s.medalText, i === 0 && { color: colors.seal }]}>{i + 1}</Text></View>
                 <View>
                   <Text style={{ fontFamily: fonts.serif, fontSize: 19, fontWeight: '600', color: colors.ink }}>{b.type}</Text>
                   <Text style={txt.caption}>{b.nickname}</Text>
@@ -104,15 +104,15 @@ export default function MbtiMatchScreen() {
 const s = StyleSheet.create({
   card: { backgroundColor: colors.heroBg, borderRadius: radius.xl, padding: 22, alignItems: 'center', marginTop: 4 },
   brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
-  brandText: { fontFamily: fonts.serif, color: colors.white, fontSize: 14, fontWeight: '600' },
-  eyebrow: { color: 'rgba(255,255,255,0.7)', fontSize: 13, marginTop: 18 },
-  big: { fontFamily: fonts.serif, color: colors.moon, fontSize: 56, fontWeight: '600', letterSpacing: 1, marginTop: 4 },
-  nick: { color: colors.white, fontSize: 15, fontWeight: '600' },
-  reason: { color: 'rgba(255,255,255,0.8)', fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 10 },
+  brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 14, fontWeight: '600' },
+  eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
+  big: { fontFamily: fonts.serif, color: colors.seal, fontSize: 56, fontWeight: '600', letterSpacing: 1, marginTop: 4 },
+  nick: { color: colors.ink, fontSize: 15, fontWeight: '600' },
+  reason: { color: colors.inkSub, fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 10 },
   rankRow: { flexDirection: 'row', gap: 8, marginTop: 18, alignSelf: 'stretch' },
-  rankCell: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 10, borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)', backgroundColor: 'rgba(255,255,255,0.06)' },
-  rankNo: { color: 'rgba(255,255,255,0.6)', fontSize: 11, fontWeight: '600' },
-  rankType: { fontFamily: fonts.serif, color: colors.white, fontSize: 16, fontWeight: '600', marginTop: 2 },
+  rankCell: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 10, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card },
+  rankNo: { color: colors.inkMute, fontSize: 11, fontWeight: '600' },
+  rankType: { fontFamily: fonts.serif, color: colors.ink, fontSize: 16, fontWeight: '600', marginTop: 2 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   medal: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   medalText: { fontSize: 14, fontWeight: '800', color: colors.purpleSoft },

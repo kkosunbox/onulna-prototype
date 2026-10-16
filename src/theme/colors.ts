@@ -1,7 +1,9 @@
 /**
- * 책력(冊曆) 디자인 시스템 — 한지 바탕 · 먹색 남색 · 낙관(도장) 붉은색.
+ * 파스텔 디자인 시스템 — 흰 바탕 위 살구·하늘·분홍 그라데이션 · 흰 카드(반경 22) · 옅은 선 ·
+ * 파스텔 아이콘 칸 · 코랄 포인트 · 검정 알약 버튼 · 굵은 고딕.
  * 화면 모드는 마이 > 화면 모드(시스템·라이트·다크)를 따른다. 앱 시작 시 결정(index.ts가 먼저 읽음).
- * - purple: 글자·강조용 (다크에서 밝아짐)   - navy: 채움용 (버튼·선택 상태, 다크에서도 그대로)
+ * - purple: 글자·강조용 (다크에서 밝아짐)   - navy: 채움용 (버튼·선택 상태)
+ * - seal: 코랄 포인트(눈썹 글자 · 강조 숫자 · 배지)
  */
 import { Appearance } from 'react-native';
 import { readThemePrefSync } from './themePref';
@@ -10,67 +12,72 @@ const pref = readThemePrefSync();
 export const isDark = pref === 'dark' ? true : pref === 'light' ? false : Appearance.getColorScheme() === 'dark';
 
 const light = {
-  purple: '#22293F',
-  purpleDeep: '#161A27',
-  purpleSoft: '#56648A',
-  lavender: '#E3DFD5',
-  lavenderSoft: '#ECE7DC',
-  cream: '#F3EEE4', // 화면 바탕
-  card: '#FFFDF8',
-  frame: '#E2DCD0', // 데스크톱 웹에서 앱 바깥
-  ink: '#1C1A17',
-  inkSub: '#58524A',
-  inkMute: '#736B5F',
-  line: '#E8E1D4',
-  lineStrong: '#DCD3C3',
-  love: '#A84A50', loveBg: '#F3E4E0',
-  money: '#93702A', moneyBg: '#F1E8D4',
-  work: '#33507F', workBg: '#E3E8EF',
-  relation: '#3F7258', relationBg: '#E2EBE3',
-  saju: '#2D3A5C', sajuBg: '#E4E6EC',
-  thai: '#A06428', thaiBg: '#F2E6D6',
-  mbti: '#3B6E68', mbtiBg: '#DFEAE7',
-  blood: '#A23E48', bloodBg: '#F3E2E1',
-  okBg: '#E2EBE3', careBg: '#F2E6D6',
-  badge: '#7E5C1A', badgeBg: '#F2E8D2',
-  danger: '#B5432E',
-  success: '#3F7258',
+  purple: '#1A1A1A',
+  purpleDeep: '#000000',
+  purpleSoft: '#6A5BA8',
+  lavender: '#EEEAF7',
+  lavenderSoft: '#F5F3F2',
+  cream: '#FFFCFA', // 화면 바탕 (위에 그라데이션)
+  card: '#FFFFFF',
+  frame: '#F1ECEA', // 데스크톱 웹에서 앱 바깥
+  ink: '#1A1A1A',
+  inkSub: '#3E3839',
+  inkMute: '#7B706F',
+  line: '#EEEAE9',
+  lineStrong: '#E3DEDC',
+  love: '#D9606E', loveBg: '#FDEEF0',
+  money: '#C27512', moneyBg: '#FFF3E2',
+  work: '#2A70D2', workBg: '#EAF1FB',
+  relation: '#1E8C92', relationBg: '#E7F5F6',
+  saju: '#5B4B94', sajuBg: '#F1EEF9',
+  thai: '#C27512', thaiBg: '#FFF3E2',
+  mbti: '#1E8C92', mbtiBg: '#E7F5F6',
+  blood: '#D9606E', bloodBg: '#FDEEF0',
+  okBg: '#E7F5F6', careBg: '#FFF3E2',
+  badge: '#B4690E', badgeBg: '#FFF3E2',
+  danger: '#D9485A',
+  success: '#1E8C92',
+  accent: '#E5707D', accentBg: '#FDEEF0',
+  glowA: '#FFF1D8', glowB: '#E8F1FF', glowC: '#FFE0E6',
 };
 
 const dark: typeof light = {
   ...light,
-  purple: '#C9D0E6',
-  purpleSoft: '#9AA6C7',
-  lavender: '#2D3140',
-  lavenderSoft: '#24272F',
-  cream: '#151411',
-  card: '#1E1C18',
-  frame: '#0D0C0A',
-  ink: '#EDE7DB',
-  inkSub: '#BDB4A4',
-  inkMute: '#9A9283',
-  line: '#2B2823',
-  lineStrong: '#38342D',
-  love: '#D58A8C', loveBg: '#35221F',
-  money: '#CDA559', moneyBg: '#332B1A',
-  work: '#8FA6CF', workBg: '#1E2533',
-  relation: '#86B596', relationBg: '#1D2B23',
-  saju: '#9DAAD0', sajuBg: '#232836',
-  thai: '#D59A5C', thaiBg: '#33281B',
-  mbti: '#7FB3AC', mbtiBg: '#1B2B29',
-  blood: '#D7878D', bloodBg: '#35201F',
-  okBg: '#1D2B23', careBg: '#33281B',
-  badge: '#EAC56B', badgeBg: '#3A2E14',
-  success: '#86B596',
+  purple: '#F3F0F0',
+  purpleSoft: '#B4A8E6',
+  lavender: '#2A2633',
+  lavenderSoft: '#242126',
+  cream: '#121013',
+  card: '#1C1A1E',
+  frame: '#09080A',
+  ink: '#F3F0F0',
+  inkSub: '#CDC6C6',
+  inkMute: '#9D9393',
+  line: '#2A272C',
+  lineStrong: '#36323A',
+  love: '#F08A96', loveBg: '#3A2328',
+  money: '#F2B25C', moneyBg: '#3A2D1C',
+  work: '#7EAAF0', workBg: '#1D2638',
+  relation: '#6FCBD0', relationBg: '#183033',
+  saju: '#B4A8E6', sajuBg: '#2A2538',
+  thai: '#F2B25C', thaiBg: '#3A2D1C',
+  mbti: '#6FCBD0', mbtiBg: '#183033',
+  blood: '#F08A96', bloodBg: '#3A2328',
+  okBg: '#183033', careBg: '#3A2D1C',
+  badge: '#F2B25C', badgeBg: '#3A2D1C',
+  danger: '#F07884',
+  success: '#6FCBD0',
+  accent: '#F08A96', accentBg: '#3A2328',
+  glowA: '#2A2118', glowB: '#18202E', glowC: '#2C1A20',
 };
 
 export const colors = {
   ...(isDark ? dark : light),
   // 모드와 무관한 고정색
-  navy: '#22293F',
-  heroBg: '#1F2433',
-  moon: '#D9B872',
-  seal: '#B5432E',
+  navy: isDark ? '#E5707D' : '#1A1A1A', // 채움(버튼 · 선택) — 위 글자는 항상 흰색
+  heroBg: isDark ? '#221E29' : '#F5F0FA', // 히어로 카드 바탕(옅은 라벤더) — 위 글자는 ink
+  moon: '#FFC98A',
+  seal: isDark ? '#F08A96' : '#E5707D',
   white: '#FFFFFF',
 };
 
@@ -93,9 +100,10 @@ export const analysisTheme: Record<SourceKey, { label: string; sub: string; emoj
   blood: { label: '혈액형', sub: '기질 한마디', emoji: '血', color: colors.blood, bg: colors.bloodBg },
 };
 
-/** 히어로는 그라디언트 없이 단색 먹색 */
+/** 화면 바탕 그라데이션(살구 → 하늘 → 분홍)과 카드용 파스텔 */
 export const gradients = {
-  hero: [colors.heroBg, colors.heroBg, colors.heroBg] as const,
-  night: ['#1F2433', '#12151F'] as const,
+  hero: isDark ? (['#2A2333', '#1F2533', '#2C1F27'] as const) : (['#FFE9EC', '#F1ECFB', '#E6F0FD'] as const),
+  night: ['#1F1B24', '#141216'] as const,
   soft: [colors.lavenderSoft, colors.lavenderSoft] as const,
+  peach: isDark ? (['#2E2419', '#1C1A1E'] as const) : (['#FFF1D8', '#FFFFFF'] as const),
 };
