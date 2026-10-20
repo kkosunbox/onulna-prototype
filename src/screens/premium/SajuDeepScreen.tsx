@@ -220,7 +220,7 @@ export default function SajuDeepScreen() {
       <SubHead title="12 · 학업·자기계발" />
       <Card>{study.map((t, i) => <Para key={i} mt={i ? 10 : 0}>{t}</Para>)}</Card>
 
-      <SubHead title="13 · 4가지 관점 교차 분석" caption="사주 · 태국 점성술 · MBTI · 혈액형이 같은 말을 할 때" />
+      <SubHead title="13 · 4가지 관점 교차 분석" caption="사주 · 점성술(서양·인도·태국) · MBTI · 혈액형이 같은 말을 할 때" />
       <Card style={{ gap: 18 }}>
         {ax.map(a => {
           const { pos, neg, verdict } = axisVerdict(a);

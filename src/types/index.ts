@@ -40,6 +40,23 @@ export interface AnalysisResult {
   description: string; // 2~3문장 해석
   tags: KeywordTag[]; // 오늘 강하게 작용하는 키워드
   scoreBias: { love: number; money: number; work: number; relationship: number }; // -10 ~ +10
+  astro?: AstroReport; // 점성술(서양·인도·태국) 상세 지표
+}
+
+/** 점성술 한 갈래의 오늘 판정 */
+export interface AstroSystem {
+  key: 'western' | 'vedic' | 'thai';
+  name: string; // 서양 점성술
+  basis: string; // 열대 황도대 · 태양과 달
+  verdict: 'good' | 'neutral' | 'care';
+  rows: [string, string][]; // 참고 지표
+  reading: string; // 오늘의 한 줄
+}
+export interface AstroReport {
+  systems: AstroSystem[];
+  goodCount: number;
+  careCount: number;
+  approx: boolean; // 출생 시각을 몰라 정오로 계산
 }
 
 export interface CombinedFortuneInput {

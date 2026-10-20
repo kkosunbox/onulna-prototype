@@ -15,16 +15,17 @@ import { ITEMS } from '../services/premium/catalog';
 import { BRANCHES, ELEMENT_INFO, Element, STEMS } from '../data/sajuData';
 import { THAI_DAYS, ThaiDay, WEEKDAY_TO_THAI } from '../data/thaiData';
 import { buildChart, dayPillar, elementCounts } from '../services/fortune/sajuService';
-import { birthThaiDay } from '../services/fortune/thaiAstrologyService';
+import { birthThaiDay, verdictKo } from '../services/fortune/thaiAstrologyService';
+import Ico from '../components/Ico';
 import { AXES } from '../services/fortune/mbtiService';
 import { MBTI_INFO } from '../data/mbtiData';
-import { BloodType, User } from '../types';
+import { AstroReport, BloodType, User } from '../types';
 import { weekdayOf } from '../utils/date';
 
-const KICKER = { saju: '四柱 · 사주', thai: '七曜 · 태국 점성술', mbti: '性向 · MBTI', blood: '血型 · 혈액형' } as const;
+const KICKER = { saju: '四柱 · 사주', thai: '星占 · 점성술', mbti: '性向 · MBTI', blood: '血型 · 혈액형' } as const;
 const NOTE: Record<string, string> = {
   saju: '양력 기준 근사 만세력으로 계산해요. 정밀 계산은 업데이트 예정이에요.',
-  thai: '태어난 요일의 수호 행성과 오늘 행성의 관계로 풀어요.',
+  thai: '세 점성술을 각자 계산해 나란히 놓은 참고 지표예요. 해·달 위치는 천문 근사식(오차 약 0.3°)으로 계산하고, 태어난 장소가 필요한 상승궁·하우스는 넣지 않았어요.',
   mbti: 'MBTI는 예측이 아닌 성향 분석이에요.',
   blood: '혈액형 성격론은 재미를 위한 콘텐츠예요.',
 };
@@ -45,12 +46,16 @@ export default function AnalysisDetailScreen() {
       </AlmanacHero>
 
       {a.source === 'saju' ? <SajuFigure u={user} today={today} tone={t.color} /> : null}
-      {a.source === 'thai' ? <ThaiFigure u={user} today={today} tone={t.color} /> : null}
+      {a.source === 'thai' && a.astro ? <AstroFigure report={a.astro} u={user} today={today} tone={t.color} /> : null}
       {a.source === 'mbti' ? <MbtiFigure u={user} focus={a.details[2]?.value ?? ''} tone={t.color} /> : null}
       {a.source === 'blood' ? <BloodFigure b={user.bloodType} tone={t.color} /> : null}
 
-      <SectionHeader title="분석 내용" />
-      <Ledger rows={a.details.map(d => [d.label, d.value] as [string, string])} tone={t.color} />
+      {a.astro ? null : (
+        <>
+          <SectionHeader title="분석 내용" />
+          <Ledger rows={a.details.map(d => [d.label, d.value] as [string, string])} tone={t.color} />
+        </>
+      )}
 
       {a.source === 'saju' ? (
         <LockCard mt={12} title="상세 사주 해석 보기" desc="원국표 · 오행 분포 · 나의 본성 · 올해와 이달의 흐름" item={ITEMS.sajuDeep()} onPress={() => nav.navigate('SajuDeep')} />
@@ -99,29 +104,72 @@ function SajuFigure({ u, today, tone }: { u: User; today: string; tone: string }
   );
 }
 
-/* ---------- 태국 점성술: 일주일 띠 ---------- */
+/* ---------- 점성술: 세 갈래 지표 + 일치도 ---------- */
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
-function ThaiFigure({ u, today, tone }: { u: User; today: string; tone: string }) {
+const V_COLOR = { good: colors.success, neutral: colors.inkMute, care: colors.danger } as const;
+const V_BG = { good: colors.okBg, neutral: colors.lavenderSoft, care: colors.loveBg } as const;
+const SYS_CH = { western: '西', vedic: '印', thai: '泰' } as const;
+
+function AstroFigure({ report, u, today, tone }: { report: AstroReport; u: User; today: string; tone: string }) {
+  const neutral = 3 - report.goodCount - report.careCount;
+  return (
+    <>
+      <Figure title="세 점성술 일치도" caption={`좋음 ${report.goodCount} · 보통 ${neutral} · 주의 ${report.careCount}`}>
+        <View style={s.agree}>
+          {report.systems.map(x => (
+            <View key={x.key} style={[s.agreeCell, { backgroundColor: V_BG[x.verdict] }]}>
+              <Text style={s.agreeName}>{x.name.replace(' 점성술', '')}</Text>
+              <Text style={[s.agreeV, { color: V_COLOR[x.verdict] }]}>{verdictKo(x.verdict)}</Text>
+            </View>
+          ))}
+        </View>
+        <Text style={[s.figNote, { borderLeftColor: tone }]}>
+          {report.goodCount >= 2 ? '두 곳 이상이 같은 방향을 가리키면 그날의 흐름으로 봐도 좋아요.' : report.careCount >= 2 ? '주의 신호가 겹친 날이에요. 큰 결정은 하루 미뤄도 괜찮아요.' : '신호가 엇갈리는 날은 한쪽에 기대기보다 균형을 잡는 게 좋아요.'}
+        </Text>
+      </Figure>
+
+      {report.systems.map(x => (
+        <Figure key={x.key} title={x.name} caption={x.basis}>
+          <View style={s.sysHead}>
+            <Ico ch={SYS_CH[x.key]} size={40} color={tone} />
+            <Text style={[s.sysReading, { flex: 1 }]}>{x.reading}</Text>
+            <View style={[s.vPill, { backgroundColor: V_BG[x.verdict] }]}><Text style={[s.vText, { color: V_COLOR[x.verdict] }]}>{verdictKo(x.verdict)}</Text></View>
+          </View>
+          <View style={s.sysRows}>
+            {x.rows.map(([k, v]) => (
+              <View key={k} style={s.sysRow}>
+                <Text style={s.sysK}>{k}</Text>
+                <Text style={s.sysV}>{v}</Text>
+              </View>
+            ))}
+          </View>
+          {x.key === 'thai' ? <ThaiWeek u={u} today={today} tone={tone} /> : null}
+        </Figure>
+      ))}
+      {report.approx ? <Text style={s.approxNote}>출생 시각을 몰라 정오 기준으로 계산했어요. 달은 하루에 약 13° 움직여서 탄생 낙샤트라와 달 라시가 한 칸 달라질 수 있어요. 마이에서 출생 시각을 넣으면 더 정확해져요.</Text> : null}
+    </>
+  );
+}
+
+/** 태국: 일곱 요일의 행성 띠 */
+function ThaiWeek({ u, today, tone }: { u: User; today: string; tone: string }) {
   const mine = birthThaiDay(u.birthDate, u.birthTime);
   const mineIdx = WEEKDAY_TO_THAI.indexOf(mine === 'wedNight' ? 'wedDay' : mine);
   const todayIdx = weekdayOf(today);
   return (
-    <Figure title="일곱 요일의 행성" caption="● 태어난 요일 · ▬ 오늘">
-      <View style={s.week}>
-        {WEEKDAY_TO_THAI.map((k: ThaiDay, i) => {
-          const d = THAI_DAYS[k]; const isMine = i === mineIdx; const isToday = i === todayIdx;
-          return (
-            <View key={k} style={s.day}>
-              <View style={[s.dot, { backgroundColor: isMine ? d.hex : 'transparent', borderColor: d.hex }, isToday && s.todayRing]} />
-              <Text style={[s.dayL, (isMine || isToday) && { color: colors.ink, fontWeight: '700' }]}>{WEEK[i]}</Text>
-              <Text style={s.planet}>{d.planetKo}</Text>
-              {isToday ? <View style={[s.todayMark, { backgroundColor: tone }]} /> : <View style={s.todayMark} />}
-            </View>
-          );
-        })}
-      </View>
-      <Text style={[s.figNote, { borderLeftColor: tone }]}>{THAI_DAYS[mine].label}생 · 수호 행성 {THAI_DAYS[mine].planetKo} · 행운색 {THAI_DAYS[mine].color}</Text>
-    </Figure>
+    <View style={[s.week, { marginTop: 16 }]}>
+      {WEEKDAY_TO_THAI.map((k: ThaiDay, i) => {
+        const d = THAI_DAYS[k]; const isMine = i === mineIdx; const isToday = i === todayIdx;
+        return (
+          <View key={k} style={s.day}>
+            <View style={[s.dot, { backgroundColor: isMine ? d.hex : 'transparent', borderColor: d.hex }, isToday && s.todayRing]} />
+            <Text style={[s.dayL, (isMine || isToday) && { color: colors.ink, fontWeight: '700' }]}>{WEEK[i]}</Text>
+            <Text style={s.planet}>{d.planetKo}</Text>
+            {isToday ? <View style={[s.todayMark, { backgroundColor: tone }]} /> : <View style={s.todayMark} />}
+          </View>
+        );
+      })}
+    </View>
   );
 }
 
@@ -188,6 +236,19 @@ const s = StyleSheet.create({
   dayL: { fontSize: 13, fontWeight: '600', color: colors.inkSub },
   planet: { fontSize: 13, color: colors.inkMute },
   todayMark: { width: 14, height: 3, borderRadius: 2 },
+  agree: { flexDirection: 'row', gap: 8 },
+  agreeCell: { flex: 1, alignItems: 'center', paddingVertical: 14, borderRadius: radius.md, gap: 2 },
+  agreeName: { fontSize: 13, fontWeight: '600', color: colors.inkSub },
+  agreeV: { fontSize: 18, lineHeight: 26, fontWeight: '700' },
+  sysHead: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  sysReading: { fontSize: 15, lineHeight: 23, color: colors.ink },
+  vPill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
+  vText: { fontSize: 13, fontWeight: '700' },
+  sysRows: { marginTop: 16, borderTopWidth: 1, borderTopColor: colors.line },
+  sysRow: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: colors.line },
+  sysK: { fontSize: 13, fontWeight: '600', color: colors.inkMute },
+  sysV: { fontSize: 15, lineHeight: 23, fontWeight: '600', color: colors.ink, marginTop: 2 },
+  approxNote: { fontSize: 13, lineHeight: 19, color: colors.inkMute, marginTop: 12 },
   figNote: { marginTop: 16, paddingLeft: 10, borderLeftWidth: 2, fontSize: 13, lineHeight: 19, color: colors.inkSub },
   axisHead: { flexDirection: 'row', justifyContent: 'space-between' },
   axisName: { fontSize: 13, fontWeight: '700', color: colors.inkMute },

@@ -20,7 +20,8 @@ export function analyzeAll(user: User, date: string) {
 export async function getDailyFortune(user: User, date: string, { force = false } = {}): Promise<DailyFortune> {
   if (!force) {
     const cached = await storage.getDailyFortune(user.id, date);
-    if (cached) return cached;
+    // 점성술 지표(astro)가 없는 예전 저장본은 새로 계산한다
+    if (cached && cached.analyses.thai.astro) return cached;
   }
   const analyses = analyzeAll(user, date);
   const engine = getFortuneEngine();

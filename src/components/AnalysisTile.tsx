@@ -7,7 +7,7 @@ import { analysisTheme, colors } from '../theme/colors';
 import { fonts, radius, shadow, sansW } from '../theme/typography';
 import { KEYWORDS } from '../data/keywords';
 
-const KICKER = { saju: '四柱', thai: '七曜', mbti: '性向', blood: '血型' } as const;
+const KICKER = { saju: '四柱', thai: '星占', mbti: '性向', blood: '血型' } as const;
 const KEEP = (Platform.OS === 'web' ? { wordBreak: 'keep-all' } : {}) as object;
 
 /**

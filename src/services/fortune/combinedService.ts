@@ -96,7 +96,7 @@ export function combineRuleBased(input: CombinedFortuneInput): CombinedFortune {
   const k0 = KEYWORDS[top[0]].label;
 
   const combinedStory =
-    `사주에서는 '${saju.headline}', 태국 점성술에서는 '${thai.headline}'이라는 흐름이 보여요. ` +
+    `사주에서는 '${saju.headline}', 점성술(서양·인도·태국)에서는 '${thai.headline}'이라는 흐름이 보여요. ` +
     `MBTI로 보면 '${mbti.headline}'이고, 혈액형 관점에서는 "${blood.headline}"라는 조언이 나왔어요. ` +
     (common.length
       ? `네 가지 관점 중 여러 곳에서 공통으로 '${common.map(t => KEYWORDS[t].label).join("', '")}'이(가) 겹쳐요. `

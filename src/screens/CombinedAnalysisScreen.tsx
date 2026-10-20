@@ -59,7 +59,7 @@ export default function CombinedAnalysisScreen() {
       <ActionTabs good={f.goodActions} avoid={f.avoidActions} />
 
       <Text style={[txt.caption, { marginTop: 16, textAlign: 'center' }]}>
-        사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽은 풀이예요
+        사주 · 점성술(서양·인도·태국) · MBTI · 혈액형을 겹쳐 읽은 풀이예요
       </Text>
       <Disclaimer compact />
     </Screen>

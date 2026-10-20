@@ -44,7 +44,7 @@ export function RepTOC({ O, owned }: { O: Outline; owned: boolean }) {
           <Text style={{ fontSize: 15, fontWeight: '600', color: colors.ink, flex: 1 }}>{x[0]}</Text>
         </View>
       ))}
-      <Text style={s.tocFoot}>사주 · 태국 점성술 · MBTI · 혈액형을 하나의 이야기로 엮은 맞춤 풀이예요{owned ? '' : ' · 구매 후 바로 작성돼요'}</Text>
+      <Text style={s.tocFoot}>사주 · 점성술(서양·인도·태국) · MBTI · 혈액형을 하나의 이야기로 엮은 맞춤 풀이예요{owned ? '' : ' · 구매 후 바로 작성돼요'}</Text>
     </View>
   );
 }
