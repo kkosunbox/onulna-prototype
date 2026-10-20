@@ -43,3 +43,14 @@ export function ayanamsa(jd: number): number {
 
 export const signOf = (lon: number) => Math.floor(norm(lon) / 30);
 export const nakshatraOf = (siderealLon: number) => Math.floor(norm(siderealLon) / (360 / 27));
+
+/** 목성의 지구 중심 황경 근사(평균 궤도요소 + 중심차, 오차 1~2°) — 1년 단위 흐름용 */
+export function jupiterLongitude(jd: number): number {
+  const d = jd - 2451545.0;
+  const L = 34.40438 + 0.08308676 * d;
+  const M = rad(L - 14.72847);
+  const lj = rad(L + 5.555 * Math.sin(M) + 0.168 * Math.sin(2 * M));
+  const rj = 5.2026 * (1 - 0.0484 * Math.cos(M));
+  const le = rad(sunLongitude(jd) + 180);
+  return norm((Math.atan2(rj * Math.sin(lj) - Math.sin(le), rj * Math.cos(lj) - Math.cos(le)) * 180) / Math.PI);
+}

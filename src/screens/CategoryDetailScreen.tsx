@@ -10,6 +10,8 @@ import Stars from '../components/Stars';
 import Disclaimer from '../components/Disclaimer';
 import Icon from '../components/Icon';
 import { useApp } from '../context/AppContext';
+import LensList from '../components/LensList';
+import { dayInsight } from '../services/fortune/insightService';
 import { AlmanacHero, Figure, Ledger } from '../components/Almanac';
 import { ACTION_NOTE } from '../data/keywords';
 import { RootStackParamList } from '../navigation/types';
@@ -20,8 +22,8 @@ const KICKER = { love: '緣分 · 연애운', money: '財物 · 재물운', work
 
 export default function CategoryDetailScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'CategoryDetail'>>();
-  const { fortune, today } = useApp();
-  if (!fortune) return null;
+  const { fortune, today, user } = useApp();
+  if (!fortune || !user) return null;
   const t = categoryTheme[params.category];
   const f = fortune.combined;
   const score = f[params.category];
@@ -60,6 +62,9 @@ export default function CategoryDetailScreen() {
           })}
         </View>
       </Figure>
+
+      <SectionHeader title={`네 관점이 본 오늘의 ${t.label}`} caption="사주 · 점성술 · MBTI · 혈액형이 각자 내린 판단" />
+      {(() => { const ins = dayInsight(user, today, fortune.analyses, params.category); return <LensList lenses={ins.lenses} verdict={ins.verdict} />; })()}
 
       <SectionHeader title="오늘의 팁" />
       <Ledger tone={t.color} rows={[

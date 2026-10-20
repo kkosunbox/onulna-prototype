@@ -8,6 +8,7 @@ import { ACTIONS, KEYWORDS } from '../../data/keywords';
 import { ELEMENT_INFO } from '../../data/sajuData';
 import { getWeakElement } from './sajuService';
 import { clamp, pick, pickMany, seededRandom } from '../../utils/seed';
+import { dayStory } from './insightService';
 
 type Cat = 'love' | 'money' | 'work' | 'relationship';
 const CATS: Cat[] = ['love', 'money', 'work', 'relationship'];
@@ -91,17 +92,9 @@ export function combineRuleBased(input: CombinedFortuneInput): CombinedFortune {
 
   // 5) 행운 요소: 사주에서 부족한 오행의 색
   const weak = ELEMENT_INFO[getWeakElement(user)];
-  const best = CATS.reduce((a, b) => (scores[a] >= scores[b] ? a : b));
-  const bestLabel = { love: '연애운', money: '재물운', work: '직장운', relationship: '인간관계운' }[best];
-  const k0 = KEYWORDS[top[0]].label;
 
-  const combinedStory =
-    `사주에서는 '${saju.headline}', 점성술(서양·인도·태국)에서는 '${thai.headline}'이라는 흐름이 보여요. ` +
-    `MBTI로 보면 '${mbti.headline}'이고, 혈액형 관점에서는 "${blood.headline}"라는 조언이 나왔어요. ` +
-    (common.length
-      ? `네 가지 관점 중 여러 곳에서 공통으로 '${common.map(t => KEYWORDS[t].label).join("', '")}'이(가) 겹쳐요. `
-      : `관점마다 결은 조금씩 다르지만 '${k0}'이(가) 가장 또렷하게 나타나요. `) +
-    `오늘은 ${bestLabel}이 가장 강하니, 그 방향으로 한 걸음 먼저 움직여 보세요.`;
+  // 네 관점의 근거를 단락으로 엮은 이야기 (services/fortune/insightService)
+  const combinedStory = dayStory(user, date, { saju, thai, mbti, blood }, scores, common.map(t => KEYWORDS[t].label));
 
   return {
     totalScore,

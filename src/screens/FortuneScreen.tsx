@@ -13,6 +13,8 @@ import { ITEMS } from '../services/premium/catalog';
 import { parseISO } from '../utils/date';
 import { useApp } from '../context/AppContext';
 import { getPeriodFortune } from '../services/fortune/periodFortuneService';
+import { dayLenses, lensVerdict, periodLenses } from '../services/fortune/insightService';
+import LensList from '../components/LensList';
 import { Period } from '../types';
 import { CategoryKey, colors } from '../theme/colors';
 import { radius, txt } from '../theme/typography';
@@ -39,9 +41,9 @@ function FlowBar({ label, score, best, index }: { label: string; score: number; 
   }, [target, reduced]);
   return (
     <View style={s.col}>
-      <Text style={[s.colScore, best && { color: colors.purple }]}>{score}</Text>
-      <Animated.View style={[s.colBar, { height: h, backgroundColor: best ? colors.navy : colors.lavender }]} />
-      <Text style={[s.colLabel, best && { color: colors.purple, fontWeight: '700' }]}>{label}</Text>
+      <Text style={[s.colScore, best && { color: colors.seal }]}>{score}</Text>
+      <Animated.View style={[s.colBar, { height: h, backgroundColor: best ? colors.seal : colors.accentBg }]} />
+      <Text style={[s.colLabel, best && { color: colors.seal, fontWeight: '700' }]}>{label}</Text>
     </View>
   );
 }
@@ -94,6 +96,12 @@ export default function FortuneScreen() {
           ) : null}
         </View>
       </Card>
+
+      <SectionHeader title={`네 관점으로 본 ${label}`} caption="사주 · 점성술(서양·인도·태국) · MBTI · 혈액형" />
+      {(() => {
+        const lenses = tab === 'daily' ? dayLenses(user, today, fortune.analyses) : periodLenses(user, today, tab);
+        return <LensList lenses={lenses} verdict={lensVerdict(lenses, `${label}의 흐름`, tab === 'daily' ? '오늘은' : tab === 'weekly' ? '이번 주는' : tab === 'monthly' ? '이달은' : '올해는')} />;
+      })()}
 
       <SectionHeader title={`${label} 분야별 운세`} caption={tab === 'daily' ? '눌러서 자세히 보기' : '눌러서 풀이 펼치기'} />
       <Card style={{ paddingVertical: 4 }}>

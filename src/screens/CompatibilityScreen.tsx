@@ -41,7 +41,7 @@ const BARS: { k: 'love' | 'personality' | 'conversation' | 'money'; l: string; c
   { k: 'conversation', l: '대화 궁합', c: colors.work, e: '言' },
   { k: 'money', l: '금전 궁합', c: colors.money, e: '財' },
 ];
-const POINT_SOURCE = ['saju', 'mbti', 'blood'] as const;
+const POINT_SOURCE = ['saju', 'thai', 'mbti', 'blood'] as const;
 
 function Label({ children }: { children: string }) {
   return <Text style={s.fieldLabel}>{children}</Text>;
@@ -128,7 +128,7 @@ export default function CompatibilityScreen() {
 
         <ShareCta spec={compatSpec(user, result)} />
 
-        <SectionHeader title="관점별 풀이" />
+        <SectionHeader title="네 관점으로 본 우리" caption="사주 · 점성술(서양·인도·태국) · MBTI · 혈액형" />
         <View style={{ gap: 10 }}>
           {result.points.map((p, i) => {
             const t = analysisTheme[POINT_SOURCE[i] ?? 'saju'];
@@ -278,7 +278,7 @@ const s = StyleSheet.create({
   fieldLabel: { fontSize: 13, fontWeight: '700', color: colors.inkSub, marginBottom: 8 },
   row: { flexDirection: 'row', gap: 8 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  mbtiCell: { width: '23.8%' },
+  mbtiCell: { flexBasis: '22%', flexGrow: 1 },
   select: { height: 52, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   selectText: { fontSize: 16, fontWeight: '500', color: colors.ink },
   error: { color: colors.danger, fontSize: 13, marginTop: 6 },

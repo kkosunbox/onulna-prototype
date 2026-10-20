@@ -5,6 +5,7 @@
 import { BloodType, CombinedFortune, CompatibilityResult, KeywordTag, User } from '../../types';
 import { BRANCHES, CONTROLS, ELEMENT_INFO, Element, GENERATES, STEMS, TEN_GOD_TEXT, TenGodGroup } from '../../data/sajuData';
 import { THAI_DAYS, THAI_FRIENDS, ThaiDay, WEEKDAY_TO_THAI } from '../../data/thaiData';
+import { astroViews } from '../fortune/insightService';
 import { MBTI_INFO } from '../../data/mbtiData';
 import { BLOOD_INFO } from '../../data/bloodData';
 import { ACTIONS, KEYWORDS } from '../../data/keywords';
@@ -319,7 +320,7 @@ export function yearData(u: User, y: number): YearData {
   const qs = [0, 1, 2, 3].map(q => Math.round(months.slice(q * 3, q * 3 + 3).reduce((s, x) => s + x.total, 0) / 3));
   const R: YearData = {
     y, yp, rel, zr, total, months, cat, best: sorted.slice(0, 3), low: sorted.slice(-2).reverse(), kws, qs,
-    views: { saju: `${pText(yp)}년의 기운이 나의 일간과 ${tenName(rel)} 관계예요. ${PERIOD_TEXT.year[rel][1]}`, thai: thaiTxt, mbti: mbtiTxt, blood: bloodTxt },
+    views: { saju: `${pText(yp)}년의 기운이 나의 일간과 ${tenName(rel)} 관계예요. ${PERIOD_TEXT.year[rel][1]}`, thai: `${astroViews(u, y).year} 태국: ${thaiTxt}`, mbti: mbtiTxt, blood: bloodTxt },
     zodiac: ZODIAC_TEXT[zr] as [string, string], animal: BRANCHES[yp.branch].animal, myAnimal: BRANCHES[birth.year.branch].animal,
   };
   ydCache.set(ck, R);
@@ -377,7 +378,7 @@ export function themeLove(u: User, today: string) {
     st, blood: BLOOD_LOVE[u.bloodType], types, yrs, ms,
     views: {
       saju: `나를 살려주는 ${elName(sup)} 기운이 강한 사람에게 편안함을 느끼기 쉬워요.`,
-      thai: `${THAI_FRIENDS[thaiDay(u)].map(k => THAI_DAYS[k].label).join(', ')}생과 잘 통해요.`,
+      thai: `${astroViews(u).love} 태국: ${THAI_FRIENDS[thaiDay(u)].map(k => THAI_DAYS[k].label).join(', ')}생과 잘 통해요.`,
       mbti: `${types.join(', ')} 유형과 서로를 채워주는 조합이에요.`,
       blood: `${u.bloodType}형은 연애할 때 ${BLOOD_LOVE[u.bloodType]}.`,
     } as Record<SrcKey, string>,
@@ -401,7 +402,7 @@ export function themeMoney(u: User, today: string) {
     t: MONEY_TYPES[type], cnt, wealthEl: CONTROLS[me], ms,
     views: {
       saju: `재물을 뜻하는 ${elName(CONTROLS[me])} 기운이 원국에 ${cnt}개 — ${cnt === 0 ? '스스로 만들어가는 재물이에요. 기술과 실력이 곧 돈이 돼요.' : cnt <= 2 ? '꾸준히 들어오는 재물이에요. 관리할수록 커져요.' : '재물 감각을 타고났어요. 다만 들어온 만큼 나가는 흐름도 커요.'}`,
-      thai: `${THAI_DAYS[td].trait}이라 ${['sun', 'tue', 'thu'].includes(td) ? '과감한 결정에서' : '꾸준한 관리에서'} 돈이 모여요.`,
+      thai: `${astroViews(u).money} 태국: ${THAI_DAYS[td].trait}이라 ${['sun', 'tue', 'thu'].includes(td) ? '과감한 결정에서' : '꾸준한 관리에서'} 돈이 모여요.`,
       mbti: mb[3] === 'J' ? '계획형(J)이라 예산을 세우면 잘 지켜요.' : '탐색형(P)이라 기회에 빠르지만 예산은 느슨해지기 쉬워요.',
       blood: `${b}형은 ${({ A: '예산표를 써두면 마음이 편해지는 타입이에요', B: '꽂히면 아낌없이 쓰는 타입이에요', O: '사람에게 쓰는 돈은 아깝지 않은 타입이에요', AB: '가성비를 꼼꼼히 따지는 타입이에요' } as Record<BloodType, string>)[b]}.`,
     } as Record<SrcKey, string>,
@@ -419,7 +420,7 @@ export function themeCareer(u: User, today: string) {
     style: [mb[2] === 'T' ? '근거와 효율로 판단해요' : '사람과 의미를 먼저 봐요', mb[3] === 'J' ? '마감과 계획이 있을 때 강해요' : '자율과 변화가 있을 때 빛나요', mb[0] === 'E' ? '함께 부딪히며 일할 때 에너지가 올라요' : '혼자 몰입하는 시간이 있어야 성과가 나요'],
     views: {
       saju: `일간 ${STEMS[ch.day.stem].ko}(${STEMS[ch.day.stem].hanja}) · ${per.core} — ${per.work}에 강해요.`,
-      thai: `${THAI_DAYS[thaiDay(u)].trait}이에요.`,
+      thai: `${astroViews(u).career} 태국: ${THAI_DAYS[thaiDay(u)].trait}이에요.`,
       mbti: `${mb} · ${MBTI_INFO[mb].nickname} — ${MBTI_INFO[mb].strength}이 무기예요.`,
       blood: `${u.bloodType}형 · ${BLOOD_INFO[u.bloodType].trait}이에요.`,
     } as Record<SrcKey, string>,

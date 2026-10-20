@@ -17,16 +17,19 @@ export function analyzeAll(user: User, date: string) {
   };
 }
 
+/** 3: 점성술 세 갈래 · 네 관점 풀이 엔진 */
+const FORTUNE_REV = 3;
+
 export async function getDailyFortune(user: User, date: string, { force = false } = {}): Promise<DailyFortune> {
   if (!force) {
     const cached = await storage.getDailyFortune(user.id, date);
-    // 점성술 지표(astro)가 없는 예전 저장본은 새로 계산한다
-    if (cached && cached.analyses.thai.astro) return cached;
+    // 풀이 엔진이 바뀌기 전 저장본은 새로 계산한다
+    if (cached && (cached.rev ?? 0) >= FORTUNE_REV) return cached;
   }
   const analyses = analyzeAll(user, date);
   const engine = getFortuneEngine();
   const combined = await engine.generate({ user, date, ...analyses, interests: user.interests ?? [] });
-  const fortune: DailyFortune = { userId: user.id, date, analyses, combined, engine: engine.name };
+  const fortune: DailyFortune = { userId: user.id, date, analyses, combined, engine: engine.name, rev: FORTUNE_REV };
   await storage.saveDailyFortune(fortune);
   return fortune;
 }

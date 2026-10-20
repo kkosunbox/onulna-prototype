@@ -8,6 +8,7 @@ import { scopedKey } from '../storage/storageService';
 import { CompatibilityResult, User } from '../../types';
 import { BRANCHES, ELEMENT_INFO, STEMS } from '../../data/sajuData';
 import { THAI_DAYS, THAI_FRIENDS, WEEKDAY_TO_THAI } from '../../data/thaiData';
+import { astroViews } from '../fortune/insightService';
 import { MBTI_INFO } from '../../data/mbtiData';
 import { BLOOD_INFO } from '../../data/bloodData';
 import { dayPillar } from '../fortune/sajuService';
@@ -49,6 +50,7 @@ ${pil}
 - 배우자궁(일지) ${BRANCHES[F.ch.day.branch].ko}, 일지 12운성 ${STAGE12[F.dayStage]}, 배우자의 별(${u.gender === 'female' ? '관성' : '재성'}) ${F.grp[F.spouseGrp]}개
 - 대운(${dae.fwd ? '순행' : '역행'}, ${dae.start}세 시작): ${dae.list.map(d => `${d.age}~${d.age + 9}세 ${pText(d.p)} ${TG[tenGod(F.ds, d.p.stem)]}/${TG[tenGod(F.ds, mainStem(d.p.branch))]} ${d.score}점`).join(' | ')}
 [태국 점성술] ${T.label}생, 수호 행성 ${T.planetKo}(${T.planet}), 성향 "${T.trait}", 행운색 ${T.color}, 주의색 ${T.cautionColor}, 잘 맞는 요일생 ${THAI_FRIENDS[td].map(k => THAI_DAYS[k].label).join('·')}
+[서양·인도 점성술] ${(() => { const v = astroViews(u, Number(today.slice(0, 4))); return [v.love, v.money, v.career, v.year].filter(Boolean).join(' '); })()}
 [MBTI] ${u.mbti} ${MBTI_INFO[u.mbti].nickname} — 강점 "${MBTI_INFO[u.mbti].strength}", 주의 "${MBTI_INFO[u.mbti].watch}"
 [혈액형] ${u.bloodType}형 — ${BLOOD_INFO[u.bloodType].trait}
 [4가지 관점 교차] ${ax.map(a => { const { pos, neg, verdict } = axisVerdict(a); return `${a.name} ${verdict}(${a.pos} ${pos}/4·${a.neg} ${neg}/4)`; }).join(', ')}`;

@@ -147,3 +147,15 @@ export function getThaiAnalysis(user: User, date: string): AnalysisResult {
     astro,
   };
 }
+
+/** 타고난 점성 지표(서양 태양 별자리 · 인도 달 라시 · 탄생 낙샤트라 · 태국 요일) */
+export function natalAstro(u: { birthDate: string; birthTime: string | null }) {
+  const jd = julianDay(u.birthDate, u.birthTime);
+  const sid = (lon: number) => lon - ayanamsa(jd);
+  return {
+    west: signOf(sunLongitude(jd)),
+    moonRashi: signOf(sid(moonLongitude(jd))),
+    nakshatra: nakshatraOf(sid(moonLongitude(jd))),
+    thai: birthThaiDay(u.birthDate, u.birthTime),
+  };
+}

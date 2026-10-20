@@ -1,9 +1,8 @@
 /** 궁합(규칙 기반). 향후 AI 궁합 API로 교체 시 CompatibilityEngine 계약만 유지 */
 import { CompatibilityResult, PartnerInput, User } from '../../types';
 import { buildChart, relation } from './sajuService';
-import { birthThaiDay } from './thaiAstrologyService';
+import { compatAstro } from './insightService';
 import { STEMS, ELEMENT_INFO } from '../../data/sajuData';
-import { THAI_FRIENDS } from '../../data/thaiData';
 import { clamp, seededRandom } from '../../utils/seed';
 
 export interface CompatibilityEngine { analyze(user: User, partner: PartnerInput): Promise<CompatibilityResult> }
@@ -27,15 +26,15 @@ export const ruleCompatibility: CompatibilityEngine = {
     const diffTF = a[2] !== b[2] ? 4 : 3;
     const sameJP = a[3] === b[3] ? 5 : 0;
 
-    const myThai = birthThaiDay(user.birthDate, user.birthTime);
-    const yourThai = birthThaiDay(partner.birthDate, partner.birthTime);
-    const thai = THAI_FRIENDS[myThai].includes(yourThai) || THAI_FRIENDS[yourThai].includes(myThai) ? 7 : myThai === yourThai ? 5 : 0;
+    // 점성술 세 갈래(서양 원소 · 인도 달 라시 거리 · 태국 우호 행성) — insightService
+    const astro = compatAstro(user, partner);
+    const thai = astro.score; // -2 ~ 9
 
     const blood = bloodScore(user.bloodType, partner.bloodType);
     const n = () => rand() * 8 - 4;
 
     const love = clamp(70 + saju + thai + diffE + n(), 50, 98);
-    const personality = clamp(68 + diffTF + sameJP + blood + n(), 50, 98);
+    const personality = clamp(68 + diffTF + sameJP + blood + Math.round(thai / 3) + n(), 50, 98);
     const conversation = clamp(70 + sameN + diffE + n(), 50, 98);
     const money = clamp(68 + sameJP + (rel === 'wealth' ? 8 : 2) + blood / 2 + n(), 50, 98);
     const total = clamp((love + personality + conversation + money) / 4 + 2);
@@ -55,6 +54,7 @@ export const ruleCompatibility: CompatibilityEngine = {
       summary: total >= 85 ? '함께할수록 서로를 빛내주는 사이' : total >= 75 ? '조금씩 맞춰가며 깊어지는 사이' : '다름을 배우며 성장하는 사이',
       points: [
         { title: `命 사주 · ${ELEMENT_INFO[meEl].ko}과 ${ELEMENT_INFO[youEl].ko}`, text: sajuLine },
+        { title: astro.title, text: astro.text },
         { title: `性 MBTI · ${a} × ${b}`, text: a[1] === b[1] ? '세상을 보는 방식이 비슷해 대화가 자연스럽게 이어져요.' : '보는 관점이 달라 새로운 시각을 서로에게 선물해요. 설명을 조금 더 친절하게.' },
         { title: `血 혈액형 · ${user.bloodType}형 × ${partner.bloodType}형`, text: blood >= 6 ? '생활 리듬이 잘 맞는 조합이에요.' : blood >= 3 ? '무난하게 어울리는 조합이에요.' : '표현 방식이 달라요. 서운함은 바로 말로 풀어주세요.' },
       ],

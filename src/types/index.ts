@@ -95,6 +95,7 @@ export interface DailyFortune {
   analyses: { saju: AnalysisResult; thai: AnalysisResult; mbti: AnalysisResult; blood: AnalysisResult };
   combined: CombinedFortune;
   engine: 'rule' | 'ai';
+  rev?: number; // 풀이 엔진 버전 — 낮으면 다시 계산
 }
 
 export interface PartnerInput {
