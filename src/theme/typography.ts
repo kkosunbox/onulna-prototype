@@ -48,14 +48,14 @@ export const txt = {
   eyebrow: { ...sansW('700'), fontSize: 11, lineHeight: 15, letterSpacing: 1.8, color: colors.seal },
 } satisfies Record<string, TextStyle>;
 
-/** 반경: 히어로 26 · 카드 22 · 입력 14 · 아이콘 칸 13 · 칩은 알약 */
-export const radius = { xs: 8, sm: 13, md: 14, lg: 22, xl: 26, pill: 999 };
+/** 반경: 히어로 24 · 카드 18 · 버튼·입력 12 · 칩은 알약 */
+export const radius = { xs: 8, sm: 12, md: 12, lg: 18, xl: 24, pill: 999 };
 export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 28, section: 32 };
 export const SCREEN_PX = 20;
 
 /** 그림자: 카드는 거의 없이 선으로, 히어로만 은은한 분홍빛 */
 export const shadow = {
-  card: { shadowColor: '#3E2A2C', shadowOpacity: isDark ? 0.35 : 0.04, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
-  hero: { shadowColor: isDark ? '#000000' : '#E5707D', shadowOpacity: isDark ? 0.4 : 0.14, shadowRadius: 24, shadowOffset: { width: 0, height: 12 }, elevation: 6 },
-  float: { shadowColor: '#3E2A2C', shadowOpacity: 0.08, shadowRadius: 20, shadowOffset: { width: 0, height: -2 }, elevation: 12 },
+  card: { shadowColor: '#1E2A3A', shadowOpacity: isDark ? 0.35 : 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  hero: { shadowColor: isDark ? '#000000' : '#2F6FB0', shadowOpacity: isDark ? 0.4 : 0.12, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
+  float: { shadowColor: '#1E2A3A', shadowOpacity: 0.08, shadowRadius: 20, shadowOffset: { width: 0, height: -2 }, elevation: 12 },
 } satisfies Record<string, ViewStyle>;

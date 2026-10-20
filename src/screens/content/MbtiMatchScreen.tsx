@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { HeroBg, heroSurface } from '../../components/HeroCard';
+import { darkSurface, onDark } from '../../components/HeroCard';
+import Mascot from '../../components/Mascot';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -31,24 +32,24 @@ export default function MbtiMatchScreen() {
     <Screen title="찰떡 MBTI" back>
       <FriendCompare route="MbtiMatch" spec={mbtiSpec(u)} />
       {/* 공유 카드 */}
-      <View ref={card} collapsable={false} style={[heroSurface, s.card]}>
-        <HeroBg />
-        <View style={s.brand}><BrandMark size={15} /></View>
+      <View ref={card} collapsable={false} style={[darkSurface, s.card]}>
+        <View style={s.mascot} pointerEvents="none"><Mascot size={128} palette="classic" face="sleepy" prop="headphones" shadow={false} /></View>
+        <BrandMark size={20} light />
         <Text style={s.eyebrow}>{u.mbti} {u.nickname}님의 찰떡 MBTI는</Text>
         <Text style={s.big}>{top.type}</Text>
         <Text style={s.nick}>{top.nickname} · 궁합 {top.score}점</Text>
         <Text style={s.reason}>{top.reason}</Text>
-        <View style={s.rankRow}>
-          {best.slice(1).map((b, i) => (
-            <View key={b.type} style={s.rankCell}>
-              <Text style={s.rankNo}>{i + 2}위</Text>
-              <Text style={s.rankType}>{b.type}</Text>
-            </View>
-          ))}
-          <View style={[s.rankCell, { borderColor: 'rgba(181,67,46,0.6)' }]}>
-            <Text style={[s.rankNo, { color: '#E9A091' }]}>조심</Text>
-            <Text style={s.rankType}>{worst.type}</Text>
+      </View>
+      <View style={s.rankRow}>
+        {best.slice(1).map((b, i) => (
+          <View key={b.type} style={s.rankCell}>
+            <Text style={s.rankNo}>{i + 2}위</Text>
+            <Text style={s.rankType}>{b.type}</Text>
           </View>
+        ))}
+        <View style={s.rankCell}>
+          <Text style={[s.rankNo, { color: colors.danger }]}>조심</Text>
+          <Text style={[s.rankType, { color: colors.danger }]}>{worst.type}</Text>
         </View>
       </View>
       <ShareActions spec={mbtiSpec(u)} />
@@ -104,17 +105,16 @@ export default function MbtiMatchScreen() {
 }
 
 const s = StyleSheet.create({
-  card: { alignItems: 'center', marginTop: 4 },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
-  brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 15, fontWeight: '600' },
-  eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
-  big: { fontFamily: fonts.serif, color: colors.seal, fontSize: 40, fontWeight: '800', letterSpacing: 1, marginTop: 4 },
-  nick: { color: colors.ink, fontSize: 15, fontWeight: '600' },
-  reason: { color: colors.inkSub, fontSize: 13, lineHeight: 19, textAlign: 'center', marginTop: 10 },
-  rankRow: { flexDirection: 'row', gap: 8, marginTop: 18, alignSelf: 'stretch' },
-  rankCell: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 10, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card },
-  rankNo: { color: colors.inkMute, fontSize: 11, fontWeight: '600' },
-  rankType: { fontFamily: fonts.serif, color: colors.ink, fontSize: 15, fontWeight: '600', marginTop: 2 },
+  card: { marginTop: 4, minHeight: 220 },
+  mascot: { position: 'absolute', right: -4, top: 30 },
+  eyebrow: { color: onDark.sub, fontSize: 15, marginTop: 18 },
+  big: { fontFamily: fonts.serif, color: onDark.text, fontSize: 40, lineHeight: 46, fontWeight: '800', letterSpacing: -1.2, marginTop: 4 },
+  nick: { color: onDark.accent, fontSize: 15, fontWeight: '700', marginTop: 4 },
+  reason: { color: onDark.sub, fontSize: 13, lineHeight: 19, marginTop: 12, paddingRight: 96 },
+  rankRow: { flexDirection: 'row', marginTop: 12, paddingVertical: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
+  rankCell: { flex: 1, alignItems: 'center' },
+  rankNo: { color: colors.inkMute, fontSize: 13, fontWeight: '600' },
+  rankType: { fontFamily: fonts.serif, color: colors.ink, fontSize: 18, fontWeight: '700', marginTop: 2 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   medal: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   medalText: { fontSize: 15, fontWeight: '700', color: colors.purpleSoft },

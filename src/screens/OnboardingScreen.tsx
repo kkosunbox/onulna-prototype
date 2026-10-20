@@ -84,7 +84,7 @@ export default function OnboardingScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }}>
-      <PageBg />
+      <PageBg sky />
       <View style={s.top}>
         <BrandMark />
         {!last ? (

@@ -27,12 +27,10 @@ export default function ShareActions({ spec, title = COPY.friend }: { spec: Shar
       <Text style={[txt.small, { marginTop: 4 }]}>보내면 친구 결과와 내 결과가 나란히 비교돼요</Text>
       <View style={s.row}>
         <PressableScale onPress={() => sendLink(spec)} style={[s.btn, s.solid]} scaleTo={0.96} haptic accessibilityLabel="친구에게 링크 보내기">
-          <Icon name="heart" size={18} color={colors.white} />
           <Text style={[s.text, { color: colors.white }]}>친구에게 보내기</Text>
         </PressableScale>
         <PressableScale onPress={() => nav.navigate('Share', { spec })} style={[s.btn, s.soft]} scaleTo={0.96} accessibilityLabel="스토리용 카드 만들기">
-          <Icon name="share" size={18} color={colors.purple} />
-          <Text style={[s.text, { color: colors.purple }]}>스토리 카드</Text>
+          <Text style={[s.text, { color: colors.ink }]}>스토리 카드</Text>
         </PressableScale>
       </View>
     </View>
@@ -40,14 +38,14 @@ export default function ShareActions({ spec, title = COPY.friend }: { spec: Shar
 }
 
 const s = StyleSheet.create({
-  box: { marginTop: 16, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong },
+  box: { marginTop: 16, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1.5, borderColor: colors.seal + '99' },
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { fontFamily: fonts.display, fontSize: 18, fontWeight: '700', color: colors.ink },
-  badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4, backgroundColor: colors.seal },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, backgroundColor: colors.seal },
   badgeText: { fontSize: 11, fontWeight: '700', color: colors.white },
   row: { flexDirection: 'row', gap: 8, marginTop: 12 },
-  btn: { flex: 1, height: 50, borderRadius: radius.md, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
-  soft: { backgroundColor: colors.lavenderSoft },
+  btn: { flex: 1, height: 50, borderRadius: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  soft: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong },
   solid: { backgroundColor: colors.navy },
-  text: { fontSize: 15, fontWeight: '600' },
+  text: { fontSize: 15, fontWeight: '700' },
 });

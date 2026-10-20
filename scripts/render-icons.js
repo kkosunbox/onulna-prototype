@@ -1,42 +1,45 @@
 /**
- * 운Pick 앱 아이콘 · 적응형 아이콘 · 스플래시 · 파비콘 생성 (assets/)
+ * 운픽 앱 아이콘 · 적응형 아이콘 · 스플래시 · 파비콘 생성 (assets/)
  * 사용: npm run icons
- * 로고는 글꼴이 아니라 직접 그린 단선 레터링(획 두께 11, 둥근 끝). src/components/BrandMark.tsx 와 같은 패스.
- * 시그니처: '운'의 ㅜ 기둥 자리에 붉은 매듭 끈으로 매달린 노란 부적(위아래 붉은 두 줄 · 도장 · 웃는 눈 · 볼 · 그림자).
+ * 아이콘은 운알이(src/components/Mascot.tsx 'classic' · 기본 눈), 워드마크는 굵은 둥근 레터링 '운픽' + 운알이 물방울
+ * (src/components/BrandMark.tsx 와 같은 패스).
  */
 const { Resvg } = require('@resvg/resvg-js');
 const fs = require('fs');
 const path = require('path');
 const FONTS = [path.resolve(__dirname, '../assets/fonts/Pretendard-Bold.otf')];
-const NAVY = '#22293F', CREAM = '#F4EDDF', RED = '#B5432E', MUTE = '#857C6E', YEL = '#EDC861', YEL2 = '#D9AE3F';
-const st = c => `fill="none" stroke="${c}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"`;
-/** 운 (0..100) */
-const un = (c = NAVY) => `
-  <ellipse cx="50" cy="24.5" rx="20" ry="15" ${st(c)}/>
-  <path d="M26 74 V86.5 H83" ${st(c)}/>
-  <path d="M50 54 V61.6" stroke="${RED}" stroke-width="1.1" stroke-linecap="round"/><circle cx="50" cy="59.6" r="1.45" fill="${RED}"/>
-  <path d="M 42.73 63.82 L 60.6 61.63 L 63.17 82.57 L 45.3 84.76 Z" fill="${NAVY}" opacity="0.16"/>
-  <path d="M 41.37 62.58 L 59.24 60.38 L 61.8 81.23 L 43.93 83.42 Z" fill="#EFCB63" stroke="#EFCB63" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M 43.23 64.57 L 57.92 62.76 L 57.99 63.36 L 43.3 65.16 Z M 43.37 65.76 L 58.06 63.95 L 58.11 64.3 L 43.42 66.11 Z M 45.13 80.05 L 59.82 78.25 L 59.86 78.59 L 45.17 80.4 Z M 45.24 80.94 L 59.93 79.14 L 60.0 79.74 L 45.31 81.54 Z" fill="${RED}" opacity="0.85"/>
-  <circle cx="51.15" cy="68.33" r="2.6" fill="${RED}"/>
-  <path d="M 47.03 73.37 Q 48.3 71.4 50.01 73.0 M 53.38 72.59 Q 54.65 70.62 56.36 72.22" fill="none" stroke="${NAVY}" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M 49.59 75.37 Q 52.27 77.46 54.36 74.79" fill="none" stroke="${NAVY}" stroke-width="1.15" stroke-linecap="round"/>
-  <circle cx="46.3" cy="75.67" r="1.5" fill="#E07C6A" opacity="0.5"/><circle cx="57.62" cy="74.29" r="1.5" fill="#E07C6A" opacity="0.5"/>
-  <path d="M14 52.5 H86" ${st(c)}/>`;
-/** Pick (운 뒤 x=110부터) */
-const pick = (c = NAVY) => `
-  <path d="M0 86.5 V13 H15 A18.5 18.5 0 0 1 15 50 H0" ${st(c)}/>
-  <path d="M55 44 V86.5" ${st(c)}/><circle cx="55" cy="22" r="7" fill="${c}"/>
-  <path d="M110 52 A18.5 18.5 0 1 0 110 80" ${st(c)}/>
-  <path d="M128 13 V86.5 M128 67 L151 44 M135 61 L153 86.5" ${st(c)}/>`;
-const word = c => `<g>${un(c)}</g><g transform="translate(110 0)">${pick(c)}</g>`; // 폭 0..269
+const INK = '#191C22', SKY = '#CFEBFF', SKY2 = '#8CCBFF', MUTE = '#7D8490';
+
+/** 운알이 (0..100) — Mascot.tsx 와 같은 몸 · 메시 그라데이션 · 눈 */
+const BODY = 'M47 12 C66 9 82 20 86 38 C90 52 92 66 84 78 C75 90 57 93 41 90 C24 87 12 76 11 59 C10 43 15 27 27 18 C33 14 40 12 47 12 Z';
+const SPOTS = [[30, 70, 34, '#B9DDFF'], [64, 58, 30, '#FFF0A3'], [74, 34, 26, '#D3F3C2'], [36, 28, 22, '#FFFFFF']];
+const eye = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#E3E8F0" stroke-width="0.8"/>
+  <circle cx="${x + 1.5}" cy="${y - 1}" r="${r * 0.55}" fill="#111318"/><circle cx="${x + 1.5 + r * 0.2}" cy="${y - 1 - r * 0.22}" r="${r * 0.14}" fill="#fff"/>`;
+const mascot = () => `
+  <defs>
+    <clipPath id="b"><path d="${BODY}"/></clipPath>
+    ${SPOTS.map(([cx, cy, r, c], i) => `<radialGradient id="g${i}" cx="${cx}" cy="${cy}" r="${r}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${c}" stop-opacity="0.95"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join('')}
+  </defs>
+  <g clip-path="url(#b)"><rect width="100" height="100" fill="#E4F2FF"/>${SPOTS.map(([cx, cy, r], i) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#g${i})"/>`).join('')}</g>
+  ${eye(36, 46, 9)}${eye(58, 42, 9.5)}`;
+
+const st = c => `fill="none" stroke="${c}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"`;
+const word = (c = INK) => `
+  <defs><linearGradient id="d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B9E0FF"/><stop offset="0.6" stop-color="#8FB8FF"/><stop offset="1" stop-color="#C9B8FF"/></linearGradient></defs>
+  <ellipse cx="48" cy="25" rx="20" ry="14.5" ${st(c)}/>
+  <path d="M12 54 H84 M48 54 V67 M22 76 V88 H80" ${st(c)}/>
+  <g transform="translate(104 0)"><path d="M6 13 H58 M21 13 V43 M43 13 V43 M4 43 H60 M80 6 V58 M10 72 H64 V94" ${st(c)}/></g>
+  <path d="M199 -11 C209 -11 215 -3 215 7 C215 16 207 21 198 20 C189 19 185 11 186 3 C187 -5 192 -11 199 -11 Z" fill="url(#d)"/>`; // 폭 -6..218
 const svg = (body, vb = '0 0 100 100') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}">${body}</svg>`;
 const png = (s, out, w) => fs.writeFileSync(out, new Resvg(s, { fitTo: { mode: 'width', value: w }, font: { fontFiles: FONTS, loadSystemFonts: false, defaultFontFamily: 'Pretendard' } }).render().asPng());
 const out = process.argv[2] || path.resolve(__dirname, '../assets');
-png(svg(`<rect width="100" height="100" fill="${CREAM}"/><g transform="translate(50 50) scale(0.6) translate(-50 -50)">${un()}</g>`), `${out}/icon.png`, 1024);
-png(svg(`<g transform="translate(50 50) scale(0.44) translate(-50 -50)">${un()}</g>`), `${out}/adaptive-icon.png`, 1024);
-png(svg(`<g transform="translate(200 175) scale(0.62) translate(-134.5 -50)">${word(NAVY)}</g>
-  <text x="200" y="250" font-family="Pretendard" font-weight="700" font-size="16" fill="${MUTE}" text-anchor="middle">오늘의 운, 하나만 Pick!</text>`, '0 0 400 400'), `${out}/splash-icon.png`, 1200);
-png(svg(`<rect width="100" height="100" rx="18" fill="${CREAM}"/><g transform="translate(50 50) scale(0.68) translate(-50 -50)">${un()}</g>`), `${out}/favicon.png`, 196);
-png(svg(`<rect x="-14" y="-14" width="297" height="128" fill="${CREAM}"/>${word(NAVY)}`, '-14 -14 297 128'), path.resolve(__dirname, '../docs/wordmark.png'), 1200);
+const skyBg = `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SKY2}"/><stop offset="1" stop-color="${SKY}"/></linearGradient></defs><rect width="100" height="100" fill="url(#sky)"/>`;
+
+png(svg(`${skyBg}<g transform="translate(50 52) scale(0.72) translate(-50 -50)">${mascot()}</g>`), `${out}/icon.png`, 1024);
+png(svg(`<g transform="translate(50 52) scale(0.52) translate(-50 -50)">${mascot()}</g>`), `${out}/adaptive-icon.png`, 1024);
+png(svg(`<g transform="translate(200 130) scale(1.1) translate(-50 -50)">${mascot()}</g>
+  <g transform="translate(200 250) scale(0.5) translate(-106 -50)">${word()}</g>
+  <text x="200" y="312" font-family="Pretendard" font-weight="700" font-size="16" fill="${MUTE}" text-anchor="middle">오늘, 나에게 딱 맞는 운</text>`, '0 0 400 400'), `${out}/splash-icon.png`, 1200);
+png(svg(`${skyBg.replace('<rect', '<rect rx="22"')}<g transform="translate(50 52) scale(0.78) translate(-50 -50)">${mascot()}</g>`), `${out}/favicon.png`, 196);
+png(svg(`<rect x="-20" y="-24" width="252" height="136" fill="#FFFFFF"/>${word()}`, '-20 -24 252 136'), path.resolve(__dirname, '../docs/wordmark.png'), 1200);
 console.log('ok');

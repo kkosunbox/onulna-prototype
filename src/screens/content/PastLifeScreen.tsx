@@ -1,5 +1,6 @@
 import React from 'react';
-import { HeroBg, heroSurface } from '../../components/HeroCard';
+import { darkSurface, onDark } from '../../components/HeroCard';
+import Mascot from '../../components/Mascot';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -26,9 +27,9 @@ export default function PastLifeScreen() {
   return (
     <Screen title="전생 테스트" back>
       <FriendCompare route="PastLife" spec={spec} />
-      <View style={[heroSurface, s.card]}>
-        <HeroBg />
-        <View style={s.brand}><BrandMark size={15} /></View>
+      <View style={[darkSurface, s.card]}>
+        <View style={s.mascot} pointerEvents="none"><Mascot size={120} palette="peach" face="curious" prop="question" shadow={false} /></View>
+        <BrandMark size={20} light />
         <View style={s.seal}><Text style={s.sealText}>{P.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은 전생에</Text>
         <Text style={s.name}>{P.title}</Text>
@@ -62,14 +63,13 @@ function Row({ k, v }: { k: string; v: string }) {
 }
 
 const s = StyleSheet.create({
-  card: { alignItems: 'center', marginTop: 4 },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
-  brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 15, fontWeight: '600' },
-  seal: { marginTop: 18, width: 72, height: 72, borderRadius: 16, borderWidth: 2, borderColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
-  sealText: { fontFamily: fonts.serif, fontSize: 40, fontWeight: '800', color: colors.seal },
-  eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
-  name: { fontFamily: fonts.serif, color: colors.ink, fontSize: 24, lineHeight: 32, fontWeight: '800', marginTop: 4, textAlign: 'center' },
-  era: { color: colors.seal, fontSize: 13, marginTop: 4 },
-  scene: { color: colors.inkSub, fontSize: 15, lineHeight: 23, marginTop: 16, textAlign: 'center' },
+  card: { marginTop: 4 },
+  mascot: { position: 'absolute', right: -2, top: 26 },
+  seal: { alignSelf: 'flex-start', marginTop: 18, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: onDark.accent },
+  sealText: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: onDark.accent },
+  eyebrow: { color: onDark.sub, fontSize: 15, marginTop: 14 },
+  name: { fontFamily: fonts.serif, color: onDark.text, fontSize: 24, lineHeight: 32, fontWeight: '800', marginTop: 4, paddingRight: 96 },
+  era: { color: onDark.accent, fontSize: 13, fontWeight: '700', marginTop: 4 },
+  scene: { color: onDark.sub, fontSize: 15, lineHeight: 23, marginTop: 16 },
   cta: { marginTop: 24, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender },
 });

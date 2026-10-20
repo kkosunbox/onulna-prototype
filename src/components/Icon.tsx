@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { colors } from '../theme/colors';
 
-export type IconName = 'home' | 'sparkle' | 'sheet' | 'heart' | 'user' | 'share' | 'chevronRight' | 'chevronLeft' | 'bell' | 'crown' | 'refresh' | 'check' | 'close' | 'clock' | 'palette' | 'mail' | 'grid';
+export type IconName = 'home' | 'sparkle' | 'sheet' | 'heart' | 'user' | 'share' | 'chevronRight' | 'chevronLeft' | 'bell' | 'crown' | 'refresh' | 'check' | 'close' | 'clock' | 'palette' | 'mail' | 'grid' | 'coin' | 'briefcase' | 'people' | 'chat' | 'download';
 
 const PATHS: Record<IconName, string> = {
   home: 'M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z',
@@ -23,6 +23,11 @@ const PATHS: Record<IconName, string> = {
   clock: 'M12 7.5V12l3 2',
   palette: 'M12 4a8 8 0 1 0 0 16c1.2 0 1.6-1 1-1.9-.7-1 0-2.1 1.2-2.1H17a3 3 0 0 0 3-3c0-5-3.6-9-8-9z',
   grid: 'M4.5 4.5h6v6h-6z M13.5 4.5h6v6h-6z M4.5 13.5h6v6h-6z M13.5 13.5h6v6h-6z',
+  coin: 'M5 8c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3z M5 8v4c0 1.7 3.1 3 7 3s7-1.3 7-3V8 M5 12v4c0 1.7 3.1 3 7 3s7-1.3 7-3v-4',
+  briefcase: 'M4 8.5h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z M9 8.5V6.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2 M4 13h16',
+  people: 'M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6 M9 11.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M15.5 11.2a2.6 2.6 0 1 0 0-5.2 M16.5 14.6c2.1.3 3.6 1.7 4 4.4',
+  chat: 'M4.5 5.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-4 3.5V16.5H4.5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z M8.5 11h.01 M12 11h.01 M15.5 11h.01',
+  download: 'M12 4v11 M7.5 10.5 12 15l4.5-4.5 M5 19.5h14',
   mail: 'M4.5 6.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z M4 7.5l8 6 8-6',
 };
 

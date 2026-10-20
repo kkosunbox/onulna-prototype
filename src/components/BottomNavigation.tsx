@@ -10,7 +10,7 @@ import { radius, shadow } from '../theme/typography';
 const ITEMS: Record<string, { label: string; icon: IconName }> = {
   Home: { label: '홈', icon: 'home' },
   Fortune: { label: '운세', icon: 'sheet' },
-  Content: { label: '콘텐츠', icon: 'grid' },
+  Content: { label: '콘텐츠', icon: 'chat' },
   Compatibility: { label: '궁합', icon: 'heart' },
   MyPage: { label: '마이', icon: 'user' },
 };
@@ -26,7 +26,7 @@ function TabItem({ focused, label, icon, onPress }: { focused: boolean; label: s
       <View style={s.iconBox}>
         <Animated.View style={[s.pill, { opacity: v, transform: [{ scaleX: pillScale }] }]} />
         <View>
-          <Icon name={icon} size={22} color={focused ? colors.seal : colors.inkMute} filled={focused} strokeWidth={focused ? 2 : 1.7} />
+          <Icon name={icon} size={24} color={focused ? colors.ink : colors.inkMute} filled={focused} strokeWidth={focused ? 2.1 : 1.7} />
         </View>
       </View>
       <Text style={[s.label, focused && { color: colors.ink, fontWeight: '700' }]}>{label}</Text>
@@ -62,9 +62,9 @@ export default function BottomNavigation({ state, navigation }: BottomTabBarProp
 }
 
 const s = StyleSheet.create({
-  bar: { flexDirection: 'row', backgroundColor: colors.card, paddingTop: 8, borderTopLeftRadius: 26, borderTopRightRadius: 26, borderTopWidth: 1, borderColor: colors.line },
+  bar: { flexDirection: 'row', backgroundColor: colors.card, paddingTop: 8, borderTopWidth: 1, borderColor: colors.line },
   item: { flex: 1, alignItems: 'center', gap: 3 },
   iconBox: { width: 56, height: 30, alignItems: 'center', justifyContent: 'center' },
-  pill: { position: 'absolute', width: 52, height: 30, borderRadius: radius.pill, backgroundColor: colors.accentBg },
+  pill: { position: 'absolute', width: 0, height: 0 },
   label: { fontSize: 11, color: colors.inkMute, fontWeight: '500' },
 });

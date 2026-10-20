@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import PressableScale from './PressableScale';
-import Ico from './Ico';
+import Mascot, { MascotFace, MascotPalette, MascotProp } from './Mascot';
 import { colors, gradients } from '../theme/colors';
 import { radius, shadow, txt } from '../theme/typography';
 
@@ -23,6 +23,10 @@ export function HeroBg({ tone }: { tone?: string }) {
   );
 }
 
+/** 검정 결과 카드 겉모양(무료 콘텐츠 결과 · 공유용) — 위 글자는 흰색, 포인트는 lime */
+export const darkSurface: ViewStyle = { borderRadius: radius.xl, padding: 22, overflow: 'hidden', backgroundColor: colors.heroBg };
+export const onDark = { text: '#FFFFFF', sub: 'rgba(255,255,255,0.78)', mute: 'rgba(255,255,255,0.55)', accent: colors.lime };
+
 /** 히어로 카드 겉모양 */
 export const heroSurface: ViewStyle = {
   borderRadius: radius.xl, padding: 22, overflow: 'hidden', backgroundColor: colors.card,
@@ -38,31 +42,42 @@ export default function HeroCard({ children, style, tone }: { children: React.Re
   );
 }
 
-/** 홍보 카드 — 배지 줄 · 소제목 · 보조 설명 · 오른쪽 아이콘 칸. 홈과 콘텐츠 탭이 같은 모양을 쓴다 */
-export function PromoCard({ badges, title, desc, ch, color, onPress, style }: {
-  badges?: React.ReactNode; title: string; desc: string; ch: string; color: string; onPress(): void; style?: StyleProp<ViewStyle>;
+/** 홍보 카드 — 검정 바탕 · 연두 제목 · 흰 설명 · 흰 알약 버튼 · 오른쪽 아래 운알이. 홈과 콘텐츠 탭이 같은 모양을 쓴다 */
+const PROMO_MASCOT: Record<string, { palette: MascotPalette; face: MascotFace; prop: MascotProp }> = {
+  談: { palette: 'classic', face: 'curious', prop: 'question' },
+  緣: { palette: 'pink', face: 'happy', prop: 'heart' },
+  心: { palette: 'peach', face: 'wink', prop: 'heart' },
+};
+export function PromoCard({ badges, title, desc, ch, onPress, style, cta }: {
+  badges?: React.ReactNode; title: string; desc: string; ch: string; color?: string; onPress(): void; style?: StyleProp<ViewStyle>; cta?: string;
 }) {
+  const m = PROMO_MASCOT[ch] ?? { palette: 'classic', face: 'open', prop: 'sparkle' };
   return (
     <PressableScale onPress={onPress} style={[s.promo, style]} scaleTo={0.985} accessibilityLabel={title}>
-      <HeroBg />
-      <View style={{ flex: 1 }}>
+      <View style={s.promoMascot} pointerEvents="none"><Mascot size={104} shadow={false} {...m} /></View>
+      <View style={{ paddingRight: 84 }}>
         {badges ? <View style={s.badges}>{badges}</View> : null}
-        <Text style={[txt.h3, { marginTop: badges ? 10 : 0 }]}>{title}</Text>
-        <Text style={[txt.small, { marginTop: 4, color: colors.inkSub }]}>{desc}</Text>
+        <Text style={[s.promoTitle, { marginTop: badges ? 10 : 0 }]}>{title}</Text>
+        <Text style={s.promoDesc}>{desc}</Text>
+        {cta ? <View style={s.cta}><Text style={s.ctaText}>{cta} →</Text></View> : null}
       </View>
-      <Ico ch={ch} size={52} color={color} style={{ backgroundColor: colors.card }} />
     </PressableScale>
   );
 }
 
-/** NEW 배지 */
+/** NEW 배지 — 검정 카드 위 연두 테두리 */
 export function NewBadge() {
   return <View style={s.newTag}><Text style={s.newText}>NEW</Text></View>;
 }
 
 const s = StyleSheet.create({
-  newTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.pill, backgroundColor: colors.seal },
-  newText: { ...txt.micro, color: colors.white, fontWeight: '700' },
-  promo: { flexDirection: 'row', alignItems: 'center', gap: 16, padding: 20, borderRadius: radius.lg, overflow: 'hidden', backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  newTag: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 6, borderWidth: 1, borderColor: colors.lime },
+  newText: { ...txt.micro, color: colors.lime, fontWeight: '700' },
+  promo: { padding: 20, borderRadius: radius.lg, overflow: 'hidden', backgroundColor: colors.heroBg },
+  promoMascot: { position: 'absolute', right: -10, bottom: -18, opacity: 0.95 },
+  promoTitle: { ...txt.h3, color: colors.lime },
+  promoDesc: { ...txt.small, color: 'rgba(255,255,255,0.78)', marginTop: 4 },
+  cta: { alignSelf: 'flex-start', marginTop: 14, paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: colors.white },
+  ctaText: { ...txt.small, color: '#1E2128', fontWeight: '700' },
   badges: { flexDirection: 'row', gap: 6 },
 });

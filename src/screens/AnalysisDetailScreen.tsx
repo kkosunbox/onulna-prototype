@@ -23,6 +23,12 @@ import { AstroReport, BloodType, User } from '../types';
 import { weekdayOf } from '../utils/date';
 
 const KICKER = { saju: '四柱 · 사주', thai: '星占 · 점성술', mbti: '性向 · MBTI', blood: '血型 · 혈액형' } as const;
+const HERO_MASCOT = {
+  saju: { palette: 'peach', face: 'look', prop: 'sparkle' },
+  thai: { palette: 'classic', face: 'curious', prop: 'sparkle' },
+  mbti: { palette: 'lavender', face: 'sleepy', prop: 'music' },
+  blood: { palette: 'pink', face: 'happy', prop: 'heart' },
+} as const;
 const NOTE: Record<string, string> = {
   saju: '양력 기준 근사 만세력으로 계산해요. 정밀 계산은 업데이트 예정이에요.',
   thai: '세 점성술을 각자 계산해 나란히 놓은 참고 지표예요. 해·달 위치는 천문 근사식(오차 약 0.3°)으로 계산하고, 태어난 장소가 필요한 상승궁·하우스는 넣지 않았어요.',
@@ -41,7 +47,7 @@ export default function AnalysisDetailScreen() {
 
   return (
     <Screen title={t.label} back>
-      <AlmanacHero tone={t} kicker={KICKER[a.source]} seal={t.emoji} eyebrow={t.sub} title={a.headline} today={today} tags={a.tags.map(tag => KEYWORDS[tag].label)}>
+      <AlmanacHero mascot={HERO_MASCOT[a.source]} tone={t} kicker={KICKER[a.source]} seal={t.emoji} eyebrow={t.sub} title={a.headline} today={today} tags={a.tags.map(tag => KEYWORDS[tag].label)}>
         <Quote label="오늘의 풀이" text={a.description} tone={t.color} />
       </AlmanacHero>
 

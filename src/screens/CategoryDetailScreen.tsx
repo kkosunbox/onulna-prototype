@@ -33,7 +33,7 @@ export default function CategoryDetailScreen() {
 
   return (
     <Screen title={t.label} back>
-      <AlmanacHero tone={t} kicker={KICKER[params.category]} seal={t.emoji} eyebrow={`오늘의 ${t.label}`} title={f.categoryTexts[params.category]} today={today}>
+      <AlmanacHero mascot={{ palette: ({ love: 'pink', money: 'peach', work: 'classic', relationship: 'mint' } as const)[params.category], face: score >= 80 ? 'happy' : score >= 72 ? 'look' : 'curious', prop: ({ love: 'heart', money: 'sparkle', work: 'sparkle', relationship: 'clover' } as const)[params.category] }} tone={t} kicker={KICKER[params.category]} seal={t.emoji} eyebrow={`오늘의 ${t.label}`} title={f.categoryTexts[params.category]} today={today}>
         <View style={s.scoreRow}>
           <ScoreRing score={score} size={76} stroke={6} color={t.color} track="rgba(0,0,0,0.06)" textColor={t.color} label="점" />
           <View style={{ flex: 1, gap: 6 }}>

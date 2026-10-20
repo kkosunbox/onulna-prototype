@@ -39,9 +39,9 @@ export default function Segmented<T extends string>({ options, value, onChange }
 }
 
 const s = StyleSheet.create({
-  wrap: { flexDirection: 'row', backgroundColor: colors.lavenderSoft, borderRadius: radius.pill, padding: 4 },
-  thumb: { position: 'absolute', top: 4, left: 4, bottom: 4, backgroundColor: colors.navy, borderRadius: radius.pill, ...shadow.card },
+  wrap: { flexDirection: 'row', backgroundColor: colors.lavender, borderRadius: radius.md, padding: 4 },
+  thumb: { position: 'absolute', top: 4, left: 4, bottom: 4, backgroundColor: colors.card, borderRadius: 9, ...shadow.card },
   item: { flex: 1, height: 38, alignItems: 'center', justifyContent: 'center' },
   label: { fontSize: 15, fontWeight: '600', color: colors.inkMute },
-  labelOn: { color: colors.white, fontWeight: '700' },
+  labelOn: { color: colors.ink, fontWeight: '700' },
 });

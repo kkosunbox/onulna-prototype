@@ -43,7 +43,7 @@ export default function MoonLoader({ title, messages = [] }: Props) {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.cream }}>
-      <PageBg />
+      <PageBg sky />
       <View style={s.center}>
         <View style={s.stage}>
           <Animated.View style={{ transform: [{ rotate: tilt }] }}>

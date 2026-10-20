@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import BrandMark from './BrandMark';
+import Mascot from './Mascot';
 import { ShareSpec } from '../services/share/shareSpecs';
 import { parseISO } from '../utils/date';
 import { fonts } from '../theme/typography';
@@ -13,9 +14,9 @@ import { fonts } from '../theme/typography';
  * 모든 간격은 8pt(4pt) 단위. 캡처(html2canvas)에서도 그대로 나오도록 View·Text·선형 그라데이션만 쓴다.
  */
 const C = {
-  bg: '#FFFCFA', ink: '#1A1A1A', sub: '#3E3839', mute: '#7B706F', line: '#EEEAE9', card: '#FFFFFF',
-  accent: '#E5707D', accentBg: '#FDEEF0', lav: '#F1EEF9', violet: '#5B4B94',
-  glowA: '#FFF1D8', glowB: '#E8F1FF', glowC: '#FFE0E6',
+  bg: '#FFFFFF', ink: '#191C22', sub: '#4A505B', mute: '#7D8490', line: '#E8ECF2', card: '#FFFFFF',
+  accent: '#2F8CF0', accentBg: '#E7F2FF', lav: '#1E2128', violet: '#D6F07A',
+  glowA: '#8CCBFF', glowB: '#D7EEFF', glowC: '#E7F2FF',
 };
 
 /** 웹에서 한국어가 단어 중간에서 끊기지 않게 */
@@ -32,8 +33,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
   return (
     <View ref={ref} collapsable={false} style={s.card}>
       {/* 바탕 빛: 위는 살구 → 하늘, 아래는 분홍 */}
-      <LinearGradient colors={[C.glowA, C.bg, C.glowB]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={s.glowTop} />
-      <LinearGradient colors={[C.bg + '00', C.bg]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={s.glowTop} />
+      <LinearGradient colors={[C.glowA, C.glowB, C.bg]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={s.glowTop} />
       <LinearGradient colors={[C.glowC + '00', C.glowC]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={s.glowBottom} />
 
       {/* 머리 */}
@@ -48,7 +48,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
             <Text style={s.kind}>{spec.kind}</Text>
             <Text style={s.eyebrow} numberOfLines={1}>{spec.eyebrow}</Text>
           </View>
-          <View style={s.ico}><Text style={s.icoText}>{spec.seal}</Text></View>
+          <Mascot size={64} face="look" prop="sparkle" shadow={false} />
         </View>
         <Text style={[longHead ? s.headSm : s.head, KEEP]} numberOfLines={3}>{spec.headline}</Text>
         {spec.sub ? <Text style={[s.sub, KEEP]} numberOfLines={spec.big ? 1 : 2}>{spec.sub}</Text> : null}
@@ -91,7 +91,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
       <View style={s.foot}>
         <Text style={[s.hook, KEEP]} numberOfLines={2}>{spec.hook}</Text>
         <View style={s.footRow}>
-          <Text style={s.url}>생일만 넣으면 30초 · 운Pick</Text>
+          <Text style={s.url}>생일만 넣으면 30초 · 운픽</Text>
           <View style={s.cta}><Text style={s.ctaText}>내 결과 보기 →</Text></View>
         </View>
       </View>
@@ -108,7 +108,7 @@ const s = StyleSheet.create({
   mast: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   datePill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.8)' },
   date: { fontSize: 11, fontWeight: '700', color: C.sub, letterSpacing: 0.3 },
-  sheet: { flex: 1, marginTop: 12, padding: 16, borderRadius: 22, backgroundColor: C.card, borderWidth: 1, borderColor: C.line },
+  sheet: { flex: 1, marginTop: 12, padding: 16, borderRadius: 18, backgroundColor: C.card, shadowColor: '#2F6FB0', shadowOpacity: 0.12, shadowRadius: 16, shadowOffset: { width: 0, height: 6 } },
   heroRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   kind: { fontSize: 11, fontWeight: '700', letterSpacing: 1.8, color: C.accent },
   eyebrow: { fontSize: 13, fontWeight: '600', color: C.mute, marginTop: 6 },
@@ -123,14 +123,14 @@ const s = StyleSheet.create({
   bigPill: { marginBottom: 10, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999, backgroundColor: C.accent },
   bigLabel: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
   stats: { flexDirection: 'row', gap: 6, marginTop: 10 },
-  stat: { flex: 1, paddingVertical: 8, paddingHorizontal: 8, borderRadius: 12, backgroundColor: '#F5F3F2' },
+  stat: { flex: 1, paddingVertical: 8, paddingHorizontal: 8, borderRadius: 12, backgroundColor: '#F3F5F8' },
   statK: { fontSize: 11, fontWeight: '600', color: C.mute },
   statV: { fontFamily: fonts.display, fontSize: 15, lineHeight: 23, fontWeight: '700', marginTop: 2, color: C.ink },
   teaser: { marginTop: 10, borderRadius: 14, padding: 10, backgroundColor: C.lav },
   teaserHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   lock: { width: 20, height: 20, borderRadius: 7, backgroundColor: C.violet, alignItems: 'center', justifyContent: 'center' },
-  lockText: { fontFamily: fonts.serif, fontSize: 11, lineHeight: 15, fontWeight: '700', color: '#FFFFFF' },
-  teaserLabel: { flex: 1, fontSize: 13, fontWeight: '700', color: C.ink },
+  lockText: { fontFamily: fonts.serif, fontSize: 11, lineHeight: 15, fontWeight: '700', color: '#1E2128' },
+  teaserLabel: { flex: 1, fontSize: 13, fontWeight: '700', color: '#FFFFFF' },
   teaserOpen: { fontSize: 11, fontWeight: '700', color: C.violet },
   bars: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 8 },
   bar: { height: 8, borderRadius: 4, backgroundColor: C.violet },

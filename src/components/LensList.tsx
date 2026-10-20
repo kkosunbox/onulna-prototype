@@ -41,7 +41,7 @@ export default function LensList({ lenses, verdict }: { lenses: LensLine[]; verd
 }
 
 const s = StyleSheet.create({
-  card: { borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 20, paddingVertical: 6 },
+  card: { borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, paddingHorizontal: 20, paddingVertical: 6 },
   verdict: { ...txt.bodyStrong, paddingVertical: 14 },
   row: { flexDirection: 'row', gap: 12, paddingVertical: 16 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },

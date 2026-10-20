@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import Ico from './Ico';
+import Mascot, { MascotFace, MascotPalette, MascotProp } from './Mascot';
 import { fonts, radius, sansW, shadow } from '../theme/typography';
 import { parseISO, weekdayOf } from '../utils/date';
 
@@ -13,9 +14,9 @@ import { parseISO, weekdayOf } from '../utils/date';
 const KEEP = (Platform.OS === 'web' ? { wordBreak: 'keep-all' } : {}) as object;
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
-export function AlmanacHero({ tone, kicker, seal, eyebrow, title, today, tags, children }: {
+export function AlmanacHero({ tone, kicker, seal, eyebrow, title, today, tags, children, mascot }: {
   tone: { color: string; bg: string }; kicker: string; seal: string; eyebrow?: string; title: string; today: string;
-  tags?: string[]; children?: React.ReactNode;
+  tags?: string[]; children?: React.ReactNode; mascot?: { palette: MascotPalette; face: MascotFace; prop: MascotProp };
 }) {
   const { m, d } = parseISO(today);
   return (
@@ -26,9 +27,9 @@ export function AlmanacHero({ tone, kicker, seal, eyebrow, title, today, tags, c
         <View style={s.datePill}><Text style={s.date}>{m}월 {d}일 {WEEK[weekdayOf(today)]}요일</Text></View>
       </View>
       <View style={s.body}>
-        <Ico ch={seal} size={48} color={tone.color} style={{ backgroundColor: colors.card }} />
-        {eyebrow ? <Text style={[s.eyebrow, { color: tone.color }]}>{eyebrow}</Text> : null}
-        <Text style={[s.title, KEEP]}>{title}</Text>
+        {mascot ? <View style={s.mascot} pointerEvents="none"><Mascot size={92} shadow={false} {...mascot} /></View> : <Ico ch={seal} size={48} color={tone.color} style={{ backgroundColor: colors.card }} />}
+        {eyebrow ? <Text style={[s.eyebrow, { color: tone.color }, mascot && { marginTop: 0 }]}>{eyebrow}</Text> : null}
+        <Text style={[s.title, KEEP, mascot && { paddingRight: 84 }]}>{title}</Text>
         {tags?.length ? (
           <View style={s.tags}>
             {tags.map(t => (
@@ -89,12 +90,13 @@ const s = StyleSheet.create({
   datePill: { paddingHorizontal: 11, paddingVertical: 5, borderRadius: radius.pill, backgroundColor: colors.card + 'CC' },
   date: { fontSize: 13, fontWeight: '600', color: colors.inkSub },
   body: { marginTop: 18 },
+  mascot: { position: 'absolute', right: -8, top: -14 },
   eyebrow: { fontSize: 13, fontWeight: '700', marginTop: 16 },
   title: { ...sansW('800'), fontSize: 24, lineHeight: 32, color: colors.ink, letterSpacing: -0.6, marginTop: 4 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 14 },
   tag: { borderRadius: radius.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: colors.card },
   tagText: { fontSize: 13, fontWeight: '700' },
-  ledger: { borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 20, paddingVertical: 6 },
+  ledger: { borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, paddingHorizontal: 20, paddingVertical: 6 },
   lrow: { flexDirection: 'row', gap: 14, paddingVertical: 16 },
   ldash: { borderTopWidth: 1, borderTopColor: colors.line },
   lnum: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center', marginTop: 1 },
@@ -104,7 +106,7 @@ const s = StyleSheet.create({
   quote: { marginTop: 18, padding: 18, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   qlabel: { fontSize: 13, fontWeight: '700', letterSpacing: 0.4 },
   qtext: { ...sansW('400'), fontSize: 15, lineHeight: 23, color: colors.ink, marginTop: 6 },
-  fig: { marginTop: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, padding: 20 },
+  fig: { marginTop: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, padding: 20 },
   figHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 },
   figTitle: { fontFamily: fonts.display, fontSize: 18, fontWeight: '700', color: colors.ink, letterSpacing: -0.4 },
   figCap: { fontSize: 13, color: colors.inkMute, fontWeight: '600' },

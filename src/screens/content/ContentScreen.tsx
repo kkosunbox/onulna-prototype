@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Mascot, { MascotFace, MascotPalette, MascotProp } from '../../components/Mascot';
 import { NewBadge, PromoCard } from '../../components/HeroCard';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -30,6 +31,14 @@ const LIST: [string, Entry[]][] = [
 ];
 
 /** 콘텐츠 탭 — 무료로 즐기고(공유) → 궁금한 건 프리미엄으로 */
+const FREE_MASCOT: Record<string, { palette: MascotPalette; face: MascotFace; prop: MascotProp }> = {
+  性: { palette: 'lavender', face: 'sleepy', prop: 'music' },
+  命: { palette: 'classic', face: 'look', prop: 'sparkle' },
+  符: { palette: 'mint', face: 'happy', prop: 'clover' },
+  前: { palette: 'peach', face: 'curious', prop: 'question' },
+  和: { palette: 'pink', face: 'wink', prop: 'heart' },
+};
+
 export default function ContentScreen() {
   const nav = useNavigation();
   const { user, today } = useApp();
@@ -67,7 +76,7 @@ export default function ContentScreen() {
         {FREE.map(([ch, t, d, go]) => (
           <PressableScale key={t} onPress={go} style={s.free} scaleTo={0.97} accessibilityLabel={t}>
             <View style={s.freeHead}>
-              <Ico ch={ch} size={40} />
+              <Mascot size={52} shadow={false} {...(FREE_MASCOT[ch] ?? FREE_MASCOT['命'])} />
               <View style={s.freeTag}><Text style={s.freeTagText}>무료</Text></View>
             </View>
             <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 12 }}>{t}</Text>
@@ -153,9 +162,9 @@ export default function ContentScreen() {
 }
 
 const s = StyleSheet.create({
-  points: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  points: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  free: { width: '48%', flexGrow: 1, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  free: { width: '48%', flexGrow: 1, padding: 16, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   freeHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   freeTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: colors.okBg },
   freeTagText: { fontSize: 11, fontWeight: '700', color: colors.success },
@@ -171,7 +180,7 @@ const s = StyleSheet.create({
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   lrow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
   line: { borderTopWidth: 1, borderTopColor: colors.line },
-  soon: { width: '48%', flexGrow: 1, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderStyle: 'dashed' },
+  soon: { width: '48%', flexGrow: 1, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderStyle: 'dashed' },
   soonH: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.inkMute },
   soonTier: { fontSize: 11, fontWeight: '700', color: colors.purpleSoft },
 });

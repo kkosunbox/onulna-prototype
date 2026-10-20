@@ -32,7 +32,7 @@ export default function Card({ children, style, variant = 'elevated', tint, onPr
 }
 
 const s = StyleSheet.create({
-  base: { borderRadius: radius.lg, padding: 20, backgroundColor: colors.card },
-  elevated: { ...shadow.card, borderWidth: 1, borderColor: colors.line },
-  flat: { borderWidth: 1, borderColor: colors.line },
+  base: { borderRadius: radius.lg, padding: 20, backgroundColor: colors.lavenderSoft },
+  elevated: {},
+  flat: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
 });

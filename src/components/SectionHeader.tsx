@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import PressableScale from './PressableScale';
+import Icon from './Icon';
 import { txt } from '../theme/typography';
 import { colors } from '../theme/colors';
 
@@ -20,17 +21,22 @@ export function HeadTitle({ title, eyebrow }: { title: string; eyebrow?: string 
 }
 
 export default function SectionHeader({ title, caption, action, onAction, first, eyebrow }: { title: string; caption?: string; action?: string; onAction?(): void; first?: boolean; eyebrow?: string }) {
+  // 시안: "제목 | 설명            >" 한 줄. 설명이 길면 제목 아래로 내린다
+  const inline = !!caption && caption.length <= 22 && !eyebrow && !/^\d{2} · /.test(title);
   return (
     <View style={{ marginTop: first ? 8 : 32, marginBottom: 12 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 12 }}>
-        <View style={{ flex: 1 }}><HeadTitle title={title} eyebrow={eyebrow} /></View>
-        {action ? (
-          <PressableScale onPress={onAction} hitSlop={10} scaleTo={0.94} style={{ paddingBottom: 3 }}>
-            <Text style={[txt.small, { color: colors.seal, fontWeight: '700' }]}>{action} →</Text>
-          </PressableScale>
-        ) : null}
-      </View>
-      {caption ? <Text style={[txt.small, { marginTop: 4 }]}>{caption}</Text> : null}
+      <PressableScale onPress={onAction} disabled={!onAction} scaleTo={0.98} accessibilityLabel={action ? `${title} ${action}` : title}
+        style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        <View style={{ flexShrink: 1 }}><HeadTitle title={title} eyebrow={eyebrow} /></View>
+        {inline ? (
+          <>
+            <View style={{ width: 1, height: 14, backgroundColor: colors.lineStrong }} />
+            <Text style={[txt.small, { flex: 1 }]} numberOfLines={1}>{caption}</Text>
+          </>
+        ) : <View style={{ flex: 1 }} />}
+        {onAction ? <Icon name="chevronRight" size={20} color={colors.inkSub} strokeWidth={2} /> : null}
+      </PressableScale>
+      {caption && !inline ? <Text style={[txt.small, { marginTop: 4 }]}>{caption}</Text> : null}
     </View>
   );
 }

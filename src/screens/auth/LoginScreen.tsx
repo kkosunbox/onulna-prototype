@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Mascot from '../../components/Mascot';
 import PageBg from '../../components/PageBg';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,7 +43,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={s.root}>
-      <PageBg />
+      <PageBg sky />
       <View style={s.hero}>
         {gift ? (
           <View style={s.gift}>
@@ -51,13 +52,12 @@ export default function LoginScreen() {
             <Text style={[txt.caption, { marginTop: 6 }]}>30초 가입하고 내 결과와 바로 비교해 보세요</Text>
           </View>
         ) : null}
-        <BrandMark size={52} />
-        <View style={s.dots}>
-          {[colors.love, colors.relation, colors.money, colors.work, colors.saju].map(c => <View key={c} style={[s.dot, { backgroundColor: c }]} />)}
+        <View style={{ alignItems: 'center' }}>
+          <Mascot size={150} face="look" prop="sparkle" />
+          <View style={{ marginTop: 18 }}><BrandMark size={44} /></View>
         </View>
-        <Text style={s.eyebrow}>TODAY'S PICK</Text>
-        <Text style={s.headline}>{COPY.ask}</Text>
-        <Text style={s.sub}>{COPY.pickMe}</Text>
+        <Text style={[s.headline, { textAlign: 'center' }]}>{COPY.ask}</Text>
+        <Text style={[s.sub, { textAlign: 'center' }]}>{COPY.pickMe}</Text>
       </View>
 
       <View style={s.bottom}>
@@ -90,9 +90,9 @@ const s = StyleSheet.create({
   dots: { flexDirection: 'row', gap: 7, marginTop: 34 },
   dot: { width: 8, height: 8, borderRadius: 4 },
   eyebrow: { fontSize: 11, fontWeight: '700', letterSpacing: 1.8, color: colors.seal, marginTop: 14 },
-  headline: { fontFamily: fonts.display, fontSize: 24, lineHeight: 32, fontWeight: '800', color: colors.ink, letterSpacing: -0.6, marginTop: 10 },
+  headline: { fontFamily: fonts.display, fontSize: 24, lineHeight: 32, fontWeight: '800', color: colors.ink, letterSpacing: -0.6, marginTop: 22 },
   sub: { fontSize: 15, lineHeight: 23, color: colors.inkSub, marginTop: 10 },
-  emailBtn: { marginTop: 24, alignSelf: 'stretch', height: 54, borderRadius: radius.pill, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
+  emailBtn: { marginTop: 24, alignSelf: 'stretch', height: 54, borderRadius: radius.md, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' },
   emailText: { fontSize: 15, fontWeight: '700', color: colors.white },
   logo: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 18 },
   logoText: { fontFamily: fonts.serif, fontSize: 40, lineHeight: 46, fontWeight: '800', color: colors.purple, letterSpacing: -1.2, marginTop: 20 },
@@ -103,7 +103,7 @@ const s = StyleSheet.create({
   emailLink: { fontSize: 15, fontWeight: '600', color: colors.inkSub, textDecorationLine: 'underline' },
   helpPill: { marginTop: 18, paddingHorizontal: 16, paddingVertical: 9, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.lineStrong },
   helpPillText: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
-  gift: { marginBottom: 32, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  gift: { marginBottom: 32, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   giftWho: { fontSize: 13, fontWeight: '700', color: colors.love },
   giftLine: { fontFamily: fonts.display, fontSize: 18, lineHeight: 26, fontWeight: '700', color: colors.ink, marginTop: 6 },
   helpRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: colors.line },

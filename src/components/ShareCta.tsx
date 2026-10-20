@@ -27,7 +27,7 @@ export default function ShareCta({ item, spec }: { item?: Item; spec: ShareSpec 
 }
 
 const s = StyleSheet.create({
-  box: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 24, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, borderStyle: 'dashed' },
+  box: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 24, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderStyle: 'dashed' },
   seal: { width: 40, height: 40, borderRadius: 16, borderWidth: 1.5, borderColor: colors.seal, alignItems: 'center', justifyContent: 'center' },
   sealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.seal },
 });

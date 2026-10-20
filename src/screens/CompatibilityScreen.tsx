@@ -271,7 +271,7 @@ const s = StyleSheet.create({
   pairMid: { width: 64, flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 34 },
   pairLine: { flex: 1, height: 1, backgroundColor: colors.love, opacity: 0.5 },
   pairHan: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.love },
-  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 20, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  inviteRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10, marginBottom: 12, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   inviteHan: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.purpleSoft, width: 28, textAlign: 'center' },
   form: { gap: 20, padding: 20 },
   me: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.lineStrong },

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { HeroBg, heroSurface } from '../../components/HeroCard';
+import { darkSurface, onDark } from '../../components/HeroCard';
+import Mascot from '../../components/Mascot';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -27,10 +28,10 @@ export default function CharacterScreen() {
   return (
     <Screen title="나의 사주 캐릭터" back>
       <FriendCompare route="Character" spec={characterSpec(u)} />
-      <View ref={card} collapsable={false} style={[heroSurface, s.card]}>
-        <HeroBg />
-        <View style={s.brand}><BrandMark size={15} /></View>
-        <View style={[s.seal, { borderColor: colors.seal }]}><Text style={s.sealText}>{c.hanja}</Text></View>
+      <View ref={card} collapsable={false} style={[darkSurface, s.card]}>
+        <View style={s.mascot} pointerEvents="none"><Mascot size={120} palette="lavender" face="look" prop="sparkle" shadow={false} /></View>
+        <BrandMark size={20} light />
+        <View style={s.seal}><Text style={s.sealText}>{c.hanja}</Text></View>
         <Text style={s.eyebrow}>{u.nickname}님은</Text>
         <Text style={s.name}>{c.name}</Text>
         <Text style={s.title}>{c.title}</Text>
@@ -65,17 +66,16 @@ export default function CharacterScreen() {
 }
 
 const s = StyleSheet.create({
-  card: { alignItems: 'center', marginTop: 4 },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' },
-  brandText: { fontFamily: fonts.serif, color: colors.ink, fontSize: 15, fontWeight: '600' },
-  seal: { marginTop: 20, width: 84, height: 84, borderRadius: 16, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
-  sealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.seal, letterSpacing: 2 },
-  eyebrow: { color: colors.inkSub, fontSize: 13, marginTop: 18 },
-  name: { fontFamily: fonts.serif, color: colors.ink, fontSize: 40, fontWeight: '800', marginTop: 2 },
-  title: { color: colors.seal, fontSize: 15, marginTop: 4 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 16 },
-  chip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card },
-  chipText: { color: colors.ink, fontSize: 13, fontWeight: '600' },
-  foot: { color: colors.inkMute, fontSize: 11, marginTop: 18 },
+  card: { marginTop: 4 },
+  mascot: { position: 'absolute', right: -2, top: 26 },
+  seal: { alignSelf: 'flex-start', marginTop: 18, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, borderWidth: 1, borderColor: onDark.accent },
+  sealText: { fontFamily: fonts.serif, fontSize: 15, fontWeight: '700', color: onDark.accent, letterSpacing: 1 },
+  eyebrow: { color: onDark.sub, fontSize: 15, marginTop: 14 },
+  name: { fontFamily: fonts.serif, color: onDark.text, fontSize: 40, lineHeight: 46, fontWeight: '800', letterSpacing: -1.2, marginTop: 2 },
+  title: { color: onDark.accent, fontSize: 15, fontWeight: '700', marginTop: 4 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 16, paddingRight: 80 },
+  chip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)' },
+  chipText: { color: onDark.text, fontSize: 13, fontWeight: '600' },
+  foot: { color: onDark.mute, fontSize: 11, marginTop: 16 },
   cta: { marginTop: 24, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, borderWidth: 1, borderColor: colors.lavender },
 });

@@ -337,7 +337,7 @@ const s = StyleSheet.create({
   infoVal: { flex: 1, fontSize: 15, fontWeight: '600', color: colors.ink, textAlign: 'right' },
   darkChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   lpill: { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 14, paddingVertical: 9, borderRadius: radius.pill },
-  ychip: { minWidth: 64, height: 52, paddingHorizontal: 14, borderRadius: radius.lg, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong, alignItems: 'center', justifyContent: 'center' },
+  ychip: { minWidth: 64, height: 52, paddingHorizontal: 14, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft, alignItems: 'center', justifyContent: 'center' },
   ychipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
   ychipText: { fontSize: 15, fontWeight: '700', color: colors.ink },
   ychipSub: { fontSize: 11, fontWeight: '600', color: colors.inkMute, marginTop: 1 },
