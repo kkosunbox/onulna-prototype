@@ -39,9 +39,12 @@ const skyBg = `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop 
 
 png(svg(`${skyBg}<g transform="translate(50 52) scale(0.72) translate(-50 -50)">${mascot()}</g>`), `${out}/icon.png`, 1024);
 png(svg(`<g transform="translate(50 52) scale(0.52) translate(-50 -50)">${mascot()}</g>`), `${out}/adaptive-icon.png`, 1024);
-png(svg(`<g transform="translate(200 130) scale(1.1) translate(-50 -50)">${mascot()}</g>
-  <g transform="translate(200 258) scale(0.62) translate(-134 -64)">${word()}</g>
-  <text x="200" y="312" font-family="Pretendard" font-weight="700" font-size="16" fill="${MUTE}" text-anchor="middle">오늘, 나에게 딱 맞는 운</text>`, '0 0 400 400'), `${out}/splash-icon.png`, 1200);
+// 스플래시: 확정 로고 이미지(assets/brand/logo.png)를 그대로 넣는다 — 다시 그리지 않는다
+const LOGO_B64 = fs.readFileSync(path.resolve(__dirname, '../assets/brand/logo.png')).toString('base64');
+png(svg(`<defs><clipPath id="lc"><rect x="60" y="120" width="280" height="143.2" rx="20"/></clipPath></defs>
+  <image href="data:image/png;base64,${LOGO_B64}" x="60" y="120" width="280" height="143.2" clip-path="url(#lc)"/>
+  <text x="200" y="300" font-family="Pretendard" font-weight="700" font-size="16" fill="${MUTE}" text-anchor="middle">오늘, 나에게 딱 맞는 운</text>`, '0 0 400 400'), `${out}/splash-icon.png`, 1200);
 png(svg(`${skyBg.replace('<rect', '<rect rx="22"')}<g transform="translate(50 52) scale(0.78) translate(-50 -50)">${mascot()}</g>`), `${out}/favicon.png`, 196);
-png(svg(`<rect x="0" y="-20" width="268" height="168" fill="#FFFFFF"/>${word()}`, '0 -20 268 168'), path.resolve(__dirname, '../docs/wordmark.png'), 1200);
+// docs/wordmark.png 는 확정 로고 원본을 그대로 복사해 둔다
+fs.copyFileSync(path.resolve(__dirname, '../assets/brand/logo.png'), path.resolve(__dirname, '../docs/wordmark.png'));
 console.log('ok');

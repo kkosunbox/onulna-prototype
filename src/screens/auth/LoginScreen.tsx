@@ -53,8 +53,7 @@ export default function LoginScreen() {
           </View>
         ) : null}
         <View style={{ alignItems: 'center' }}>
-          <Mascot size={150} face="look" prop="sparkle" />
-          <View style={{ marginTop: 18 }}><BrandMark size={56} /></View>
+          <BrandMark size={140} />
         </View>
         <Text style={[s.headline, { textAlign: 'center' }]}>{COPY.ask}</Text>
         <Text style={[s.sub, { textAlign: 'center' }]}>{COPY.pickMe}</Text>
