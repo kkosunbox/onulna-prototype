@@ -24,20 +24,18 @@ const mascot = () => `
   ${eye(36, 46, 9)}${eye(58, 42, 9.5)}`;
 
 const BLUE = '#5B9BF5';
-const st = (c, cap = 'round') => `fill="none" stroke="${c}" stroke-width="15" stroke-linecap="${cap}" stroke-linejoin="round"`;
-/** 운Pick 워드마크 — BrandMark.tsx 와 같은 패스 (폭 -4..320, 높이 0..124) */
+const st = (c, cap = 'round') => `fill="none" stroke="${c}" stroke-width="18" stroke-linecap="${cap}" stroke-linejoin="round"`;
+/** 운Pick 워드마크 — BrandMark.tsx 와 같은 패스 (폭 -8..336, 높이 -10..128) */
 const word = (c = INK) => `
-  <circle cx="50" cy="26" r="15" ${st(c)}/>
-  <rect x="6" y="50" width="88" height="15" fill="${c}"/>
-  <rect x="42.5" y="58" width="15" height="20" fill="${c}"/>
-  <path d="M18 58 V84 C18 98 34 100 48 94 C62 88 74 86 80 94 C84 100 84 108 84 114" ${st(c, 'butt')}/>
-  <g transform="translate(116 0)">
-    <path d="M8 100 V40 H34 A19 19 0 0 1 34 78 H22" ${st(c)}/>
-    <path d="M70 58 V100" ${st(c)}/><circle cx="70" cy="30" r="10" fill="${c}"/>
-    <path d="M134 60 A21 21 0 1 0 134 96" ${st(c)}/>
-    <path d="M160 30 V100 M166 76 L190 100" ${st(c)}/>
-    <path d="M168 70 L194 44" ${st(BLUE)}/>
-  </g>`;
+  <circle cx="48" cy="24" r="18" ${st(c)}/>
+  <rect x="0" y="54" width="96" height="18" fill="${c}"/>
+  <rect x="39" y="64" width="18" height="30" fill="${c}"/>
+  <path d="M13 64 V88 C13 102 30 104 46 97 C60 91 72 90 80 98 C85 103 86 112 86 124" ${st(c, 'butt')}/>
+  <path d="M117 104 V38 H138 A19 19 0 0 1 138 76 H126" ${st(c)}/>
+  <path d="M187 60 V104" ${st(c)}/><circle cx="187" cy="32" r="11" fill="${c}"/>
+  <path d="M254 62 A22 22 0 1 0 254 98" ${st(c)}/>
+  <path d="M284 30 V104 M291 78 L314 104" ${st(c)}/>
+  <path d="M292 72 L318 46" ${st(BLUE)}/>`;
 const svg = (body, vb = '0 0 100 100') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}">${body}</svg>`;
 const png = (s, out, w) => fs.writeFileSync(out, new Resvg(s, { fitTo: { mode: 'width', value: w }, font: { fontFiles: FONTS, loadSystemFonts: false, defaultFontFamily: 'Pretendard' } }).render().asPng());
 const out = process.argv[2] || path.resolve(__dirname, '../assets');
@@ -46,8 +44,8 @@ const skyBg = `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop 
 png(svg(`${skyBg}<g transform="translate(50 52) scale(0.72) translate(-50 -50)">${mascot()}</g>`), `${out}/icon.png`, 1024);
 png(svg(`<g transform="translate(50 52) scale(0.52) translate(-50 -50)">${mascot()}</g>`), `${out}/adaptive-icon.png`, 1024);
 png(svg(`<g transform="translate(200 130) scale(1.1) translate(-50 -50)">${mascot()}</g>
-  <g transform="translate(200 252) scale(0.42) translate(-158 -62)">${word()}</g>
+  <g transform="translate(200 252) scale(0.4) translate(-164 -59)">${word()}</g>
   <text x="200" y="312" font-family="Pretendard" font-weight="700" font-size="16" fill="${MUTE}" text-anchor="middle">오늘, 나에게 딱 맞는 운</text>`, '0 0 400 400'), `${out}/splash-icon.png`, 1200);
 png(svg(`${skyBg.replace('<rect', '<rect rx="22"')}<g transform="translate(50 52) scale(0.78) translate(-50 -50)">${mascot()}</g>`), `${out}/favicon.png`, 196);
-png(svg(`<rect x="-24" y="-16" width="368" height="156" fill="#FFFFFF"/>${word()}`, '-24 -16 368 156'), path.resolve(__dirname, '../docs/wordmark.png'), 1200);
+png(svg(`<rect x="-28" y="-26" width="384" height="170" fill="#FFFFFF"/>${word()}`, '-28 -26 384 170'), path.resolve(__dirname, '../docs/wordmark.png'), 1200);
 console.log('ok');
