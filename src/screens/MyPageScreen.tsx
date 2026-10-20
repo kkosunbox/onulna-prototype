@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Mascot from '../components/Mascot';
 import HeroCard from '../components/HeroCard';
 import { Alert, Linking, Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -83,12 +84,11 @@ export default function MyPageScreen() {
       {/* 브랜드 카드: 홈 히어로와 같은 그라디언트로 앱 전체 톤을 묶는다 */}
       <HeroCard style={s.card}>
           <View style={s.cardTop}>
-            <View style={s.avatar}><Text style={s.avatarText}>{user.nickname.slice(0, 1)}</Text></View>
+            <Mascot size={60} face="happy" shadow={false} />
             <View style={{ flex: 1 }}>
               <Text style={s.name}>{user.nickname}</Text>
               <Text style={s.meta}>{MBTI_INFO[user.mbti].nickname} {user.mbti} · {user.bloodType}형</Text>
             </View>
-            <LogoMark size={26} fg={colors.ink} />
           </View>
           {fortune ? (
             <View style={s.todayRow}>

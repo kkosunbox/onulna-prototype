@@ -51,7 +51,7 @@ export default function SocialLoginScreen() {
           <View style={s.dots}>{[0, 1, 2].map(i => <View key={i} style={s.dot} />)}</View>
           <View style={[s.logo, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line }]}><LogoMark size={38} fg={colors.ink} /></View>
         </View>
-        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>운Pick에서 {brand} 계정 정보를{'\n'}요청해요</Text>
+        <Text style={[txt.h2, { textAlign: 'center', marginTop: 20 }]}>운픽에서 {brand} 계정 정보를{'\n'}요청해요</Text>
         <Text style={[txt.small, { textAlign: 'center', marginTop: 6 }]}>동의하면 별도 가입 없이 바로 시작할 수 있어요.</Text>
 
         <View style={s.card}>

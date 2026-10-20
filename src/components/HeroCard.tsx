@@ -17,7 +17,7 @@ export function HeroBg({ tone }: { tone?: string }) {
     <LinearGradient
       pointerEvents="none"
       colors={tone ? [tone, colors.card] : gradients.hero}
-      start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+      start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }}
       style={StyleSheet.absoluteFill}
     />
   );
@@ -30,13 +30,17 @@ export const onDark = { text: '#FFFFFF', sub: 'rgba(255,255,255,0.78)', mute: 'r
 /** 히어로 카드 겉모양 */
 export const heroSurface: ViewStyle = {
   borderRadius: radius.xl, padding: 22, overflow: 'hidden', backgroundColor: colors.card,
-  borderWidth: 1, borderColor: colors.line, ...shadow.hero,
 };
 
-export default function HeroCard({ children, style, tone }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; tone?: string }) {
+/** 하늘 카드 — 위에 운알이(선택)를 올리고 아래에 내용. 운세 탭 · 유료 화면 · 마이 · 궁합 결과가 같은 모양 */
+export default function HeroCard({ children, style, tone, mascot }: {
+  children: React.ReactNode; style?: StyleProp<ViewStyle>; tone?: string;
+  mascot?: { palette?: MascotPalette; face?: MascotFace; prop?: MascotProp; size?: number };
+}) {
   return (
     <View style={[heroSurface, style]}>
       <HeroBg tone={tone} />
+      {mascot ? <View style={{ alignItems: 'center', marginTop: -6, marginBottom: 6 }}><Mascot size={mascot.size ?? 96} shadow={false} palette={mascot.palette} face={mascot.face ?? 'look'} prop={mascot.prop ?? 'cloud'} /></View> : null}
       {children}
     </View>
   );

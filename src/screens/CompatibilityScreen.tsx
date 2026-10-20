@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Mascot from '../components/Mascot';
 import HeroCard from '../components/HeroCard';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { TabParamList } from '../navigation/types';
@@ -104,9 +105,9 @@ export default function CompatibilityScreen() {
       <Screen largeTitle="우리 둘의 궁합" onBack={() => setResult(null)}>
         <HeroCard style={s.hero}>
             <View style={s.pair}>
-              <Avatar name={user.nickname} light />
-              <Icon name="heart" size={18} color={colors.seal} filled />
-              <Avatar name={result.target.nickname} />
+              <Mascot size={64} face="happy" shadow={false} />
+              <Icon name="heart" size={22} color="#FF8FB1" filled fillOpacity={1} strokeWidth={0} />
+              <Mascot size={64} palette="pink" face="wink" shadow={false} />
             </View>
             <Text style={s.pairNames}>{user.nickname} · {result.target.nickname}</Text>
             <View style={{ marginVertical: 16 }}><ScoreRing score={result.total} size={128} label="종합 궁합" /></View>
@@ -177,31 +178,29 @@ export default function CompatibilityScreen() {
       subtitle="상대의 정보로 네 가지 관점의 궁합을 봐요"
       footer={<PrimaryButton label="궁합 보기" onPress={analyze} disabled={!ok} />}
     >
-      {/* 두 사람의 책력 — 내 낙관 · 和 · 아직 비어 있는 상대 낙관 */}
-      <View style={s.pairSheet}>
-        <View style={s.pairCol}>
-          <View style={[s.pairSeal, { backgroundColor: colors.seal }]}><Text style={s.pairSealText}>{user.nickname.slice(0, 1)}</Text></View>
-          <Text style={s.pairName}>{user.nickname}</Text>
-          <Text style={txt.caption}>{user.mbti} · {user.bloodType}형</Text>
+      {/* 두 사람 — 나(운알이) · 하트 · 아직 비어 있는 상대(궁금한 운알이) */}
+      <HeroCard style={{ marginTop: 6 }}>
+        <View style={s.pairRow}>
+          <View style={s.pairCol}>
+            <Mascot size={88} face="happy" shadow={false} />
+            <Text style={s.pairName}>{user.nickname}</Text>
+            <Text style={txt.small}>{user.mbti} · {user.bloodType}형</Text>
+          </View>
+          <View style={s.pairHeart}><Icon name="heart" size={26} color="#FF8FB1" filled fillOpacity={1} strokeWidth={0} /></View>
+          <View style={s.pairCol}>
+            <Mascot size={88} palette={name.trim() ? 'pink' : 'lavender'} face={name.trim() ? 'wink' : 'curious'} prop={name.trim() ? 'none' : 'question'} shadow={false} />
+            <Text style={s.pairName}>{name.trim() || '그 사람'}</Text>
+            <Text style={txt.small}>{mbti && blood ? `${mbti} · ${blood}형` : '정보를 채워 주세요'}</Text>
+          </View>
         </View>
-        <View style={s.pairMid}>
-          <View style={s.pairLine} />
-          <Text style={s.pairHan}>和</Text>
-          <View style={s.pairLine} />
-        </View>
-        <View style={s.pairCol}>
-          <View style={[s.pairSeal, s.pairEmpty]}><Text style={[s.pairSealText, { color: colors.inkMute }]}>{name.trim() ? name.trim().slice(0, 1) : '?'}</Text></View>
-          <Text style={s.pairName}>{name.trim() || '그 사람'}</Text>
-          <Text style={txt.caption}>{mbti && blood ? `${mbti} · ${blood}형` : '정보를 채워 주세요'}</Text>
-        </View>
-      </View>
+      </HeroCard>
       <PressableScale onPress={sendInvite} style={s.inviteRow} scaleTo={0.98} accessibilityLabel="상대에게 링크로 궁합 신청 받기">
-        <Text style={s.inviteHan}>信</Text>
+        <View style={s.inviteIco}><Icon name="share" size={20} color={colors.seal} strokeWidth={2} /></View>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>생일을 모른다면, 링크로 신청받기</Text>
           <Text style={txt.caption}>상대가 링크를 열면 둘의 궁합이 바로 나와요</Text>
         </View>
-        <Icon name="share" size={18} color={colors.purple} />
+        <Icon name="chevronRight" size={18} color={colors.inkSub} strokeWidth={2} />
       </PressableScale>
 
       <Card style={s.form}>
@@ -262,8 +261,11 @@ export default function CompatibilityScreen() {
 }
 
 const s = StyleSheet.create({
+  pairRow: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: 4 },
+  pairHeart: { marginBottom: 64 },
+  inviteIco: { width: 40, height: 40, borderRadius: 12, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center' },
   pairSheet: { flexDirection: 'row', alignItems: 'center', marginTop: 4, padding: 20, borderRadius: radius.xl, backgroundColor: colors.loveBg, borderWidth: 1, borderColor: colors.line },
-  pairCol: { flex: 1, alignItems: 'center', gap: 4 },
+  pairCol: { flex: 1, alignItems: 'center', gap: 2 },
   pairSeal: { width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
   pairEmpty: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.inkMute, backgroundColor: colors.card },
   pairSealText: { fontFamily: fonts.serif, fontSize: 24, fontWeight: '800', color: colors.white },

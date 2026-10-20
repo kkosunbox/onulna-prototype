@@ -53,7 +53,7 @@ export default function HomeScreen() {
             <Icon name="chevronLeft" size={24} />
           </PressableScale>
         ) : null}
-        <BrandMark size={28} />
+        <BrandMark size={36} />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
         <PressableScale onPress={() => nav.navigate('Wallet')} style={s.ptPill} scaleTo={0.94} accessibilityLabel={`내 포인트 ${points}P`}>

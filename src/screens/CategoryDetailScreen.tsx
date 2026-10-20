@@ -18,7 +18,7 @@ import { RootStackParamList } from '../navigation/types';
 import { analysisTheme, categoryTheme, colors } from '../theme/colors';
 import { radius, txt } from '../theme/typography';
 
-const KICKER = { love: '緣分 · 연애운', money: '財物 · 재물운', work: '事業 · 직장운', relationship: '人和 · 관계운' } as const;
+const KICKER = { love: 'LOVE · 연애운', money: 'MONEY · 재물운', work: 'WORK · 직장운', relationship: 'PEOPLE · 관계운' } as const;
 
 export default function CategoryDetailScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'CategoryDetail'>>();

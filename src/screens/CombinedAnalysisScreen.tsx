@@ -25,7 +25,8 @@ export default function CombinedAnalysisScreen() {
   return (
     <Screen title="종합 분석" back>
       <AlmanacHero
-        tone={{ color: colors.purple, bg: colors.lavenderSoft }} kicker="綜合 · 종합 분석" seal="合" eyebrow="네 가지 관점이 겹친 오늘"
+        tone={{ color: colors.seal, bg: colors.accentBg }} kicker="TODAY · 종합 분석" seal="合" eyebrow="네 가지 관점이 겹친 오늘"
+        mascot={{ palette: 'classic', face: f.totalScore >= 80 ? 'happy' : 'look', prop: 'sparkle' }}
         title={f.summary} today={today} tags={f.commonKeywords.length ? f.commonKeywords : f.keywords.slice(0, 1)}
       />
 

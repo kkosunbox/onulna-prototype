@@ -91,7 +91,7 @@ const ShareCard = forwardRef<View, { spec: ShareSpec; today: string }>(({ spec, 
       <View style={s.foot}>
         <Text style={[s.hook, KEEP]} numberOfLines={2}>{spec.hook}</Text>
         <View style={s.footRow}>
-          <Text style={s.url}>생일만 넣으면 30초 · 운Pick</Text>
+          <Text style={s.url}>생일만 넣으면 30초 · 운픽</Text>
           <View style={s.cta}><Text style={s.ctaText}>내 결과 보기 →</Text></View>
         </View>
       </View>

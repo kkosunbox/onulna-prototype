@@ -15,7 +15,8 @@ import { Item, fmtP } from '../../services/premium/catalog';
 import { SrcKey } from '../../services/premium/engine';
 import { analysisTheme, colors, gradients } from '../../theme/colors';
 import { fonts, radius, shadow, txt } from '../../theme/typography';
-import { HeadTitle } from '../SectionHeader';
+import SectionHeader, { HeadTitle } from '../SectionHeader';
+import { MascotFace, MascotPalette, MascotProp } from '../Mascot';
 
 export const scoreColor = (v: number) => (v >= 85 ? colors.purple : v >= 75 ? colors.purpleSoft : colors.inkMute);
 
@@ -65,13 +66,9 @@ export function HeadRow({ item, caption }: { item?: Item | null; caption: string
 }
 
 /* ---------- 글 ---------- */
+/** 섹션 제목 — 홈·운세와 같은 '제목 | 설명' 한 줄 (번호가 붙으면 CHAPTER 눈썹) */
 export function SubHead({ title, caption, first }: { title: string; caption?: string; first?: boolean }) {
-  return (
-    <View style={{ marginTop: first ? 8 : 32, marginBottom: 12 }}>
-      <HeadTitle title={title} />
-      {caption ? <Text style={[txt.small, { marginTop: 4 }]}>{caption}</Text> : null}
-    </View>
-  );
+  return <SectionHeader title={title} caption={caption} first={first} />;
 }
 export function Para({ children, mt = 6, style }: { children: React.ReactNode; mt?: number; style?: StyleProp<TextStyle> }) {
   return <Text style={[s.para, { marginTop: mt }, style]}>{children}</Text>;
@@ -153,8 +150,11 @@ export function Seal({ ch, size = 36 }: { ch: string; bg?: string; size?: number
 }
 
 /* ---------- 히어로 ---------- */
-export function Hero({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) {
-  return <HeroCard style={[{ marginTop: 12 }, style]}>{children}</HeroCard>;
+/** 유료 화면 맨 위 하늘 카드 — 기본으로 구름 위 운알이를 올린다(mascot={false}로 끔) */
+export function Hero({ children, style, mascot = {} }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; mascot?: false | { palette?: MascotPalette; face?: MascotFace; prop?: MascotProp; size?: number } }) {
+  // 가로로 놓인 히어로(점수 링 + 글)는 운알이 자리가 없어 넣지 않는다
+  const row = StyleSheet.flatten(style)?.flexDirection === 'row';
+  return <HeroCard style={[{ marginTop: 12 }, style]} mascot={mascot && !row ? mascot : undefined}>{children}</HeroCard>;
 }
 export const heroTxt = StyleSheet.create({
   eyebrow: { color: colors.seal, fontSize: 13, fontWeight: '700', letterSpacing: 0.4 },

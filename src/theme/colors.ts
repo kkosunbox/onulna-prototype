@@ -104,7 +104,7 @@ export const analysisTheme: Record<SourceKey, { label: string; sub: string; emoj
 
 /** 화면 머리의 하늘색 그라데이션과 카드용 파스텔 */
 export const gradients = {
-  hero: isDark ? (['#1B2A3D', '#171B21'] as const) : (['#EAF5FF', '#FFFFFF'] as const),
+  hero: isDark ? (['#1B2A3D', '#171B21'] as const) : (['#BFE3FF', '#E3F2FF', '#F7FBFF'] as const),
   sky: isDark ? (['#1B3550', '#111418'] as const) : (['#8CCBFF', '#D7EEFF', '#FFFFFF'] as const),
   night: ['#1E2128', '#15171C'] as const,
   soft: [colors.lavenderSoft, colors.lavenderSoft] as const,

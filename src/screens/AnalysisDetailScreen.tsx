@@ -22,7 +22,7 @@ import { MBTI_INFO } from '../data/mbtiData';
 import { AstroReport, BloodType, User } from '../types';
 import { weekdayOf } from '../utils/date';
 
-const KICKER = { saju: '四柱 · 사주', thai: '星占 · 점성술', mbti: '性向 · MBTI', blood: '血型 · 혈액형' } as const;
+const KICKER = { saju: 'SAJU · 사주', thai: 'ASTROLOGY · 점성술', mbti: 'MBTI · 성향', blood: 'BLOOD · 혈액형' } as const;
 const HERO_MASCOT = {
   saju: { palette: 'peach', face: 'look', prop: 'sparkle' },
   thai: { palette: 'classic', face: 'curious', prop: 'sparkle' },

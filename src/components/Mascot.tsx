@@ -25,6 +25,17 @@ export default function Mascot({ size = 96, palette = 'classic', face = 'open', 
   size?: number; palette?: MascotPalette; face?: MascotFace; prop?: MascotProp; shadow?: boolean;
 }) {
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, '');
+  return (
+    <Svg width={size} height={size} viewBox="0 0 100 100">
+      <MascotArt id={id} palette={palette} face={face} prop={prop} shadow={shadow} />
+    </Svg>
+  );
+}
+
+/** 운알이 그림(100×100 좌표) — 로고처럼 다른 SVG 안에 넣을 때 G로 감싸 옮겨 쓴다 */
+export function MascotArt({ id, palette = 'classic', face = 'open', prop = 'none', shadow = false }: {
+  id: string; palette?: MascotPalette; face?: MascotFace; prop?: MascotProp; shadow?: boolean;
+}) {
   const P = PAL[palette];
   const spots = [
     { cx: 30, cy: 70, r: 34, c: P.spots[1] },
@@ -33,7 +44,7 @@ export default function Mascot({ size = 96, palette = 'classic', face = 'open', 
     { cx: 36, cy: 28, r: 22, c: P.spots[3] },
   ];
   return (
-    <Svg width={size} height={size} viewBox="0 0 100 100">
+    <G>
       <Defs>
         <ClipPath id={`b${id}`}><Path d={BODY} /></ClipPath>
         {spots.map((s, i) => (
@@ -53,10 +64,14 @@ export default function Mascot({ size = 96, palette = 'classic', face = 'open', 
         <Rect x={0} y={0} width={100} height={100} fill={P.base} />
         {spots.map((s, i) => <Circle key={i} cx={s.cx} cy={s.cy} r={s.r} fill={`url(#g${id}${i})`} />)}
       </G>
+      {/* 유리 같은 윤기 — 흰 테두리와 왼쪽 위 반짝임 */}
+      <Path d={BODY} fill="none" stroke="#FFFFFF" strokeOpacity={0.75} strokeWidth={1.6} />
+      <Path d="M22 34 C24 26 29 21 35 19" stroke="#FFFFFF" strokeOpacity={0.9} strokeWidth={3.2} strokeLinecap="round" fill="none" />
+      <Circle cx={20} cy={41} r={1.8} fill="#FFFFFF" fillOpacity={0.85} />
 
       <Face face={face} />
       <Accessory prop={prop} />
-    </Svg>
+    </G>
   );
 }
 

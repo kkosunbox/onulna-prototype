@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Mascot from '../../components/Mascot';
 import { StyleSheet, Text, View } from 'react-native';
 import Screen from '../../components/Screen';
 import TextField from '../../components/TextField';
@@ -61,6 +62,7 @@ export default function SignUpScreen() {
 
   return (
     <Screen back footer={<PrimaryButton label="다음" onPress={() => setSheet(true)} disabled={!formOk} />}>
+      <View style={{ marginTop: 8 }}><Mascot size={64} face="happy" prop="sparkle" shadow={false} /></View>
       <Text style={[txt.title, { marginTop: 8 }]}>이메일로 시작하기</Text>
       <Text style={[txt.small, { marginTop: 6 }]}>이메일과 비밀번호만 있으면 바로 시작할 수 있어요.</Text>
 

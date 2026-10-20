@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Mascot from '../../components/Mascot';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Screen from '../../components/Screen';
@@ -63,6 +64,7 @@ export default function FindPasswordScreen() {
         ? <PrimaryButton label={busy ? '보내는 중…' : '인증번호 받기'} onPress={send} disabled={!isEmail(email) || busy} />
         : <PrimaryButton label={busy ? '변경 중…' : '비밀번호 변경'} onPress={reset} disabled={!can2} />}
     >
+      <View style={{ marginTop: 8 }}><Mascot size={64} face="curious" prop="question" shadow={false} /></View>
       <Text style={[txt.title, { marginTop: 8 }]}>{step === 1 ? '가입한 이메일을\n알려주세요' : '인증번호와\n새 비밀번호를 입력해 주세요'}</Text>
       <Text style={[txt.small, { marginTop: 6 }]}>{step === 1 ? '비밀번호를 다시 설정할 수 있는 인증번호를 보내드려요.' : `${email.trim()}로 보낸 6자리 인증번호를 입력해 주세요.`}</Text>
 
