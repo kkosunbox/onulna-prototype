@@ -30,23 +30,21 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
   // 탭 화면(큰 제목)에도 뒤로 가기: 화면 안 단계 → 이전에 보던 탭 → 홈
   const showBack = back || !!largeTitle || !!onBack;
   const goBack = onBack ?? (largeTitle && !back ? tabBack : () => nav.goBack());
-  const bar = (title || showBack || right) && (
+  // 시안: 모든 화면 머리는 "‹ 제목" 왼쪽 정렬 한 줄 + 오른쪽 자리(코인·저장 등)
+  const heading = largeTitle ?? title;
+  const bar = (heading || showBack || right) && (
     <View style={s.bar}>
       {showBack ? (
-        <PressableScale onPress={goBack} hitSlop={10} style={[s.iconBtn]} accessibilityLabel="뒤로 가기" scaleTo={0.9}>
-          <View style={s.backBtn}><Icon name="chevronLeft" size={20} color={colors.ink} strokeWidth={2.2} /></View>
+        <PressableScale onPress={goBack} hitSlop={10} style={s.iconBtn} accessibilityLabel="뒤로 가기" scaleTo={0.9}>
+          <Icon name="chevronLeft" size={26} color={colors.ink} strokeWidth={2.2} />
         </PressableScale>
-      ) : <View style={s.iconBtn} />}
-      <Text style={[txt.h3, { fontWeight: '700' }]} numberOfLines={1}>{title}</Text>
-      <View style={s.iconBtn}>{right}</View>
+      ) : null}
+      <Text style={s.heading} numberOfLines={1} accessibilityRole="header">{heading}</Text>
+      <View style={s.right}>{right}</View>
     </View>
   );
-  const head = largeTitle ? (
-    <View style={s.largeHead}>
-      <Text style={txt.title} accessibilityRole="header">{largeTitle}</Text>
-      {subtitle ? <Text style={[txt.body, { marginTop: 4 }]}>{subtitle}</Text> : null}
-    </View>
-  ) : null;
+  const head = null;
+  void subtitle;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bg }} edges={['top']}>
@@ -66,8 +64,10 @@ export default function Screen({ children, title, largeTitle, subtitle, back, sc
 }
 
 const s = StyleSheet.create({
-  bar: { height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 },
-  iconBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22 },
+  bar: { height: 56, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, gap: 2 },
+  heading: { flex: 1, fontSize: 22, lineHeight: 30, fontWeight: '800', letterSpacing: -0.6, color: colors.ink, marginLeft: 4 },
+  right: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingRight: 6 },
+  iconBtn: { width: 40, height: 44, alignItems: 'center', justifyContent: 'center' },
   backBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
   largeHead: { paddingTop: 2, paddingBottom: 20 },
   content: { paddingHorizontal: SCREEN_PX, paddingBottom: 32 },

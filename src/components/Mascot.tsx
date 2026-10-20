@@ -8,7 +8,7 @@ import Svg, { Circle, ClipPath, Defs, Ellipse, G, Path, RadialGradient, Rect, St
  */
 export type MascotPalette = 'classic' | 'pink' | 'peach' | 'mint' | 'lavender';
 export type MascotFace = 'open' | 'wink' | 'happy' | 'sleepy' | 'look' | 'curious';
-export type MascotProp = 'none' | 'sparkle' | 'heart' | 'clover' | 'question' | 'music' | 'headphones';
+export type MascotProp = 'none' | 'sparkle' | 'heart' | 'clover' | 'question' | 'music' | 'headphones' | 'cloud';
 
 const PAL: Record<MascotPalette, { base: string; spots: [string, string, string, string] }> = {
   classic: { base: '#E4F2FF', spots: ['#FFF0A3', '#B9DDFF', '#D3F3C2', '#FFFFFF'] },
@@ -107,6 +107,17 @@ function Accessory({ prop }: { prop: MascotProp }) {
           <Path d="M18 46 C18 22 76 14 84 40" stroke="#E7ECF5" strokeWidth={5} fill="none" strokeLinecap="round" />
           <Rect x={10} y={42} width={12} height={20} rx={6} fill="#DDE5F2" />
           <Rect x={80} y={36} width={12} height={20} rx={6} fill="#DDE5F2" />
+        </G>
+      );
+    case 'cloud':
+      // 몸 아래를 감싸는 구름 + 노란 별 두 개
+      return (
+        <G>
+          {[[18, 86, 12], [32, 82, 14], [50, 84, 15], [68, 82, 14], [82, 87, 11], [42, 92, 12], [60, 93, 12]].map(([x, y, r], i) => (
+            <Circle key={i} cx={x} cy={y} r={r} fill="#FFFFFF" />
+          ))}
+          <Path d="M6 26 L8.5 31.5 L14 34 L8.5 36.5 L6 42 L3.5 36.5 L-2 34 L3.5 31.5 Z" fill="#FFD84D" />
+          <Path d="M90 16 L91.6 19.4 L95 21 L91.6 22.6 L90 26 L88.4 22.6 L85 21 L88.4 19.4 Z" fill="#FFD84D" />
         </G>
       );
     default:

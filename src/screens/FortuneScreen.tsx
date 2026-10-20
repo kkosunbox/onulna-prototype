@@ -8,7 +8,11 @@ import ScoreRing from '../components/ScoreRing';
 import CategoryRow from '../components/CategoryRow';
 import SectionHeader from '../components/SectionHeader';
 import Disclaimer from '../components/Disclaimer';
-import { LockCard } from '../components/premium/Kit';
+import { LinearGradient } from 'expo-linear-gradient';
+import Mascot from '../components/Mascot';
+import Icon from '../components/Icon';
+import { PromoCard } from '../components/HeroCard';
+import { usePremium } from '../context/PremiumContext';
 import { ITEMS } from '../services/premium/catalog';
 import { parseISO } from '../utils/date';
 import { useApp } from '../context/AppContext';
@@ -16,7 +20,7 @@ import { getPeriodFortune } from '../services/fortune/periodFortuneService';
 import { dayLenses, lensVerdict, periodLenses } from '../services/fortune/insightService';
 import LensList from '../components/LensList';
 import { Period } from '../types';
-import { CategoryKey, colors } from '../theme/colors';
+import { CategoryKey, colors, gradients } from '../theme/colors';
 import { radius, txt } from '../theme/typography';
 import { motion, useReducedMotion } from '../utils/motion';
 import { COPY } from '../content/copy';
@@ -25,6 +29,8 @@ const TABS: { key: Period; label: string }[] = [
   { key: 'daily', label: '오늘' }, { key: 'weekly', label: '주간' }, { key: 'monthly', label: '월간' }, { key: 'yearly', label: '연간' },
 ];
 const CHART_H = 120;
+/** 추천 카드마다 운알이 모습 */
+const PROMO_CH: Record<string, string> = { consult: '談', spouse: '緣', crush: '心', 'theme-love': '緣' };
 const CATS: CategoryKey[] = ['love', 'money', 'work', 'relationship'];
 /** 목록에 가격만 보여주기 위한 대표 상품 */
 const CONSULT_ITEM = { ...ITEMS.consult('preview'), title: '고민 상담 1회' };
@@ -50,6 +56,7 @@ function FlowBar({ label, score, best, index }: { label: string; score: number; 
 
 export default function FortuneScreen() {
   const { user, fortune, today } = useApp();
+  const { owned } = usePremium();
   const nav = useNavigation();
   const [tab, setTab] = useState<Period>('daily');
   const [open, setOpen] = useState<CategoryKey | null>(null);
@@ -84,42 +91,50 @@ export default function FortuneScreen() {
 
   return (
     <Screen largeTitle="운세" subtitle={COPY.four}>
-      <Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
+      <View style={{ marginTop: 6 }} /><Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
 
-      <Card style={s.summary}>
-        <ScoreRing key={tab} score={score} size={84} stroke={7} color={colors.seal} track={colors.card} textColor={colors.ink} />
-        <View style={{ flex: 1 }}>
-          <Text style={txt.caption}>{label}의 흐름</Text>
-          <Text style={[txt.bodyStrong, { marginTop: 4 }]}>{summary}</Text>
-          {period ? (
-            <View style={s.focus}><Text style={s.focusText}>집중 테마 · {period.focus}</Text></View>
-          ) : null}
+      {/* 하늘 카드 — 운알이 + 점수 + 흐름 */}
+      <View style={s.hero}>
+        <LinearGradient colors={gradients.sky} locations={[0, 0.55, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
+        <View style={s.art}>
+          {tab === 'weekly' ? (
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+              <Mascot size={104} palette="pink" face="happy" shadow={false} />
+              <View style={{ marginLeft: -26 }}><Mascot size={104} face="open" shadow={false} /></View>
+              <View style={s.heart}><Icon name="heart" size={22} color="#FF8FB1" filled strokeWidth={0} /></View>
+            </View>
+          ) : (
+            <Mascot size={132} palette={tab === 'monthly' ? 'mint' : tab === 'yearly' ? 'lavender' : 'classic'} face={score >= 80 ? 'happy' : 'look'} prop={tab === 'monthly' ? 'clover' : 'cloud'} shadow={false} />
+          )}
         </View>
-      </Card>
+        <View style={s.heroRow}>
+          <View style={s.ringWrap}><ScoreRing key={tab} score={score} size={84} stroke={6} color={colors.seal} track={colors.line} textColor={colors.ink} /></View>
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+              <Text style={txt.h3}>{tab === 'weekly' ? '이번 주의 흐름' : `${label}의 흐름`}</Text>
+              {period ? <View style={s.focus}><Text style={s.focusText}>집중 테마 · {period.focus}</Text></View> : null}
+            </View>
+            <Text style={[txt.body, { color: colors.inkSub, marginTop: 4 }]}>{summary}</Text>
+          </View>
+        </View>
+      </View>
 
-      <SectionHeader title={`네 관점으로 본 ${label}`} caption="사주 · 점성술(서양·인도·태국) · MBTI · 혈액형" />
-      {(() => {
-        const lenses = tab === 'daily' ? dayLenses(user, today, fortune.analyses) : periodLenses(user, today, tab);
-        return <LensList lenses={lenses} verdict={lensVerdict(lenses, `${label}의 흐름`, tab === 'daily' ? '오늘은' : tab === 'weekly' ? '이번 주는' : tab === 'monthly' ? '이달은' : '올해는')} />;
-      })()}
-
-      <SectionHeader title={`${label} 분야별 운세`} caption={tab === 'daily' ? '눌러서 자세히 보기' : '눌러서 풀이 펼치기'} />
-      <Card style={{ paddingVertical: 4 }}>
+      <SectionHeader title={`${tab === 'weekly' ? '이번 주' : label} 분야별 운세`} caption={tab === 'daily' ? '눌러서 자세히 보기' : '눌러서 풀이 펼치기'} />
+      <View style={{ gap: 10 }}>
         {CATS.map((k, i) => {
           const c = tab === 'daily' ? { score: f[k], text: f.categoryTexts[k], best: '' } : period?.cats[k];
           if (!c) return null;
           return (
-            <View key={`${tab}-${k}`} style={i > 0 ? s.border : null}>
-              <CategoryRow
-                category={k} score={c.score} text={c.text} delay={i * 80}
-                badge={c.best ? `${c.best}${tab === 'weekly' ? '요일' : ''} 최고` : undefined}
-                lines={tab !== 'daily' && open === k ? 4 : 1}
-                onPress={() => (tab === 'daily' ? nav.navigate('CategoryDetail', { category: k }) : setOpen(open === k ? null : k))}
-              />
-            </View>
+            <CategoryRow
+              key={`${tab}-${k}`}
+              category={k} score={c.score} text={c.text} delay={i * 80} expand={tab !== 'daily'}
+              badge={c.best ? `${c.best}${tab === 'weekly' ? '요일' : ''} 최고` : undefined}
+              lines={tab !== 'daily' && open === k ? 4 : 1}
+              onPress={() => (tab === 'daily' ? nav.navigate('CategoryDetail', { category: k }) : setOpen(open === k ? null : k))}
+            />
           );
         })}
-      </Card>
+      </View>
 
       {period ? (
         <>
@@ -132,9 +147,17 @@ export default function FortuneScreen() {
         </>
       ) : null}
 
+      <SectionHeader title={`네 관점으로 본 ${label}`} caption="사주 · 점성술(서양·인도·태국) · MBTI · 혈액형" />
+      {(() => {
+        const lenses = tab === 'daily' ? dayLenses(user, today, fortune.analyses) : periodLenses(user, today, tab);
+        return <LensList lenses={lenses} verdict={lensVerdict(lenses, `${label}의 흐름`, tab === 'daily' ? '오늘은' : tab === 'weekly' ? '이번 주는' : tab === 'monthly' ? '이달은' : '올해는')} />;
+      })()}
+
+
       <SectionHeader title="더 깊이 보기" caption={`${label}의 흐름에 맞춰 골랐어요`} />
       {recs.map((r, i) => (
-        <LockCard key={r.key} title={r.title} desc={r.desc} item={r.item} onPress={r.go} mt={i === 0 ? 0 : 10} />
+        <PromoCard key={r.key} style={{ marginTop: i === 0 ? 0 : 10 }} title={r.title} desc={r.desc} ch={PROMO_CH[r.key] ?? '命'}
+          cta={owned(r.item.key) ? '보유 중 · 다시 보기' : `${r.item.cost}P · 시작하기`} onPress={r.go} />
       ))}
       <Disclaimer />
     </Screen>
@@ -142,9 +165,13 @@ export default function FortuneScreen() {
 }
 
 const s = StyleSheet.create({
-  summary: { flexDirection: 'row', alignItems: 'center', gap: 16, marginTop: 16 },
-  focus: { alignSelf: 'flex-start', marginTop: 10, backgroundColor: colors.lavenderSoft, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 5 },
-  focusText: { fontSize: 13, fontWeight: '700', color: colors.purple },
+  hero: { marginTop: 16, borderRadius: radius.xl, overflow: 'hidden', paddingHorizontal: 18, paddingBottom: 18 },
+  art: { alignItems: 'center', paddingTop: 14, height: 150, justifyContent: 'flex-end' },
+  heart: { position: 'absolute', top: -6, left: '44%' },
+  heroRow: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 6 },
+  ringWrap: { width: 92, height: 92, borderRadius: 46, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center' },
+  focus: { backgroundColor: colors.card, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4 },
+  focusText: { fontSize: 11, fontWeight: '700', color: colors.seal },
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   chart: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, paddingTop: 22, height: CHART_H + 80 },
   col: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6, height: '100%' },

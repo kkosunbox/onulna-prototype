@@ -31,10 +31,10 @@ const PATHS: Record<IconName, string> = {
   mail: 'M4.5 6.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z M4 7.5l8 6 8-6',
 };
 
-interface Props { name: IconName; size?: number; color?: string; filled?: boolean; strokeWidth?: number }
+interface Props { name: IconName; size?: number; color?: string; filled?: boolean; strokeWidth?: number; fillOpacity?: number }
 
 /** 이모지·유니코드 기호 대신 쓰는 일관된 선형 아이콘 세트 */
-export default function Icon({ name, size = 22, color = colors.ink, filled = false, strokeWidth = 1.8 }: Props) {
+export default function Icon({ name, size = 22, color = colors.ink, filled = false, strokeWidth = 1.8, fillOpacity }: Props) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       {name === 'user' && <Circle cx={12} cy={8.2} r={3.6} stroke={color} strokeWidth={strokeWidth} fill={filled ? color : 'none'} fillOpacity={0.18} />}
@@ -46,7 +46,7 @@ export default function Icon({ name, size = 22, color = colors.ink, filled = fal
         strokeLinecap="round"
         strokeLinejoin="round"
         fill={filled ? color : 'none'}
-        fillOpacity={filled ? 0.18 : 0}
+        fillOpacity={filled ? fillOpacity ?? 0.18 : 0}
       />
     </Svg>
   );

@@ -3,6 +3,8 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Screen from '../../components/Screen';
+import { LinearGradient } from 'expo-linear-gradient';
+import Mascot from '../../components/Mascot';
 import Card from '../../components/Card';
 import TextField from '../../components/TextField';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -19,7 +21,7 @@ import {
   CONSULT_CATS, CONSULT_CONFIG, CRISIS_LINES, ConsultCat, ConsultEntry, MODE_LABEL, catOf, consultAnswer, guessCat, isCrisis, loadConsults, saveConsult,
 } from '../../services/content/consult';
 import { consultSpec } from '../../services/share/shareSpecs';
-import { colors } from '../../theme/colors';
+import { colors, gradients } from '../../theme/colors';
 import { fonts, radius, txt, sansW } from '../../theme/typography';
 
 const EXAMPLES = [
@@ -37,7 +39,7 @@ export default function ConsultScreen() {
 
 function Compose() {
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { user: u, today } = useApp();
+  const { user: u, today, fortune } = useApp();
   const { owned, openUnlock, points } = usePremium();
   const [cat, setCat] = useState<ConsultCat | null>(null);
   const [picked, setPicked] = useState(false);
@@ -62,36 +64,38 @@ function Compose() {
   };
 
   return (
-    <Screen title="말 못 할 고민 상담" back>
-      <Hero>
-        <Text style={heroTxt.eyebrow}>익명 · 이 기기에만 저장돼요</Text>
-        <Text style={[heroTxt.summ, { fontSize: 24, lineHeight: 32 }]}>누구에게도 못 한 고민,{'\n'}사주에게 털어놓으세요</Text>
-        <Text style={{ fontSize: 13, lineHeight: 19, color: colors.inkSub, marginTop: 8 }}>내 사주 · 이번 달 기운 · 앞으로 3개월 흐름 · MBTI로 지금 나에게 맞는 답을 드려요.</Text>
-      </Hero>
+    <Screen title="상담" back right={<View style={s.coin}><Coin size={16} /><Text style={s.coinText}>{points.toLocaleString('ko-KR')}</Text></View>}>
+      {/* 오늘의 기운 */}
+      <View style={s.mood}>
+        <LinearGradient colors={gradients.hero} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />
+        <View><Mascot size={60} palette="mint" face="look" prop="clover" shadow={false} /></View>
+        <View style={{ flex: 1 }}>
+          <Text style={txt.bodyStrong}>오늘 {u.nickname}님의 기운</Text>
+          <Text style={[txt.small, { color: colors.inkSub, marginTop: 2 }]}>{fortune?.combined.summary ?? '오늘의 흐름을 읽고 있어요.'}</Text>
+        </View>
+      </View>
 
-      <SubHead title="어떤 고민인가요?" />
+      <TextField
+        value={text} onChangeText={onText} multiline maxLength={CONSULT_CONFIG.maxLen}
+        placeholder="지금 마음에 걸리는 일을 편하게 적어주세요."
+        containerStyle={s.input}
+        style={{ height: 150, fontSize: 15, lineHeight: 23 }}
+        accessibilityLabel="고민 내용"
+      />
+      <View style={s.between}>
+        <Text style={txt.small}>{!picked && cat ? `'${catOf(cat).label}' 고민으로 골랐어요` : '구체적일수록 답이 정확해져요'}</Text>
+        <Text style={[txt.small, len >= CONSULT_CONFIG.maxLen && { color: colors.danger }]}>{len}/{CONSULT_CONFIG.maxLen}</Text>
+      </View>
+
       <View style={s.chips}>
         {CONSULT_CATS.map(c => {
           const on = cat === c.key;
           return (
             <PressableScale key={c.key} onPress={() => { setCat(c.key); setPicked(true); }} style={[s.chip, on && s.chipOn]} scaleTo={0.95} accessibilityState={{ selected: on }}>
-              <Text style={[s.chipH, on && { color: colors.seal }]}>{c.hanja}</Text>
-              <Text style={[s.chipT, on && { color: colors.white }]}>{c.label}</Text>
+              <Text style={[s.chipT, on && { color: colors.white }]}>{on ? '✓ ' : ''}{c.label}</Text>
             </PressableScale>
           );
         })}
-      </View>
-
-      <SubHead title="고민을 적어 주세요" caption={`${CONSULT_CONFIG.minLen}~${CONSULT_CONFIG.maxLen}자 · 구체적일수록 답이 정확해져요`} />
-      <TextField
-        value={text} onChangeText={onText} multiline maxLength={CONSULT_CONFIG.maxLen}
-        placeholder={`예) ${EXAMPLES[new Date(today).getDate() % EXAMPLES.length]}`}
-        style={{ height: 140, fontSize: 15, lineHeight: 23 }}
-        accessibilityLabel="고민 내용"
-      />
-      <View style={s.between}>
-        <Text style={txt.caption}>{!picked && cat ? `'${catOf(cat).label}' 고민으로 골랐어요 · 위에서 바꿀 수 있어요` : ' '}</Text>
-        <Text style={[txt.caption, len >= CONSULT_CONFIG.maxLen && { color: colors.danger }]}>{len}/{CONSULT_CONFIG.maxLen}</Text>
       </View>
 
       {crisis ? (
@@ -112,7 +116,17 @@ function Compose() {
         label={owned(ITEMS.consult('x').key) ? '상담 결과 보기' : `${CONSULT_CONFIG.cost}P로 상담받기`}
         icon={<Coin size={18} />} onPress={submit} disabled={!ok} style={{ marginTop: 16 }}
       />
-      <Text style={[txt.caption, { textAlign: 'center', marginTop: 8 }]}>보유 {fmtP(points)} · 공유 카드에는 고민 내용이 절대 들어가지 않아요</Text>
+      <Text style={[txt.small, { textAlign: 'center', marginTop: 10 }]}>{CONSULT_CONFIG.minLen}자 이상 적으면 상담받을 수 있어요 · 보유 {fmtP(points)}</Text>
+
+      <SubHead title="이런 고민도 괜찮아요" caption="눌러서 바로 적어 보세요" />
+      <View style={{ gap: 8, alignItems: 'flex-start' }}>
+        {EXAMPLES.map(e => (
+          <PressableScale key={e} onPress={() => onText(e)} style={s.example} scaleTo={0.98} accessibilityLabel={`예시 고민: ${e}`}>
+            <Text style={txt.bodyStrong}>{e}</Text>
+          </PressableScale>
+        ))}
+      </View>
+      <Text style={[txt.small, { textAlign: 'center', marginTop: 20 }]}>나만 볼 수 있어요. 공유 카드에는 고민 내용이 절대 들어가지 않아요.</Text>
 
       {list.length ? (
         <>
@@ -217,12 +231,17 @@ function Answer({ id }: { id: string }) {
 }
 
 const s = StyleSheet.create({
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: { width: '23%', flexGrow: 1, alignItems: 'center', paddingVertical: 12, borderRadius: radius.md, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
+  chip: { paddingHorizontal: 16, paddingVertical: 9, borderRadius: radius.pill, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.lineStrong },
   chipOn: { backgroundColor: colors.navy, borderColor: colors.navy },
+  coin: { flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingHorizontal: 12, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
+  coinText: { fontSize: 13, fontWeight: '700', color: colors.ink },
+  mood: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: radius.lg, overflow: 'hidden', marginTop: 4 },
+  input: { marginTop: 16, borderRadius: 14, borderWidth: 1.5, borderColor: colors.seal + 'AA' },
+  example: { paddingHorizontal: 16, paddingVertical: 12, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   chipH: { fontFamily: fonts.serif, fontSize: 18, fontWeight: '700', color: colors.purple },
-  chipT: { fontSize: 13, fontWeight: '600', color: colors.inkSub, marginTop: 2 },
-  between: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
+  chipT: { fontSize: 15, fontWeight: '600', color: colors.inkSub },
+  between: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   crisis: { marginTop: 16, borderWidth: 1.5, borderColor: colors.love },
   line: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 12, borderRadius: radius.md, backgroundColor: colors.loveBg },
   hist: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 },
