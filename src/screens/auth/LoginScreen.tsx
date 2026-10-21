@@ -43,7 +43,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={s.root}>
-      <PageBg sky />
+      <PageBg deep />
       <View style={s.hero}>
         {gift ? (
           <View style={s.gift}>

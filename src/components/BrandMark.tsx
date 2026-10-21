@@ -6,25 +6,20 @@ import Mascot from './Mascot';
 export const BRAND = { name: '운픽', ko: '운픽', slogan: '오늘, 나에게 딱 맞는 운', store: '운픽 - 오늘, 나에게 딱 맞는 운' };
 
 /**
- * 운픽 로고 — 확정 시안 이미지(assets/brand/logo.png, 876×448)를 그대로 쓴다.
- * 다시 그리거나 색을 바꾸지 않는다. 크기만 높이(size)로 맞추고 모서리를 둥글게 자른다.
+ * 운픽 로고 — 확정 시안(assets/brand/logo-original.png)에서 배경과 모눈만 걷어낸 투명 PNG.
+ * 모양·색은 원본 그대로(흰 글자 + 운알이). 하늘색이나 어두운 바탕 위에 둔다.
+ * 흰 바탕처럼 밝은 곳에서만 글자를 먹색으로 바꾼 ink 버전을 쓴다. (scripts/cutout-logo.js 로 생성)
  */
 const LOGO = require('../../assets/brand/logo.png');
-const RATIO = 876 / 448;
+const LOGO_INK = require('../../assets/brand/logo-ink.png');
+const RATIO = 669 / 396;
 
 /** 마크: 운알이 얼굴 (작은 자리 · 로딩) */
 export function LogoMark({ size = 24 }: { size?: number; fg?: string }) {
   return <Mascot size={size} shadow={false} />;
 }
 
-/** 워드마크: 확정 로고 이미지. size = 높이 */
-export default function BrandMark({ size = 22 }: { light?: boolean; size?: number; fg?: string }) {
-  return (
-    <Image
-      source={LOGO}
-      accessibilityLabel={BRAND.name}
-      resizeMode="contain"
-      style={{ width: size * RATIO, height: size, borderRadius: size * 0.14 }}
-    />
-  );
+/** 워드마크. size = 높이 · ink = 밝은 바탕용(글자 먹색) */
+export default function BrandMark({ size = 22, ink = false }: { size?: number; ink?: boolean; light?: boolean; fg?: string }) {
+  return <Image source={ink ? LOGO_INK : LOGO} accessibilityLabel={BRAND.name} resizeMode="contain" style={{ width: size * RATIO, height: size }} />;
 }

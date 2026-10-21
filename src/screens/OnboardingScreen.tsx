@@ -86,7 +86,7 @@ export default function OnboardingScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }}>
       <PageBg sky />
       <View style={s.top}>
-        <BrandMark />
+        <BrandMark size={30} ink />
         {!last ? (
           <PressableScale onPress={completeOnboarding} hitSlop={12} scaleTo={0.94}><Text style={s.skip}>건너뛰기</Text></PressableScale>
         ) : null}

@@ -8,7 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#FFFFFF",
-    "description": "오늘의 운, 하나만 Pick! 사주 · 태국 점성술 · MBTI · 혈액형을 겹쳐 읽는 오늘의 운세.",
+    "description": "오늘의 운, 하나만 Pick! 사주 · 점성술(서양·인도·태국) · MBTI · 혈액형을 겹쳐 읽는 오늘의 운세.",
     "primaryColor": "#22293F",
     "ios": {
       "supportsTablet": false,
@@ -45,10 +45,10 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 220,
           "resizeMode": "contain",
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#8CCBFF",
           "dark": {
             "image": "./assets/splash-icon.png",
-            "backgroundColor": "#FFFFFF"
+            "backgroundColor": "#1B3550"
           }
         }
       ]
