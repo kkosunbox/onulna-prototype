@@ -7,7 +7,8 @@ import ScoreRing from './ScoreRing';
 import Mascot, { MascotFace } from './Mascot';
 import Icon, { IconName } from './Icon';
 import { CombinedFortune } from '../types';
-import { CategoryKey, categoryTheme, colors, isDark } from '../theme/colors';
+import { CategoryKey, analysisTheme, categoryTheme, colors, isDark } from '../theme/colors';
+import { dayLenses } from '../services/fortune/insightService';
 import { radius, sansW, shadow, txt } from '../theme/typography';
 import { useApp } from '../context/AppContext';
 import { fortuneOf } from '../services/premium/engine';
@@ -44,6 +45,8 @@ export default function TodayHero({ fortune: f, today, onOpenStory, onOpenCatego
     const { y, m, d } = parseISO(today);
     return fortuneOf(user, toISODate(new Date(y, m - 1, d - 1)));
   }, [user?.id, today]);
+  const { fortune: full } = useApp();
+  const lenses = useMemo(() => (user && full ? dayLenses(user, today, full.analyses) : null), [user?.id, today, full]);
   const best = CATS.reduce((a, b) => (f[b.k] > f[a.k] ? b : a)).k;
   const worst = CATS.reduce((a, b) => (f[b.k] < f[a.k] ? b : a)).k;
 
@@ -84,8 +87,11 @@ export default function TodayHero({ fortune: f, today, onOpenStory, onOpenCatego
         <View style={s.mascotWrap}>
           <Animated.View style={[s.groundShadow, { transform: [{ scaleX: shadowScale }] }]} />
           <Animated.View style={{ transform: [{ translateY: ty }] }}>
-            <Mascot size={132} face={faceOf(f.totalScore)} prop={f.totalScore >= 72 ? 'sparkle' : 'none'} shadow={false} />
+            <Mascot size={124} face={faceOf(f.totalScore)} prop={f.totalScore >= 72 ? 'sparkle' : 'none'} shadow={false} />
           </Animated.View>
+        </View>
+        <View style={s.keywords}>
+          {f.keywords.slice(0, 3).map(k => <View key={k} style={s.kw}><Text style={s.kwText}>#{k}</Text></View>)}
         </View>
       </View>
 
@@ -103,7 +109,7 @@ export default function TodayHero({ fortune: f, today, onOpenStory, onOpenCatego
                 <Text style={s.catText}>{label}</Text>
               </View>
               <Text style={[s.delta, { color: d > 0 ? colors.success : d < 0 ? colors.danger : colors.inkMute }]}>
-                {d > 0 ? `▲ ${d}` : d < 0 ? `▼ ${-d}` : '어제와 같음'}
+                {d > 0 ? `어제보다 ▲${d}` : d < 0 ? `어제보다 ▼${-d}` : '어제와 같아요'}
               </Text>
             </PressableScale>
           );
@@ -116,7 +122,23 @@ export default function TodayHero({ fortune: f, today, onOpenStory, onOpenCatego
           <Text style={txt.h3}>오늘의 운세</Text>
           <View style={s.more}><Text style={txt.small}>종합풀이</Text><Icon name="chevronRight" size={16} color={colors.inkMute} strokeWidth={2} /></View>
         </PressableScale>
-        <Text style={[s.lead, KEEP]}>{f.summary}</Text>
+        {lenses ? (
+          <PressableScale onPress={onOpenStory} scaleTo={0.98} style={s.signals} accessibilityLabel="네 관점 신호 · 종합풀이 보기">
+            <Text style={s.signalHead}>네 관점 신호 <Text style={s.signalSub}>· {lenses.filter(l => l.tone === 'up').length}곳이 밀어줘요</Text></Text>
+            <View style={s.signalRow}>
+              {lenses.map(l => {
+                const t = analysisTheme[l.source];
+                const on = l.tone === 'up', off = l.tone === 'down';
+                return (
+                  <View key={l.source} style={[s.signal, { backgroundColor: on ? t.bg : colors.card }]}>
+                    <View style={[s.sigDot, { backgroundColor: on ? t.color : off ? colors.danger : colors.lineStrong }]} />
+                    <Text style={[s.sigText, on && { color: t.color }]}>{l.label}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </PressableScale>
+        ) : null}
 
         <View style={s.points}>
           <Point tone="up" label={`잘 풀리는 일 · ${categoryTheme[best].label}`} text={f.categoryTexts[best]} color={categoryTheme[best].color} />
@@ -180,7 +202,7 @@ function Clouds() {
 }
 
 const s = StyleSheet.create({
-  stage: { borderRadius: radius.xl, overflow: 'hidden', paddingTop: 16, paddingHorizontal: 14, height: 318 },
+  stage: { borderRadius: radius.xl, overflow: 'hidden', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 16 },
   bubble: { paddingVertical: 14, paddingHorizontal: 18, borderRadius: 20, backgroundColor: colors.card },
   bubbleTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   eyebrow: { ...sansW('700'), fontSize: 13, color: colors.seal },
@@ -191,7 +213,17 @@ const s = StyleSheet.create({
   of: { ...sansW('600'), fontSize: 13, color: colors.inkMute, marginLeft: 2, marginTop: 14 },
   summary: { ...txt.bodyStrong, flex: 1, marginLeft: 14 },
   tail: { alignSelf: 'center', width: 0, height: 0, borderLeftWidth: 10, borderRightWidth: 10, borderTopWidth: 12, borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: colors.card },
-  mascotWrap: { alignItems: 'center', marginTop: 4 },
+  mascotWrap: { alignItems: 'center', marginTop: 2 },
+  keywords: { flexDirection: 'row', justifyContent: 'center', gap: 6, marginTop: 4 },
+  kw: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.pill, backgroundColor: colors.card, ...shadow.card },
+  kwText: { ...sansW('700'), fontSize: 13, color: colors.inkSub },
+  signals: { marginTop: 12 },
+  signalHead: { ...sansW('700'), fontSize: 13, color: colors.ink },
+  signalSub: { ...sansW('500'), fontSize: 13, color: colors.inkMute },
+  signalRow: { flexDirection: 'row', gap: 6, marginTop: 8 },
+  signal: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, paddingVertical: 8, borderRadius: radius.md },
+  sigDot: { width: 7, height: 7, borderRadius: 4 },
+  sigText: { ...sansW('700'), fontSize: 11, color: colors.inkSub },
   groundShadow: { position: 'absolute', bottom: 10, width: 74, height: 9, borderRadius: 999, backgroundColor: '#4C77A8', opacity: 0.12 },
 
   cats: { flexDirection: 'row', gap: 8, marginTop: 12 },
@@ -200,13 +232,13 @@ const s = StyleSheet.create({
   bestText: { ...sansW('700'), fontSize: 11, color: colors.white },
   catLabel: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 8 },
   catText: { ...txt.bodyStrong, fontSize: 13 },
-  delta: { ...sansW('700'), fontSize: 11, marginTop: 4 },
+  delta: { ...sansW('600'), fontSize: 11, marginTop: 4 },
 
   card: { marginTop: 12, padding: 20, borderRadius: radius.lg, backgroundColor: colors.lavenderSoft },
   cardHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   more: { flexDirection: 'row', alignItems: 'center', gap: 2 },
   lead: { ...sansW('700'), fontSize: 18, lineHeight: 26, letterSpacing: -0.4, color: colors.ink, marginTop: 10 },
-  points: { marginTop: 14, padding: 14, borderRadius: radius.md, backgroundColor: colors.card, gap: 12 },
+  points: { marginTop: 12, padding: 14, borderRadius: radius.md, backgroundColor: colors.card, gap: 12 },
   point: { flexDirection: 'row', gap: 10 },
   pointMark: { width: 22, height: 22, borderRadius: 11, alignItems: 'center', justifyContent: 'center', marginTop: 1 },
   pointLabel: { ...sansW('700'), fontSize: 13 },
