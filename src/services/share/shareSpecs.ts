@@ -10,7 +10,7 @@ import { crushReport, spouseReport } from '../content/premiumContent';
 import { ConsultEntry, MODE_LABEL, catOf, consultAnswer } from '../content/consult';
 import {
   PurposeKey, ageNow, daeun, lifeStages, luckyDays, monthPillarOf, monthReport, isoOf, sajuFull, stageKeyOfAge,
-  themeCareer, themeLove, themeMoney, yearData, WEEK,
+  themeCareer, themeLove, themeMoney, yearData, WEEK, fortuneOf,
 } from '../premium/engine';
 import { relation } from '../fortune/sajuService';
 import { MONTH_LINE, STEM_PERSONA, YEAR_IDIOM } from '../premium/data';
@@ -29,6 +29,9 @@ export interface ShareSpec {
   stats: [string, string][];
   /** 키워드 알약(선택) */
   tags?: string[];
+  /** 수집 카드용 — 오늘의 칭호 · 올해 중 상위 % · 등급 */
+  title?: string;
+  rank?: { top: number; tier: string; scope: string };
   /** 봉인된 이야기 — label은 보이고 내용은 가린다 */
   teaser?: string;
   /** 카드 하단 질문 */
@@ -46,16 +49,41 @@ const josa = (w: string, a: string, b: string) => { const c = w.charCodeAt(w.len
 const md = (iso: string) => { const p = parseISO(iso); return `${p.m}/${p.d}`; };
 const mdw = (iso: string) => `${md(iso)} ${WEEK[weekdayOf(iso)]}`;
 
+/* ---------- 오늘의 칭호 · 올해 중 순위 ---------- */
+/** 오늘 가장 강한 키워드 → 오늘의 칭호 */
+const TITLE: Record<string, string> = {
+  '새로운 만남': '인연을 부르는 사람', '변화': '판을 바꾸는 사람', '기회': '기회를 낚는 사람', '금전 흐름': '돈길을 여는 사람',
+  '재충전': '숨 고르는 고수', '집중': '몰입의 달인', '표현': '말로 마음을 여는 사람', '신중함': '한 수 앞을 보는 사람',
+  '조화': '모두를 잇는 사람', '도전': '한계를 넘는 사람', '직감': '촉이 살아 있는 사람', '배움': '쑥쑥 자라는 사람',
+};
+/** 등급 — 올해 나의 날 중 상위 몇 %인지로 정한다 */
+export const tierOf = (top: number) => (top <= 5 ? '레전드 데이' : top <= 15 ? '레어 데이' : top <= 40 ? '굿 데이' : '충전 데이');
+/** 올해 하루하루를 같은 규칙으로 계산해 오늘이 상위 몇 %인지(1~100) */
+export function dayRank(u: User, iso: string, score: number): number {
+  const { y } = parseISO(iso);
+  const n = (Date.UTC(y + 1, 0, 1) - Date.UTC(y, 0, 1)) / 86400000;
+  let better = 0;
+  for (let i = 0; i < n; i++) {
+    const dt = new Date(Date.UTC(y, 0, 1 + i));
+    const d = `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, '0')}-${String(dt.getUTCDate()).padStart(2, '0')}`;
+    if (fortuneOf(u, d).totalScore > score) better++;
+  }
+  return Math.max(1, Math.ceil(((better + 1) / n) * 100));
+}
+
 /* ---------- 무료 ---------- */
-export function todaySpec(u: User, f: CombinedFortune): ShareSpec {
+export function todaySpec(u: User, f: CombinedFortune, today?: string): ShareSpec {
+  const top = today ? dayRank(u, today, f.totalScore) : undefined;
   return {
+    title: TITLE[f.keywords[0]] ?? '오늘의 주인공',
+    rank: top ? { top, tier: tierOf(top), scope: '올해 나의 날 중' } : undefined,
     kind: '오늘의 운세', seal: '日', eyebrow: `${u.nickname}님의 오늘`,
     headline: f.summary, big: { value: String(f.totalScore), unit: '점', label: '오늘의 종합운' },
     stats: [['연애', String(f.love)], ['재물', String(f.money)], ['직장', String(f.work)], ['관계', String(f.relationship)]],
     tags: f.keywords.slice(0, 3),
     teaser: '오늘 꼭 피해야 할 한 가지',
-    hook: '너의 오늘은 몇 점일까?',
-    text: `오늘 내 운세 ${f.totalScore}점, 키워드는 '${f.keywords[0]}'. 너는 오늘 몇 점이야?`, file: 'woonpick-today', route: 'Home', short: `${f.totalScore}점 · ${f.keywords[0]}`,
+    hook: top ? '너는 오늘 상위 몇 %?' : '너의 오늘은 몇 점일까?',
+    text: top ? `오늘 나 올해 중 상위 ${top}%의 날이래 (${tierOf(top)}). 오늘의 칭호는 '${TITLE[f.keywords[0]] ?? '오늘의 주인공'}'! 너는 상위 몇 %야?` : `오늘 내 운세 ${f.totalScore}점, 키워드는 '${f.keywords[0]}'. 너는 오늘 몇 점이야?`, file: 'woonpick-today', route: 'Home', short: `${f.totalScore}점 · ${f.keywords[0]}`,
   };
 }
 

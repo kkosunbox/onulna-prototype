@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import Screen from '../components/Screen';
@@ -22,7 +22,8 @@ export default function ShareScreen() {
   const { sendLink, urlOf, reward } = useShare();
   const ref = useRef<View>(null);
   const [busy, setBusy] = useState<'share' | 'save' | null>(null);
-  const spec = params?.spec ?? (fortune && user ? todaySpec(user, fortune.combined) : null);
+  // 오늘 카드는 올해 365일과 비교한 순위를 담는다(한 번만 계산)
+  const spec = useMemo(() => params?.spec ?? (fortune && user ? todaySpec(user, fortune.combined, today) : null), [params?.spec, fortune, user?.id, today]);
   if (!spec) return null;
 
   const run = async (mode: 'share' | 'save') => {
@@ -52,7 +53,7 @@ export default function ShareScreen() {
       <View style={[s.frame, shadow.hero]}>
         <View style={s.clip}><ShareCard ref={ref} spec={spec} today={today} /></View>
       </View>
-      <Text style={[txt.small, { marginTop: 16, textAlign: 'center' }]}>인스타 스토리 9:16 · 가려진 내용은 앱에서만 열려요</Text>
+      <Text style={[txt.small, { marginTop: 16, textAlign: 'center' }]}>인스타 스토리 9:16 · 올해 365일 중 오늘의 순위를 담았어요</Text>
     </Screen>
   );
 }
