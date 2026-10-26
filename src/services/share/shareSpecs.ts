@@ -25,8 +25,10 @@ export interface ShareSpec {
   headline: string;
   sub?: string;
   big?: { value: string; unit?: string; label: string };
-  /** [라벨, 값] 2~3개 */
+  /** [라벨, 값] 2~4개 */
   stats: [string, string][];
+  /** 키워드 알약(선택) */
+  tags?: string[];
   /** 봉인된 이야기 — label은 보이고 내용은 가린다 */
   teaser?: string;
   /** 카드 하단 질문 */
@@ -49,7 +51,8 @@ export function todaySpec(u: User, f: CombinedFortune): ShareSpec {
   return {
     kind: '오늘의 운세', seal: '日', eyebrow: `${u.nickname}님의 오늘`,
     headline: f.summary, big: { value: String(f.totalScore), unit: '점', label: '오늘의 종합운' },
-    stats: [['연애', String(f.love)], ['재물', String(f.money)], ['일', String(f.work)]],
+    stats: [['연애', String(f.love)], ['재물', String(f.money)], ['직장', String(f.work)], ['관계', String(f.relationship)]],
+    tags: f.keywords.slice(0, 3),
     teaser: '오늘 꼭 피해야 할 한 가지',
     hook: '너의 오늘은 몇 점일까?',
     text: `오늘 내 운세 ${f.totalScore}점, 키워드는 '${f.keywords[0]}'. 너는 오늘 몇 점이야?`, file: 'woonpick-today', route: 'Home', short: `${f.totalScore}점 · ${f.keywords[0]}`,
