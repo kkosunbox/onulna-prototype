@@ -92,7 +92,7 @@ export function todayTalisman(u: User, today: string) {
   const f = fortuneOf(u, today);
   const tag = kwTag(f.keywords[0]);
   return {
-    hanja: KEYWORDS[tag].emoji,
+    tag, hanja: KEYWORDS[tag].emoji,
     keyword: KEYWORDS[tag].label,
     mantra: MANTRA[tag],
     color: f.luckyColor, colorHex: f.luckyColorHex, number: f.luckyNumber, time: f.luckyTime,
