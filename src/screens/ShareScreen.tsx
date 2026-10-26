@@ -49,14 +49,15 @@ export default function ShareScreen() {
         </View>
       }
     >
-      <View style={[s.shadow, shadow.hero]}>
-        <ShareCard ref={ref} spec={spec} today={today} />
+      <View style={[s.frame, shadow.hero]}>
+        <View style={s.clip}><ShareCard ref={ref} spec={spec} today={today} /></View>
       </View>
-      <Text style={[txt.caption, { marginTop: 12, textAlign: 'center' }]}>인스타그램 스토리에 꼭 맞는 9:16 크기예요{'\n'}가려진 내용은 앱에서만 볼 수 있어요</Text>
+      <Text style={[txt.small, { marginTop: 16, textAlign: 'center' }]}>인스타 스토리 9:16 · 가려진 내용은 앱에서만 열려요</Text>
     </Screen>
   );
 }
 
 const s = StyleSheet.create({
-  shadow: { borderRadius: 2, backgroundColor: colors.card },
+  frame: { borderRadius: 22, backgroundColor: colors.card },
+  clip: { borderRadius: 22, overflow: 'hidden' },
 });
