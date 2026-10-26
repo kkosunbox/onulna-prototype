@@ -6,6 +6,7 @@ import Segmented from '../components/Segmented';
 import Card from '../components/Card';
 import ScoreRing from '../components/ScoreRing';
 import CategoryRow from '../components/CategoryRow';
+import PeriodCatCard from '../components/PeriodCatCard';
 import SectionHeader from '../components/SectionHeader';
 import Disclaimer from '../components/Disclaimer';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -164,13 +165,20 @@ export default function FortuneScreen() {
           const c = tab === 'daily' ? { score: f[k], text: f.categoryTexts[k], best: '' } : period?.cats[k];
           if (!c) return null;
           return (
-            <CategoryRow
-              key={`${tab}-${k}`}
-              category={k} score={c.score} text={c.text} delay={i * 80} expand={tab !== 'daily'} delta={prev ? c.score - prev[k] : undefined}
-              badge={c.best ? `${c.best}${tab === 'weekly' ? '요일' : ''} 최고` : undefined}
-              lines={tab !== 'daily' && open === k ? 4 : 1}
-              onPress={() => (tab === 'daily' ? nav.navigate('CategoryDetail', { category: k }) : setOpen(open === k ? null : k))}
-            />
+            tab === 'daily' ? (
+              <CategoryRow
+                key={`${tab}-${k}`}
+                category={k} score={c.score} text={c.text} delay={i * 80} delta={prev ? c.score - prev[k] : undefined}
+                onPress={() => nav.navigate('CategoryDetail', { category: k })}
+              />
+            ) : (
+              <PeriodCatCard
+                key={`${tab}-${k}`}
+                category={k} score={c.score} text={c.text} series={'series' in c ? c.series : undefined}
+                best={`${c.best}${tab === 'weekly' ? '요일' : ''}`}
+                open={open === k} onPress={() => setOpen(open === k ? null : k)}
+              />
+            )
           );
         })}
       </View>

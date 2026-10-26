@@ -33,7 +33,7 @@ function catsFrom(groups: { label: string; days: CombinedFortune[] }[], unit: st
     const per = groups.map(g => ({ label: g.label, v: avg(g.days.map(d => d[k])) }));
     const score = avg(groups.flatMap(g => g.days.map(d => d[k])));
     const best = per.reduce((a, b) => (b.v > a.v ? b : a)).label;
-    out[k] = { score, best, text: `${LINE[k][lvl(score)]} ${unit === '요일' ? `${best}요일` : best}에 가장 힘이 실려요.` };
+    out[k] = { score, best, series: per, text: `${LINE[k][lvl(score)]} ${unit === '요일' ? `${best}요일` : best}에 가장 힘이 실려요.` };
   });
   return out;
 }
@@ -82,7 +82,7 @@ export function getPeriodFortune(user: User, today: string, period: 'weekly' | '
   CATS.forEach(k => {
     const bm = D.months.reduce((a, b) => (b[k] > a[k] ? b : a)).m;
     const field = (FIELD[D.rel] as Record<string, string>)[FIELD_KEY[k]];
-    cats[k] = { score: D.cat[k], best: `${bm}월`, text: `${field.split('.')[0]}. ${bm}월에 가장 힘이 실려요.` };
+    cats[k] = { score: D.cat[k], best: `${bm}월`, series: D.months.map(x => ({ label: `${x.m}`, v: x[k] })), text: `${field.split('.')[0]}. ${bm}월에 가장 힘이 실려요.` };
   });
   return { period, label: `${y}년`, score: D.total, flow, summary: text, focus: D.kws[0] ?? FOCUS[0], cats };
 }
