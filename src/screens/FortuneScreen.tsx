@@ -14,14 +14,17 @@ import Icon from '../components/Icon';
 import { PromoCard } from '../components/HeroCard';
 import { usePremium } from '../context/PremiumContext';
 import { ITEMS } from '../services/premium/catalog';
-import { parseISO } from '../utils/date';
+import { parseISO, toISODate } from '../utils/date';
+import { fortuneOf } from '../services/premium/engine';
+import { Clouds, Floating } from '../components/Stage';
 import { useApp } from '../context/AppContext';
 import { getPeriodFortune } from '../services/fortune/periodFortuneService';
 import { dayLenses, lensVerdict, periodLenses } from '../services/fortune/insightService';
 import LensList from '../components/LensList';
 import { Period } from '../types';
-import { CategoryKey, colors, gradients } from '../theme/colors';
-import { radius, txt } from '../theme/typography';
+import { CategoryKey, categoryTheme, colors, gradients } from '../theme/colors';
+import { IconName } from '../components/Icon';
+import { radius, sansW, shadow, txt } from '../theme/typography';
 import { motion, useReducedMotion } from '../utils/motion';
 import { COPY } from '../content/copy';
 
@@ -29,6 +32,8 @@ const TABS: { key: Period; label: string }[] = [
   { key: 'daily', label: '오늘' }, { key: 'weekly', label: '주간' }, { key: 'monthly', label: '월간' }, { key: 'yearly', label: '연간' },
 ];
 const CHART_H = 120;
+const CAT_ICON: Record<CategoryKey, IconName> = { love: 'heart', money: 'coin', work: 'briefcase', relationship: 'people' };
+const gradeOf = (n: number) => (n >= 85 ? '아주 좋음' : n >= 72 ? '좋음' : n >= 60 ? '보통' : '쉬어 가기');
 /** 추천 카드마다 운알이 모습 */
 const PROMO_CH: Record<string, string> = { consult: '談', spouse: '緣', crush: '心', 'theme-love': '緣' };
 const CATS: CategoryKey[] = ['love', 'money', 'work', 'relationship'];
@@ -72,6 +77,10 @@ export default function FortuneScreen() {
   // 이 기간에 가장 약한 분야를 먼저 추천하고, 기간에 맞는 유료 콘텐츠를 덧붙인다
   const scoreOf = (k: CategoryKey) => (tab === 'daily' ? f[k] : period?.cats[k].score ?? 0);
   const weak = CATS.reduce((a, b) => (scoreOf(b) < scoreOf(a) ? b : a));
+  const topCat = CATS.reduce((a, b) => (scoreOf(b) > scoreOf(a) ? b : a));
+  const bestFlow = period ? period.flow.reduce((a, b) => (b.score > a.score ? b : a)).label + (tab === 'weekly' ? '요일' : tab === 'yearly' ? '월' : '') : '';
+  // 오늘 탭: 어제 대비 변화
+  const prev = tab === 'daily' ? fortuneOf(user, (() => { const { y, m, d } = parseISO(today); return toISODate(new Date(y, m - 1, d - 1)); })()) : null;
   const { y: ty, m: tm } = parseISO(today);
   const R = {
     love: { key: 'theme-love', title: `${label} 연애운이 아쉽다면`, desc: '연애·결혼 운세 · 잘 맞는 사람 · 인연이 오는 해', item: ITEMS.theme('love'), go: () => nav.navigate('Theme', { kind: 'love' }) },
@@ -93,28 +102,58 @@ export default function FortuneScreen() {
     <Screen largeTitle="운세" subtitle={COPY.four}>
       <View style={{ marginTop: 6 }} /><Segmented<Period> options={TABS} value={tab} onChange={t => { setTab(t); setOpen(null); }} />
 
-      {/* 하늘 카드 — 운알이 + 점수 + 흐름 */}
+      {/* 하늘 무대 — 둥실 운알이 + 흐름 패널 */}
       <View style={s.hero}>
         <LinearGradient colors={gradients.sky} locations={[0, 0.55, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
+        <Clouds />
         <View style={s.art}>
           {tab === 'weekly' ? (
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-              <Mascot size={104} palette="pink" face="happy" shadow={false} />
-              <View style={{ marginLeft: -26 }}><Mascot size={104} face="open" shadow={false} /></View>
-              <View style={s.heart}><Icon name="heart" size={22} color="#FF8FB1" filled strokeWidth={0} /></View>
-            </View>
+            <Floating shadowWidth={120}>
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                <Mascot size={96} palette="pink" face="happy" shadow={false} />
+                <View style={{ marginLeft: -24 }}><Mascot size={96} face="open" shadow={false} /></View>
+                <View style={s.heart}><Icon name="heart" size={22} color="#FF8FB1" filled fillOpacity={1} strokeWidth={0} /></View>
+              </View>
+            </Floating>
           ) : (
-            <Mascot size={132} palette={tab === 'monthly' ? 'mint' : tab === 'yearly' ? 'lavender' : 'classic'} face={score >= 80 ? 'happy' : 'look'} prop={tab === 'monthly' ? 'clover' : 'cloud'} shadow={false} />
+            <Floating>
+              <Mascot size={120} palette={tab === 'monthly' ? 'mint' : tab === 'yearly' ? 'lavender' : 'classic'} face={score >= 80 ? 'happy' : 'look'} prop={tab === 'monthly' ? 'clover' : 'cloud'} shadow={false} />
+            </Floating>
           )}
         </View>
-        <View style={s.heroRow}>
-          <View style={s.ringWrap}><ScoreRing key={tab} score={score} size={84} stroke={6} color={colors.seal} track={colors.line} textColor={colors.ink} /></View>
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-              <Text style={txt.h3}>{tab === 'weekly' ? '이번 주의 흐름' : `${label}의 흐름`}</Text>
-              {period ? <View style={s.focus}><Text style={s.focusText}>집중 테마 · {period.focus}</Text></View> : null}
+
+        <View style={[s.panel, shadow.hero]}>
+          <View style={s.heroRow}>
+            <ScoreRing key={tab} score={score} size={76} stroke={6} color={colors.seal} track={colors.lavenderSoft} textColor={colors.ink} />
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Text style={txt.h3}>{tab === 'weekly' ? '이번 주의 흐름' : `${label}의 흐름`}</Text>
+                <View style={s.grade}><Text style={s.gradeText}>{gradeOf(score)}</Text></View>
+              </View>
+              <Text style={[txt.small, { color: colors.inkSub, marginTop: 4 }]}>{summary}</Text>
             </View>
-            <Text style={[txt.body, { color: colors.inkSub, marginTop: 4 }]}>{summary}</Text>
+          </View>
+          <View style={s.chips}>
+            {period ? (
+              <>
+                <View style={s.chipBlue}><Text style={s.chipBlueText}>집중 테마 · {period.focus}</Text></View>
+                <View style={s.chip}><Text style={s.chipText}>최고의 {tab === 'weekly' ? '요일' : tab === 'monthly' ? '주' : '달'} · {bestFlow}</Text></View>
+              </>
+            ) : f.keywords.slice(0, 3).map(k => <View key={k} style={s.chip}><Text style={s.chipText}>#{k}</Text></View>)}
+          </View>
+          <View style={s.duo}>
+            {([['가장 좋은 분야', topCat], ['보완할 분야', weak]] as const).map(([k, c]) => {
+              const t = categoryTheme[c];
+              return (
+                <View key={k} style={s.duoCell}>
+                  <View style={[s.duoIco, { backgroundColor: t.bg }]}><Icon name={CAT_ICON[c]} size={18} color={t.color} filled fillOpacity={c === 'love' ? 1 : 0.35} strokeWidth={2} /></View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={txt.micro}>{k}</Text>
+                    <Text style={s.duoV}>{t.label} <Text style={{ color: t.color }}>{scoreOf(c)}</Text></Text>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </View>
       </View>
@@ -127,7 +166,7 @@ export default function FortuneScreen() {
           return (
             <CategoryRow
               key={`${tab}-${k}`}
-              category={k} score={c.score} text={c.text} delay={i * 80} expand={tab !== 'daily'}
+              category={k} score={c.score} text={c.text} delay={i * 80} expand={tab !== 'daily'} delta={prev ? c.score - prev[k] : undefined}
               badge={c.best ? `${c.best}${tab === 'weekly' ? '요일' : ''} 최고` : undefined}
               lines={tab !== 'daily' && open === k ? 4 : 1}
               onPress={() => (tab === 'daily' ? nav.navigate('CategoryDetail', { category: k }) : setOpen(open === k ? null : k))}
@@ -165,13 +204,22 @@ export default function FortuneScreen() {
 }
 
 const s = StyleSheet.create({
-  hero: { marginTop: 16, borderRadius: radius.xl, overflow: 'hidden', paddingHorizontal: 18, paddingBottom: 18 },
-  art: { alignItems: 'center', paddingTop: 14, height: 150, justifyContent: 'flex-end' },
-  heart: { position: 'absolute', top: -6, left: '44%' },
-  heroRow: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 6 },
-  ringWrap: { width: 92, height: 92, borderRadius: 46, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center' },
-  focus: { backgroundColor: colors.card, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4 },
-  focusText: { fontSize: 11, fontWeight: '700', color: colors.seal },
+  hero: { marginTop: 16, borderRadius: radius.xl, overflow: 'hidden', padding: 14 },
+  art: { alignItems: 'center', paddingTop: 6, height: 150, justifyContent: 'flex-end' },
+  heart: { position: 'absolute', top: -8, left: '44%' },
+  panel: { marginTop: 6, padding: 16, borderRadius: 20, backgroundColor: colors.card },
+  heroRow: { flexDirection: 'row', alignItems: 'center', gap: 14 },
+  grade: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.pill, backgroundColor: colors.accentBg },
+  gradeText: { ...sansW('700'), fontSize: 11, color: colors.seal },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 12 },
+  chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: radius.pill, backgroundColor: colors.lavenderSoft },
+  chipText: { ...sansW('600'), fontSize: 13, color: colors.inkSub },
+  chipBlue: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: radius.pill, backgroundColor: colors.accentBg },
+  chipBlueText: { ...sansW('700'), fontSize: 13, color: colors.seal },
+  duo: { flexDirection: 'row', gap: 8, marginTop: 12 },
+  duoCell: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, padding: 10, borderRadius: radius.md, backgroundColor: colors.lavenderSoft },
+  duoIco: { width: 32, height: 32, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+  duoV: { ...sansW('700'), fontSize: 13, color: colors.ink, marginTop: 1 },
   border: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineStrong },
   chart: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, paddingTop: 22, height: CHART_H + 80 },
   col: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', gap: 6, height: '100%' },
